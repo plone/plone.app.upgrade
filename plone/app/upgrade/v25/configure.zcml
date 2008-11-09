@@ -12,17 +12,17 @@
 
         <genericsetup:upgradeStep
             title="Migrate all existing actions to new-style actions"
-            handler=".v30.alphas.migrateOldActions"
+            handler="plone.app.upgrade.v30.alphas.migrateOldActions"
             />
 
         <genericsetup:upgradeStep
             title="Repair plone_lexicon pipeline"
-            handler=".v25.fixupPloneLexicon"
+            handler=".fixupPloneLexicon"
             />
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v25.final_two51"
+            handler=".final_two51"
             />
 
     </genericsetup:upgradeSteps>
@@ -32,7 +32,7 @@
         destination="2.5.1"
         title="Empty upgrade step"
         profile="Products.CMFPlone:plone"
-        handler=".null_upgrade_step"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
         />
 
     <genericsetup:upgradeStep
@@ -40,7 +40,7 @@
         destination="2.5.2.rc1"
         title="Changes cookie auth redirects to the correct location"
         profile="Products.CMFPlone:plone"
-        handler=".v25.setLoginFormInCookieAuth"
+        handler=".setLoginFormInCookieAuth"
         />
 
     <genericsetup:upgradeStep
@@ -48,7 +48,7 @@
         destination="2.5.2"
         title="Empty upgrade step"
         profile="Products.CMFPlone:plone"
-        handler=".null_upgrade_step"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
         />
 
     <genericsetup:upgradeStep
@@ -56,7 +56,7 @@
         destination="2.5.3.rc1"
         title="Add markdown and textile mime types."
         profile="Products.CMFPlone:plone"
-        handler=".v25.addMissingMimeTypes"
+        handler=".addMissingMimeTypes"
         />
 
     <genericsetup:upgradeStep
@@ -64,7 +64,7 @@
         destination="2.5.3"
         title="Empty upgrade step"
         profile="Products.CMFPlone:plone"
-        handler=".null_upgrade_step"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
         />
 
     <genericsetup:upgradeStep
@@ -72,7 +72,7 @@
         destination="2.5.4"
         title="Correct baseline profile in GenericSetup."
         profile="Products.CMFPlone:plone"
-        handler=".v30.alphas.updateImportStepsFromBaseProfile"
+        handler="plone.app.upgrade.v30.alphas.updateImportStepsFromBaseProfile"
         />
 
     <genericsetup:upgradeStep
@@ -80,7 +80,7 @@
         destination="2.5.4.2"
         title="Empty upgrade step"
         profile="Products.CMFPlone:plone"
-        handler=".null_upgrade_step"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
         />
 
     <genericsetup:upgradeStep
@@ -88,7 +88,7 @@
         destination="2.5.5"
         title="Empty upgrade step"
         profile="Products.CMFPlone:plone"
-        handler=".null_upgrade_step"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
         />
 
 </configure>

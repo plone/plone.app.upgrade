@@ -29,6 +29,7 @@ from Products.CMFCalendar.interfaces import ICalendarTool
 from Products.CMFCore.ActionInformation import Action
 from Products.CMFCore.ActionInformation import ActionCategory
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.utils import getToolInterface
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.permissions import AccessInactivePortalContent
 from Products.CMFCore.interfaces import IActionsTool
@@ -85,6 +86,7 @@ from plone.app.upgrade.v30.alphas import updateActionsI18NDomain
 from plone.app.upgrade.v30.alphas import updateFTII18NDomain
 from plone.app.upgrade.v30.alphas import convertLegacyPortlets
 from plone.app.upgrade.v30.alphas import registerToolsAsUtilities
+from plone.app.upgrade.v30.alphas import registration
 from plone.app.upgrade.v30.alphas import installKss
 from plone.app.upgrade.v30.alphas import addReaderAndEditorRoles
 from plone.app.upgrade.v30.alphas import migrateLocalroleForm
@@ -512,6 +514,10 @@ class TestMigrations_v2_5_x(MigrationTest):
         registerToolsAsUtilities(self.portal)
         for i in interfaces:
             self.failUnless(sm.queryUtility(i) is None)
+
+    def testToolRegistration(self):
+        for (tool_id, interface) in registration:
+            self.assertEqual(getToolInterface(tool_id), interface)
 
 
 class TestMigrations_v3_0_alpha1(MigrationTest):
