@@ -76,6 +76,9 @@ from Products.PlonePAS.interfaces.group import IGroupDataTool
 from Products.ResourceRegistries.interfaces import ICSSRegistry
 from Products.ResourceRegistries.interfaces import IJSRegistry
 
+from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import loadMigrationProfile
+
 from plone.app.upgrade.v30.alphas import enableZope3Site
 from plone.app.upgrade.v30.alphas import migrateOldActions
 from plone.app.upgrade.v30.alphas import updateActionsI18NDomain
@@ -116,9 +119,6 @@ from plone.app.upgrade.v30.betas import hidePropertiesAction
 from plone.app.upgrade.v30.rcs import addIntelligentText
 
 from plone.app.upgrade.v30.final_three0x import installNewModifiers
-
-from plone.app.upgrade.tests.base import MigrationTest
-from plone.app.upgrade.utils import loadMigrationProfile
 
 
 class TestMigrations_v3_0_Actions(MigrationTest):
@@ -216,7 +216,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
 class TestMigrations_v2_5_x(MigrationTest):
 
     def afterSetUp(self):
-        self.profile = 'profile-Products.CMFPlone.migrations:2.5.x-3.0a1'
+        self.profile = 'profile-plone.app.upgrade:2.5.x-3.0a1'
         self.icons = self.portal.portal_actionicons
         self.types = self.portal.portal_types
         self.properties = self.portal.portal_properties
@@ -517,7 +517,7 @@ class TestMigrations_v2_5_x(MigrationTest):
 class TestMigrations_v3_0_alpha1(MigrationTest):
 
     def afterSetUp(self):
-        self.profile = 'profile-Products.CMFPlone.migrations:3.0a1-3.0a2'
+        self.profile = 'profile-plone.app.upgrade:3.0a1-3.0a2'
         self.actions = self.portal.portal_actions
 
     def testInstallRedirectorUtility(self):
@@ -677,7 +677,7 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
 class TestMigrations_v3_0_alpha2(MigrationTest):
 
     def afterSetUp(self):
-        self.profile = 'profile-Products.CMFPlone.migrations:3.0a2-3.0b1'
+        self.profile = 'profile-plone.app.upgrade:3.0a2-3.0b1'
         self.actions = self.portal.portal_actions
         self.icons = self.portal.portal_actionicons
         self.properties = self.portal.portal_properties
@@ -877,7 +877,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
 class TestMigrations_v3_0(MigrationTest):
 
     def afterSetUp(self):
-        self.profile = 'profile-Products.CMFPlone.migrations:3.0b1-3.0b2'
+        self.profile = 'profile-plone.app.upgrade:3.0b1-3.0b2'
         self.actions = self.portal.portal_actions
         self.icons = self.portal.portal_actionicons
         self.skins = self.portal.portal_skins
@@ -903,7 +903,7 @@ class TestMigrations_v3_0(MigrationTest):
         # Test it twice
         for i in range(2):
             loadMigrationProfile(self.portal,
-                    'profile-Products.CMFPlone.migrations:3.0b1-3.0b2',
+                    'profile-plone.app.upgrade:3.0b1-3.0b2',
                     steps=["cssregistry"])
             stylesheet_ids = cssreg.getResourceIds()
             for id in added_ids:
@@ -1072,7 +1072,7 @@ class TestMigrations_v3_0(MigrationTest):
         # Test it twice
         for i in range(2):
             loadMigrationProfile(self.portal,
-                    'profile-Products.CMFPlone.migrations:3.0b1-3.0b2',
+                    'profile-plone.app.upgrade:3.0b1-3.0b2',
                     steps=["rolemap"])
             for p in ['CMFEditions: Apply version control',
                       'CMFEditions: Save new version',

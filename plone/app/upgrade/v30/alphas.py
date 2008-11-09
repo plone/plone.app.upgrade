@@ -73,15 +73,16 @@ from Products.CMFPlone.interfaces import IMigrationTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import ITranslationServiceTool
-from Products.CMFPlone.migrations import logger
-from Products.CMFPlone.migrations.migration_util import installOrReinstallProduct
-from Products.CMFPlone.migrations.migration_util import loadMigrationProfile
+
+from plone.app.upgrade.utils import installOrReinstallProduct
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import logger
 
 
 def three0_alpha1(context):
     """2.5.x -> 3.0-alpha1
     """
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:2.5.x-3.0a1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:2.5.x-3.0a1')
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
 
@@ -97,13 +98,13 @@ def three0_alpha1(context):
 def alpha1_alpha2(context):
     """ 3.0-alpha1 -> 3.0-alpha2
     """
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0a1-3.0a2')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0a1-3.0a2')
 
 
 def alpha2_beta1(context):
     """ 3.0-alpha2 -> 3.0-beta1
     """
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0a2-3.0b1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0a2-3.0b1')
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
 

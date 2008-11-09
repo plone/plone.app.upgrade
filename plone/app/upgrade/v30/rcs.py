@@ -5,12 +5,12 @@ from Products.MimetypesRegistry.mime_types.mtr_mimetypes import text_web_intelli
 from Products.PortalTransforms.transforms.web_intelligent_plain_text_to_html import register as intel2html_register
 from Products.PortalTransforms.transforms.html_to_web_intelligent_plain_text import register as html2intel_register
 
-from Products.CMFPlone.migrations import logger
-from Products.CMFPlone.migrations.migration_util import loadMigrationProfile
+from plone.app.upgrade.utils import logger
+from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def rc2_final(context):
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0rc2-3.0final')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0rc2-3.0final')
 
 
 def addIntelligentText(context):

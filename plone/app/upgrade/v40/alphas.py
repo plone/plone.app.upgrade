@@ -1,7 +1,7 @@
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFPlone.migrations import logger
-from Products.CMFPlone.migrations.migration_util import loadMigrationProfile
+from plone.app.upgrade.utils import logger
+from plone.app.upgrade.utils import loadMigrationProfile
 
 
 _KNOWN_ACTION_ICONS = {
@@ -14,7 +14,7 @@ def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3-4alpha1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3-4alpha1')
 
     migrateActionIcons(portal)
 

@@ -4,9 +4,9 @@ from Products.CMFPlacefulWorkflow.interfaces import IPlacefulMarker
 from Products.CMFPlone.setuphandlers import replace_local_role_manager
 from Products.PlonePAS.interfaces.plugins import ILocalRolesPlugin
 
-from plone.app.upgrade.v31.betas import reinstallCMFPlacefulWorkflow
-
 from plone.app.upgrade.tests.base import MigrationTest
+
+from plone.app.upgrade.v31.betas import reinstallCMFPlacefulWorkflow
 
 
 class TestMigrations_v3_1(MigrationTest):

@@ -1,21 +1,20 @@
 from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.StandardModifiers import install
 
-from Products.CMFPlone.migrations import logger
-from Products.CMFPlone.migrations.migration_util import loadMigrationProfile
-from Products.CMFPlone.migrations.v3_0.alphas import registerToolsAsUtilities
+from plone.app.upgrade.utils import logger
+from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def final_three01(context):
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0final-3.0.1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0final-3.0.1')
 
 
 def three01_three02(context):
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0.1-3.0.2')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0.1-3.0.2')
 
 
 def three03_three04(context):
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0.3-3.0.4')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0.3-3.0.4')
 
 
 def installNewModifiers(context):

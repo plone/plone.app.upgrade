@@ -12,17 +12,17 @@
 
         <genericsetup:upgradeStep
             title="Migrate all existing actions to new-style actions"
-            handler=".v3_0.alphas.migrateOldActions"
+            handler=".v30.alphas.migrateOldActions"
             />
 
         <genericsetup:upgradeStep
             title="Repair plone_lexicon pipeline"
-            handler=".v2_5.fixupPloneLexicon"
+            handler=".v25.fixupPloneLexicon"
             />
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v2_5.final_two51"
+            handler=".v25.final_two51"
             />
 
     </genericsetup:upgradeSteps>
@@ -40,7 +40,7 @@
         destination="2.5.2.rc1"
         title="Changes cookie auth redirects to the correct location"
         profile="Products.CMFPlone:plone"
-        handler=".v2_5.setLoginFormInCookieAuth"
+        handler=".v25.setLoginFormInCookieAuth"
         />
 
     <genericsetup:upgradeStep
@@ -56,7 +56,7 @@
         destination="2.5.3.rc1"
         title="Add markdown and textile mime types."
         profile="Products.CMFPlone:plone"
-        handler=".v2_5.addMissingMimeTypes"
+        handler=".v25.addMissingMimeTypes"
         />
 
     <genericsetup:upgradeStep
@@ -72,7 +72,7 @@
         destination="2.5.4"
         title="Correct baseline profile in GenericSetup."
         profile="Products.CMFPlone:plone"
-        handler=".v3_0.alphas.updateImportStepsFromBaseProfile"
+        handler=".v30.alphas.updateImportStepsFromBaseProfile"
         />
 
     <genericsetup:upgradeStep

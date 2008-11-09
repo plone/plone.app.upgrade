@@ -1,16 +1,16 @@
 from Products.CMFCore.ActionInformation import Action
 from Products.CMFCore.utils import getToolByName
 
-from plone.app.upgrade.v40.alphas import migrateActionIcons
-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.tests.base import MigrationTest
 
+from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
+from plone.app.upgrade.v40.alphas import migrateActionIcons
 
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
-    profile = "profile-Products.CMFPlone.migrations:3-4alpha1"
+    profile = "profile-plone.app.upgrade:3-4alpha1"
 
     def afterSetUp(self):
         self.atool = getToolByName(self.portal, 'portal_actions')
@@ -22,7 +22,6 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.failUnless(True)
 
     def testMigrateActionIcons(self):
-        from Products.CMFPlone.migrations.v4_0.alphas import _KNOWN_ACTION_ICONS
         _KNOWN_ACTION_ICONS['object_buttons'].extend(['test_id', 'test2_id'])
         self.aitool.addActionIcon(
             category='object_buttons',

@@ -8,26 +8,26 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFPlone.migrations import logger
-from Products.CMFPlone.migrations.migration_util import loadMigrationProfile
+from plone.app.upgrade.utils import logger
+from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def beta1_beta2(context):
     """ 3.0-beta1 -> 3.0-beta2
     """
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0b1-3.0b2')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0b1-3.0b2')
 
 
 def beta2_beta3(context):
     """ 3.0-beta2 -> 3.0-beta3
     """
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0b2-3.0b3')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0b2-3.0b3')
 
 
 def beta3_rc1(context):
     """ 3.0-beta3 -> 3.0-rc1
     """
-    loadMigrationProfile(context, 'profile-Products.CMFPlone.migrations:3.0b3-3.0b4')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0b3-3.0b4')
 
 
 def migrateHistoryTab(context):

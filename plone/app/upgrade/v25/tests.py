@@ -1,18 +1,18 @@
 from Products.CMFPlone.UnicodeSplitter import Splitter
 from Products.CMFPlone.UnicodeSplitter import CaseNormalizer
 
+from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import loadMigrationProfile
+
 from plone.app.upgrade.v25 import fixupPloneLexicon
 from plone.app.upgrade.v25 import setLoginFormInCookieAuth
 from plone.app.upgrade.v25 import addMissingMimeTypes
-
-from plone.app.upgrade.tests.base import MigrationTest
-from plone.app.upgrade.utils import loadMigrationProfile
 
 
 class TestMigrations_v2_5_0(MigrationTest):
 
     def afterSetUp(self):
-        self.profile = 'profile-Products.CMFPlone.migrations:2.5final-2.5.1'
+        self.profile = 'profile-plone.app.upgrade:2.5final-2.5.1'
         self.actions = self.portal.portal_actions
         self.css = self.portal.portal_css
 

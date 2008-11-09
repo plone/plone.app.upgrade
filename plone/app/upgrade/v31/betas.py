@@ -4,7 +4,7 @@ from zope.interface import Interface
 from plone.portlets.interfaces import IPortletType
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.migrations.migration_util import loadMigrationProfile
+from plone.app.upgrade.utils import loadMigrationProfile
 from Products.GenericSetup.browser.manage import ImportStepsView
 from Products.GenericSetup.browser.manage import ExportStepsView
 
@@ -15,7 +15,7 @@ def three0_beta1(portal):
     """
     out = []
 
-    loadMigrationProfile(portal, 'profile-Products.CMFPlone.migrations:3.0.6-3.1beta1')
+    loadMigrationProfile(portal, 'profile-plone.app.upgrade:3.0.6-3.1beta1')
 
     addBrowserLayer(portal, out)
     addCollectionAndStaticPortlets(portal, out)

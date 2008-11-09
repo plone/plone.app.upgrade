@@ -14,12 +14,12 @@
 
         <genericsetup:upgradeStep
             title="Make the portal a Zope3 site"
-            handler=".v3_0.alphas.enableZope3Site"
+            handler=".v30.alphas.enableZope3Site"
             />
 
         <genericsetup:upgradeStep
             title="Register some tools as utilities"
-            handler=".v3_0.alphas.registerToolsAsUtilities"
+            handler=".v30.alphas.registerToolsAsUtilities"
             />
 
     </genericsetup:upgradeSteps>
@@ -33,42 +33,42 @@
 
         <genericsetup:upgradeStep
             title="Updates the available GS import steps"
-            handler=".v3_0.alphas.updateImportStepsFromBaseProfile"
+            handler=".v30.alphas.updateImportStepsFromBaseProfile"
             />
 
         <genericsetup:upgradeStep
             title="Migrate all existing actions to new-style actions"
-            handler=".v3_0.alphas.migrateOldActions"
+            handler=".v30.alphas.migrateOldActions"
             />
 
         <genericsetup:upgradeStep
             title="Add an i18n_domain to actions"
-            handler=".v3_0.alphas.updateActionsI18NDomain"
+            handler=".v30.alphas.updateActionsI18NDomain"
             />
 
         <genericsetup:upgradeStep
             title="Add an i18n_domain to type information"
-            handler=".v3_0.alphas.updateFTII18NDomain"
+            handler=".v30.alphas.updateFTII18NDomain"
             />
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.alphas.three0_alpha1"
+            handler=".v30.alphas.three0_alpha1"
             />
 
         <genericsetup:upgradeStep
             title="Remove tableless skin"
-            handler=".v3_0.alphas.removeTablelessSkin"
+            handler=".v30.alphas.removeTablelessSkin"
             />
 
         <genericsetup:upgradeStep
             title="Add portlet managers"
-            handler=".v3_0.alphas.addPortletManagers"
+            handler=".v30.alphas.addPortletManagers"
             />
 
         <genericsetup:upgradeStep
             title="Migrate legacy portlets"
-            handler=".v3_0.alphas.convertLegacyPortlets"
+            handler=".v30.alphas.convertLegacyPortlets"
             />
 
     </genericsetup:upgradeSteps>
@@ -82,27 +82,27 @@
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.alphas.alpha1_alpha2"
+            handler=".v30.alphas.alpha1_alpha2"
             />
 
         <genericsetup:upgradeStep
             title="Add reader and editor roles"
-            handler=".v3_0.alphas.addReaderAndEditorRoles"
+            handler=".v30.alphas.addReaderAndEditorRoles"
             />
 
         <genericsetup:upgradeStep
             title="Change folder_localrole_form to @@sharing"
-            handler=".v3_0.alphas.migrateLocalroleForm"
+            handler=".v30.alphas.migrateLocalroleForm"
             />
 
         <genericsetup:upgradeStep
             title="Reorder the user actions"
-            handler=".v3_0.alphas.reorderUserActions"
+            handler=".v30.alphas.reorderUserActions"
             />
 
         <genericsetup:upgradeStep
             title="Install KSS"
-            handler=".v3_0.alphas.installKss"
+            handler=".v30.alphas.installKss"
             />
 
     </genericsetup:upgradeSteps>
@@ -114,47 +114,47 @@
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.alphas.alpha2_beta1"
+            handler=".v30.alphas.alpha2_beta1"
             />
 
         <genericsetup:upgradeStep
             title="Use the unpacked kukit-src.js and pack it ourself"
-            handler=".v3_0.alphas.updateKukitJS"
+            handler=".v30.alphas.updateKukitJS"
             />
 
         <genericsetup:upgradeStep
             title="Remove the mystuff user action"
-            handler=".v3_0.alphas.removeMyStuffAction"
+            handler=".v30.alphas.removeMyStuffAction"
             />
 
         <genericsetup:upgradeStep
             title="Modify security settings to match new default policies"
-            handler=".v3_0.alphas.updateMemberSecurity"
+            handler=".v30.alphas.updateMemberSecurity"
             />
 
         <genericsetup:upgradeStep
             title="Add new Plone Session Plugin"
-            handler=".v3_0.alphas.updatePASPlugins"
+            handler=".v30.alphas.updatePASPlugins"
             />
 
         <genericsetup:upgradeStep
             title="Add a RAMCache for ResourceRegistries"
-            handler=".v3_0.alphas.addCacheForResourceRegistry"
+            handler=".v30.alphas.addCacheForResourceRegistry"
             />
 
         <genericsetup:upgradeStep
             title="Add the object_provides catalog index"
-            handler=".v3_0.alphas.addObjectProvidesIndex"
+            handler=".v30.alphas.addObjectProvidesIndex"
             />
 
         <genericsetup:upgradeStep
             title="Add additional example workflows"
-            handler=".v3_0.alphas.addMissingWorkflows"
+            handler=".v30.alphas.addMissingWorkflows"
             />
 
         <genericsetup:upgradeStep
             title="Replace obsolete PlonePAS version of plone tool"
-            handler=".v3_0.alphas.restorePloneTool"
+            handler=".v30.alphas.restorePloneTool"
             />
 
     </genericsetup:upgradeSteps>
@@ -166,72 +166,72 @@
 
         <genericsetup:upgradeStep
             title="Migrate history action"
-            handler=".v3_0.betas.migrateHistoryTab"
+            handler=".v30.betas.migrateHistoryTab"
             />
 
         <genericsetup:upgradeStep
             title="Change the order of action providers"
-            handler=".v3_0.betas.changeOrderOfActionProviders"
+            handler=".v30.betas.changeOrderOfActionProviders"
             />
 
         <genericsetup:upgradeStep
             title="Update edit action with locking condition"
-            handler=".v3_0.betas.updateEditActionConditionForLocking"
+            handler=".v30.betas.updateEditActionConditionForLocking"
             />
 
         <genericsetup:upgradeStep
             title="Add form unload JS to the JSregistry"
-            handler=".v3_0.betas.addOnFormUnloadJS"
+            handler=".v30.betas.addOnFormUnloadJS"
             />
 
         <genericsetup:upgradeStep
             title="Remove old no longer used actions"
-            handler=".v3_0.betas.cleanupOldActions"
+            handler=".v30.betas.cleanupOldActions"
             />
 
         <genericsetup:upgradeStep
             title="Remove empty default_charset from portal"
-            handler=".v3_0.betas.cleanDefaultCharset"
+            handler=".v30.betas.cleanDefaultCharset"
             />
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.betas.beta1_beta2"
+            handler=".v30.betas.beta1_beta2"
             />
 
         <genericsetup:upgradeStep
             title="Add automatic group PAS plugin"
-            handler=".v3_0.betas.addAutoGroupToPAS"
+            handler=".v30.betas.addAutoGroupToPAS"
             />
 
         <genericsetup:upgradeStep
             title="Remove s5_presentation action"
-            handler=".v3_0.betas.removeS5Actions"
+            handler=".v30.betas.removeS5Actions"
             />
 
         <genericsetup:upgradeStep
             title="Associate portal_kss with RAM cache"
-            handler=".v3_0.betas.addCacheForKSSRegistry"
+            handler=".v30.betas.addCacheForKSSRegistry"
             />
 
         <genericsetup:upgradeStep
             title="Disable KSS for anonymous users"
-            handler=".v3_0.betas.modifyKSSResources"
+            handler=".v30.betas.modifyKSSResources"
             />
 
         <genericsetup:upgradeStep
             title="Allow contributer role to add content"
-            handler=".v3_0.betas.addContributorToCreationPermissions"
+            handler=".v30.betas.addContributorToCreationPermissions"
             />
 
         <genericsetup:upgradeStep
             title="Remove no longer existing action proiders"
-            handler=".v3_0.betas.cleanupActionProviders"
+            handler=".v30.betas.cleanupActionProviders"
             />
 
         <genericsetup:upgradeStep
             title="Remove properties tab from types"
-            handler=".v3_0.betas.hidePropertiesAction"
+            handler=".v30.betas.hidePropertiesAction"
             />
 
     </genericsetup:upgradeSteps>
@@ -243,17 +243,17 @@
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.betas.beta2_beta3"
+            handler=".v30.betas.beta2_beta3"
             />
 
         <genericsetup:upgradeStep
             title="Remove sharing action from types"
-            handler=".v3_0.betas.removeSharingAction"
+            handler=".v30.betas.removeSharingAction"
             />
 
         <genericsetup:upgradeStep
             title="Grant editor role secondary edit permissions"
-            handler=".v3_0.betas.addEditorToSecondaryEditorPermissions"
+            handler=".v30.betas.addEditorToSecondaryEditorPermissions"
             />
 
     </genericsetup:upgradeSteps>
@@ -265,17 +265,17 @@
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.betas.beta3_rc1"
+            handler=".v30.betas.beta3_rc1"
             />
 
         <genericsetup:upgradeStep
             title="Change the title of topics to collection"
-            handler=".v3_0.betas.updateTopicTitle"
+            handler=".v30.betas.updateTopicTitle"
             />
 
         <genericsetup:upgradeStep
             title="Separate KSS development and production resources"
-            handler=".v3_0.betas.modifyKSSResourcesForDevelMode"
+            handler=".v30.betas.modifyKSSResourcesForDevelMode"
             />
 
     </genericsetup:upgradeSteps>
@@ -285,7 +285,7 @@
         destination="3.0.rc2"
         title="Add intelligenttext mime type and transforms"
         profile="Products.CMFPlone:plone"
-        handler=".v3_0.rcs.addIntelligentText"
+        handler=".v30.rcs.addIntelligentText"
         />
 
     <genericsetup:upgradeStep
@@ -293,7 +293,7 @@
         destination="3.0"
         title="General required migration steps"
         profile="Products.CMFPlone:plone"
-        handler=".v3_0.rcs.rc2_final"
+        handler=".v30.rcs.rc2_final"
         />
 
     <!-- Plone 3.0.x -->
@@ -303,7 +303,7 @@
         destination="3.0.1"
         title="General required migration steps"
         profile="Products.CMFPlone:plone"
-        handler=".v3_0.final_three0x.final_three01"
+        handler=".v30.final_three0x.final_three01"
         />
 
     <genericsetup:upgradeStep
@@ -311,7 +311,7 @@
         destination="3.0.2"
         title="General required migration steps"
         profile="Products.CMFPlone:plone"
-        handler=".v3_0.final_three0x.three01_three02"
+        handler=".v30.final_three0x.three01_three02"
         />
 
     <genericsetup:upgradeStep
@@ -329,12 +329,12 @@
 
         <genericsetup:upgradeStep
             title="General required migration steps"
-            handler=".v3_0.final_three0x.three03_three04"
+            handler=".v30.final_three0x.three03_three04"
             />
 
         <genericsetup:upgradeStep
             title="Added new CMFEditions modifiers"
-            handler=".v3_0.final_three0x.installNewModifiers"
+            handler=".v30.final_three0x.installNewModifiers"
             />
 
     </genericsetup:upgradeSteps>
