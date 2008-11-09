@@ -10,7 +10,7 @@ from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def rc2_final(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0rc2-3.0final')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0rc2-3.0final')
 
 
 def addIntelligentText(context):

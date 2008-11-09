@@ -8,7 +8,7 @@ from plone.app.upgrade.utils import loadMigrationProfile
 def final_two51(context):
     """2.5-final -> 2.5.1
     """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade:2.5final-2.5.1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v25:2.5final-2.5.1')
 
     # Required for #5569 (is_folderish needs reindexing) and #5231 (all text
     # indices need to be reindexed so they are split properly)

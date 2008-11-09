@@ -7,7 +7,7 @@
         name="3.0.6-3.1beta1"
         title="Migration profile for Plone 3.0.6 to Plone 3.1-beta1"
         description="This profile contains configuration changes that are applied during the Plone 3.0.6 to 3.1-beta1 migration." 
-        directory="v3_1/profiles/three0_beta1"
+        directory="profiles/three0_beta1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
@@ -16,7 +16,7 @@
         name="3.1.1-3.1.2"
         title="Migration profile for Plone 3.1.1 to Plone 3.1.2"
         description="This profile contains configuration changes that are applied during the Plone 3.1.1 to 3.1.2 migration." 
-        directory="v3_1/profiles/three11_three12"
+        directory="profiles/three11_three12"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />

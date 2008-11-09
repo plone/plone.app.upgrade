@@ -6,15 +6,15 @@ from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def final_three01(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0final-3.0.1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0final-3.0.1')
 
 
 def three01_three02(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0.1-3.0.2')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0.1-3.0.2')
 
 
 def three03_three04(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade:3.0.3-3.0.4')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0.3-3.0.4')
 
 
 def installNewModifiers(context):

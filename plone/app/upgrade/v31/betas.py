@@ -15,7 +15,7 @@ def three0_beta1(portal):
     """
     out = []
 
-    loadMigrationProfile(portal, 'profile-plone.app.upgrade:3.0.6-3.1beta1')
+    loadMigrationProfile(portal, 'profile-plone.app.upgrade.v31:3.0.6-3.1beta1')
 
     addBrowserLayer(portal, out)
     addCollectionAndStaticPortlets(portal, out)

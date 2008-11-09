@@ -10,7 +10,7 @@ from plone.app.upgrade.v40.alphas import migrateActionIcons
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
-    profile = "profile-plone.app.upgrade:3-4alpha1"
+    profile = "profile-plone.app.upgrade.v40:3-4alpha1"
 
     def afterSetUp(self):
         self.atool = getToolByName(self.portal, 'portal_actions')

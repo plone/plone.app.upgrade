@@ -12,7 +12,7 @@ from plone.app.upgrade.v25 import addMissingMimeTypes
 class TestMigrations_v2_5_0(MigrationTest):
 
     def afterSetUp(self):
-        self.profile = 'profile-plone.app.upgrade:2.5final-2.5.1'
+        self.profile = 'profile-plone.app.upgrade.v25:2.5final-2.5.1'
         self.actions = self.portal.portal_actions
         self.css = self.portal.portal_css
 

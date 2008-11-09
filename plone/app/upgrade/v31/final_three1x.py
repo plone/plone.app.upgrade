@@ -5,4 +5,4 @@ def three11_three12(portal):
     
     out = []
     
-    loadMigrationProfile(portal, 'profile-plone.app.upgrade:3.1.1-3.1.2')
+    loadMigrationProfile(portal, 'profile-plone.app.upgrade.v31:3.1.1-3.1.2')
