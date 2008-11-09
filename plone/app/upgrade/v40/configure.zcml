@@ -8,7 +8,7 @@
     <genericsetup:upgradeStep
         source="3.1.2"
         destination="4.0.dev"
-        title="Upgrade from Plone 3.1.1 to Plone 4.0.dev."
+        title="Upgrade from Plone 3.1.2 to Plone 4.0.dev."
         profile="Products.CMFPlone:plone"
         handler=".alphas.threeX_alpha1"
         />

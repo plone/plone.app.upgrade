@@ -69,7 +69,6 @@ from Products.StandardCacheManagers import RAMCacheManager
 from Products.CMFPlone import cmfplone_globals
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.interfaces import IFactoryTool
-from Products.CMFPlone.interfaces import IMigrationTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import ITranslationServiceTool
@@ -351,7 +350,6 @@ registration = (('mimetypes_registry', IMimetypesRegistryTool),
                 ('portal_properties', IPropertiesTool),
                 ('portal_syndication', ISyndicationTool),
                 ('portal_undo', IUndoTool),
-                ('portal_migration', IMigrationTool),
                 ('MailHost', IMailHost),
                 ('portal_diff', IDiffTool),
                 ('portal_uidannotation', IUniqueIdAnnotationManagement),

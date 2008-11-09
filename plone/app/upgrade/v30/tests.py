@@ -60,7 +60,6 @@ from Products.CMFEditions.interfaces import IStorageTool
 from Products.CMFFormController.interfaces import IFormControllerTool
 from Products.CMFQuickInstallerTool.interfaces import IQuickInstallerTool
 from Products.CMFPlone.interfaces import IFactoryTool
-from Products.CMFPlone.interfaces import IMigrationTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import ITranslationServiceTool
@@ -470,7 +469,7 @@ class TestMigrations_v2_5_x(MigrationTest):
     def testRegisterToolsAsUtilities(self):
         sm = getSiteManager(self.portal)
         interfaces = (ISiteRoot, IPloneSiteRoot,
-                      IMigrationTool, IActionIconsTool, ISyndicationTool,
+                      IActionIconsTool, ISyndicationTool,
                       IMetadataTool, IPropertiesTool, IUndoTool, IMailHost,
                       IUniqueIdAnnotationManagement, IUniqueIdGenerator,
                       IDiffTool, IATCTTool, IMimetypesRegistryTool,
