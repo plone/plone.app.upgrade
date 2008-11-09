@@ -9,7 +9,7 @@ from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 
 
-class MigrationTestCase(PloneTestCase.PloneTestCase):
+class MigrationTest(PloneTestCase.PloneTestCase):
 
     def removeActionFromTool(self, action_id, category=None, action_provider='portal_actions'):
         # Removes an action from portal_actions
