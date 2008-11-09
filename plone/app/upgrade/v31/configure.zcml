@@ -47,4 +47,52 @@
         handler=".final_three1x.three11_three12"
         />
 
+    <genericsetup:upgradeStep
+        source="3.1.2"
+        destination="3.1.3"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.1.3"
+        destination="3.1.4"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.1.4"
+        destination="3.1.5"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler=".final_three1x.three14_three15"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.1.5"
+        destination="3.1.5.1"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.1.5.1"
+        destination="3.1.6"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.1.6"
+        destination="3.1.7"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
 </configure>

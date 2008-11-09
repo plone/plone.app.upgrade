@@ -10,6 +10,7 @@ from Products.GenericSetup.browser.manage import ExportStepsView
 
 from Products.CMFPlone.setuphandlers import replace_local_role_manager
 
+
 def three0_beta1(portal):
     """3.0.6 -> 3.1-beta1
     """
@@ -33,6 +34,7 @@ def addBrowserLayer(portal, out):
         qi.installProduct("plone.browserlayer", locked=True)
         out.append("Installed plone.browserlayer")
 
+
 def addCollectionAndStaticPortlets(portal, out):
     qi=getToolByName(portal, "portal_quickinstaller")
     if not qi.isProductInstalled("plone.portlet.static"):
@@ -41,6 +43,7 @@ def addCollectionAndStaticPortlets(portal, out):
     if not qi.isProductInstalled("plone.portlet.collection"):
         qi.installProduct("plone.portlet.collection", locked=True)
         out.append("Installed plone.portlet.collection")
+
 
 def migratePortletTypeRegistrations(portal, out):
     for name, portletType in getUtilitiesFor(IPortletType):
