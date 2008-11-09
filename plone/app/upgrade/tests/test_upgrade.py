@@ -14,6 +14,16 @@ class TestUpgrade(MigrationTest):
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
         self.failUnless(len(upgrades) == 0)
 
+    def testProfileVersion(self):
+        # The profile version for the base profile should be the same
+        # as the file system version and the instance version
+        setup = getToolByName(self.portal, 'portal_setup')
+
+        current = self.setup.getVersionForProfile(_DEFAULT_PROFILE)
+        current = tuple(current.split('.'))
+        last = self.setup.getLastVersionForProfile(_DEFAULT_PROFILE)
+        self.failUnless(last == current)
+
     def testDoUpgrades(self):
         self.setRoles(['Manager'])
 
