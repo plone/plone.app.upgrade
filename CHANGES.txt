@@ -4,5 +4,8 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Removed safeGetMemberDataTool method, which wasn't used anywhere.
+  [hannosch]
+
 - Initial implementation.
   [hannosch]
