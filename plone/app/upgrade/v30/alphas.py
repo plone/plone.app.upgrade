@@ -1,5 +1,4 @@
 import os
-from StringIO import StringIO
 
 from five.localsitemanager import find_next_sitemanager
 from five.localsitemanager import make_objectmanager_site
@@ -480,16 +479,15 @@ def updatePASPlugins(context):
     from Products.PlonePAS.Extensions.Install import activatePluginInterfaces
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    sout=StringIO()
 
-    activatePluginInterfaces(portal, 'mutable_properties', sout)
-    activatePluginInterfaces(portal, 'source_users', sout)
-    activatePluginInterfaces(portal, 'credentials_cookie_auth', sout,
+    activatePluginInterfaces(portal, 'mutable_properties')
+    activatePluginInterfaces(portal, 'source_users')
+    activatePluginInterfaces(portal, 'credentials_cookie_auth',
             disable=['ICredentialsResetPlugin', 'ICredentialsUpdatePlugin'])
     if not portal.acl_users.objectIds(['Plone Session Plugin']):
         from plone.session.plugins.session import manage_addSessionPlugin
         manage_addSessionPlugin(portal.acl_users, 'session')
-        activatePluginInterfaces(portal, "session", sout)
+        activatePluginInterfaces(portal, "session")
         logger.info("Added Plone Session Plugin.")
 
 

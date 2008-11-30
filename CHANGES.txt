@@ -4,6 +4,9 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Updated method calls to PlonePAS. They lost the out argument.
+  [hannosch]
+
 - Adjusted legacy portlet conversion tests to new members folder approach.
   [hannosch]
 
