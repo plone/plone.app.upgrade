@@ -673,9 +673,7 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
                    continue
                 path = st.getSkinPath(s)
                 path = [p.strip() for p in  path.split(',')]
-                self.assert_('plone_kss' in path)
                 self.assert_('archetypes_kss' in path)
-            self.assert_(hasattr(aq_base(st), 'plone_kss'))
             self.assert_(hasattr(aq_base(st), 'archetypes_kss'))
 
 

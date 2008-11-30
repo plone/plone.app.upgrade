@@ -1,8 +1,10 @@
 import os
 from StringIO import StringIO
 
+from five.localsitemanager import find_next_sitemanager
 from five.localsitemanager import make_objectmanager_site
 from five.localsitemanager.registry import FiveVerifyingAdapterLookup
+from five.localsitemanager.registry import PersistentComponents
 from plone.app.portlets.utils import convert_legacy_portlets
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import ILocalPortletAssignmentManager
@@ -11,6 +13,8 @@ from zope.app.component.interfaces import ISite
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
 from zope.component import getUtility
+from zope.component.globalregistry import base
+from zope.component.interfaces import ComponentLookupError
 
 from Acquisition import aq_base
 from Globals import package_home
@@ -186,8 +190,6 @@ class installKss(object):
     def install_skins(self):
         st = getToolByName(self.context, 'portal_skins')
         skins = ['Plone Default', 'Plone Tableless']
-        if not hasattr(aq_base(st), 'plone_kss'):
-            createDirectoryView(st, 'CMFPlone/skins/plone_kss')
         if not hasattr(aq_base(st), 'archetypes_kss'):
             createDirectoryView(st, 'Archetypes/skins/archetypes_kss')
         selections = st._getSelections()
@@ -197,9 +199,6 @@ class installKss(object):
             path = st.getSkinPath(s)
             path = [p.strip() for p in  path.split(',')]
             path_changed = False
-            if not 'plone_kss' in path:
-                path.append('plone_kss')
-                path_changed = True
             if not 'archetypes_kss' in path:
                 path.append('archetypes_kss')
                 path_changed = True
@@ -219,13 +218,26 @@ def enableZope3Site(context):
     if not ISite.providedBy(portal):
         make_objectmanager_site(portal)
         logger.info('Made the portal a Zope3 site.')
+
+    try:
+        components = portal.getSiteManager()
+    except ComponentLookupError:
+        next = find_next_sitemanager(portal)
+        if next is None:
+            next = base
+        name = '/'.join(portal.getPhysicalPath())
+        components = PersistentComponents(name, (next,))
+        components.__parent__ = portal
+        portal.setSiteManager(components)
+        logger.info("Site manager '%s' added." % name)
     else:
-        sm = portal.getSiteManager()
-        if sm.utilities.LookupClass  != FiveVerifyingAdapterLookup:
-            sm.utilities.LookupClass = FiveVerifyingAdapterLookup
-            sm.utilities._createLookup()
-            sm.utilities.__parent__ = aq_base(sm)
-            sm.__parent__ = aq_base(portal)
+        if components.utilities.LookupClass != FiveVerifyingAdapterLookup:
+            # for CMF 2.1 beta instances
+            components.__parent__ = portal
+            components.utilities.LookupClass = FiveVerifyingAdapterLookup
+            components.utilities._createLookup()
+            components.utilities.__parent__ = components
+            logger.info('LookupClass replaced.')
 
 
 def migrateOldActions(context):

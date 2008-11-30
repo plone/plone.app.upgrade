@@ -4,6 +4,10 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Adjusted KSS installation tests to match fewer skin layers and adjusted
+  enableZope3Site function to match the new CMF21 upgrade step.
+  [hannosch]
+
 - Removed safeGetMemberDataTool method, which wasn't used anywhere.
   [hannosch]
 
