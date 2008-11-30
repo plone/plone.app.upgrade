@@ -4,6 +4,9 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Adjusted legacy portlet conversion tests to new members folder approach.
+  [hannosch]
+
 - Adjusted KSS installation tests to match fewer skin layers and adjusted
   enableZope3Site function to match the new CMF21 upgrade step.
   [hannosch]

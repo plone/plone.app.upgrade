@@ -355,10 +355,6 @@ class TestMigrations_v2_5_x(MigrationTest):
             self.assertEquals(1, len(rp))
             self.failUnless(isinstance(rp[0], portlets.login.Assignment))
 
-            members = self.portal.Members
-            portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-            self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
-
     def testLegacyPortletsConvertedNoSlots(self):
         self.setRoles(('Manager',))
         leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
@@ -389,11 +385,7 @@ class TestMigrations_v2_5_x(MigrationTest):
         
         rp = right.values()
         self.assertEquals(0, len(rp))
-        
-        members = self.portal.Members
-        portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
-        
+
     def testLegacyPortletsConvertedBadSlots(self):
         self.setRoles(('Manager',))
         leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
@@ -426,11 +418,7 @@ class TestMigrations_v2_5_x(MigrationTest):
         rp = right.values()
         self.assertEquals(1, len(rp))
         self.failUnless(isinstance(rp[0], portlets.login.Assignment))
-        
-        members = self.portal.Members
-        portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
-        
+
     def testLegacyPortletsConvertedNoMembersFolder(self):
         self.setRoles(('Manager',))
         leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
