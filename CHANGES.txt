@@ -4,6 +4,9 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Merge changeset 24257 from 3.2 branch migrations for 3.2 to 3.2.1
+  [calvinhp]
+
 - Fixed deprecation warnings for use of Globals.
   [hannosch]
 
