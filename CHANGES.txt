@@ -4,6 +4,9 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Fixed deprecation warnings for use of Globals.
+  [hannosch]
+
 - Specified package dependencies.
   [hannosch]
 

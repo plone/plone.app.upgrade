@@ -16,7 +16,7 @@ from zope.component.globalregistry import base
 from zope.component.interfaces import ComponentLookupError
 
 from Acquisition import aq_base
-from Globals import package_home
+from App.Common import package_home
 from Products.Archetypes.interfaces import IArchetypeTool
 from Products.Archetypes.interfaces import IReferenceCatalog
 from Products.Archetypes.interfaces import IUIDCatalog
