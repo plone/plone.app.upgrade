@@ -1,6 +1,5 @@
 from Products.CMFCore.utils import getToolByName
 
-from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
 
 

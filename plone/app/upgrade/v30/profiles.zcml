@@ -4,69 +4,6 @@
     i18n_domain="plone">
 
     <genericsetup:registerProfile
-        name="2.5.x-3.0a1"
-        title="Migration profile for Plone 2.5.x to Plone 3.0-alpha1"
-        description="This profile contains configuration changes that are applied during the Plone 2.5.x to Plone 3.0-alpha1 migration." 
-        directory="profiles/two5x_alpha1"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        name="3.0a1-3.0a2"
-        title="Migration profile for Plone 3.0-alpha1 to Plone 3.0-alpha2"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-alpha1 to 3.0-alpha2 migration." 
-        directory="profiles/alpha1_alpha2"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        name="3.0a2-3.0b1"
-        title="Migration profile for Plone 3.0-alpha2 to Plone 3.0-beta1"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-alpha2 to 3.0-beta1 migration." 
-        directory="profiles/alpha2_beta1"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        name="3.0b1-3.0b2"
-        title="Migration profile for Plone 3.0-beta1 to Plone 3.0-beta2"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-beta1 to 3.0-beta2 migration." 
-        directory="profiles/beta1_beta2"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        name="3.0b2-3.0b3"
-        title="Migration profile for Plone 3.0-beta2 to Plone 3.0-beta3"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-beta2 to 3.0-beta3 migration." 
-        directory="profiles/beta2_beta3"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        name="3.0b3-3.0b4"
-        title="Migration profile for Plone 3.0-beta3 to Plone 3.0-beta4"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-beta3 to 3.0-beta4 migration." 
-        directory="profiles/beta3_beta4"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        name="3.0rc2-3.0final"
-        title="Migration profile for Plone 3.0-rc2 to Plone 3.0-final"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-rc2 to 3.0-final migration." 
-        directory="profiles/rc2_final"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
         name="3.0final-3.0.1"
         title="Migration profile for Plone 3.0-final to Plone 3.0.1"
         description="This profile contains configuration changes that are applied during the Plone 3.0-final to 3.0.1 migration." 

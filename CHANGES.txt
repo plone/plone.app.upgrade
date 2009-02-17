@@ -4,6 +4,10 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Removed the migration code from 2.5 final to 3.0. We only support upgrading
+  from 3.0 final in this version.
+  [hannosch]
+
 - Merge changeset 24257 from 3.2 branch migrations for 3.2 to 3.2.1
   [calvinhp]
 
