@@ -12,13 +12,12 @@ from plone.app.upgrade.v31.betas import reinstallCMFPlacefulWorkflow
 class TestMigrations_v3_1(MigrationTest):
 
     def afterSetUp(self):
-        self.qi = self.portal.portal_quickinstaller
         self.wf = self.portal.portal_workflow
         self.ps = self.portal.portal_setup
 
     def testReinstallCMFPlacefulWorkflow(self):
         # first the product needs to be installed
-        self.qi.installProduct('CMFPlacefulWorkflow')
+        reinstallCMFPlacefulWorkflow(self.portal, [])
         # Delete existing logs to prevent race condition
         self.ps.manage_delObjects(self.ps.objectIds())
         # We remove the new marker, to ensure it's added on reinstall
@@ -26,14 +25,6 @@ class TestMigrations_v3_1(MigrationTest):
             noLongerProvides(self.wf, IPlacefulMarker)
         reinstallCMFPlacefulWorkflow(self.portal, [])
         self.failUnless(IPlacefulMarker.providedBy(self.wf))
-
-    def testReinstallCMFPlacefulWorkflowDoesNotInstall(self):
-        reinstallCMFPlacefulWorkflow(self.portal, [])
-        self.failIf(self.qi.isProductInstalled('CMFPlacefulWorkflow'))
-
-    def testReinstallCMFPlacefulWorkflowNoTool(self):
-        self.portal._delObject('portal_quickinstaller')
-        reinstallCMFPlacefulWorkflow(self.portal, [])
 
     def testReplaceLocalRoleManager(self):
         # first we replace the local role manager with the one from PlonePAS

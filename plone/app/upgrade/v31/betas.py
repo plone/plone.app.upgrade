@@ -18,7 +18,6 @@ def three0_beta1(portal):
 
     loadMigrationProfile(portal, 'profile-plone.app.upgrade.v31:3.0.6-3.1beta1')
 
-    addBrowserLayer(portal, out)
     addCollectionAndStaticPortlets(portal, out)
     migratePortletTypeRegistrations(portal, out)
     removeDoubleGenericSetupSteps(portal, out)
@@ -28,21 +27,12 @@ def three0_beta1(portal):
     return out
 
 
-def addBrowserLayer(portal, out):
-    qi=getToolByName(portal, "portal_quickinstaller")
-    if not qi.isProductInstalled("plone.browserlayer"):
-        qi.installProduct("plone.browserlayer", locked=True)
-        out.append("Installed plone.browserlayer")
-
-
 def addCollectionAndStaticPortlets(portal, out):
-    qi=getToolByName(portal, "portal_quickinstaller")
-    if not qi.isProductInstalled("plone.portlet.static"):
-        qi.installProduct("plone.portlet.static", locked=True)
-        out.append("Installed plone.portlet.static")
-    if not qi.isProductInstalled("plone.portlet.collection"):
-        qi.installProduct("plone.portlet.collection", locked=True)
-        out.append("Installed plone.portlet.collection")
+    setup = getToolByName(portal, 'portal_setup')
+    setup.runAllImportStepsFromProfile('profile-plone.portlet.static:default')
+    out.append("Installed plone.portlet.static")
+    setup.runAllImportStepsFromProfile('profile-plone.portlet.collection:default')
+    out.append("Installed plone.portlet.collection")
 
 
 def migratePortletTypeRegistrations(portal, out):
@@ -79,9 +69,6 @@ def removeDoubleGenericSetupSteps(portal, out):
                 " ".join(steps))
 
 def reinstallCMFPlacefulWorkflow(portal, out):
-    qi = getToolByName(portal, 'portal_quickinstaller', None)
-    if qi is not None:
-        installed = qi.isProductInstalled('CMFPlacefulWorkflow')
-        if installed:
-            qi.reinstallProducts(['CMFPlacefulWorkflow'])
-            out.append('Reinstalled CMFPlacefulWorkflow')
+    setup = getToolByName(portal, 'portal_setup')
+    setup.runAllImportStepsFromProfile('profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow')
+    out.append('Reinstalled CMFPlacefulWorkflow')

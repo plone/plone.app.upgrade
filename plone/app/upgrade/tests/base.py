@@ -76,12 +76,6 @@ class MigrationTest(PloneTestCase.PloneTestCase):
         if tool.hasProperty(property_id):
             tool.manage_delProperties([property_id])
 
-    def uninstallProduct(self, product_name):
-        # Removes a product
-        tool = getToolByName(self.portal, 'portal_quickinstaller')
-        if tool.isProductInstalled(product_name):
-            tool.uninstallProducts([product_name])
-
     def addSkinLayer(self, layer, skin='Plone Default', pos=None):
         # Adds a skin layer at pos. If pos is None, the layer is appended
         skins = getToolByName(self.portal, 'portal_skins')

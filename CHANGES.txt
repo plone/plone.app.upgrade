@@ -4,6 +4,9 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Updated code to no longer rely on quick installer.
+  [hannosch]
+
 - Removed the migration code from 2.5 final to 3.0. We only support upgrading
   from 3.0 final in this version.
   [hannosch]
