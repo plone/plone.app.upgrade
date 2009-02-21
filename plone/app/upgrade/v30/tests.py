@@ -7,7 +7,6 @@ class TestMigrations_v3_0(MigrationTest):
 
     def afterSetUp(self):
         self.actions = self.portal.portal_actions
-        self.icons = self.portal.portal_actionicons
         self.skins = self.portal.portal_skins
         self.types = self.portal.portal_types
         self.workflow = self.portal.portal_workflow
