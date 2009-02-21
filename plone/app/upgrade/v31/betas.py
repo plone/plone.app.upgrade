@@ -1,14 +1,13 @@
+from borg.localrole.utils import replace_local_role_manager
+from plone.portlets.interfaces import IPortletType
 from zope.component import getUtilitiesFor
 from zope.interface import Interface
 
-from plone.portlets.interfaces import IPortletType
-
 from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.utils import loadMigrationProfile
 from Products.GenericSetup.browser.manage import ImportStepsView
 from Products.GenericSetup.browser.manage import ExportStepsView
 
-from Products.CMFPlone.setuphandlers import replace_local_role_manager
+from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def three0_beta1(portal):

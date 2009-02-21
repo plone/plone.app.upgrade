@@ -4,6 +4,9 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Import the `replace_local_role_manager` method from borg.localrole.
+  [hannosch]
+
 - Cleaned up unused test helper methods. Use standard interface to register
   the upgrade profiles for.
   [hannosch]
