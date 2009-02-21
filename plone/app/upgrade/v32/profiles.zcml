@@ -8,7 +8,7 @@
       title="Migration profile for Plone 3.2a1 to Plone 3.2a2 with Iterate"
       description="This profile contains configuration changes that are applied during the Plone 3.2a1 to 3.2a2 migration when Iterate is installed."
       directory="profiles/three1_beta1_iterate"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 

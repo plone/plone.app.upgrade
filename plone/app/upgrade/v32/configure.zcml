@@ -26,7 +26,7 @@
       title="Migration profile for Plone 3.2 to Plone 3.2.1"
       description="This profile contains configuration changes that are applied during the Plone 3.2 to 3.2.1 migration."
       directory="v3_2/profiles/three2_three21"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 

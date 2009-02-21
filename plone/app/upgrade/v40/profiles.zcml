@@ -8,7 +8,7 @@
         title="Migration profile for Plone 3.x to Plone 4.0alpha1"
         description="This profile contains configuration changes that are applied during the Plone 3.x to 4.0alpha1 migration." 
         directory="profiles/to_alpha1"
-        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        for="Products.CMFCore.interfaces.ISiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 

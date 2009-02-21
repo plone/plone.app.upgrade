@@ -4,6 +4,10 @@ Changelog
 0.1 - unreleased
 ----------------
 
+- Cleaned up unused test helper methods. Use standard interface to register
+  the upgrade profiles for.
+  [hannosch]
+
 - Removed any reference to CMFActionIcons.
   [hannosch]
 

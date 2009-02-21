@@ -1,7 +1,8 @@
-from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.tests.base import MigrationTest
+
+_DEFAULT_PROFILE = 'Products.CMFPlone:plone'
 
 
 class TestUpgrade(MigrationTest):
