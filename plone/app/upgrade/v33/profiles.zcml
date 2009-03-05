@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone">
+
+  <genericsetup:registerProfile
+      name="3.2.1-3.3a1"
+      title="Migration profile for Plone 3.2.1 to Plone 3.3a1"
+      description="This profile adds default link and lock settings for Plone 3.3"
+      directory="profiles/three2_three3"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>

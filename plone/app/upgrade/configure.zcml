@@ -5,6 +5,7 @@
     <include package=".v30" />
     <include package=".v31" />
     <include package=".v32" />
+    <include package=".v33" />
     <include package=".v40" />
 
 </configure>
