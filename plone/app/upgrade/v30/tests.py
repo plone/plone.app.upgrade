@@ -1,3 +1,5 @@
+from Products.CMFCore.utils import getToolByName
+
 from plone.app.upgrade.tests.base import MigrationTest
 
 from plone.app.upgrade.v30.final_three0x import installNewModifiers
@@ -10,7 +12,7 @@ class TestMigrations_v3_0(MigrationTest):
         self.skins = self.portal.portal_skins
         self.types = self.portal.portal_types
         self.workflow = self.portal.portal_workflow
-        self.properties = self.portal.portal_properties
+        self.properties = getToolByName(self.portal, 'portal_properties')
 
     def testInstallNewModifiers(self):
         # ensure the new modifiers are installed

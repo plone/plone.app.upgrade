@@ -1,3 +1,5 @@
+from Products.CMFCore.utils import getToolByName
+
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v33 import three2_three3
 
@@ -5,7 +7,7 @@ class TestMigrations_v3_3(MigrationTest):
 
     def afterSetUp(self):
         self.types = self.portal.portal_types
-        self.properties = self.portal.portal_properties
+        self.properties = getToolByName(self.portal, 'portal_properties')
     
     def _upgrade(self):
         three2_three3(self.portal)
