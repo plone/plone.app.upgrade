@@ -13,4 +13,12 @@
         handler="plone.app.upgrade.v33.three2_three3"
         />
 
+    <genericsetup:upgradeStep
+        source="3.3rc3"
+        destination="3.3"
+        title="Modify actions to work with the new INavigationRoot"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.v33.three3_rc3_three3_rc4"
+        />
+
 </configure>

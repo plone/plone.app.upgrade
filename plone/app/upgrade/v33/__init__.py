@@ -7,6 +7,9 @@ def three2_three3(portal):
     loadMigrationProfile(portal, 'profile-plone.app.upgrade.v33:3.2.1-3.3a1')
     maybeUpdateLinkView(portal)
 
+def three3_rc3_three3_rc4(portal):
+    loadMigrationProfile(portal,'profile-plone.app.upgrade.v33:3.3rc3-3.3')
+
 def maybeUpdateLinkView(portal):
     ttool = getToolByName(portal, 'portal_types')
     link_fti = ttool.Link
