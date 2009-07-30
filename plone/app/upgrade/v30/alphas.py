@@ -6,7 +6,7 @@ from plone.app.portlets.utils import convert_legacy_portlets
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import ILocalPortletAssignmentManager
 from plone.portlets.constants import CONTEXT_CATEGORY as CONTEXT_PORTLETS
-from zope.app.component.interfaces import ISite
+from zope.location.interfaces import ISite
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
 from zope.component import getUtility
