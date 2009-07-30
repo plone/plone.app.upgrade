@@ -1,3 +1,8 @@
+from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
+from zope.component import getSiteManager
+from zope.ramcache.interfaces.ram import IRAMCache
+from zope.ramcache.ram import RAMCache
+
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.utils import logger
@@ -44,3 +49,10 @@ def migrateActionIcons(portal):
                     action.icon_expr = '%s%s' % (prefix, expr)
                 # Remove the action icon
                 aitool.removeActionIcon(cat, ident)
+
+def addOrReplaceRamCache(portal):
+    sm = getSiteManager(context=portal)
+    sm.unregisterUtility(provided=OldIRAMCache)
+    sm.unregisterUtility(provided=IRAMCache)
+    sm.registerUtility(factory=RAMCache, provided=IRAMCache)
+    logger.info('Installed local RAM cache utility.')

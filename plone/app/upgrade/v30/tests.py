@@ -13,12 +13,11 @@ from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import ILocalPortletAssignmentManager
 from plone.portlets.constants import CONTEXT_CATEGORY as CONTEXT_PORTLETS
 
-from zope.app.cache.interfaces.ram import IRAMCache
 from zope.app.component.hooks import clearSite
 from zope.app.component.interfaces import ISite
 from zope.component import getGlobalSiteManager
 from zope.component import getSiteManager
-from zope.component import getUtility, getMultiAdapter, queryUtility
+from zope.component import getUtility, getMultiAdapter
 
 from Products.Archetypes.interfaces import IArchetypeTool
 from Products.Archetypes.interfaces import IReferenceCatalog
@@ -111,7 +110,6 @@ from plone.app.upgrade.v30.betas import addEditorToSecondaryEditorPermissions
 from plone.app.upgrade.v30.betas import updateEditActionConditionForLocking
 from plone.app.upgrade.v30.betas import addOnFormUnloadJS
 
-from plone.app.upgrade.v30.betas import beta3_rc1
 from plone.app.upgrade.v30.betas import modifyKSSResourcesForDevelMode
 from plone.app.upgrade.v30.betas import updateTopicTitle
 from plone.app.upgrade.v30.betas import cleanupActionProviders
@@ -859,14 +857,13 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             self.failUnless('object_provides' in catalog.indexes())
 
     def testMigratePloneTool(self):
-        from Products.CMFPlone import ToolNames
         tool = self.portal.plone_utils
         tool.meta_type = 'PlonePAS Utilities Tool'
         # Test it twice
         for i in range(2):
             restorePloneTool(self.portal)
             tool = self.portal.plone_utils
-            self.assertEquals(ToolNames.UtilsTool, tool.meta_type)
+            self.assertEquals('Plone Utility Tool', tool.meta_type)
 
     def testInstallPloneLanguageTool(self):
         CMFSite.manage_delObjects(self.portal, ['portal_languages'])
@@ -1164,15 +1161,6 @@ class TestMigrations_v3_0(MigrationTest):
             addOnFormUnloadJS(self.portal)
             script_ids = jsreg.getResourceIds()
             self.failUnless('unlockOnFormUnload.js' in script_ids)
-
-    def testAddRAMCache(self):
-        sm = getSiteManager()
-        sm.unregisterUtility(provided=IRAMCache)
-        util = queryUtility(IRAMCache)
-        self.failUnless(util.maxAge == 86400)
-        beta3_rc1(self.portal)
-        util = queryUtility(IRAMCache)
-        self.failUnless(util.maxAge == 3600)
 
     def testUpdateTopicTitle(self):
         topic = self.types.get('Topic')

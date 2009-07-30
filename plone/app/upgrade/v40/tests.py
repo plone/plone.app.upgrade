@@ -1,3 +1,6 @@
+from zope.component import getSiteManager, queryUtility
+from zope.ramcache.interfaces.ram import IRAMCache
+
 from Products.CMFCore.ActionInformation import Action
 from Products.CMFCore.utils import getToolByName
 
@@ -6,7 +9,7 @@ from plone.app.upgrade.tests.base import MigrationTest
 
 from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
 from plone.app.upgrade.v40.alphas import migrateActionIcons
-
+from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
@@ -79,6 +82,30 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.content_icon, "document_icon.png")
 
+    def testAddRAMCache(self):
+        # Test it twice
+        for i in range(2):
+            sm = getSiteManager()
+            sm.unregisterUtility(provided=IRAMCache)
+            util = queryUtility(IRAMCache)
+            self.failUnless(util.maxAge == 86400)
+            addOrReplaceRamCache(self.portal)
+            util = queryUtility(IRAMCache)
+            self.failUnless(util.maxAge == 3600)
+
+    def testReplaceOldRamCache(self):
+        sm = getSiteManager()
+        
+        # Test it twice
+        for i in range(2):
+            sm.unregisterUtility(provided=IRAMCache)
+            from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
+            from zope.app.cache.ram import RAMCache as OldRAMCache
+            sm.registerUtility(factory=OldRAMCache, provided=OldIRAMCache)
+
+            addOrReplaceRamCache(self.portal)
+            util = queryUtility(IRAMCache)
+            self.failUnless(util.maxAge == 3600)
 
 def test_suite():
     from unittest import TestSuite, makeSuite

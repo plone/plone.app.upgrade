@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added migration to make sure we're using an IRAMCache utility from
+  zope.ramcache instead of zope.app.cache
+  [davisagli]
+
 - Merged changeset 27805 from 3.3 branch migrations for 3.3rc3 to
   3.3rc4 (fix cooked expressions in css registry).
   [maurits]  
