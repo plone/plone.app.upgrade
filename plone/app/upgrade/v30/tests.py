@@ -60,7 +60,6 @@ from Products.CMFEditions.interfaces import IStorageTool
 from Products.CMFFormController.interfaces import IFormControllerTool
 from Products.CMFQuickInstallerTool.interfaces import IQuickInstallerTool
 from Products.CMFPlone.interfaces import IFactoryTool
-from Products.CMFPlone.interfaces import IMigrationTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import ITranslationServiceTool
@@ -470,7 +469,7 @@ class TestMigrations_v2_5_x(MigrationTest):
     def testRegisterToolsAsUtilities(self):
         sm = getSiteManager(self.portal)
         interfaces = (ISiteRoot, IPloneSiteRoot,
-                      IMigrationTool, IActionIconsTool, ISyndicationTool,
+                      IActionIconsTool, ISyndicationTool,
                       IMetadataTool, IPropertiesTool, IUndoTool, IMailHost,
                       IUniqueIdAnnotationManagement, IUniqueIdGenerator,
                       IDiffTool, IATCTTool, IMimetypesRegistryTool,
@@ -889,7 +888,7 @@ class TestMigrations_v3_0(MigrationTest):
         self.skins = self.portal.portal_skins
         self.types = self.portal.portal_types
         self.workflow = self.portal.portal_workflow
-        self.properties = self.portal.portal_properties
+        self.properties = getToolByName(self.portal, 'portal_properties')
 
     def testAddContentRulesAction(self):
         self.portal.portal_actions.object._delObject('contentrules')

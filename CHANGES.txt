@@ -4,5 +4,31 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Merged changeset 27805 from 3.3 branch migrations for 3.3rc3 to
+  3.3rc4 (fix cooked expressions in css registry).
+  [maurits]  
+
+- Added the z3c.autoinclude entry point so this package is automatically loaded
+  on Plone 3.3 and above.
+  [hannosch]
+
+- Import the `replace_local_role_manager` method from borg.localrole.
+  [hannosch]
+
+- Merge changeset 24257 from 3.2 branch migrations for 3.2 to 3.2.1
+  [calvinhp]
+
+- Fixed deprecation warnings for use of Globals.
+  [hannosch]
+
+- Specified package dependencies.
+  [hannosch]
+
+- Updated method calls to PlonePAS. They lost the out argument.
+  [hannosch]
+
+- Removed safeGetMemberDataTool method, which wasn't used anywhere.
+  [hannosch]
+
 - Initial implementation.
   [hannosch]

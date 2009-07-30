@@ -6,19 +6,19 @@
     <include file="profiles.zcml" />
 
     <genericsetup:upgradeStep
-        source="3.1.7"
-        destination="3.2a1"
-        title="Empty upgrade step"
+        source="3.2.1"
+        destination="3.3a1"
+        title="Add link and lock settings for Plone 3.3"
         profile="Products.CMFPlone:plone"
-        handler="plone.app.upgrade.utils.null_upgrade_step"
+        handler="plone.app.upgrade.v33.three2_three3"
         />
 
     <genericsetup:upgradeStep
-        source="3.2a1"
-        destination="3.2b1"
-        title="Empty upgrade step"
+        source="3.3rc3"
+        destination="3.3"
+        title="Modify actions to work with the new INavigationRoot"
         profile="Products.CMFPlone:plone"
-        handler=".betas.three1_beta1"
+        handler="plone.app.upgrade.v33.three3_rc3_three3_rc4"
         />
 
 </configure>

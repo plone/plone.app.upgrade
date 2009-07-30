@@ -1,14 +1,14 @@
+from borg.localrole.utils import replace_local_role_manager
+from plone.portlets.interfaces import IPortletType
 from zope.component import getUtilitiesFor
 from zope.interface import Interface
 
-from plone.portlets.interfaces import IPortletType
-
 from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.utils import loadMigrationProfile
 from Products.GenericSetup.browser.manage import ImportStepsView
 from Products.GenericSetup.browser.manage import ExportStepsView
 
-from Products.CMFPlone.setuphandlers import replace_local_role_manager
+from plone.app.upgrade.utils import loadMigrationProfile
+
 
 def three0_beta1(portal):
     """3.0.6 -> 3.1-beta1
@@ -33,6 +33,7 @@ def addBrowserLayer(portal, out):
         qi.installProduct("plone.browserlayer", locked=True)
         out.append("Installed plone.browserlayer")
 
+
 def addCollectionAndStaticPortlets(portal, out):
     qi=getToolByName(portal, "portal_quickinstaller")
     if not qi.isProductInstalled("plone.portlet.static"):
@@ -41,6 +42,7 @@ def addCollectionAndStaticPortlets(portal, out):
     if not qi.isProductInstalled("plone.portlet.collection"):
         qi.installProduct("plone.portlet.collection", locked=True)
         out.append("Installed plone.portlet.collection")
+
 
 def migratePortletTypeRegistrations(portal, out):
     for name, portletType in getUtilitiesFor(IPortletType):
