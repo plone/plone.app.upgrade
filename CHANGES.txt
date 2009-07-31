@@ -31,6 +31,9 @@ Changelog
 - Updated method calls to PlonePAS. They lost the out argument.
   [hannosch]
 
+- Adjusted enableZope3Site function to match the new CMF21 upgrade step.
+  [hannosch]
+
 - Removed safeGetMemberDataTool method, which wasn't used anywhere.
   [hannosch]
 
