@@ -113,6 +113,11 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
+            title="Remove empty default_charset from portal"
+            handler=".betas.cleanDefaultCharset"
+            />
+
+        <genericsetup:upgradeStep
             title="General required migration steps"
             handler=".alphas.alpha2_beta1"
             />
@@ -187,11 +192,6 @@
         <genericsetup:upgradeStep
             title="Remove old no longer used actions"
             handler=".betas.cleanupOldActions"
-            />
-
-        <genericsetup:upgradeStep
-            title="Remove empty default_charset from portal"
-            handler=".betas.cleanDefaultCharset"
             />
 
         <genericsetup:upgradeStep
