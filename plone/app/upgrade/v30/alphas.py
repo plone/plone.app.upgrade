@@ -605,11 +605,15 @@ def addMissingWorkflows(context):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = wfdc.parseWorkflowXML(body, encoding)
 
         _initDCWorkflow( wf
                        , title
                        , description
+                       , manager_bypass
+                       , creation_guard
                        , state_variable
                        , initial_state
                        , states

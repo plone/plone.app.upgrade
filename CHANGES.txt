@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Adjusted the addMissingWorkflows action to reflect additional variables
+  returned by the WorkflowDefinitionConfigurator in current DCWorkflow.
+  [davisagli]
+
 - Moved the cleanDefaultCharset action to the 3.0a2-3.0b1 migration; it is a
   prerequisite for that step's properties.xml import.
   [davisagli]
