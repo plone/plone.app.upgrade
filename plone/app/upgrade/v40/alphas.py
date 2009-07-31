@@ -46,7 +46,7 @@ def migrateActionIcons(portal):
                     if not ':' in expr and cat in _KNOWN_ACTION_ICONS.keys():
                         if ident in _KNOWN_ACTION_ICONS[cat]:
                             prefix = 'string:$portal_url/'
-                    action.icon_expr = '%s%s' % (prefix, expr)
+                    action._setPropValue('icon_expr', '%s%s' % (prefix, expr))
                 # Remove the action icon
                 aitool.removeActionIcon(cat, ident)
 

@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Corrected the migrateActionIcons function to use the correct API for setting
+  the new icon_expr, so that the icon_expr_object also gets set correctly.
+  [davisagli]
+
 - Adjusted the addMissingWorkflows action to reflect additional variables
   returned by the WorkflowDefinitionConfigurator in current DCWorkflow.
   [davisagli]
