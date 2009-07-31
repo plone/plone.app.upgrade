@@ -246,7 +246,8 @@ def enableZope3Site(context):
 
 def migrateOldActions(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    special_providers = ['portal_types',
+    special_providers = ['portal_controlpanel',
+                         'portal_types',
                          'portal_workflow']
     # We don't need to operate on the providers that are still valid and
     # should ignore the control panel as well

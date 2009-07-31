@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Re-add portal_controlpanel to the list of special action providers for the
+  migrateOldActions function.
+  [davisagli]
+
 - Corrected the migrateActionIcons function to use the correct API for setting
   the new icon_expr, so that the icon_expr_object also gets set correctly.
   [davisagli]
