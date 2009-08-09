@@ -8,4 +8,6 @@
            class="Products.PlonePAS.tools.memberdata.MemberDataTool"/>
  <required tool_id="portal_membership"
            class="Products.PlonePAS.tools.membership.MembershipTool"/>
+ <required tool_id="portal_diff"
+           class="Products.CMFDiffTool.CMFDiffTool.CMFDiffTool"/>
 </tool-setup>

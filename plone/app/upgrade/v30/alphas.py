@@ -93,7 +93,6 @@ def three0_alpha1(context):
     upgradeATCTTool(portal, [])
 
     # Install CMFEditions and CMFDiffTool
-    installProduct('CMFDiffTool', portal, hidden=True)
     installProduct('CMFEditions', portal, hidden=True)
 
 

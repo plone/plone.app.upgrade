@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Adjust migration for installing CMFDiffTool to reflect the fact that this is
+  now configured in CMFPlone.
+  [davisagli]
+
 - Re-add portal_controlpanel to the list of special action providers for the
   migrateOldActions function.
   [davisagli]

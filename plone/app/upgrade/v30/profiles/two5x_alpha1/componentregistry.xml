@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<componentregistry>
+ <utilities>
+  <utility
+     interface="Products.CMFDiffTool.interfaces.IDiffTool"
+     object="portal_diff"/>
+ </utilities>
+</componentregistry>
