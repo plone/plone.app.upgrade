@@ -18,6 +18,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
     def afterSetUp(self):
         self.atool = getToolByName(self.portal, 'portal_actions')
         self.aitool = getToolByName(self.portal, 'portal_actionicons')
+        self.cptool = getToolByName(self.portal, 'portal_controlpanel')
 
     def testProfile(self):
         # This tests the whole migration profile can be loaded
@@ -75,6 +76,38 @@ class TestMigrations_v4_0alpha1(MigrationTest):
                              'string:$portal_url/test.gif')
             self.assertEqual(object_buttons.test2_id.icon_expr,
                              'python:context.getIcon()')
+
+    def testMigrateControlPanelActionIcons(self):
+        _KNOWN_ACTION_ICONS['controlpanel'].extend(['test_id'])
+        self.aitool.addActionIcon(
+            category='controlpanel',
+            action_id='test_id',
+            icon_expr='test.gif',
+            title='Test my icon',
+            )
+        
+        self.cptool.registerConfiglet(
+            id='test_id',
+            name='Test Configlet',
+            action='string:${portal_url}/test',
+            permission='Manage portal',
+            category='Plone',
+            visible=True,
+            appId='',
+            icon_expr=''
+            )
+
+        action = self.cptool.getActionObject('Plone/test_id')
+        self.assertEqual(action.getIconExpression(), '')
+        self.assertEqual(self.aitool.getActionIcon('controlpanel', 'test_id'),
+                         'test.gif')
+        # Test it twice
+        for i in range(2):
+            migrateActionIcons(self.portal)
+            icons = [ic.getActionId() for ic in self.aitool.listActionIcons()]
+            self.failIf('test_id' in icons)
+            self.assertEqual(action.getIconExpression(),
+                             'string:$portal_url/test.gif')
 
     def testPngContentIcons(self):
         tt = getToolByName(self.portal, "portal_types")

@@ -90,6 +90,7 @@ from plone.app.upgrade.v30.alphas import addReaderAndEditorRoles
 from plone.app.upgrade.v30.alphas import migrateLocalroleForm
 from plone.app.upgrade.v30.alphas import reorderUserActions
 from plone.app.upgrade.v30.alphas import updatePASPlugins
+from plone.app.upgrade.v30.alphas import updateConfigletTitles
 from plone.app.upgrade.v30.alphas import updateKukitJS
 from plone.app.upgrade.v30.alphas import addCacheForResourceRegistry
 from plone.app.upgrade.v30.alphas import removeTablelessSkin
@@ -684,6 +685,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         self.actions = self.portal.portal_actions
         self.icons = self.portal.portal_actionicons
         self.properties = self.portal.portal_properties
+        self.cp = self.portal.portal_controlpanel
 
     def testAddVariousProperties(self):
         PROPERTIES = ('enable_link_integrity_checks', 'enable_sitemap',
@@ -821,6 +823,23 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             except KeyError:
                 # Ignore unregistered interface types 
                 pass
+
+    def testUpdateConfigletTitles(self):
+        collection = self.cp.getActionObject('Plone/portal_atct')
+        language = self.cp.getActionObject('Plone/PloneLanguageTool')
+        navigation = self.cp.getActionObject('Plone/NavigationSettings')
+        types = self.cp.getActionObject('Plone/TypesSettings')
+        users = self.cp.getActionObject('Plone/UsersGroups')
+        users2 = self.cp.getActionObject('Plone/UsersGroups2')
+        # test it twice
+        for i in range(2):
+            updateConfigletTitles(self.portal)
+            self.assertEquals(collection.title, 'Collection')
+            self.assertEquals(language.title, 'Language')
+            self.assertEquals(navigation.title, 'Navigation')
+            self.assertEquals(types.title, 'Types')
+            self.assertEquals(users.title, 'Users and Groups')
+            self.assertEquals(users2.title, 'Users and Groups')
 
     def testAddCacheForResourceRegistry(self):
         ram_cache_id = 'ResourceRegistryCache'

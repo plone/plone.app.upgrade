@@ -13,6 +13,15 @@ _KNOWN_ACTION_ICONS = {
     'plone' : ['sendto', 'print', 'rss', 'extedit', 'full_screen'],
     'object_buttons' : ['cut', 'copy', 'paste', 'delete'],
     'folder_buttons' : ['cut', 'copy', 'paste', 'delete'],
+    'controlpanel': ['QuickInstaller', 'portal_atct', 'MailHost',
+                       'UsersGroups', 'MemberPrefs', 'PortalSkin',
+                       'MemberPassword', 'ZMI', 'SecuritySettings',
+                       'NavigationSettings', 'SearchSettings',
+                       'errorLog', 'kupu', 'PloneReconfig',
+                       'CalendarSettings', 'TypesSettings', 
+                       'PloneLanguageTool', 'CalendarSettings',
+                       'HtmlFilter', 'Maintenance', 'UsersGroups2',
+                       'versioning', 'placefulworkflow'],
 }
 
 def threeX_alpha1(context):
@@ -26,9 +35,10 @@ def threeX_alpha1(context):
 
 def migrateActionIcons(portal):
     atool = getToolByName(portal, 'portal_actions', None)
+    cptool = getToolByName(portal, 'portal_controlpanel', None)
     aitool = getToolByName(portal, 'portal_actionicons', None)
 
-    if atool is None or aitool is None:
+    if atool is None or cptool is None or aitool is None:
         return
 
     # Existing action categories
@@ -36,19 +46,32 @@ def migrateActionIcons(portal):
 
     for ic in aitool.listActionIcons():
         cat = ic.getCategory()
+        ident = ic.getActionId()
+        expr = ic.getExpression()
+        prefix = ''
+        
+        if cat not in _KNOWN_ACTION_ICONS.keys() or ident not in _KNOWN_ACTION_ICONS[cat]:
+            continue
+        
+        prefix = ''
+        if ':' not in expr:
+            prefix = 'string:$portal_url/'
+
         if cat in categories:
-            ident = ic.getActionId()
-            expr = ic.getExpression()
+            # actions tool
             action = atool[cat].get(ident)
             if action is not None:
                 if not action.icon_expr:
-                    prefix = ''
-                    if not ':' in expr and cat in _KNOWN_ACTION_ICONS.keys():
-                        if ident in _KNOWN_ACTION_ICONS[cat]:
-                            prefix = 'string:$portal_url/'
                     action._setPropValue('icon_expr', '%s%s' % (prefix, expr))
-                # Remove the action icon
-                aitool.removeActionIcon(cat, ident)
+        elif cat == 'controlpanel':
+            # control panel tool
+            action_infos = [a for a in cptool.listActions() if a.getId() == ident]
+            if len(action_infos):
+                if not action_infos[0].getIconExpression():
+                    action_infos[0].setIconExpression('%s%s' % (prefix, expr))
+
+        # Remove the action icon
+        aitool.removeActionIcon(cat, ident)
 
 def addOrReplaceRamCache(portal):
     sm = getSiteManager(context=portal)

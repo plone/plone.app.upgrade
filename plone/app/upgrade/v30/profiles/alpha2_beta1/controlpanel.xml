@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel" 
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="plone">
+  <configlet title="Maintenance" action_id="Maintenance"
+     appId="Plone" category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@maintenance-controlpanel"
+     icon_expr="string:${portal_url}/maintenance_icon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Manage portal</permission>
+  </configlet>
+  <configlet title="Themes" action_id="PortalSkin" appId="PortalSkin"
+     category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@skins-controlpanel"
+     icon_expr="string:${portal_url}/skins_icon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Manage portal</permission>
+  </configlet>
+  <configlet title="Site" action_id="PloneReconfig" appId="Plone"
+     category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@site-controlpanel"
+     icon_expr="string:${portal_url}/logoIcon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Manage portal</permission>
+  </configlet>
+  <configlet title="HTML Filtering" action_id="HtmlFilter" appId="HtmlFilter"
+     category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@filter-controlpanel"
+     icon_expr="string:${portal_url}/htmlfilter_icon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Manage portal</permission>
+  </configlet>
+  <configlet title="Security" action_id="SecuritySettings"
+     appId="SecuritySettings" category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@security-controlpanel"
+     icon_expr="string:${portal_url}/lock_icon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Manage portal</permission>
+  </configlet>
+  <configlet title="Content Rules" action_id="ContentRules" appId="Plone"
+     category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@rules-controlpanel"
+     icon_expr="string:${portal_url}/contentrules_icon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Content rules: Manage rules</permission>
+  </configlet>
+  <configlet title="Types" action_id="TypesSettings"
+     appId="TypesSettings" category="Plone" condition_expr=""
+     url_expr="string:${portal_url}/@@types-controlpanel"
+     icon_expr="string:${portal_url}/document_icon.png"
+     visible="True" i18n:attributes="title">
+   <permission>Manage portal</permission>
+  </configlet>
+</object>

@@ -496,6 +496,31 @@ def updatePASPlugins(context):
         logger.info("Added Plone Session Plugin.")
 
 
+def updateConfigletTitles(portal):
+    """Update titles of some configlets"""
+    controlPanel = getToolByName(portal, 'portal_controlpanel', None)
+    if controlPanel is not None:
+        collection = controlPanel.getActionObject('Plone/portal_atct')
+        language = controlPanel.getActionObject('Plone/PloneLanguageTool')
+        navigation = controlPanel.getActionObject('Plone/NavigationSettings')
+        types = controlPanel.getActionObject('Plone/TypesSettings')
+        users = controlPanel.getActionObject('Plone/UsersGroups')
+        users2 = controlPanel.getActionObject('Plone/UsersGroups2')
+
+        if collection is not None:
+            collection.title = "Collection"
+        if language is not None:
+            language.title = "Language"
+        if navigation is not None:
+            navigation.title = "Navigation"
+        if types is not None:
+            types.title = "Types"
+        if users is not None:
+            users.title = "Users and Groups"
+        if users2 is not None:
+            users2.title = "Users and Groups"
+
+
 def updateKukitJS(context):
     """Use the unpacked kukit-src.js and pack it ourself.
     """

@@ -143,6 +143,11 @@
             />
 
         <genericsetup:upgradeStep
+            title="Update configlet titles"
+            handler=".alphas.updateConfigletTitles"
+            />
+
+        <genericsetup:upgradeStep
             title="Add a RAMCache for ResourceRegistries"
             handler=".alphas.addCacheForResourceRegistry"
             />

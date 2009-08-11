@@ -4,6 +4,12 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Adjusted action icon migration to handle the configlet icons properly.
+  [davisagli]
+
+- Re-added missing configlet migrations.
+  [davisagli]
+
 - Adjust migration for installing CMFDiffTool to reflect the fact that this is
   now configured in CMFPlone.
   [davisagli]
