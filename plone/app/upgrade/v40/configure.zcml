@@ -5,12 +5,26 @@
 
     <include file="profiles.zcml" />
 
-    <genericsetup:upgradeStep
+    <genericsetup:upgradeSteps
         source="3.3"
         destination="4.0.dev"
-        title="Upgrade from Plone 3.3 to Plone 4.0.dev."
-        profile="Products.CMFPlone:plone"
-        handler=".alphas.threeX_alpha1"
-        />
+        profile="Products.CMFPlone:plone">
+        
+        <genericsetup:upgradeStep
+            title="General migration steps."
+            handler=".alphas.threeX_alpha1"
+            />
+    
+        <genericsetup:upgradeStep
+            title="Migrate action icons away from the action icons tool."
+            handler=".alphas.migrateActionIcons"
+            />
+        
+        <genericsetup:upgradeStep
+            title="Update the local RAMCache utility import location."
+            handler=".alphas.addOrReplaceRamCache"
+            />
+    
+    </genericsetup:upgradeSteps>
 
 </configure>

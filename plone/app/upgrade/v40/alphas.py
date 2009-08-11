@@ -30,10 +30,9 @@ def threeX_alpha1(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
 
-    migrateActionIcons(portal)
 
-
-def migrateActionIcons(portal):
+def migrateActionIcons(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
     atool = getToolByName(portal, 'portal_actions', None)
     cptool = getToolByName(portal, 'portal_controlpanel', None)
     aitool = getToolByName(portal, 'portal_actionicons', None)
@@ -73,7 +72,8 @@ def migrateActionIcons(portal):
         # Remove the action icon
         aitool.removeActionIcon(cat, ident)
 
-def addOrReplaceRamCache(portal):
+def addOrReplaceRamCache(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
     sm = getSiteManager(context=portal)
     sm.unregisterUtility(provided=OldIRAMCache)
     sm.unregisterUtility(provided=IRAMCache)

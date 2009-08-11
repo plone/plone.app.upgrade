@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Revert the migration steps for getting rid of the external editor.
+  [davisagli]
+
 - Adjusted action icon migration to handle the configlet icons properly.
   [davisagli]
 
