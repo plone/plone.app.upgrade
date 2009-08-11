@@ -109,11 +109,23 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             self.assertEqual(action.getIconExpression(),
                              'string:$portal_url/test.gif')
 
+    def testContentTypeIconExpressions(self):
+        """
+        FTIs should now be using icon_expr instead of content_icon.
+        (The former caches the expression object.)
+        """
+        tt = getToolByName(self.portal, "portal_types")
+        tt.Document.icon_expr = None
+        tt.Document.content_icon = 'document_icon.png'
+        loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
+        self.assertEqual(tt.Document.icon_expr, "string:${portal_url}/document_icon.png")
+        self.failIf(tt.Document.content_icon)
+
     def testPngContentIcons(self):
         tt = getToolByName(self.portal, "portal_types")
         tt.Document.content_icon = "document_icon.gif"
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
-        self.assertEqual(tt.Document.content_icon, "document_icon.png")
+        self.assertEqual(tt.Document.icon_expr, "string:${portal_url}/document_icon.png")
 
     def testAddRAMCache(self):
         # Test it twice

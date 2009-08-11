@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added Plone 4 migration step to convert content type icons to be set with
+  icon_expr.
+  [davisagli]
+
 - Revert the migration steps for getting rid of the external editor.
   [davisagli]
 
