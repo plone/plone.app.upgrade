@@ -1,6 +1,7 @@
 from zope.component import getSiteManager, queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
+from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.ActionInformation import Action
 from Products.CMFCore.utils import getToolByName
 
@@ -10,6 +11,19 @@ from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
 from plone.app.upgrade.v40.alphas import migrateActionIcons
 from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
+from plone.app.upgrade.v40.alphas import migrateMailHost
+
+class FakeSecureMailHost(object):
+    meta_type = 'Secure Mail Host'
+    id = 'MailHost'
+    title = 'Fake MailHost'
+    smtp_host = 'smtp.example.com'
+    smtp_port = 587
+    smtp_userid='me'
+    smtp_pass='secret'
+    smtp_notls=False
+    def manage_fixupOwnershipAfterAdd(self):
+        pass
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
@@ -149,6 +163,27 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             addOrReplaceRamCache(self.portal)
             util = queryUtility(IRAMCache)
             self.failUnless(util.maxAge == 3600)
+
+    def testReplaceSecureMailHost(self):
+        portal = self.portal
+        sm = getSiteManager(context=portal)
+        # try it with an unmodified site to ensure it doesn't give any errors
+        migrateMailHost(portal)
+        portal._delObject('MailHost')
+        # Run it with our MailHost replaced
+        portal._setObject('MailHost', FakeSecureMailHost())
+        self.assertEqual(portal.MailHost.meta_type, 'Secure Mail Host')
+        sm.unregisterUtility(provided=IMailHost)
+        sm.registerUtility(portal.MailHost, provided=IMailHost)
+        migrateMailHost(portal)
+        new_mh = portal.MailHost
+        self.failUnlessEqual(new_mh.meta_type, 'Mail Host')
+        self.failUnlessEqual(new_mh.title, 'Fake MailHost')
+        self.failUnlessEqual(new_mh.smtp_host, 'smtp.example.com')
+        self.failUnlessEqual(new_mh.smtp_port, 587)
+        self.failUnlessEqual(new_mh.smtp_uid, 'me')
+        self.failUnlessEqual(new_mh.smtp_pwd, 'secret')
+        self.failUnlessEqual(new_mh.force_tls, True)
 
 def test_suite():
     from unittest import TestSuite, makeSuite

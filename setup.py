@@ -59,6 +59,7 @@ setup(name='plone.app.upgrade',
         'Products.PlonePAS',
         'Products.PortalTransforms',
         'Products.ResourceRegistries',
+        'Products.SecureMailHost', # For migration only, when can we remove this?
         # 'Acquisition',
         # 'Zope2',
       ],

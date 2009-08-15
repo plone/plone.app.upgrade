@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Aded Migration for SecureMailHost removal
+  [alecm]
+
 - Added Plone 4 migration step to add icon_expr to FTIs.
   [davisagli]
 
