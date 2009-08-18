@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Fixed a couple profiles that were not registered for IMigratingPloneSiteRoot.
+  [davisagli]
+
 - Added Plone 4 migration step to add icon_expr to FTIs.
   [davisagli]
 
