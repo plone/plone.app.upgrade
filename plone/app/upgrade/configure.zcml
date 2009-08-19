@@ -9,4 +9,9 @@
     <include package=".v33" />
     <include package=".v40" />
 
+    <utility
+        factory=".HiddenProducts"
+        name="plone.app.upgrades"
+        />
+
 </configure>

@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added a INonInstallable utility to hide this package's profiles from the
+  quick installer.
+  [davisagli]
+
 - Fixed a couple profiles that were not registered for IMigratingPloneSiteRoot.
   [davisagli]
 

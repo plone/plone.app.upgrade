@@ -21,6 +21,7 @@ setup(name='plone.app.upgrade',
       zip_safe=False,
       extras_require=dict(
         test=[
+            'Products.CMFQuickInstallerTool',
             'Products.PloneTestCase',
             'plone.contentrules',
             'plone.app.i18n',
