@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <object name="portal_css" meta_type="Stylesheets Registry">
  <stylesheet update="True"
-    enabled="1" id="mobile.css" media="handheld, screen and (max-width: 480px)" />
+    enabled="1" id="mobile.css" media="handheld, screen and (max-device-width: 480px)" />
 </object>
