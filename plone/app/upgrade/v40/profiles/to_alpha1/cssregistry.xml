@@ -1,5 +1,23 @@
 <?xml version="1.0"?>
 <object name="portal_css" meta_type="Stylesheets Registry">
- <stylesheet update="True"
-    enabled="1" id="mobile.css" media="handheld, screen and (max-device-width: 480px)" />
+ <stylesheet id="mobile.css" update="True" enabled="1" media="handheld, screen and (max-device-width: 480px)" />
+ <stylesheet id="base.css" update="True" rendering="link" />
+ <stylesheet id="public.css" update="True" rendering="link" />
+ <stylesheet id="columns.css" update="True" rendering="link" />
+ <stylesheet id="authoring.css" update="True" rendering="link" />
+ <stylesheet id="portlets.css" update="True" rendering="link" />
+ <stylesheet id="controlpanel.css" update="True" rendering="link" />
+ <stylesheet id="print.css" update="True" rendering="link" />
+ <stylesheet id="mobile.css" update="True" rendering="link" />
+ <stylesheet id="deprecated.css" update="True" rendering="link" />
+ <stylesheet id="navtree.css" update="True" rendering="link" />
+ <stylesheet id="invisibles.css" update="True" rendering="link" />
+ <stylesheet id="forms.css" update="True" rendering="link" />
+ <stylesheet id="ploneKss.css" update="True" rendering="link" />
+ <stylesheet id="RTL.css" update="True" rendering="link" />
+ <stylesheet id="ploneCustom.css" update="True" rendering="link" />
+ <stylesheet id="member.css" update="True" rendering="link" />
+ <stylesheet id="kupustyles.css" update="True" rendering="link" />
+ <stylesheet id="kupuplone.css" update="True" rendering="link" />
+ <stylesheet id="kupudrawerstyles.css" update="True" rendering="link" />
 </object>
