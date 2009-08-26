@@ -30,9 +30,9 @@ def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     portal = getToolByName(context, 'portal_url').getPortalObject()
+    migrateMailHost(portal)
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
 
-    migrateMailHost(portal)
 
 def migrateActionIcons(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
