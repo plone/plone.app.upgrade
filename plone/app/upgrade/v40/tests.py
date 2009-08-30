@@ -183,7 +183,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.failUnlessEqual(new_mh.smtp_port, 587)
         self.failUnlessEqual(new_mh.smtp_uid, 'me')
         self.failUnlessEqual(new_mh.smtp_pwd, 'secret')
-        self.failUnlessEqual(new_mh.force_tls, True)
+        #Force TLS is always false, because SMH has no equivalent option
+        self.failUnlessEqual(new_mh.force_tls, False)
 
 def test_suite():
     from unittest import TestSuite, makeSuite

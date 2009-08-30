@@ -89,7 +89,7 @@ def migrateMailHost(portal):
     if mh and getattr(mh, 'meta_type', None) == 'Secure Mail Host':
         new_mh = MailHost(id=mh.id, title=mh.title, smtp_host=mh.smtp_host,
                           smtp_port=mh.smtp_port, smtp_uid=mh.smtp_userid,
-                          smtp_pwd=mh.smtp_pass, force_tls=not mh.smtp_notls)
+                          smtp_pwd=mh.smtp_pass, force_tls=False)
         portal._delObject('MailHost')
         portal._setObject('MailHost', new_mh)
         sm = getSiteManager(context=portal)
