@@ -11,7 +11,7 @@
 
     <utility
         factory=".HiddenProducts"
-        name="plone.app.upgrades"
+        name="plone.app.upgrade"
         />
 
 </configure>
