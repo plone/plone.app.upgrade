@@ -60,8 +60,8 @@ setup(name='plone.app.upgrade',
         'Products.PlonePAS',
         'Products.PortalTransforms',
         'Products.ResourceRegistries',
-        # 'Acquisition',
-        # 'Zope2',
+        'Acquisition',
+        'Zope2',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]
