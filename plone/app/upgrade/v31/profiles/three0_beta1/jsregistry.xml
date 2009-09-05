@@ -3,7 +3,7 @@
   <javascript cacheable="True" compression="none" cookable="True" 
     enabled="True" expression="" id="jquery.js" inline="False"
     insert-top="" />
-  <!-- cssQuery is left enabled on migrated sites only; we do move it -->
+  <!-- cssQuery is left enabled on upgraded sites only; we do move it -->
   <javascript id="cssQuery.js" update="" enabled="true"
     insert-after="jquery.js" />
  	<javascript cacheable="True" compression="safe" cookable="True" 
@@ -18,7 +18,7 @@
   <javascript id="collapsiblesections.js" update="" compression="full" />
   <javascript id="accessibility.js" update="" compression="full" />
   <!-- calendarpopup.js has been deprecated and disabled on new sites, 
-       migration leaves it enabled -->
+       upgrade leaves it enabled -->
   <!-- new resources needed for kss -->
   <javascript cacheable="True" compression="none" cookable="True"
     enabled="True" expression=""

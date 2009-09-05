@@ -21,7 +21,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.cptool = getToolByName(self.portal, 'portal_controlpanel')
 
     def testProfile(self):
-        # This tests the whole migration profile can be loaded
+        # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 

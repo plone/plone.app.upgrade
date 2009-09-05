@@ -37,7 +37,7 @@ def migrateHistoryTab(context):
         if objects is not None:
             if 'rss' in objects.objectIds():
                 objects.manage_renameObjects(['rss'], ['history'])
-                logger.info('Migrated history action.')
+                logger.info('Upgraded history action.')
 
 
 def changeOrderOfActionProviders(context):

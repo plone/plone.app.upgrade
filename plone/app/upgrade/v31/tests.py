@@ -57,7 +57,7 @@ class TestMigrations_v3_1(MigrationTest):
         uf.manage_delObjects(['borg_localroles'])
         # activate the standard plugin
         uf.plugins.activatePlugin(ILocalRolesPlugin, 'local_roles')
-        # run the migration twice
+        # run the upgrade twice
         replace_local_role_manager(self.portal)
         replace_local_role_manager(self.portal)
         plugins = uf.plugins.listPlugins(ILocalRolesPlugin)
@@ -72,7 +72,7 @@ class TestMigrations_v3_1(MigrationTest):
         uf.manage_delObjects(['borg_localroles'])
         # delete the standard plugin
         uf.manage_delObjects(['local_roles'])
-        # Run the migration, which shouldn't fail even if the expected
+        # Run the upgrade, which shouldn't fail even if the expected
         # plugin is missing
         replace_local_role_manager(self.portal)
         plugins = uf.plugins.listPlugins(ILocalRolesPlugin)

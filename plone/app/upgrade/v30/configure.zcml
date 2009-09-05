@@ -37,7 +37,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="Migrate all existing actions to new-style actions"
+            title="Upgrade all existing actions to new-style actions"
             handler=".alphas.migrateOldActions"
             />
 
@@ -52,7 +52,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".alphas.three0_alpha1"
             />
 
@@ -67,7 +67,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="Migrate legacy portlets"
+            title="Upgrade legacy portlets"
             handler=".alphas.convertLegacyPortlets"
             />
 
@@ -81,7 +81,7 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".alphas.alpha1_alpha2"
             />
 
@@ -118,7 +118,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".alphas.alpha2_beta1"
             />
 
@@ -175,7 +175,7 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Migrate history action"
+            title="Upgrade history action"
             handler=".betas.migrateHistoryTab"
             />
 
@@ -200,7 +200,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".betas.beta1_beta2"
             />
 
@@ -247,7 +247,7 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".betas.beta2_beta3"
             />
 
@@ -269,7 +269,7 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".betas.beta3_rc1"
             />
 
@@ -296,7 +296,7 @@
     <genericsetup:upgradeStep
         source="3.0.rc2"
         destination="3.0"
-        title="General required migration steps"
+        title="General required upgrade steps"
         profile="Products.CMFPlone:plone"
         handler=".rcs.rc2_final"
         />
@@ -306,7 +306,7 @@
     <genericsetup:upgradeStep
         source="3.0"
         destination="3.0.1"
-        title="General required migration steps"
+        title="General required upgrade steps"
         profile="Products.CMFPlone:plone"
         handler=".final_three0x.final_three01"
         />
@@ -314,7 +314,7 @@
     <genericsetup:upgradeStep
         source="3.0.1"
         destination="3.0.2"
-        title="General required migration steps"
+        title="General required upgrade steps"
         profile="Products.CMFPlone:plone"
         handler=".final_three0x.three01_three02"
         />
@@ -333,7 +333,7 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".final_three0x.three03_three04"
             />
 

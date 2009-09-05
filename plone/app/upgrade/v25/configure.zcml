@@ -11,7 +11,7 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Migrate all existing actions to new-style actions"
+            title="Upgrade all existing actions to new-style actions"
             handler="plone.app.upgrade.v30.alphas.migrateOldActions"
             />
 
@@ -21,7 +21,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="General required migration steps"
+            title="General required upgrade steps"
             handler=".final_two51"
             />
 

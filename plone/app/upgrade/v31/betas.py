@@ -50,8 +50,8 @@ def migratePortletTypeRegistrations(portal, out):
             portletType.for_ = [Interface]
         elif type(portletType.for_) is not list:
             portletType.for_ = [portletType.for_]
-    
-    out.append("Migrated portlet types to support multiple " + \
+
+    out.append("Upgraded portlet types to support multiple " + \
       "portlet manager interfaces.")
 
 

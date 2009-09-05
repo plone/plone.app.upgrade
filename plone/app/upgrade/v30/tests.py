@@ -152,7 +152,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
             reply = getattr(reply_actions, 'reply', None)
             self.failIf(reply is None)
             self.failUnless(isinstance(reply, Action))
-            # Verify all data has been migrated correctly to the new Action
+            # Verify all data has been upgraded correctly to the new Action
             data = reply.getInfoData()[0]
             self.assertEquals(data['category'], 'reply_actions')
             self.assertEquals(data['title'], 'Reply')
@@ -745,13 +745,13 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         jsreg.registerScript('++resource++kukit.js', compression="none")
         script_ids = jsreg.getResourceIds()
         self.failUnless('++resource++kukit.js' in script_ids)
-        # migrate and test again
+        # upgrade and test again
         updateKukitJS(self.portal)
         script_ids = jsreg.getResourceIds()
         self.failUnless('++resource++kukit-src.js' in script_ids)
         resource = jsreg.getResource('++resource++kukit-src.js')
         self.failUnless(resource.getCompression() == 'full')
-        # Run the last migration and check that everything is in its
+        # Run the last upgrade and check that everything is in its
         # place. We must have both the devel and production resources.
         # They both should be uncompressed since kss compresses them
         # directly. Also they should have conditions that switches them.
@@ -1081,7 +1081,7 @@ class TestMigrations_v3_0(MigrationTest):
             self.assertEquals(False, bool(self.portal.acquiredRolesAreUsedBy('Add portal content')))
 
     def testAddBeta2VersioningPermissionsToNewRoles(self):
-        # This migration just uses GS to apply the role changes,
+        # This upgrade just uses GS to apply the role changes,
         # these permissions will not have been installed previously,
         # so this should be safe
         for p in ['CMFEditions: Apply version control',
@@ -1183,14 +1183,14 @@ class TestMigrations_v3_0(MigrationTest):
 
     def testUpdateTopicTitle(self):
         topic = self.types.get('Topic')
-        topic.title = 'Unmigrated'
+        topic.title = 'Old'
         # Test it twice
         for i in range(2):
             updateTopicTitle(self.portal)
             self.failUnless(topic.title == 'Collection')
 
     def testAddIntelligentText(self):
-        # Before migration, the mime type and transforms of intelligent text
+        # Before the upgrade, the mime type and transforms of intelligent text
         # are not available. They *are* here in a fresh site, so we may need
         # to remove them first for testing. First we remove the transforms,
         # as they depend on the mimetype being there.

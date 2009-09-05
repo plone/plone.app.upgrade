@@ -213,7 +213,7 @@ class installKss(object):
         self.install_mimetype() 
         self.install_resources() 
         self.install_skins() 
-        logger.info("Succesfully migrated portal to KSS")
+        logger.info("Succesfully installed KSS into the site.")
 
 
 def enableZope3Site(context):
@@ -283,9 +283,9 @@ def migrateOldActions(context):
             if getattr(aq_base(new_category), action.id, None) is None:
                 new_category._setObject(action.id, new_action)
 
-        # Remove old actions from migrated providers
+        # Remove old actions from upgraded providers
         provider._actions = ()
-    logger.info('Migrated old actions to new actions stored in portal_actions.')
+    logger.info('Upgraded old actions to new actions stored in portal_actions.')
 
 
 def _check_ascii(text):
@@ -329,7 +329,7 @@ def convertLegacyPortlets(context):
     root to use plone.portlets. Also block portlets in the Members folder.
     
     Note - there may be other portlets defined elsewhere. These will require
-    manual migration from the @@manage-portlets view. This is to avoid a 
+    manual upgrade from the @@manage-portlets view. This is to avoid a 
     full walk of the portal (i.e. waking up every single object) looking for
     potential left_slots/right_slots! 
     """
