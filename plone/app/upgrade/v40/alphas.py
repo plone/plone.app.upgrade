@@ -11,17 +11,20 @@ from plone.app.upgrade.utils import loadMigrationProfile
 
 _KNOWN_ACTION_ICONS = {
     'plone' : ['sendto', 'print', 'rss', 'extedit', 'full_screen'],
-    'object_buttons' : ['cut', 'copy', 'paste', 'delete'],
+    'object_buttons' : ['cut', 'copy', 'paste', 'delete',
+                        'iterate_checkin', 'iterate_checkout',
+                        'iterate_checkout_cancel'],
     'folder_buttons' : ['cut', 'copy', 'paste', 'delete'],
     'controlpanel': ['QuickInstaller', 'portal_atct', 'MailHost',
-                       'UsersGroups', 'MemberPrefs', 'PortalSkin',
-                       'MemberPassword', 'ZMI', 'SecuritySettings',
-                       'NavigationSettings', 'SearchSettings',
-                       'errorLog', 'kupu', 'PloneReconfig',
-                       'CalendarSettings', 'TypesSettings', 
-                       'PloneLanguageTool', 'CalendarSettings',
-                       'HtmlFilter', 'Maintenance', 'UsersGroups2',
-                       'versioning', 'placefulworkflow'],
+                     'UsersGroups', 'MemberPrefs', 'PortalSkin',
+                     'MemberPassword', 'ZMI', 'SecuritySettings',
+                     'NavigationSettings', 'SearchSettings',
+                     'errorLog', 'kupu', 'PloneReconfig',
+                     'CalendarSettings', 'TypesSettings', 
+                     'PloneLanguageTool', 'CalendarSettings',
+                     'HtmlFilter', 'Maintenance', 'UsersGroups2',
+                     'versioning', 'placefulworkflow',
+                     'MarkupSettings', 'ContentRules'],
 }
 
 def threeX_alpha1(context):
