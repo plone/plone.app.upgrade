@@ -3,7 +3,7 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="plone">
  <configlet title="Markup" action_id="MarkupSettings"
     appId="MarkupSettings" category="Plone" condition_expr=""
-    url_expr="string:${portal_url}/@@language-controlpanel"
+    url_expr="string:${portal_url}/@@markup-controlpanel"
     icon_expr="string:${portal_url}/edit.png"
     visible="True" i18n:attributes="title">
   <permission>Manage portal</permission>
