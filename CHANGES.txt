@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added link to upgrade instructions for sites upgraded from Plone < 2.5
+  (technically, sites using GroupUserFolder)
+  [davisagli]
+
 - Added a INonInstallable utility to hide this package's profiles from the
   quick installer.
   [davisagli]

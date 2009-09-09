@@ -1,5 +1,6 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="plone">
 
     <include package=".v25" />
@@ -12,6 +13,13 @@
     <utility
         factory=".HiddenProducts"
         name="plone.app.upgrade"
+        />
+    
+    <browser:page
+        name="index.html"
+        for=".gruf_bbb.UpgradeProcessError"
+        class=".gruf_bbb.UpgradeProcessErrorView"
+        permission="zope.Public"
         />
 
 </configure>
