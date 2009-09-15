@@ -10,7 +10,8 @@ from plone.app.upgrade.utils import loadMigrationProfile
 
 
 _KNOWN_ACTION_ICONS = {
-    'plone' : ['sendto', 'print', 'rss', 'extedit', 'full_screen'],
+    'plone' : ['sendto', 'print', 'rss', 'extedit', 'full_screen',
+               'addtofavorites', 'ics', 'vcs'],
     'object_buttons' : ['cut', 'copy', 'paste', 'delete',
                         'iterate_checkin', 'iterate_checkout',
                         'iterate_checkout_cancel'],
@@ -50,6 +51,13 @@ def migrateActionIcons(context):
         cat = ic.getCategory()
         ident = ic.getActionId()
         expr = ic.getExpression()
+        if expr.endswith('gif'):
+            try:
+                png_expr = expr[:-4] + '.png'
+                portal.restrictedTraverse(png_expr)
+                expr = png_expr
+            except (AttributeError, KeyError):
+                pass
         prefix = ''
         
         if cat not in _KNOWN_ACTION_ICONS.keys() or ident not in _KNOWN_ACTION_ICONS[cat]:
@@ -59,9 +67,13 @@ def migrateActionIcons(context):
         if ':' not in expr:
             prefix = 'string:$portal_url/'
 
-        if cat in categories:
+        if cat == 'plone':
+            new_cat = 'document_actions'
+        else:
+            new_cat = cat
+        if new_cat in categories:
             # actions tool
-            action = atool[cat].get(ident)
+            action = atool[new_cat].get(ident)
             if action is not None:
                 if not action.icon_expr:
                     action._setPropValue('icon_expr', '%s%s' % (prefix, expr))
