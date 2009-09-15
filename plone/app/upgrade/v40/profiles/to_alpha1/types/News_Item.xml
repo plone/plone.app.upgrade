@@ -2,4 +2,5 @@
 <object name="News Item">
  <property name="content_icon">newsitem_icon.png</property>
  <property name="icon_expr">string:${portal_url}/newsitem_icon.png</property>
+ <action action_id="references" category="object" remove="True"/>
 </object>

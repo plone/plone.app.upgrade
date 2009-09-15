@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added removal of action for AT graphviz reference visualization from
+  all content types in the Plone 4 alpha migration.
+  [davisagli]
+
 - Made the action icons migration switch from GIF to PNG where possible,
   and correctly handle actions in the document_actions category.
   [davisagli]

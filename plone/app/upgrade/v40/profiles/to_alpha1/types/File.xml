@@ -2,4 +2,5 @@
 <object name="File">
  <property name="content_icon">file_icon.png</property>
  <property name="icon_expr">string:${portal_url}/file_icon.png</property>
+ <action action_id="references" category="object" remove="True"/>
 </object>
