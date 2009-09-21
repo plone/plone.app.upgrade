@@ -4,6 +4,11 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added updating of the actor variable expression for several workflows in the
+  Plone 4 alpha migration.  This helps fix
+  http://dev.plone.org/old/plone/ticket/7398
+  [davisagli]
+
 - Added removal of action for AT graphviz reference visualization from
   all content types in the Plone 4 alpha migration.
   [davisagli]

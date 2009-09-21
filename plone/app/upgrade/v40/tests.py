@@ -10,6 +10,7 @@ from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
 from plone.app.upgrade.v40.alphas import migrateActionIcons
 from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
+from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
@@ -19,6 +20,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.atool = getToolByName(self.portal, 'portal_actions')
         self.aitool = getToolByName(self.portal, 'portal_actionicons')
         self.cptool = getToolByName(self.portal, 'portal_controlpanel')
+        self.wftool = getToolByName(self.portal, 'portal_workflow')
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -149,6 +151,26 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             addOrReplaceRamCache(self.portal)
             util = queryUtility(IRAMCache)
             self.failUnless(util.maxAge == 3600)
+    
+    def testChangeWorkflowActorVariableExpression(self):
+        for i in range(2):
+            changeWorkflowActorVariableExpression(self.portal)
+            wf = self.wftool.intranet_folder_workflow
+            self.assertEqual(wf.variables.actor.getDefaultExprText(),
+                             'user/getId')
+            wf = self.wftool.one_state_workflow
+            self.assertEqual(wf.variables.actor.getDefaultExprText(),
+                             'user/getId')
+            wf = self.wftool.simple_publication_workflow
+            self.assertEqual(wf.variables.actor.getDefaultExprText(),
+                             'user/getId')
+        
+        # make sure it doesn't break if the workflow is missing
+        wf = self.wftool.intranet_folder_workflow
+        self.wftool._delOb('intranet_folder_workflow')
+        changeWorkflowActorVariableExpression(self.portal)
+        self.wftool._setOb('intranet_folder_workflow', wf)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -94,3 +94,18 @@ def addOrReplaceRamCache(context):
     sm.unregisterUtility(provided=IRAMCache)
     sm.registerUtility(factory=RAMCache, provided=IRAMCache)
     logger.info('Installed local RAM cache utility.')
+
+def changeWorkflowActorVariableExpression(context):
+    wftool = getToolByName(context, 'portal_workflow')
+    workflows = ('intranet_folder_workflow', 'one_state_workflow',
+                 'simple_publication_workflow')
+    for workflow_id in workflows:
+        wf = getattr(wftool, workflow_id, None)
+        if wf is None:
+            continue
+        actor_var = wf.variables._getOb('actor', None)
+        if actor_var is None:
+            continue
+        actor_var.setProperties(description = actor_var.description,
+                                default_expr = 'user/getId')
+    logger.info('Updated workflow actor variable expression.')
