@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<atcttool
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <topic_indexes i18n:domain="plone">
+  <index name="Subject" description="Tags are used for ad-hoc organization of content"
+     friendlyName="Tags"
+     i18n:attributes="description; friendlyName">
+  </index>
+ </topic_indexes>
+ <topic_metadata i18n:domain="plone">
+  <metadata name="Subject" description="Tags are used for ad-hoc organization of content"
+     enabled="True" friendlyName="Tags"
+     i18n:attributes="description; friendlyName" />
+ </topic_metadata>
+</atcttool>
