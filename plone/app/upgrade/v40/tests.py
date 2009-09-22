@@ -11,6 +11,7 @@ from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
 from plone.app.upgrade.v40.alphas import migrateActionIcons
 from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
 from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
+from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
@@ -21,6 +22,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.aitool = getToolByName(self.portal, 'portal_actionicons')
         self.cptool = getToolByName(self.portal, 'portal_controlpanel')
         self.wftool = getToolByName(self.portal, 'portal_workflow')
+        self.csstool = getToolByName(self.portal, 'portal_css')
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -153,6 +155,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             self.failUnless(util.maxAge == 3600)
     
     def testChangeWorkflowActorVariableExpression(self):
+        self.wftool.intranet_folder_workflow.variables.actor.setProperties('')
+        
         for i in range(2):
             changeWorkflowActorVariableExpression(self.portal)
             wf = self.wftool.intranet_folder_workflow
@@ -171,6 +175,22 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         changeWorkflowActorVariableExpression(self.portal)
         self.wftool._setOb('intranet_folder_workflow', wf)
 
+    def changeAuthenticatedResourcesCondition(self):
+        # make sure CSS resource is updated
+        res = self.csstool.getResource('member.css')
+        res.setAuthenticated(False)
+        res.setExpression('not: portal/portal_membership/isAnonymousUser')
+        # test it twice
+        for i in range(2):
+            changeAuthenticatedResourcesCondition(self.portal)
+            self.assertEqual(res.getExpression(), '')
+            self.failUnless(res.getAuthenticated())
+        
+        # make sure it doesn't update it if the expression has been
+        # customized
+        res.setExpression('python:False')
+        changeAuthenticatedResourcesCondition(self.portal)
+        self.assertEqual(res.getExpression(), 'python:False')
 
 def test_suite():
     from unittest import TestSuite, makeSuite

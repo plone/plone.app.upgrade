@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added update of resources to use the authenticated flag instead of a full
+  expression where possible, in the Plone 4 alpha migration.
+  [davisagli]
+
 - Added renaming of Categories to Tags in the portal_atct tool indices in the
   Plone 4 alpha migration.
   [davisagli]

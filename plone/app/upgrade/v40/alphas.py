@@ -107,5 +107,32 @@ def changeWorkflowActorVariableExpression(context):
         if actor_var is None:
             continue
         actor_var.setProperties(description = actor_var.description,
-                                default_expr = 'user/getId')
+                                default_expr = 'user/getId',
+                                for_status = 1,
+                                update_always = 1)
     logger.info('Updated workflow actor variable expression.')
+
+def changeAuthenticatedResourcesCondition(context):
+    """ ResourceRegistries now has an 'authenticated' boolean property which
+        can be used to short-circuit the expression evaluation for the simple,
+        common case of authenticated-only resources.
+    """
+    resources = {
+        'portal_css': ('member.css',),
+        'portal_javascripts': ('dropdown.js', 'table_sorter.js',
+            'calendar_formfield.js', 'calendarpopup.js', 'formUnload.js',
+            'formsubmithelpers.js', 'unlockOnFormUnload.js')
+        }
+    for tool_id, resource_ids in resources.items():
+        tool = getToolByName(context, tool_id, None)
+        if tool is None:
+            continue
+        for resource_id in resource_ids:
+            resource = tool.getResource(resource_id)
+            if resource is None:
+                continue
+            if resource._data['expression'] == 'not: portal/portal_membership/isAnonymousUser':
+                resource.setExpression('')
+                resource.setAuthenticated(True)
+        tool.cookResources()
+    logger.info('Updated expression for authenticated-only resources.')

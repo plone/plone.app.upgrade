@@ -24,6 +24,16 @@
             title="Update the local RAMCache utility import location."
             handler=".alphas.addOrReplaceRamCache"
             />
+        
+        <genericsetup:upgradeStep
+            title="Update the actor variable expression in several workflows."
+            handler=".alphas.changeWorkflowActorVariableExpression"
+            />
+        
+        <genericsetup:upgradeStep
+            title="Update expression for authenticated-only resources."
+            handler=".alphas.changeAuthenticatedResourcesCondition"
+            />
     
     </genericsetup:upgradeSteps>
 
