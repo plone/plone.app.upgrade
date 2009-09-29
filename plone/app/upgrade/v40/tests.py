@@ -13,6 +13,7 @@ from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
 from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
 from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
 
+
 class TestMigrations_v4_0alpha1(MigrationTest):
 
     profile = "profile-plone.app.upgrade.v40:3-4alpha1"
@@ -68,8 +69,9 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
         self.assertEqual(object_buttons.test_id.icon_expr, '')
         self.assertEqual(object_buttons.test2_id.icon_expr, '')
-        self.assertEqual(self.aitool.getActionIcon('object_buttons', 'test_id'),
-                        'test.gif')
+        self.assertEqual(
+            self.aitool.getActionIcon('object_buttons', 'test_id'),
+            'test.gif')
         # Test it twice
         for i in range(2):
             migrateActionIcons(self.portal)
@@ -89,7 +91,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             icon_expr='test.gif',
             title='Test my icon',
             )
-        
+
         self.cptool.registerConfiglet(
             id='test_id',
             name='Test Configlet',
@@ -98,7 +100,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             category='Plone',
             visible=True,
             appId='',
-            icon_expr=''
+            icon_expr='',
             )
 
         action = self.cptool.getActionObject('Plone/test_id')
@@ -121,7 +123,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         tt = getToolByName(self.portal, "portal_types")
         tt.Document.icon_expr = None
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
-        self.assertEqual(tt.Document.icon_expr, "string:${portal_url}/document_icon.png")
+        self.assertEqual(tt.Document.icon_expr,
+                         "string:${portal_url}/document_icon.png")
 
     def testPngContentIcons(self):
         tt = getToolByName(self.portal, "portal_types")
@@ -142,7 +145,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
     def testReplaceOldRamCache(self):
         sm = getSiteManager()
-        
+
         # Test it twice
         for i in range(2):
             sm.unregisterUtility(provided=IRAMCache)
@@ -153,10 +156,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             addOrReplaceRamCache(self.portal)
             util = queryUtility(IRAMCache)
             self.failUnless(util.maxAge == 3600)
-    
+
     def testChangeWorkflowActorVariableExpression(self):
         self.wftool.intranet_folder_workflow.variables.actor.setProperties('')
-        
+
         for i in range(2):
             changeWorkflowActorVariableExpression(self.portal)
             wf = self.wftool.intranet_folder_workflow
@@ -168,14 +171,14 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             wf = self.wftool.simple_publication_workflow
             self.assertEqual(wf.variables.actor.getDefaultExprText(),
                              'user/getId')
-        
+
         # make sure it doesn't break if the workflow is missing
         wf = self.wftool.intranet_folder_workflow
         self.wftool._delOb('intranet_folder_workflow')
         changeWorkflowActorVariableExpression(self.portal)
         self.wftool._setOb('intranet_folder_workflow', wf)
 
-    def changeAuthenticatedResourcesCondition(self):
+    def testChangeAuthenticatedResourcesCondition(self):
         # make sure CSS resource is updated
         res = self.csstool.getResource('member.css')
         res.setAuthenticated(False)
@@ -185,12 +188,13 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             changeAuthenticatedResourcesCondition(self.portal)
             self.assertEqual(res.getExpression(), '')
             self.failUnless(res.getAuthenticated())
-        
+
         # make sure it doesn't update it if the expression has been
         # customized
         res.setExpression('python:False')
         changeAuthenticatedResourcesCondition(self.portal)
         self.assertEqual(res.getExpression(), 'python:False')
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
