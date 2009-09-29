@@ -4,6 +4,11 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added property use_email_as_login=False to the site properties in the
+  Plone 4 alpha migration.
+  Refs http://dev.plone.org/old/plone/ticket/9214
+  [maurits]
+
 - Added update of resources to use the authenticated flag instead of a full
   expression where possible, in the Plone 4 alpha migration.
   [davisagli]
