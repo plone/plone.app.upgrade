@@ -4,9 +4,15 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added upgrade step to remove outdated actions and properties from both the
+  Plone Site and TempFolder FTI.
+  [hannosch]
+
+- Adjusted setupReferencebrowser upgrade step to proper new-style.
+  [hannosch]
+
 - Added property use_email_as_login=False to the site properties in the
-  Plone 4 alpha migration.
-  Refs http://dev.plone.org/plone/ticket/9214
+  Plone 4 alpha migration. Refs http://dev.plone.org/plone/ticket/9214.
   [maurits]
 
 - Added update of resources to use the authenticated flag instead of a full

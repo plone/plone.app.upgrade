@@ -31,21 +31,18 @@ _KNOWN_ACTION_ICONS = {
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
-    out = []
-    portal = getToolByName(context, 'portal_url').getPortalObject()
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
-    setupReferencebrowser(portal, out)
 
-def setupReferencebrowser(portal, out):
+def setupReferencebrowser(context):
     # install new archetypes.referencebrowserwidget
+    portal = getToolByName(context, 'portal_url').getPortalObject()
     qi = getToolByName(portal, 'portal_quickinstaller')
     package = 'archetypes.referencebrowserwidget'
     if not qi.isProductInstalled(package):
         qi.installProduct(package, locked=True)
-        out.append("Installed %s" % package)
+        logger.info("Installed %s" % package)
 
-    # remove obsolete skin 'ATReferenceBrowserWidget' from
-    # skins tool
+    # remove obsolete skin 'ATReferenceBrowserWidget' from skins tool
     skins_tool = getToolByName(portal, 'portal_skins')
     sels = skins_tool._getSelections()
     for skinname, layer in sels.items():
@@ -54,9 +51,6 @@ def setupReferencebrowser(portal, out):
             layers.remove('ATReferenceBrowserWidget')
         new_layers = ','.join(layers)
         sels[skinname] = new_layers
-
-    return out
-
 
 def migrateActionIcons(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -159,3 +153,22 @@ def changeAuthenticatedResourcesCondition(context):
                 resource.setAuthenticated(True)
         tool.cookResources()
     logger.info('Updated expression for authenticated-only resources.')
+
+def cleanPloneSiteFTI(context):
+    portal_types = getToolByName(context, 'portal_types', None)
+
+    site = portal_types['Plone Site']
+    to_remove = ['edit', 'folderlisting', 'external_edit']
+    actids = [o.id for o in site.listActions()]
+    selection = [actids.index(a) for a in actids if a in to_remove]
+    if len(selection) > 0:
+        site.deleteActions(selection)
+        logger.info('Updated Plone site FTI.')
+
+    temp = portal_types['TempFolder']
+    to_remove = ['edit', 'localroles', 'folderContents']
+    actids = [o.id for o in temp.listActions()]
+    selection = [actids.index(a) for a in actids if a in to_remove]
+    if len(selection) > 0:
+        temp.deleteActions(selection)
+        logger.info('Updated TempFolder FTI.')

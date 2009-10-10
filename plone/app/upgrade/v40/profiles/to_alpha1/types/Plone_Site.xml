@@ -2,4 +2,6 @@
 <object name="Plone Site">
  <property name="content_icon">site_icon.png</property>
  <property name="icon_expr">string:${portal_url}/site_icon.png</property>
+ <property name="immediate_view">folder_listing</property>
+ <alias from="edit" to="@@site-controlpanel"/>
 </object>

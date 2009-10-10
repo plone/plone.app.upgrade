@@ -214,8 +214,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             new_layers = ','.join(layers)
             sels[skinname] = new_layers
 
-        out = []
-        setupReferencebrowser(self.portal, out)
+        setupReferencebrowser(self.portal)
 
         sels = skins_tool._getSelections()
         for skinname, layer in sels.items():

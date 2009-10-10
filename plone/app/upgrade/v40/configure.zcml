@@ -9,32 +9,42 @@
         source="3.3"
         destination="4.0.dev"
         profile="Products.CMFPlone:plone">
-        
+
         <genericsetup:upgradeStep
             title="General upgrade steps."
             handler=".alphas.threeX_alpha1"
             />
-    
+
         <genericsetup:upgradeStep
             title="Upgrade action icons away from the action icons tool."
             handler=".alphas.migrateActionIcons"
             />
-        
+
         <genericsetup:upgradeStep
             title="Update the local RAMCache utility import location."
             handler=".alphas.addOrReplaceRamCache"
             />
-        
+
         <genericsetup:upgradeStep
             title="Update the actor variable expression in several workflows."
             handler=".alphas.changeWorkflowActorVariableExpression"
             />
-        
+
         <genericsetup:upgradeStep
             title="Update expression for authenticated-only resources."
             handler=".alphas.changeAuthenticatedResourcesCondition"
             />
-    
+
+        <genericsetup:upgradeStep
+            title="Install new archetypes.referencebrowserwidget."
+            handler=".alphas.setupReferencebrowser"
+            />
+
+        <genericsetup:upgradeStep
+            title="Removed outdated actions and properties from the Portal FTI"
+            handler=".alphas.cleanPloneSiteFTI"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
