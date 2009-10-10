@@ -195,6 +195,14 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         changeAuthenticatedResourcesCondition(self.portal)
         self.assertEqual(res.getExpression(), 'python:False')
 
+    def testAddedUseEmailProperty(self):
+        tool = getToolByName(self.portal, 'portal_properties')
+        sheet = getattr(tool, 'site_properties')
+        #self.assertEqual(sheet.getProperty('use_email_as_login'), False)
+        self.removeSiteProperty('use_email_as_login')
+        loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
+        self.assertEqual(sheet.getProperty('use_email_as_login'), False)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
