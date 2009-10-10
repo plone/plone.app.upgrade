@@ -7,6 +7,7 @@ from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import installOrReinstallProduct
 
 
 _KNOWN_ACTION_ICONS = {
@@ -21,7 +22,7 @@ _KNOWN_ACTION_ICONS = {
                      'MemberPassword', 'ZMI', 'SecuritySettings',
                      'NavigationSettings', 'SearchSettings',
                      'errorLog', 'kupu', 'PloneReconfig',
-                     'CalendarSettings', 'TypesSettings', 
+                     'CalendarSettings', 'TypesSettings',
                      'PloneLanguageTool', 'CalendarSettings',
                      'HtmlFilter', 'Maintenance', 'UsersGroups2',
                      'versioning', 'placefulworkflow',
@@ -31,7 +32,15 @@ _KNOWN_ACTION_ICONS = {
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
+
+    out = []
+
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+
+    installOrReinstallProduct(portal, 'plone.app.jquerytools', out)
+
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
+
 
 def setupReferencebrowser(context):
     # install new archetypes.referencebrowserwidget
@@ -76,10 +85,10 @@ def migrateActionIcons(context):
             except (AttributeError, KeyError):
                 pass
         prefix = ''
-        
+
         if cat not in _KNOWN_ACTION_ICONS.keys() or ident not in _KNOWN_ACTION_ICONS[cat]:
             continue
-        
+
         prefix = ''
         if ':' not in expr:
             prefix = 'string:$portal_url/'
