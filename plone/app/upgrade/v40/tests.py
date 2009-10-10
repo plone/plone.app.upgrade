@@ -12,6 +12,7 @@ from plone.app.upgrade.v40.alphas import migrateActionIcons
 from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
 from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
 from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
+from plone.app.upgrade.v40.alphas import setupReferencebrowser
 
 
 class TestMigrations_v4_0alpha1(MigrationTest):
@@ -203,6 +204,23 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
         self.assertEqual(sheet.getProperty('use_email_as_login'), False)
 
+    def testReplaceReferencebrowser(self):
+        skins_tool = getToolByName(self.portal, 'portal_skins')
+        sels = skins_tool._getSelections()
+        for skinname, layer in sels.items():
+            layers = layer.split(',')
+            self.failIf('ATReferenceBrowserWidget' in layers)
+            layers.remove('referencebrowser')
+            new_layers = ','.join(layers)
+            sels[skinname] = new_layers
+
+        out = []
+        setupReferencebrowser(self.portal, out)
+
+        sels = skins_tool._getSelections()
+        for skinname, layer in sels.items():
+            layers = layer.split(',')
+            self.failUnless('referencebrowser' in layers)
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -31,8 +31,31 @@ _KNOWN_ACTION_ICONS = {
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
+    out = []
     portal = getToolByName(context, 'portal_url').getPortalObject()
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
+    setupReferencebrowser(portal, out)
+
+def setupReferencebrowser(portal, out):
+    # install new archetypes.referencebrowserwidget
+    qi = getToolByName(portal, 'portal_quickinstaller')
+    package = 'archetypes.referencebrowserwidget'
+    if not qi.isProductInstalled(package):
+        qi.installProduct(package, locked=True)
+        out.append("Installed %s" % package)
+
+    # remove obsolete skin 'ATReferenceBrowserWidget' from
+    # skins tool
+    skins_tool = getToolByName(portal, 'portal_skins')
+    sels = skins_tool._getSelections()
+    for skinname, layer in sels.items():
+        layers = layer.split(',')
+        if 'ATReferenceBrowserWidget' in layers:
+            layers.remove('ATReferenceBrowserWidget')
+        new_layers = ','.join(layers)
+        sels[skinname] = new_layers
+
+    return out
 
 
 def migrateActionIcons(context):
