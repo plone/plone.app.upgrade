@@ -14,7 +14,7 @@ from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.globalregistry import base
 from zope.component.interfaces import ComponentLookupError
-from zope.site import setSite
+from zope.site.hooks import setSite
 
 from Acquisition import aq_base
 from App.Common import package_home
