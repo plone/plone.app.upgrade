@@ -4,6 +4,10 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Added step to remove the plone_various step from the persistent import
+  step registry.
+  [davisagli]
+
 - Added upgrade step to remove outdated actions and properties from both the
   Plone Site and TempFolder FTI.
   [hannosch]

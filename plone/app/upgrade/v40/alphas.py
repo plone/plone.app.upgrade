@@ -181,3 +181,9 @@ def cleanPloneSiteFTI(context):
     if len(selection) > 0:
         temp.deleteActions(selection)
         logger.info('Updated TempFolder FTI.')
+
+def unregisterPloneVariousImportStep(context):
+    # remove step that is now registered via ZCML
+    steps = context.getImportStepRegistry()
+    if 'plone_various' in steps.listSteps():
+        steps.unregisterStep('plone_various')

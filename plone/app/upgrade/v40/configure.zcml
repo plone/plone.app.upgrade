@@ -6,6 +6,19 @@
     <include file="profiles.zcml" />
 
     <genericsetup:upgradeSteps
+        source="*"
+        destination="4.0.dev"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Unregister the plone_various import step"
+            handler=".alphas.unregisterPloneVariousImportStep"
+            />
+
+    </genericsetup:upgradeSteps>
+    
+
+    <genericsetup:upgradeSteps
         source="3.3"
         destination="4.0.dev"
         profile="Products.CMFPlone:plone">
