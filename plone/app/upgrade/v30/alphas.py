@@ -14,6 +14,7 @@ from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.globalregistry import base
 from zope.component.interfaces import ComponentLookupError
+from zope.site import setSite
 
 from Acquisition import aq_base
 from App.Common import package_home
@@ -221,7 +222,6 @@ def enableZope3Site(context):
     if not ISite.providedBy(portal):
         make_objectmanager_site(portal)
         logger.info('Made the portal a Zope3 site.')
-        
     try:
         components = portal.getSiteManager()
     except ComponentLookupError:
@@ -241,6 +241,8 @@ def enableZope3Site(context):
             components.utilities._createLookup()
             components.utilities.__parent__ = components
             logger.info('LookupClass replaced.')
+    # Make sure to set the new site as the new active one
+    setSite(portal)
 
 
 def migrateOldActions(context):
