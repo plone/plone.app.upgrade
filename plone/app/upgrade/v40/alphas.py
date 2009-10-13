@@ -3,6 +3,8 @@ from zope.component import getSiteManager
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
+from Products.MailHost.MailHost import MailHost
+from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.utils import logger
@@ -38,7 +40,7 @@ def threeX_alpha1(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
 
     installOrReinstallProduct(portal, 'plone.app.jquerytools', out)
-
+    migrateMailHost(portal)
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
 
 
@@ -187,3 +189,17 @@ def unregisterPloneVariousImportStep(context):
     steps = context.getImportStepRegistry()
     if 'plone_various' in steps.listSteps():
         steps.unregisterStep('plone_various')
+
+def migrateMailHost(portal):
+    mh = getToolByName(portal, 'MailHost', None)
+    # Only migrate secure mail host
+    if mh and getattr(mh, 'meta_type', None) == 'Secure Mail Host':
+        new_mh = MailHost(id=mh.id, title=mh.title, smtp_host=mh.smtp_host,
+                          smtp_port=mh.smtp_port, smtp_uid=mh.smtp_userid or '',
+                          smtp_pwd=mh.smtp_pass or '', force_tls=False)
+        portal._delObject('MailHost')
+        portal._setObject('MailHost', new_mh)
+        sm = getSiteManager(context=portal)
+        sm.unregisterUtility(provided=IMailHost)
+        sm.registerUtility(new_mh, provided=IMailHost)
+

@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Aded Migration for SecureMailHost removal
+  [alecm]
+
 - Added step to remove the plone_various step from the persistent import
   step registry.
   [davisagli]
