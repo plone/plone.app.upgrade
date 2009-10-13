@@ -5,4 +5,8 @@
               expression=""
               insert-after="jquery-integration.js"
               />
+  <javascript cacheable="True" compression="safe"
+	      cookable="True" enabled="True" expression=""
+	      id="collapsibleformfields.js" inline="False"
+	      insert-after="collapsiblesections.js" />
 </object>
