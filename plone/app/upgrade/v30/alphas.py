@@ -674,3 +674,4 @@ def restorePloneTool(context):
 def updateImportStepsFromBaseProfile(context):
     """Updates the available import steps for existing sites."""
     context.setBaselineContext("profile-%s" % _DEFAULT_PROFILE)
+

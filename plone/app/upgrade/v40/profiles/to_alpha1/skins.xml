@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_skins" meta_type="Plone Skins Tool">
+ <object name="plone_wysiwyg" remove="True"/>
+ <skin-path name="*">
+  <layer name="plone_wysiwyg" remove="True"/>
+ </skin-path>
+</object>

@@ -1,3 +1,4 @@
+import time
 from zope.component import getSiteManager, queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
@@ -234,6 +235,18 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         for skinname, layer in sels.items():
             layers = layer.split(',')
             self.failUnless('referencebrowser' in layers)
+    
+    def testInstallNewDependencies(self):
+        # test for running the TinyMCE profile by checking for the skin layer
+        # it installs (the profile is marked as noninstallable, so we can't
+        # ask the quick installer)
+        skins_tool = getToolByName(self.portal, 'portal_skins')
+        del skins_tool['tinymce']
+        for i in range(2):
+            loadMigrationProfile(self.portal, self.profile)
+            self.failUnless('tinymce' in skins_tool)
+            # sleep to avoid a GS log filename collision :-o
+            time.sleep(1)
 
     def testReplaceSecureMailHost(self):
         portal = self.portal

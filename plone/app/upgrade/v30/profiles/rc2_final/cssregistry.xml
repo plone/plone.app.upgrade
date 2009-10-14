@@ -6,7 +6,4 @@
  <!-- Move the CSS to the top, so the anon CSS block is rendered last -->
  <stylesheet id="member.css" insert-before="base.css" />
  <stylesheet id="RTL.css" insert-before="base.css" />
- <stylesheet id="kupustyles.css" insert-before="base.css" />
- <stylesheet id="kupuplone.css" insert-before="base.css" />
- <stylesheet id="kupudrawerstyles.css" insert-before="base.css" />
 </object>

@@ -7,11 +7,4 @@
     Export Archetype type specific configuration.
   
  </export-step>
- <export-step id="kupu-setup"
-              handler="Products.kupu.plone.exportimport.exportKupuSettings"
-              title="Kupu Settings">
-  
-  Export Kupu settings
- 
- </export-step>
 </export-steps>

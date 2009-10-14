@@ -6,7 +6,11 @@
               insert-after="jquery-integration.js"
               />
   <javascript cacheable="True" compression="safe"
-	      cookable="True" enabled="True" expression=""
-	      id="collapsibleformfields.js" inline="False"
-	      insert-after="collapsiblesections.js" />
+              cookable="True" enabled="True" expression=""
+              id="collapsibleformfields.js" inline="False"
+              insert-after="collapsiblesections.js" />
+  <javascript cacheable="True" compression="safe" cookable="True"
+              enabled="True"
+              expression="python:not here.restrictedTraverse('@@plone_portal_state').anonymous() or (getattr(portal, 'kupu_library_tool', None) and portal.kupu_library_tool.isKupuEnabled(REQUEST=request))"
+              id="sarissa.js" inline="False"/>
 </object>

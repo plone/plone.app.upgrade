@@ -4,6 +4,18 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Adjust the sarissa.js condition on upgrading to Plone 4, so that it doesn't
+  break if kupu is absent.
+  [davisagli]
+
+- Remove the now empty plone_wysiwyg skin layer on upgrading to Plone 4.
+  [davisagli]
+
+- Make sure the TinyMCE profile and default_editor property get installed
+  when upgrading to Plone 4 (kupu remains the default editor for upgraded
+  sites).
+  [davisagli]
+
 - Aded Migration for SecureMailHost removal
   [alecm]
 

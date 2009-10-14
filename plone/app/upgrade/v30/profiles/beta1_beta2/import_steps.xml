@@ -18,15 +18,6 @@
     Import Archetype type specific configuration.
   
  </import-step>
- <import-step id="kupu-setup" version="20061211-01"
-              handler="Products.kupu.plone.exportimport.importKupuSettings"
-              title="Kupu Settings">
-  <dependency step="toolset"/>
-  
-  
-  Import Kupu settings
- 
- </import-step>
  <import-step id="mimetypes-registry-various"
               version="20070309-01"
               handler="Products.MimetypesRegistry.setuphandlers.setupMimetypesRegistry"

@@ -27,7 +27,6 @@ setup(name='plone.app.upgrade',
             'plone.app.i18n',
             'plone.app.redirector',
             'plone.app.viewletmanager',
-            'Products.kupu',
         ]
       ),
       install_requires=[
