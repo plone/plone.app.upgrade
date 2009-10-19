@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Add new default modifiers from CMFEditions on upgrade.
+  [alecm]
+
 - Adjust the sarissa.js condition on upgrading to Plone 4, so that it doesn't
   break if kupu is absent.
   [davisagli]

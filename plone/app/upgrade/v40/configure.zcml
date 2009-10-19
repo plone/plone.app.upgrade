@@ -58,6 +58,11 @@
             handler=".alphas.cleanPloneSiteFTI"
             />
 
+        <genericsetup:upgradeStep
+            title="Added new CMFEditions default modifiers"
+            handler="plone.app.upgrade.v30.final_three0x.installNewModifiers"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
