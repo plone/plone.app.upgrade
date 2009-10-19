@@ -63,6 +63,11 @@
             handler="plone.app.upgrade.v30.final_three0x.installNewModifiers"
             />
 
+        <genericsetup:upgradeStep
+            title="Migrate MailHost"
+            handler=".alphas.migrateMailHost"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

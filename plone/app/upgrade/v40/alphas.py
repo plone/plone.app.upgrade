@@ -40,7 +40,6 @@ def threeX_alpha1(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
 
     installOrReinstallProduct(portal, 'plone.app.jquerytools', out)
-    migrateMailHost(portal)
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
 
 
