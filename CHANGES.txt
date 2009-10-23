@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Replace highlightsearchterms.js with jquery.highlightsearchterms.js
+  [mj]
+
 - Add new default modifiers from CMFEditions on upgrade.
   [alecm]
 
