@@ -34,14 +34,11 @@ _KNOWN_ACTION_ICONS = {
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
-
-    out = []
-
-    portal = getToolByName(context, 'portal_url').getPortalObject()
-
-    installOrReinstallProduct(portal, 'plone.app.jquerytools', out)
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
 
+def installJqTools(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    installOrReinstallProduct(portal, 'plone.app.jquerytools')
 
 def setupReferencebrowser(context):
     # install new archetypes.referencebrowserwidget

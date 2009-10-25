@@ -72,7 +72,7 @@ def cleanupSkinPath(portal, skinName, test=1):
          new_path.append(layer)
    skinstool.addSkinSelection(skinName, ','.join(new_path), test=test)
 
-def installOrReinstallProduct(portal, product_name, out, hidden=False):
+def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     """Installs a product
 
     If product is already installed test if it needs to be reinstalled. Also
@@ -84,17 +84,17 @@ def installOrReinstallProduct(portal, product_name, out, hidden=False):
         # Refresh skins
         portal.clearCurrentSkin()
         portal.setupCurrentSkin(portal.REQUEST)
-        out.append('Installed %s.' % product_name)
+        logger.info("Installed %s" % product_name)
     else:
         info = qi._getOb(product_name)
         installed_version = info.getInstalledVersion()
         product_version = qi.getProductVersion(product_name)
         if installed_version != product_version:
             qi.reinstallProducts([product_name])
-            out.append('%s is out of date (installed: %s/ filesystem: %s), '\
+            logger.info('%s is out of date (installed: %s/ filesystem: %s), '\
                 'reinstalled.' % (product_name, installed_version, product_version))
         else:
-            out.append('%s already installed.' % product_name)
+            logger.info('%s already installed.' % product_name)
 
 
 def loadMigrationProfile(context, profile, steps=_marker):

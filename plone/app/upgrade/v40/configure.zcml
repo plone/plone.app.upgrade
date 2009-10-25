@@ -54,18 +54,23 @@
             />
 
         <genericsetup:upgradeStep
-            title="Removed outdated actions and properties from the Portal FTI"
+            title="Remove outdated actions and properties from the Portal FTI."
             handler=".alphas.cleanPloneSiteFTI"
             />
 
         <genericsetup:upgradeStep
-            title="Added new CMFEditions default modifiers"
+            title="Add new CMFEditions default modifiers."
             handler="plone.app.upgrade.v30.final_three0x.installNewModifiers"
             />
 
         <genericsetup:upgradeStep
             title="Migrate MailHost"
             handler=".alphas.migrateMailHost"
+            />
+
+        <genericsetup:upgradeStep
+            title="Install new plone.app.jquerytools."
+            handler=".alphas.installJqTools"
             />
 
     </genericsetup:upgradeSteps>
