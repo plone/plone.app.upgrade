@@ -252,7 +252,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         portal = self.portal
         sm = getSiteManager(context=portal)
         # try it with an unmodified site to ensure it doesn't give any errors
-        migrateMailHost(portal)
+        migrateMailHost(portal.portal_setup)
         portal._delObject('MailHost')
         # Run it with our MailHost replaced
         portal._setObject('MailHost', FakeSecureMailHost())

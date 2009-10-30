@@ -186,7 +186,8 @@ def unregisterPloneVariousImportStep(context):
     if 'plone_various' in steps.listSteps():
         steps.unregisterStep('plone_various')
 
-def migrateMailHost(portal):
+def migrateMailHost(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
     mh = getToolByName(portal, 'MailHost', None)
     # Only migrate secure mail host
     if mh and getattr(mh, 'meta_type', None) == 'Secure Mail Host':
