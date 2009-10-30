@@ -4,6 +4,9 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- Add migration for unified folders.
+  [witsch]
+
 - Replace highlightsearchterms.js with jquery.highlightsearchterms.js
   [mj]
 

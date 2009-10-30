@@ -16,6 +16,7 @@ from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
 from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
 from plone.app.upgrade.v40.alphas import setupReferencebrowser
 from plone.app.upgrade.v40.alphas import migrateMailHost
+from plone.app.upgrade.v40.alphas import migrateFolders
 
 
 class FakeSecureMailHost(object):
@@ -269,6 +270,22 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.failUnlessEqual(new_mh.smtp_pwd, 'secret')
         #Force TLS is always false, because SMH has no equivalent option
         self.failUnlessEqual(new_mh.force_tls, False)
+
+    def testFolderMigration(self):
+        from plone.app.folder.tests.content import create
+        from plone.app.folder.tests.test_migration import reverseMigrate
+        from plone.app.folder.tests.test_migration import isSaneBTreeFolder
+        # create a folder in an unmigrated state & check it's broken...
+        folder = create('Folder', self.portal, 'foo', title='Foo')
+        reverseMigrate(self.portal)
+        self.failIf(isSaneBTreeFolder(self.portal.foo))
+        # now run the migration step...
+        migrateFolders(self.portal)
+        folder = self.portal.foo
+        self.failUnless(isSaneBTreeFolder(folder))
+        self.assertEqual(folder.getId(), 'foo')
+        self.assertEqual(folder.Title(), 'Foo')
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

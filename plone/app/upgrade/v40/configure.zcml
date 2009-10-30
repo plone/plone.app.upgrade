@@ -73,6 +73,11 @@
             handler=".alphas.installJqTools"
             />
 
+        <genericsetup:upgradeStep
+            title="Migrate folders."
+            handler=".alphas.migrateFolders"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

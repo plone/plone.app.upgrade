@@ -200,3 +200,16 @@ def migrateMailHost(context):
         sm.unregisterUtility(provided=IMailHost)
         sm.registerUtility(new_mh, provided=IMailHost)
 
+def migrateFolders(context):
+    from plone.app.folder.migration import BTreeMigrationView
+    class MigrationView(BTreeMigrationView):
+        def mklog(self):
+            msgs = []
+            def log(msg, timestamp=True, cr=True):
+                msgs.append(msg)
+                if cr:
+                    logger.info(''.join(msgs))
+                    msgs[:] = []
+            return log
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    MigrationView(portal, None)()
