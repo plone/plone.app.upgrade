@@ -19,4 +19,8 @@
               enabled="True" expression="" id="jquery.highlightsearchterms.js"
               inline="False" insert-after="input-label.js"/>
   <javascript id="jquery.highlightsearchterms.js" remove="True"/>
+
+  <!-- CSSQuery has been removed -->
+  <javascript id="cssQuery.js" remove="True"/>
+
 </object>

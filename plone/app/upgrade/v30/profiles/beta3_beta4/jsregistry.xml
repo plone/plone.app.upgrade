@@ -9,7 +9,7 @@
 
   <!-- Sarissa should be almost at the top, because it's a dependency for
        many other scripts -->
-  <javascript id="sarissa.js" insert-after="cssQuery.js"/>    
+  <javascript id="sarissa.js" insert-after="jquery.js"/>    
   <!-- Move these, so they won't break up the rendering -->
   <javascript id="toc.js" insert-after="styleswitcher.js"/>    
   <javascript id="webstats.js" insert-after="toc.js"/>
