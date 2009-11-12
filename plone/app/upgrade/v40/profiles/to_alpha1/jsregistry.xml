@@ -18,7 +18,7 @@
   <javascript cacheable="True" compression="safe" cookable="True"
               enabled="True" expression="" id="jquery.highlightsearchterms.js"
               inline="False" insert-after="input-label.js"/>
-  <javascript id="jquery.highlightsearchterms.js" remove="True"/>
+  <javascript id="highlightsearchterms.js" remove="True"/>
 
   <!-- CSSQuery has been removed -->
   <javascript id="cssQuery.js" remove="True"/>

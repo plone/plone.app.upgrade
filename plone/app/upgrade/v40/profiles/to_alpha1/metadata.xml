@@ -3,5 +3,7 @@
   <version>1</version>
   <dependencies>
     <dependency>profile-Products.TinyMCE:TinyMCE</dependency>
+    <dependency>profile-plonetheme.sunburst:default</dependency>
+    <dependency>profile-plonetheme.classic:default</dependency>
   </dependencies>
 </metadata>

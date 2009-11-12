@@ -4,6 +4,12 @@ Changelog
 1.0 - unreleased
 ----------------
 
+- fixed removeal of highlightsearchterms.js
+  [naro]
+  
+- added plonetheme.classic and plonetheme.sunburst as dependencies
+  [naro]
+
 - Add migration for unified folders.
   [witsch]
 
