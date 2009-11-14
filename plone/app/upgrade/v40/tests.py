@@ -41,6 +41,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.cptool = getToolByName(self.portal, 'portal_controlpanel')
         self.wftool = getToolByName(self.portal, 'portal_workflow')
         self.csstool = getToolByName(self.portal, 'portal_css')
+        self.jstool = getToolByName(self.portal, 'portal_javascripts')
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -248,6 +249,17 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             self.failUnless('tinymce' in skins_tool)
             # sleep to avoid a GS log filename collision :-o
             time.sleep(1)
+
+    def testNewJSIsInstalled(self):
+        installedScriptIds = self.jstool.getResourceIds()
+        expected = [
+            # js resources that are part of plone.app.jquerytools
+            '++resource++plone.app.jquerytools.js',
+            '++resource++plone.app.jquerytools.overlayhelpers.js',
+            # js resource that is new in CMFPlone
+            'popupforms.js']
+        for e in expected:
+            self.failUnless(e in installedScriptIds, e)
 
     def testReplaceSecureMailHost(self):
         portal = self.portal

@@ -19,7 +19,7 @@
     
 
     <genericsetup:upgradeSteps
-        source="3.3"
+        source="3.3.2"
         destination="4.0.dev"
         profile="Products.CMFPlone:plone">
 
