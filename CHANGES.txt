@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a1 - Unreleased
+1.0a1 - 2009-11-17
 ------------------
 
 - Added Products.contentmigration as a dependency.
@@ -58,8 +58,8 @@ Changelog
   [davisagli]
 
 - Added updating of the actor variable expression for several workflows in the
-  Plone 4 alpha migration.  This helps fix
-  http://dev.plone.org/plone/ticket/7398
+  Plone 4 alpha migration. This helps fix
+  http://dev.plone.org/plone/ticket/7398.
   [davisagli]
 
 - Added removal of action for AT graphviz reference visualization from
