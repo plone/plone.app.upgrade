@@ -15,10 +15,42 @@
 
     <genericsetup:upgradeStep
         source="3.2a1"
-        destination="3.2b1"
+        destination="3.2rc1"
         title="Update permissions on iterate actions."
         profile="Products.CMFPlone:plone"
         handler=".betas.three1_beta1"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.2rc1"
+        destination="3.2"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.2"
+        destination="3.2.1"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.2.1"
+        destination="3.2.2"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="3.2.2"
+        destination="3.2.3"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
         />
 
 </configure>
