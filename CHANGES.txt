@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.0 - unreleased
-----------------
+1.0a1 - Unreleased
+------------------
 
 - Added Products.contentmigration as a dependency.
   [hannosch]

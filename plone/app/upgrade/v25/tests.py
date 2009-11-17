@@ -35,7 +35,9 @@ class TestMigrations_v2_5_0(MigrationTest):
         # event registration test
         script_ids = jsreg.getResourceIds()
         self.failUnless('event-registration.js' in script_ids)
-        self.assertEqual(jsreg.getResourcePosition('event-registration.js'), 3)
+        after = jsreg.getResourcePosition('register_function.js')
+        position = jsreg.getResourcePosition('event-registration.js')
+        self.failUnless(position < after)
 
     def tesFixObjDeleteAction(self):
         # Prepare delete actions test

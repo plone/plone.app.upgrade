@@ -16,7 +16,7 @@
     <genericsetup:upgradeStep
         source="3.2a1"
         destination="3.2b1"
-        title="Empty upgrade step"
+        title="Update permissions on iterate actions."
         profile="Products.CMFPlone:plone"
         handler=".betas.three1_beta1"
         />
