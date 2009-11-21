@@ -11,13 +11,13 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Update the toolset registry."
-            handler=".alphas.updateToolset"
+            title="Cleanup the persistent tool registry."
+            handler=".alphas.cleanUpToolRegistry"
             />
 
         <genericsetup:upgradeStep
-            title="Cleanup the persistent tool registry."
-            handler=".alphas.cleanUpToolRegistry"
+            title="Update the toolset registry."
+            handler=".alphas.updateToolset"
             />
 
         <genericsetup:upgradeStep
