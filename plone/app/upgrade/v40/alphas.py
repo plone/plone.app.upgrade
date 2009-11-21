@@ -189,7 +189,7 @@ def cleanPloneSiteFTI(context):
         logger.info('Updated TempFolder FTI.')
 
 def unregisterOldImportSteps(context):
-    # remove steps that are now registered via ZCML
+    # remove steps that are now registered via ZCML or gone completely
     REMOVE = (
         'plone-archetypes',
         'plone-site',
