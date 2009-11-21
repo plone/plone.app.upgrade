@@ -255,8 +255,9 @@ def cleanUpProductRegistry(context):
         else:
             # Remove and reinitialize the help sections. Their internal
             # catalog has changed in Zope 2.12
-            product._delObject('Help')
-            product.getProductHelp()
+            if product.get('Help'):
+                product._delObject('Help')
+                product.getProductHelp()
 
     # Remove product entries for products gone from the filesystem
     for name in gone:
@@ -265,11 +266,25 @@ def cleanUpProductRegistry(context):
 def migrateMailHost(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     mh = getToolByName(portal, 'MailHost', None)
-    # Only migrate secure mail host
-    if mh and getattr(mh, 'meta_type', None) == 'Secure Mail Host':
-        new_mh = MailHost(id=mh.id, title=mh.title, smtp_host=mh.smtp_host,
-                          smtp_port=mh.smtp_port, smtp_uid=mh.smtp_userid or '',
-                          smtp_pwd=mh.smtp_pass or '', force_tls=False)
+    if mh is None:
+        return
+
+    # Migrate secure mail host and broken mail host objects
+    meta_type = getattr(mh, 'meta_type', None)
+    if meta_type in ('Secure Mail Host', 'Broken Because Product is Gone'):
+        if meta_type == 'Secure Mail Host':
+            new_mh = MailHost(
+                id=mh.id,
+                title=mh.title,
+                smtp_host=mh.smtp_host,
+                smtp_port=mh.smtp_port,
+                smtp_uid=mh.smtp_userid or '',
+                smtp_pwd=mh.smtp_pass or '',
+                force_tls=False,
+            )
+        else:
+            new_mh = MailHost(id='MailHost', smtp_host='')
+            logger.info('Replaced a broken MailHost object.')
         portal._delObject('MailHost')
         portal._setObject('MailHost', new_mh)
         sm = getSiteManager(context=portal)

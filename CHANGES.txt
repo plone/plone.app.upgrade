@@ -4,6 +4,10 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Let the mailhost upgrade step replace broken objects with a fresh standard
+  mailhost. It's likely our new one has the features of the custom product.
+  [hannosch]
+
 - Clean up Zope's product registry to deal with removed products and internal
   changes to the HelpSys catalogs.
   [hannosch]
