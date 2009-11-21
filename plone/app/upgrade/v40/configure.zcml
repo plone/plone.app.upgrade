@@ -11,6 +11,11 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
+            title="Update the toolset"
+            handler=".alphas.updateToolset"
+            />
+
+        <genericsetup:upgradeStep
             title="Unregister the plone_various import step"
             handler=".alphas.unregisterPloneVariousImportStep"
             />

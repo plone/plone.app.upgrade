@@ -31,6 +31,11 @@ _KNOWN_ACTION_ICONS = {
                      'MarkupSettings', 'ContentRules'],
 }
 
+def updateToolset(context):
+    # This must happen before other upgrade steps using GS profiles can be
+    # successfully run.
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:update-toolset')
+
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """

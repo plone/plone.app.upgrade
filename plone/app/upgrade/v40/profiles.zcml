@@ -4,6 +4,15 @@
     i18n_domain="plone">
 
     <genericsetup:registerProfile
+        name="update-toolset"
+        title="Update toolset"
+        description="This profile updates the toolset to make sure other profiles don't try to use broken tools." 
+        directory="profiles/update_toolset"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <genericsetup:registerProfile
         name="3-4alpha1"
         title="Upgrade profile for Plone 3.x to Plone 4.0alpha1"
         description="This profile contains configuration changes that are applied during the Plone 3.x to 4.0alpha1 upgrade." 

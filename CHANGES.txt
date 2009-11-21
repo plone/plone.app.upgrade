@@ -4,6 +4,12 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- When upgrading to Plone 4.0a1, be sure to update the toolset with new class
+  locations before importing any other profiles, which might otherwise fail
+  in the toolset step. Be sure to update the locations for the tools which
+  moved from CMFPlone to PlonePAS, for upgrades from very old sites.
+  [davisagli]
+
 
 1.0a1 - 2009-11-17
 ------------------
