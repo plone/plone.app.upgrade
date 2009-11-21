@@ -1,3 +1,5 @@
+import transaction
+
 from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
 from zope.component import getSiteManager
 from zope.ramcache.interfaces.ram import IRAMCache
@@ -5,6 +7,7 @@ from zope.ramcache.ram import RAMCache
 
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
+from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.utils import logger
@@ -185,11 +188,57 @@ def cleanPloneSiteFTI(context):
         temp.deleteActions(selection)
         logger.info('Updated TempFolder FTI.')
 
-def unregisterPloneVariousImportStep(context):
-    # remove step that is now registered via ZCML
-    steps = context.getImportStepRegistry()
-    if 'plone_various' in steps.listSteps():
-        steps.unregisterStep('plone_various')
+def unregisterOldImportSteps(context):
+    # remove steps that are now registered via ZCML
+    REMOVE = (
+        'plone-archetypes',
+        'plone-site',
+        'plone_various',
+    )
+    registry = context.getImportStepRegistry()
+    steps = registry.listSteps()
+    for step in REMOVE:
+        if step in steps:
+            registry.unregisterStep(step)
+
+def cleanUpToolRegistry(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    toolset = context.getToolsetRegistry()
+    required = toolset._required.copy()
+    existing = portal.keys()
+    changed = False
+    for name, info in required.items():
+        if name not in existing:
+            del required[name]
+            changed = True
+    if changed:
+        toolset._required = required
+        logger.info('Cleaned up the toolset registry.')
+
+def cleanUpSkinsTool(context):
+    skins = getToolByName(context, 'portal_skins')
+    # Remove directory views for directories missing on the filesystem
+    for name in skins.keys():
+        directory_view = skins.get(name)
+        reg_key = getattr(directory_view, '_dirpath', None)
+        if not reg_key:
+            # not a directory view, but a persistent folder
+            continue
+        try:
+            reg_key = _dirreg.getCurrentKeyFormat(reg_key)
+            info = _dirreg.getDirectoryInfo(reg_key)
+        except ValueError:
+            skins._delObject(name)
+
+    transaction.savepoint(optimistic=True)
+    existing = skins.keys()
+    # Remove no longer existing entries from skin selections
+    for layer, paths in skins.selections.items():
+        new_paths = []
+        for name in paths.split(','):
+            if name in existing:
+                new_paths.append(name)
+        skins.selections[layer] = ','.join(new_paths)
 
 def migrateMailHost(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()

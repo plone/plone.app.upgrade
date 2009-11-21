@@ -11,13 +11,23 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Update the toolset"
+            title="Update the toolset registry."
             handler=".alphas.updateToolset"
             />
 
         <genericsetup:upgradeStep
-            title="Unregister the plone_various import step"
-            handler=".alphas.unregisterPloneVariousImportStep"
+            title="Cleanup the persistent tool registry."
+            handler=".alphas.cleanUpToolRegistry"
+            />
+
+        <genericsetup:upgradeStep
+            title="Unregister old import steps."
+            handler=".alphas.unregisterOldImportSteps"
+            />
+
+        <genericsetup:upgradeStep
+            title="Cleanup the skins tool."
+            handler=".alphas.cleanUpSkinsTool"
             />
 
     </genericsetup:upgradeSteps>

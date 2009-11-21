@@ -4,6 +4,17 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Deal with more removed import steps and remove them from the registry.
+  [hannosch]
+
+- Cleanup the skins tools and remove broken directory views as well as cleaning
+  up the skin selections to avoid references to no longer existing directories.
+  [hannosch]
+
+- Remove entries from the toolset registry pointing to no longer existing
+  tools. This can happen when add-ons have been uninstalled.
+  [hannosch]
+
 - When upgrading to Plone 4.0a1, be sure to update the toolset with new class
   locations before importing any other profiles, which might otherwise fail
   in the toolset step. Be sure to update the locations for the tools which
