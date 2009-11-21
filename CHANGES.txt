@@ -4,6 +4,10 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Clean up Zope's product registry to deal with removed products and internal
+  changes to the HelpSys catalogs.
+  [hannosch]
+
 - Deal with more removed import steps and remove them from the registry.
   [hannosch]
 

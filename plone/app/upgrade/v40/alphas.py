@@ -5,6 +5,7 @@ from zope.component import getSiteManager
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
+from App.Common import package_home
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.DirectoryView import _dirreg
@@ -239,6 +240,27 @@ def cleanUpSkinsTool(context):
             if name in existing:
                 new_paths.append(name)
         skins.selections[layer] = ','.join(new_paths)
+
+def cleanUpProductRegistry(context):
+    control = getattr(context, 'Control_Panel')
+    products = control.Products
+
+    gone = []
+    for name, product in products.items():
+        path = getattr(product, 'package_name', 'Products.' + product.id)
+        try:
+            prod_path = package_home({'__name__' : path})
+        except KeyError:
+            gone.append(name)
+        else:
+            # Remove and reinitialize the help sections. Their internal
+            # catalog has changed in Zope 2.12
+            product._delObject('Help')
+            product.getProductHelp()
+
+    # Remove product entries for products gone from the filesystem
+    for name in gone:
+        products._delObject(name)
 
 def migrateMailHost(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()

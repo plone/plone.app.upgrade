@@ -30,6 +30,11 @@
             handler=".alphas.cleanUpSkinsTool"
             />
 
+        <genericsetup:upgradeStep
+            title="Cleanup Zope's products registry."
+            handler=".alphas.cleanUpProductRegistry"
+            />
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
