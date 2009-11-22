@@ -49,10 +49,14 @@ def rememberTheme(context):
     default_skin = getattr(skins, 'default_skin', '')
     setattr(aq_base(skins), 'old_default_skin', default_skin)
 
+
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
+    loadMigrationProfile(
+        context, 'profile-Products.CMFPlone:dependencies',
+        steps=('controlpanel', 'jsregistry'))
 
 
 def restoreTheme(context):

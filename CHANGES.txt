@@ -4,6 +4,9 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Run the steps found in the ``Products.CMFPlone:dependencies`` profile.
+  [hannosch]
+
 - Remove ``calendarpopup.js`` from portal_javascripts.
   [hannosch]
 
