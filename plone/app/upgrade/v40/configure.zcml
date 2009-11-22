@@ -83,7 +83,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="Migrate MailHost"
+            title="Upgrade MailHost."
             handler=".alphas.migrateMailHost"
             />
 
@@ -93,7 +93,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="Migrate folders."
+            title="Upgrade standard folders to new unified folder type."
             handler=".alphas.migrateFolders"
             />
 
