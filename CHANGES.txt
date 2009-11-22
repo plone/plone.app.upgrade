@@ -4,6 +4,9 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Recompile all persistent Python Scripts during the upgrade.
+  [hannosch]
+
 - Simplify installation of new dependencies and include ``plone.app.imaging``.
   [hannosch]
 

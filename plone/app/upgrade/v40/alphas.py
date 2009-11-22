@@ -348,3 +348,20 @@ def migrateFolders(context):
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
     MigrationView(portal, None)()
+
+
+def recompilePythonScripts(context):
+    '''Recompile all Python Scripts'''
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    scripts = portal.ZopeFind(portal, obj_metatypes=('Script (Python)',),
+                              search_sub=1)
+    names = []
+    for name, ob in scripts:
+        if ob._v_change:
+            names.append(name)
+            ob._compile()
+            ob._p_changed = 1
+
+    if names:
+        logger.info('The following Scripts were recompiled:\n' +
+                    '\n'.join(names))
