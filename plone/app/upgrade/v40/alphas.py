@@ -17,12 +17,12 @@ from plone.app.upgrade.utils import installOrReinstallProduct
 
 
 _KNOWN_ACTION_ICONS = {
-    'plone' : ['sendto', 'print', 'rss', 'extedit', 'full_screen',
-               'addtofavorites', 'ics', 'vcs'],
-    'object_buttons' : ['cut', 'copy', 'paste', 'delete',
-                        'iterate_checkin', 'iterate_checkout',
-                        'iterate_checkout_cancel'],
-    'folder_buttons' : ['cut', 'copy', 'paste', 'delete'],
+    'plone': ['sendto', 'print', 'rss', 'extedit', 'full_screen',
+              'addtofavorites', 'ics', 'vcs'],
+    'object_buttons': ['cut', 'copy', 'paste', 'delete',
+                       'iterate_checkin', 'iterate_checkout',
+                       'iterate_checkout_cancel'],
+    'folder_buttons': ['cut', 'copy', 'paste', 'delete'],
     'controlpanel': ['QuickInstaller', 'portal_atct', 'MailHost',
                      'UsersGroups', 'MemberPrefs', 'PortalSkin',
                      'MemberPassword', 'ZMI', 'SecuritySettings',
@@ -35,19 +35,24 @@ _KNOWN_ACTION_ICONS = {
                      'MarkupSettings', 'ContentRules'],
 }
 
+
 def updateToolset(context):
     # This must happen before other upgrade steps using GS profiles can be
     # successfully run.
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:update-toolset')
+    name = 'profile-plone.app.upgrade.v40:update-toolset'
+    loadMigrationProfile(context, name)
+
 
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
 
+
 def installJqTools(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     installOrReinstallProduct(portal, 'plone.app.jquerytools')
+
 
 def setupReferencebrowser(context):
     # install new archetypes.referencebrowserwidget
@@ -67,6 +72,7 @@ def setupReferencebrowser(context):
             layers.remove('ATReferenceBrowserWidget')
         new_layers = ','.join(layers)
         sels[skinname] = new_layers
+
 
 def migrateActionIcons(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -93,7 +99,8 @@ def migrateActionIcons(context):
                 pass
         prefix = ''
 
-        if cat not in _KNOWN_ACTION_ICONS.keys() or ident not in _KNOWN_ACTION_ICONS[cat]:
+        if (cat not in _KNOWN_ACTION_ICONS.keys() or
+            ident not in _KNOWN_ACTION_ICONS[cat]):
             continue
 
         prefix = ''
@@ -112,13 +119,15 @@ def migrateActionIcons(context):
                     action._setPropValue('icon_expr', '%s%s' % (prefix, expr))
         elif cat == 'controlpanel':
             # control panel tool
-            action_infos = [a for a in cptool.listActions() if a.getId() == ident]
+            action_infos = [a for a in cptool.listActions()
+                              if a.getId() == ident]
             if len(action_infos):
                 if not action_infos[0].getIconExpression():
                     action_infos[0].setIconExpression('%s%s' % (prefix, expr))
 
         # Remove the action icon
         aitool.removeActionIcon(cat, ident)
+
 
 def addOrReplaceRamCache(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -127,6 +136,7 @@ def addOrReplaceRamCache(context):
     sm.unregisterUtility(provided=IRAMCache)
     sm.registerUtility(factory=RAMCache, provided=IRAMCache)
     logger.info('Installed local RAM cache utility.')
+
 
 def changeWorkflowActorVariableExpression(context):
     wftool = getToolByName(context, 'portal_workflow')
@@ -145,17 +155,19 @@ def changeWorkflowActorVariableExpression(context):
                                 update_always = 1)
     logger.info('Updated workflow actor variable expression.')
 
+
 def changeAuthenticatedResourcesCondition(context):
     """ ResourceRegistries now has an 'authenticated' boolean property which
         can be used to short-circuit the expression evaluation for the simple,
         common case of authenticated-only resources.
     """
     resources = {
-        'portal_css': ('member.css',),
+        'portal_css': ('member.css', ),
         'portal_javascripts': ('dropdown.js', 'table_sorter.js',
             'calendar_formfield.js', 'calendarpopup.js', 'formUnload.js',
-            'formsubmithelpers.js', 'unlockOnFormUnload.js')
-        }
+            'formsubmithelpers.js', 'unlockOnFormUnload.js')}
+    ANON = ('not: portal/portal_membership/isAnonymousUser',
+            'not:portal/portal_membership/isAnonymousUser', )
     for tool_id, resource_ids in resources.items():
         tool = getToolByName(context, tool_id, None)
         if tool is None:
@@ -164,11 +176,12 @@ def changeAuthenticatedResourcesCondition(context):
             resource = tool.getResource(resource_id)
             if resource is None:
                 continue
-            if resource._data['expression'] == 'not: portal/portal_membership/isAnonymousUser':
+            if resource._data['expression'] in ANON:
                 resource.setExpression('')
                 resource.setAuthenticated(True)
         tool.cookResources()
     logger.info('Updated expression for authenticated-only resources.')
+
 
 def cleanPloneSiteFTI(context):
     portal_types = getToolByName(context, 'portal_types', None)
@@ -189,6 +202,7 @@ def cleanPloneSiteFTI(context):
         temp.deleteActions(selection)
         logger.info('Updated TempFolder FTI.')
 
+
 def unregisterOldImportSteps(context):
     # remove steps that are now registered via ZCML or gone completely
     REMOVE = (
@@ -201,6 +215,7 @@ def unregisterOldImportSteps(context):
     for step in REMOVE:
         if step in steps:
             registry.unregisterStep(step)
+
 
 def cleanUpToolRegistry(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -215,6 +230,7 @@ def cleanUpToolRegistry(context):
     if changed:
         toolset._required = required
         logger.info('Cleaned up the toolset registry.')
+
 
 def cleanUpSkinsTool(context):
     skins = getToolByName(context, 'portal_skins')
@@ -244,6 +260,7 @@ def cleanUpSkinsTool(context):
                 new_paths.append('classic_styles')
         skins.selections[layer] = ','.join(new_paths)
 
+
 def cleanUpProductRegistry(context):
     control = getattr(context, 'Control_Panel')
     products = control.Products
@@ -252,7 +269,7 @@ def cleanUpProductRegistry(context):
     for name, product in products.items():
         path = getattr(product, 'package_name', 'Products.' + product.id)
         try:
-            prod_path = package_home({'__name__' : path})
+            prod_path = package_home({'__name__': path})
         except KeyError:
             gone.append(name)
         else:
@@ -265,6 +282,7 @@ def cleanUpProductRegistry(context):
     # Remove product entries for products gone from the filesystem
     for name in gone:
         products._delObject(name)
+
 
 def migrateMailHost(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -294,16 +312,21 @@ def migrateMailHost(context):
         sm.unregisterUtility(provided=IMailHost)
         sm.registerUtility(new_mh, provided=IMailHost)
 
+
 def migrateFolders(context):
     from plone.app.folder.migration import BTreeMigrationView
+
     class MigrationView(BTreeMigrationView):
+
         def mklog(self):
             msgs = []
+
             def log(msg, timestamp=True, cr=True):
                 msgs.append(msg)
                 if cr:
                     logger.info(''.join(msgs))
                     msgs[:] = []
             return log
+
     portal = getToolByName(context, 'portal_url').getPortalObject()
     MigrationView(portal, None)()
