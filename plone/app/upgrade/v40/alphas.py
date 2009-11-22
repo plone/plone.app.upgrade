@@ -239,6 +239,9 @@ def cleanUpSkinsTool(context):
         for name in paths.split(','):
             if name in existing:
                 new_paths.append(name)
+            elif name == 'plone_styles':
+                # plone_styles has been moved and renamed
+                new_paths.append('classic_styles')
         skins.selections[layer] = ','.join(new_paths)
 
 def cleanUpProductRegistry(context):

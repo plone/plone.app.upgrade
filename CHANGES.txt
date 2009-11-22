@@ -4,6 +4,9 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- The plone_styles layer is automatically renamed to classic_styles.
+  [hannosch]
+
 - Let the mailhost upgrade step replace broken objects with a fresh standard
   mailhost. It's likely our new one has the features of the custom product.
   [hannosch]
