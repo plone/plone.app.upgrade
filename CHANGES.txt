@@ -4,6 +4,9 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Remove ``calendarpopup.js`` from portal_javascripts.
+  [hannosch]
+
 - Preserve the default theme after an upgrade instead of making sunburst the
   new default. Also ensure the classic_styles layer isn't part of sunburst.
   [hannosch]

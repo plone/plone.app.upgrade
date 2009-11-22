@@ -19,7 +19,8 @@
               inline="False" insert-after="input-label.js"/>
   <javascript id="highlightsearchterms.js" remove="True"/>
 
-  <!-- CSSQuery has been removed -->
+  <!-- CSSQuery and calendarpopup have been removed -->
   <javascript id="cssQuery.js" remove="True"/>
+  <javascript id="calendarpopup.js" remove="True" />
 
 </object>
