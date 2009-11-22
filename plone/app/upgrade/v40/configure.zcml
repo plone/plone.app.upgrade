@@ -43,8 +43,18 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
+            title="Remember active theme."
+            handler=".alphas.rememberTheme"
+            />
+
+        <genericsetup:upgradeStep
             title="General upgrade steps."
             handler=".alphas.threeX_alpha1"
+            />
+
+        <genericsetup:upgradeStep
+            title="Restore theme after Sunburst has been installed."
+            handler=".alphas.restoreTheme"
             />
 
         <genericsetup:upgradeStep

@@ -4,6 +4,10 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Preserve the default theme after an upgrade instead of making sunburst the
+  new default. Also ensure the classic_styles layer isn't part of sunburst.
+  [hannosch]
+
 - The plone_styles layer is automatically renamed to classic_styles.
   [hannosch]
 

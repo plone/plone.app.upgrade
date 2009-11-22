@@ -5,6 +5,7 @@ from zope.component import getSiteManager
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
+from Acquisition import aq_base
 from App.Common import package_home
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
@@ -43,10 +44,36 @@ def updateToolset(context):
     loadMigrationProfile(context, name)
 
 
+def rememberTheme(context):
+    skins = getToolByName(context, 'portal_skins')
+    default_skin = getattr(skins, 'default_skin', '')
+    setattr(aq_base(skins), 'old_default_skin', default_skin)
+
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
+
+
+def restoreTheme(context):
+    skins = getToolByName(context, 'portal_skins')
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    old_default_skin = getattr(aq_base(skins), 'old_default_skin', None)
+    if old_default_skin is not None:
+        setattr(aq_base(skins), 'default_skin', old_default_skin)
+        portal.changeSkin(old_default_skin, context.REQUEST)
+
+    # The Sunburst theme is based on Plone Default. During the cleanUpSkinsTool
+    # upgrade step we replace plone_styles with classic_styles in the default
+    # theme. As a result Sunburst includes ``classic_styles`` at this point.
+    theme = 'Sunburst Theme'
+    paths = skins.selections.get(theme)
+    if paths:
+        new_paths = []
+        for path in paths.split(','):
+            if path != 'classic_styles':
+                new_paths.append(path)
+        skins.selections[theme] = ','.join(new_paths)
 
 
 def installJqTools(context):
