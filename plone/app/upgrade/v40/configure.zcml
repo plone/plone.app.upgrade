@@ -78,7 +78,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="Install new archetypes.referencebrowserwidget."
+            title="Configure new reference browser."
             handler=".alphas.setupReferencebrowser"
             />
 
@@ -95,11 +95,6 @@
         <genericsetup:upgradeStep
             title="Upgrade MailHost."
             handler=".alphas.migrateMailHost"
-            />
-
-        <genericsetup:upgradeStep
-            title="Install new plone.app.jquerytools."
-            handler=".alphas.installJqTools"
             />
 
         <genericsetup:upgradeStep

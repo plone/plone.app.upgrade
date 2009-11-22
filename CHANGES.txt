@@ -4,6 +4,9 @@ Changelog
 1.0a2 - Unreleased
 ------------------
 
+- Simplify installation of new dependencies and include ``plone.app.imaging``.
+  [hannosch]
+
 - Run the steps found in the ``Products.CMFPlone:dependencies`` profile.
   [hannosch]
 

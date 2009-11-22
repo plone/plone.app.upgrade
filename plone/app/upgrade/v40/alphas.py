@@ -14,7 +14,6 @@ from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import installOrReinstallProduct
 
 
 _KNOWN_ACTION_ICONS = {
@@ -80,21 +79,9 @@ def restoreTheme(context):
         skins.selections[theme] = ','.join(new_paths)
 
 
-def installJqTools(context):
-    portal = getToolByName(context, 'portal_url').getPortalObject()
-    installOrReinstallProduct(portal, 'plone.app.jquerytools')
-
-
 def setupReferencebrowser(context):
-    # install new archetypes.referencebrowserwidget
-    portal = getToolByName(context, 'portal_url').getPortalObject()
-    qi = getToolByName(portal, 'portal_quickinstaller')
-    package = 'archetypes.referencebrowserwidget'
-    if not qi.isProductInstalled(package):
-        qi.installProduct(package, locked=True)
-        logger.info("Installed %s" % package)
-
     # remove obsolete skin 'ATReferenceBrowserWidget' from skins tool
+    portal = getToolByName(context, 'portal_url').getPortalObject()
     skins_tool = getToolByName(portal, 'portal_skins')
     sels = skins_tool._getSelections()
     for skinname, layer in sels.items():

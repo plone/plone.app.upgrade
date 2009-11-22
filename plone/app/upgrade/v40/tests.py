@@ -231,13 +231,14 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             new_layers = ','.join(layers)
             sels[skinname] = new_layers
 
+        loadMigrationProfile(self.portal, self.profile)
         setupReferencebrowser(self.portal)
 
         sels = skins_tool._getSelections()
         for skinname, layer in sels.items():
             layers = layer.split(',')
             self.failUnless('referencebrowser' in layers)
-    
+
     def testInstallNewDependencies(self):
         # test for running the TinyMCE profile by checking for the skin layer
         # it installs (the profile is marked as noninstallable, so we can't
