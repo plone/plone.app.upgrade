@@ -109,4 +109,16 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4.0a1"
+        destination="4.0a2"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Rename join_form_fields."
+            handler=".alphas.renameJoinFormFields"
+            />
+            
+    </genericsetup:upgradeSteps>
+
 </configure>

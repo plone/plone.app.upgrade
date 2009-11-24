@@ -351,7 +351,7 @@ def migrateFolders(context):
 
 
 def recompilePythonScripts(context):
-    '''Recompile all Python Scripts'''
+    """Recompile all Python Scripts"""
     portal = getToolByName(context, 'portal_url').getPortalObject()
     scripts = portal.ZopeFind(portal, obj_metatypes=('Script (Python)',),
                               search_sub=1)
@@ -365,3 +365,22 @@ def recompilePythonScripts(context):
     if names:
         logger.info('The following Scripts were recompiled:\n' +
                     '\n'.join(names))
+
+
+def alpha1_alpha2(context):
+    """4.0alpha1 -> 4.0alpha2
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha1-4alpha2')
+
+def renameJoinFormFields(context):
+    """Rename portal_properties join_form_fields to registration_fields"""
+    sprop = getToolByName(context, 'portal_properties').site_properties
+    if sprop.hasProperty('join_form_fields'):
+        oldValue = list(sprop.getProperty('join_form_fields'))
+        # The 'groups' field no longer belongs in the user-facing registration form
+        if 'groups' in oldValue:
+            oldValue.remove('groups')
+        if not sprop.hasProperty('user_registration_fields'):
+            sprop.manage_addProperty('user_registration_fields', oldValue, 'lines')
+        sprop.manage_delProperties(['join_form_fields'])    
+    

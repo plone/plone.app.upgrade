@@ -17,6 +17,7 @@ from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
 from plone.app.upgrade.v40.alphas import setupReferencebrowser
 from plone.app.upgrade.v40.alphas import migrateMailHost
 from plone.app.upgrade.v40.alphas import migrateFolders
+from plone.app.upgrade.v40.alphas import renameJoinFormFields
 
 
 class FakeSecureMailHost(object):
@@ -299,9 +300,29 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertEqual(folder.getId(), 'foo')
         self.assertEqual(folder.Title(), 'Foo')
 
+class TestMigrations_v4_0alpha2(MigrationTest):
+
+    profile = "profile-plone.app.upgrade.v40:4alpha1-4alpha2"
+
+    def testProfile(self):
+        # This tests the whole upgrade profile can be loaded
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless(True)
+
+    def testMigrateJoinFormFields(self):
+        ptool = getToolByName(self.portal, 'portal_properties')
+        sheet = getattr(ptool, 'site_properties')
+        self.removeSiteProperty('user_registration_fields')
+        self.addSiteProperty('join_form_fields')
+        sheet.join_form_fields = ('username', 'password', 'email', 'mail_me', 'groups')
+        renameJoinFormFields(self)
+        self.assertEqual(sheet.hasProperty('join_form_fields'), False)
+        self.assertEqual(sheet.hasProperty('user_registration_fields'), True)
+        self.assertEqual(sheet.getProperty('user_registration_fields'), ('username', 'password', 'email', 'mail_me'))
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestMigrations_v4_0alpha1))
+    suite.addTest(makeSuite(TestMigrations_v4_0alpha2))
     return suite
