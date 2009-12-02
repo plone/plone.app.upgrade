@@ -1,8 +1,9 @@
 Changelog
 =========
 
-1.0a2 - Unreleased
+1.0a2 - 2009-12-02
 ------------------
+
 - Provide join_form_fields to user_registration_fields migration.
   [esteele]
 
