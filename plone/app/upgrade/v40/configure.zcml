@@ -118,7 +118,19 @@
             title="Rename join_form_fields."
             handler=".alphas.renameJoinFormFields"
             />
-            
+
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4.0a2"
+        destination="4.0a3"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Empty upgrade step"
+            handler="plone.app.upgrade.utils.null_upgrade_step"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
