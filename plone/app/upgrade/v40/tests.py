@@ -147,9 +147,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
     def testPngContentIcons(self):
         tt = getToolByName(self.portal, "portal_types")
-        tt.Document.content_icon = "document_icon.gif"
+        tt.Document.icon_expr = "string:${portal_url}/document_icon.gif"
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
-        self.assertEqual(tt.Document.content_icon, "document_icon.png")
+        self.assertEqual(tt.Document.icon_expr,
+            "string:${portal_url}/document_icon.png")
 
     def testAddRAMCache(self):
         # Test it twice
@@ -302,13 +303,6 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
 class TestMigrations_v4_0alpha2(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha1-4alpha2"
-
-    def testProfile(self):
-        # This tests the whole upgrade profile can be loaded
-        loadMigrationProfile(self.portal, self.profile)
-        self.failUnless(True)
-
     def testMigrateJoinFormFields(self):
         ptool = getToolByName(self.portal, 'portal_properties')
         sheet = getattr(ptool, 'site_properties')
@@ -320,9 +314,25 @@ class TestMigrations_v4_0alpha2(MigrationTest):
         self.assertEqual(sheet.hasProperty('user_registration_fields'), True)
         self.assertEqual(sheet.getProperty('user_registration_fields'), ('username', 'password', 'email', 'mail_me'))
 
+class TestMigrations_v4_0alpha3(MigrationTest):
+
+    profile = "profile-plone.app.upgrade.v40:4alpha2-4alpha3"
+
+    def testProfile(self):
+        # This tests the whole upgrade profile can be loaded
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless(True)
+
+    def testJoinActionURL(self):
+        self.portal.portal_actions.user.join.url_expr = 'foo'
+        loadMigrationProfile(self.portal, self.profile, ('actions', ))
+        self.assertEqual(self.portal.portal_actions.user.join.url_expr,
+            'string:${globals_view/navigationRootUrl}/@@register')
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestMigrations_v4_0alpha1))
     suite.addTest(makeSuite(TestMigrations_v4_0alpha2))
+    suite.addTest(makeSuite(TestMigrations_v4_0alpha3))
     return suite

@@ -127,8 +127,8 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Empty upgrade step"
-            handler="plone.app.upgrade.utils.null_upgrade_step"
+            title="Update Join action URL"
+            handler="plone.app.upgrade.v40.alphas.alpha2_alpha3"
             />
 
     </genericsetup:upgradeSteps>

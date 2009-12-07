@@ -4,8 +4,13 @@ Changelog
 1.0a3 - Unreleased
 ------------------
 
-- Added empty upgrade step from alpha 2 to 3.
-  [hannosch]
+- Moved the join action URL expression update to the 4.0a2-4.0a3 step, since
+  it never got wired up for a1-a2.
+  [davisagli]
+
+- Removed references to content_icon, which is deprecated in CMFCore 2.2.0
+  beta 1.
+  [davisagli]
 
 1.0a2 - 2009-12-02
 ------------------
