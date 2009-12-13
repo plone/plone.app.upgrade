@@ -4,6 +4,10 @@ Changelog
 1.0a3 - Unreleased
 ------------------
 
+- Extended the unregisterOldSteps upgrade step to remove persistent step
+  registrations now done via ZCML.
+  [hannosch]
+
 - Fixed a reference of jquery.js in the Plone 3.0 upgrade steps. The file was
   only introduced in Plone 3.1.
   [hannosch]

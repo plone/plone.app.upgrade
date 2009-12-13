@@ -221,18 +221,48 @@ def cleanPloneSiteFTI(context):
         logger.info('Updated TempFolder FTI.')
 
 
-def unregisterOldImportSteps(context):
+def unregisterOldSteps(context):
     # remove steps that are now registered via ZCML or gone completely
-    REMOVE = (
+    _REMOVE_STEPS = (
+        'actions',
+        'caching_policy_mgr',
+        'catalog',
+        'componentregistry',
+        'content_type_registry',
+        # 'languagetool',
+        'mailhost',
+        'properties',
+        'rolemap',
+        'skins',
+        'toolset',
+        'typeinfo',
+        'workflow',
+    )
+    _REMOVE_IMPORT_STEPS = _REMOVE_STEPS + (
+        'cookie_authentication',
+        # 'mimetypes-registry-various',
+        # 'plonepas',
         'plone-archetypes',
         'plone-site',
         'plone_various',
+        # 'portal-transforms-various',
+        'various',
+    )
+    _REMOVE_EXPORT_STEPS = _REMOVE_STEPS + (
+        'cookieauth',
+        'step_registries',
     )
     registry = context.getImportStepRegistry()
     steps = registry.listSteps()
-    for step in REMOVE:
+    for step in _REMOVE_IMPORT_STEPS:
         if step in steps:
             registry.unregisterStep(step)
+    registry = context.getExportStepRegistry()
+    steps = registry.listSteps()
+    for step in _REMOVE_EXPORT_STEPS:
+        if step in steps:
+            registry.unregisterStep(step)
+    context._p_changed = True
 
 
 def cleanUpToolRegistry(context):

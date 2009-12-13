@@ -21,8 +21,8 @@
             />
 
         <genericsetup:upgradeStep
-            title="Unregister old import steps."
-            handler=".alphas.unregisterOldImportSteps"
+            title="Unregister old export and import steps."
+            handler=".alphas.unregisterOldSteps"
             />
 
         <genericsetup:upgradeStep
