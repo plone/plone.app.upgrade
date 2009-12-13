@@ -4,6 +4,10 @@ Changelog
 1.0a3 - Unreleased
 ------------------
 
+- Updated all profile versions in the Plone 4 series to new simple integer
+  based numbers.
+  [hannosch]
+
 - Updated to match the new profile version for Plone.
   [hannosch]
 

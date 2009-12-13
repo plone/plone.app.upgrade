@@ -5,9 +5,26 @@
 
     <include file="profiles.zcml" />
 
+    <!-- Allow upgrades from alpha releases with an old version scheme -->
+    <genericsetup:upgradeStep
+        source="4.0a1"
+        destination="4001"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
+    <genericsetup:upgradeStep
+        source="4.0a2"
+        destination="4002"
+        title="Empty upgrade step"
+        profile="Products.CMFPlone:plone"
+        handler="plone.app.upgrade.utils.null_upgrade_step"
+        />
+
     <genericsetup:upgradeSteps
         source="*"
-        destination="4.0a1"
+        destination="4001"
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
@@ -39,7 +56,7 @@
 
     <genericsetup:upgradeSteps
         source="3.3.2"
-        destination="4.0a1"
+        destination="4001"
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
@@ -110,8 +127,8 @@
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
-        source="4.0a1"
-        destination="4.0a2"
+        source="4001"
+        destination="4002"
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
@@ -122,7 +139,7 @@
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
-        source="4.0a2"
+        source="4002"
         destination="4003"
         profile="Products.CMFPlone:plone">
 
