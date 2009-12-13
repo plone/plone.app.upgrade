@@ -123,7 +123,7 @@
 
     <genericsetup:upgradeSteps
         source="4.0a2"
-        destination="4.0a3"
+        destination="4003"
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep

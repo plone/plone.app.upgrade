@@ -4,6 +4,9 @@ Changelog
 1.0a3 - Unreleased
 ------------------
 
+- Updated to match the new profile version for Plone.
+  [hannosch]
+
 - Extended the unregisterOldSteps upgrade step to remove persistent step
   registrations now done via ZCML.
   [hannosch]
