@@ -4,6 +4,10 @@ Changelog
 1.0a3 - Unreleased
 ------------------
 
+- Fixed a reference of jquery.js in the Plone 3.0 upgrade steps. The file was
+  only introduced in Plone 3.1.
+  [hannosch]
+
 - Moved the join action URL expression update to the 4.0a2-4.0a3 step, since
   it never got wired up for a1-a2.
   [davisagli]
