@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a3 - Unreleased
+1.0a3 - 2009-12-16
 ------------------
 
 - Updated all profile versions in the Plone 4 series to new simple integer
