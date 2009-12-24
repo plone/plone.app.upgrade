@@ -4,6 +4,8 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Declared missing dependencies.
+  [hannosch]
 
 1.0a3 - 2009-12-16
 ------------------
