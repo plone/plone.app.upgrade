@@ -2,7 +2,6 @@ from os.path import abspath
 from os.path import dirname
 from os.path import join
 
-from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.UnicodeSplitter import Splitter
 from Products.CMFPlone.UnicodeSplitter import CaseNormalizer
 
@@ -135,13 +134,7 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite = getattr(self.app, self.site_id)
         mig = oldsite.portal_migration
         result = mig.upgrade(swallow_errors=False)
-
-        # XXX currently fails
-        # self.failUnless(self.success_message in result)
-
-        # There are no more upgrade steps available
-        upgrades = oldsite.portal_setup.listUpgrades(_DEFAULT_PROFILE)
-        self.failUnless(len(upgrades) == 0)
+        self.failIf(mig.needUpgrading())
 
 
 def test_suite():

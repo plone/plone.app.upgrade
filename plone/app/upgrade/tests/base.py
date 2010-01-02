@@ -4,16 +4,20 @@
 
 import transaction
 
-from Testing import ZopeTestCase
-from Products.CMFPlone.tests import PloneTestCase
+from Testing.ZopeTestCase.sandbox import Sandboxed
+from Products.PloneTestCase.layer import PloneSiteLayer
+from Products.PloneTestCase.ptc import PloneTestCase
+from Products.PloneTestCase.ptc import setupPloneSite
 
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.tests.base.testcase import WarningInterceptor
 
+setupPloneSite()
 
-class MigrationTest(PloneTestCase.PloneTestCase):
+
+class MigrationTest(PloneTestCase):
 
     def removeActionFromTool(self, action_id, category=None, action_provider='portal_actions'):
         # Removes an action from portal_actions
@@ -109,20 +113,32 @@ class MigrationTest(PloneTestCase.PloneTestCase):
             skins.addSkinSelection(skin, ','.join(path))
 
 
-class FunctionalUpgradeTestCase(
-    ZopeTestCase.FunctionalTestCase, WarningInterceptor):
+class FunctionalUpgradeLayer(PloneSiteLayer):
+
+    @classmethod
+    def setUp(cls):
+        pass
+
+    @classmethod
+    def tearDown(cls):
+        pass
+
+
+class FunctionalUpgradeTestCase(Sandboxed, PloneTestCase, WarningInterceptor):
 
     _setup_fixture = 0
+    layer = FunctionalUpgradeLayer
     zexp = None
     site_id = 'test'
-    success_message = 'Your Plone instance is now up-to-date.'
 
     def afterSetUp(self):
         self._trap_warning_output()
         self.app._importObjectFromFile(self.zexp, verify=0)
         self._free_warning_output()
+        self.loginAsPortalOwner()
         transaction.commit()
 
     def beforeTearDown(self):
         self.app._delObject(self.site_id)
+        self.logout()
         transaction.commit()
