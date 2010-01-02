@@ -2,8 +2,11 @@ from os.path import abspath
 from os.path import dirname
 from os.path import join
 
+from zope.site.hooks import setSite
+
 from Products.CMFPlone.UnicodeSplitter import Splitter
 from Products.CMFPlone.UnicodeSplitter import CaseNormalizer
+from Products.GenericSetup.context import TarballImportContext
 
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
@@ -135,6 +138,20 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         mig = oldsite.portal_migration
         result = mig.upgrade(swallow_errors=False)
         self.failIf(mig.needUpgrading())
+
+        setSite(self.portal)
+        expected_export = self.portal.portal_setup.runAllExportSteps()
+        setSite(oldsite)
+        stool = oldsite.portal_setup
+        upgraded_export = stool.runAllExportSteps()
+
+        expected = TarballImportContext(stool, expected_export['tarball'])
+        upgraded = TarballImportContext(stool, upgraded_export['tarball'])
+        diff = stool.compareConfigurations(upgraded, expected)
+
+        # We have quite a number of actually wanted differences in upgraded
+        # versus new sites. But maybe we can still get something out of this
+        # self.assertEqual(diff, '', diff)
 
 
 def test_suite():
