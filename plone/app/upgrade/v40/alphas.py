@@ -6,6 +6,7 @@ from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
 from Acquisition import aq_base
+from Acquisition import aq_get
 from App.Common import package_home
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
@@ -64,7 +65,8 @@ def restoreTheme(context):
     old_default_skin = getattr(aq_base(skins), 'old_default_skin', None)
     if old_default_skin is not None:
         setattr(aq_base(skins), 'default_skin', old_default_skin)
-        portal.changeSkin(old_default_skin, context.REQUEST)
+        request = aq_get(context, 'REQUEST', None)
+        portal.changeSkin(old_default_skin, request)
 
     # The Sunburst theme is based on Plone Default. During the cleanUpSkinsTool
     # upgrade step we replace plone_styles with classic_styles in the default
