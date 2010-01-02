@@ -57,9 +57,6 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         mig = oldsite.portal_migration
         self.failIf(mig.needUpgrading())
 
-        # diff = self.export()
-        # self.assertEqual(diff, '', diff)
-
 
 def test_suite():
     from unittest import TestSuite, makeSuite
