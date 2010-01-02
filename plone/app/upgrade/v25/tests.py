@@ -136,6 +136,7 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
     def testUpgrade(self):
         oldsite = getattr(self.app, self.site_id)
         mig = oldsite.portal_migration
+        # result holds all messages logged during the upgrade
         result = mig.upgrade(swallow_errors=False)
         self.failIf(mig.needUpgrading())
 
