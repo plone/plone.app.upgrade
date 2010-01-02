@@ -9,8 +9,10 @@ Changelog
   quite hard to get the same add-ons installed again in a new site.
   [hannosch]
 
-- Added first cut of functional upgrade tests based on an actual zexp. Thanks
-  to CMF for the inspiration.
+- Added functional upgrade tests based on an actual zexp export of each major
+  version of Plone. Each one is imported and upgraded. A diff of the upgraded
+  configuration vs the one of a completely new site is generated. Thanks to
+  CMF for the inspiration. This closes http://dev.plone.org/plone/ticket/721.
   [hannosch]
 
 - Declared missing dependencies.
