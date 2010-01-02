@@ -159,7 +159,11 @@ class FunctionalUpgradeTestCase(Sandboxed, PloneTestCase, WarningInterceptor):
     def migrate(self):
         oldsite = getattr(self.app, self.site_id)
         mig = oldsite.portal_migration
-        return (oldsite, mig.upgrade(swallow_errors=False))
+        components = getattr(oldsite, '_components', None)
+        if components is not None:
+            setSite(oldsite)
+        result = mig.upgrade(swallow_errors=False)
+        return (oldsite, result)
 
     def export(self):
         oldsite = getattr(self.app, self.site_id)

@@ -1,5 +1,6 @@
 from Products.CMFCore.utils import getToolByName
 
+from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v33 import three2_three3
 
@@ -37,8 +38,32 @@ class TestMigrations_v3_3(MigrationTest):
         self.assertEqual(self.types.Link.immediate_view, 'foobar')
         self.assertEqual(self.types.Link.view_methods, ('foobar',))
 
+class TestFunctionalMigrations(FunctionalUpgradeTestCase):
+
+    def testBaseUpgrade(self):
+        self.importFile(__file__, 'test-base.zexp')
+        oldsite, result = self.migrate()
+
+        mig = oldsite.portal_migration
+        self.failIf(mig.needUpgrading())
+
+        # diff = self.export()
+        # self.assertEqual(diff, '', diff)
+
+    def testFullUpgrade(self):
+        self.importFile(__file__, 'test-full.zexp')
+        oldsite, result = self.migrate()
+
+        mig = oldsite.portal_migration
+        self.failIf(mig.needUpgrading())
+
+        # diff = self.export()
+        # self.assertEqual(diff, '', diff)
+
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestMigrations_v3_3))
+    suite.addTest(makeSuite(TestFunctionalMigrations))
     return suite

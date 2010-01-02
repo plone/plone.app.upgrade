@@ -1,8 +1,8 @@
 from Products.CMFPlone.UnicodeSplitter import Splitter
 from Products.CMFPlone.UnicodeSplitter import CaseNormalizer
 
-from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
+from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
 
 from plone.app.upgrade.v25 import fixupPloneLexicon

@@ -4,6 +4,7 @@ from zope.interface import noLongerProvides
 from Products.CMFPlacefulWorkflow.interfaces import IPlacefulMarker
 from Products.PlonePAS.interfaces.plugins import ILocalRolesPlugin
 
+from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
 
 from plone.app.upgrade.v31.betas import reinstallCMFPlacefulWorkflow
@@ -87,11 +88,34 @@ class TestMigrations_v3_1(MigrationTest):
 
     def testReplaceLocalRoleManagerNoUF(self):
         # Delete the user folder
-        uf = self.portal._delObject('acl_users')
         replace_local_role_manager(self.portal)
+
+class TestFunctionalMigrations(FunctionalUpgradeTestCase):
+
+    def testBaseUpgrade(self):
+        self.importFile(__file__, 'test-base.zexp')
+        oldsite, result = self.migrate()
+
+        mig = oldsite.portal_migration
+        self.failIf(mig.needUpgrading())
+
+        # diff = self.export()
+        # self.assertEqual(diff, '', diff)
+
+    def testFullUpgrade(self):
+        self.importFile(__file__, 'test-full.zexp')
+        oldsite, result = self.migrate()
+
+        mig = oldsite.portal_migration
+        self.failIf(mig.needUpgrading())
+
+        # diff = self.export()
+        # self.assertEqual(diff, '', diff)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestMigrations_v3_1))
+    suite.addTest(makeSuite(TestFunctionalMigrations))
     return suite
