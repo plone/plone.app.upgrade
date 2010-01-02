@@ -4,6 +4,10 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Added first cut of functional upgrade tests based on an actual zexp. Thanks
+  to CMF for the inspiration.
+  [hannosch]
+
 - Declared missing dependencies.
   [hannosch]
 
