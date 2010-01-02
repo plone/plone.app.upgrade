@@ -127,11 +127,11 @@ class TestMigrations_v2_5_2(MigrationTest):
         # now they're back:
         self.failUnless(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
 
-here = abspath(dirname(__file__))
+data_dir = join(abspath(dirname(__file__)), 'data')
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 
-    zexp = join(here, 'data', 'test.zexp')
+    zexp = join(data_dir, 'test-base.zexp')
 
     def testUpgrade(self):
         oldsite = getattr(self.app, self.site_id)
