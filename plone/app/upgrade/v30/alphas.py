@@ -190,9 +190,9 @@ class installKss(object):
         st = getToolByName(self.context, 'portal_skins')
         skins = ['Plone Default', 'Plone Tableless']
         if not hasattr(aq_base(st), 'plone_kss'):
-            createDirectoryView(st, 'CMFPlone/skins/plone_kss')
+            createDirectoryView(st, 'Products.CMFPlone:skins/plone_kss')
         if not hasattr(aq_base(st), 'archetypes_kss'):
-            createDirectoryView(st, 'Archetypes/skins/archetypes_kss')
+            createDirectoryView(st, 'Products.Archetypes:skins/archetypes_kss')
         selections = st._getSelections()
         for s in skins:
             if not selections.has_key(s):
