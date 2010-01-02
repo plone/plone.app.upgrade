@@ -2,7 +2,12 @@
 # Base TestCase for upgrades
 #
 
+from os.path import abspath
+from os.path import dirname
+from os.path import join
+
 import transaction
+from zope.site.hooks import setSite
 
 from Testing.ZopeTestCase.sandbox import Sandboxed
 from Products.PloneTestCase.layer import PloneSiteLayer
@@ -13,6 +18,7 @@ from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.tests.base.testcase import WarningInterceptor
+from Products.GenericSetup.context import TarballImportContext
 
 setupPloneSite()
 
@@ -128,17 +134,38 @@ class FunctionalUpgradeTestCase(Sandboxed, PloneTestCase, WarningInterceptor):
 
     _setup_fixture = 0
     layer = FunctionalUpgradeLayer
-    zexp = None
     site_id = 'test'
 
     def afterSetUp(self):
-        self._trap_warning_output()
-        self.app._importObjectFromFile(self.zexp, verify=0)
-        self._free_warning_output()
         self.loginAsPortalOwner()
-        transaction.commit()
+        setSite(self.portal)
+        stool = self.portal.portal_setup
+        expected_export = stool.runAllExportSteps()
+        self.expected = TarballImportContext(stool, expected_export['tarball'])
+        setSite(None)
 
     def beforeTearDown(self):
-        self.app._delObject(self.site_id)
+        if self.site_id in self.app:
+            self.app._delObject(self.site_id)
         self.logout()
         transaction.commit()
+
+    def importFile(self, context, name):
+        path = join(abspath(dirname(context)), 'data', name)
+        self._trap_warning_output()
+        self.app._importObjectFromFile(path, verify=0)
+        self._free_warning_output()
+
+    def migrate(self):
+        oldsite = getattr(self.app, self.site_id)
+        mig = oldsite.portal_migration
+        return (oldsite, mig.upgrade(swallow_errors=False))
+
+    def export(self):
+        oldsite = getattr(self.app, self.site_id)
+        setSite(oldsite)
+        stool = oldsite.portal_setup
+        upgraded_export = stool.runAllExportSteps()
+
+        upgraded = TarballImportContext(stool, upgraded_export['tarball'])
+        return stool.compareConfigurations(upgraded, self.expected)

@@ -1,12 +1,5 @@
-from os.path import abspath
-from os.path import dirname
-from os.path import join
-
-from zope.site.hooks import setSite
-
 from Products.CMFPlone.UnicodeSplitter import Splitter
 from Products.CMFPlone.UnicodeSplitter import CaseNormalizer
-from Products.GenericSetup.context import TarballImportContext
 
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
@@ -127,29 +120,17 @@ class TestMigrations_v2_5_2(MigrationTest):
         # now they're back:
         self.failUnless(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
 
-data_dir = join(abspath(dirname(__file__)), 'data')
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 
-    zexp = join(data_dir, 'test-base.zexp')
-
     def testUpgrade(self):
-        oldsite = getattr(self.app, self.site_id)
+        self.importFile(__file__, 'test-base.zexp')
+        oldsite, result = self.migrate()
+
         mig = oldsite.portal_migration
-        # result holds all messages logged during the upgrade
-        result = mig.upgrade(swallow_errors=False)
         self.failIf(mig.needUpgrading())
 
-        setSite(self.portal)
-        expected_export = self.portal.portal_setup.runAllExportSteps()
-        setSite(oldsite)
-        stool = oldsite.portal_setup
-        upgraded_export = stool.runAllExportSteps()
-
-        expected = TarballImportContext(stool, expected_export['tarball'])
-        upgraded = TarballImportContext(stool, upgraded_export['tarball'])
-        diff = stool.compareConfigurations(upgraded, expected)
-
+        diff = self.export()
         # We have quite a number of actually wanted differences in upgraded
         # versus new sites. But maybe we can still get something out of this
         # self.assertEqual(diff, '', diff)
