@@ -131,7 +131,8 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         self.failIf(mig.needUpgrading())
 
         diff = self.export()
-        # self.assertEqual(diff, '', diff)
+        len_diff = len(diff.split('\n'))
+        self.failUnless(len_diff <= 2800)
 
 
 def test_suite():

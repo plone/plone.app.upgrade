@@ -35,7 +35,8 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         self.failIf(mig.needUpgrading())
 
         diff = self.export()
-        # self.assertEqual(diff, '', diff)
+        len_diff = len(diff.split('\n'))
+        self.failUnless(len_diff <= 2500)
 
     def testFullUpgrade(self):
         self.importFile(__file__, 'test-full.zexp')
@@ -43,6 +44,10 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 
         mig = oldsite.portal_migration
         self.failIf(mig.needUpgrading())
+
+        diff = self.export()
+        len_diff = len(diff.split('\n'))
+        self.failUnless(len_diff <= 2700)
 
 
 def test_suite():
