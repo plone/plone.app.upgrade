@@ -131,8 +131,6 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         self.failIf(mig.needUpgrading())
 
         diff = self.export()
-        # We have quite a number of actually wanted differences in upgraded
-        # versus new sites. But maybe we can still get something out of this
         # self.assertEqual(diff, '', diff)
 
 

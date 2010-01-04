@@ -4,6 +4,10 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Enable the diff export in functional upgrade tests, we do a complete
+  GenericSetup export of all upgraded sites now.
+  [hannosch]
+
 - Remove the hint of doing an export/import comparison for the full upgrades.
   These have varying add-ons installed depending on the original site and its
   quite hard to get the same add-ons installed again in a new site.

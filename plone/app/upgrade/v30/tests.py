@@ -1260,7 +1260,7 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         mig = oldsite.portal_migration
         self.failIf(mig.needUpgrading())
 
-        # diff = self.export()
+        diff = self.export()
         # self.assertEqual(diff, '', diff)
 
     def testFullUpgrade(self):
