@@ -415,3 +415,8 @@ def alpha2_alpha3(context):
     """4.0alpha2 -> 4.0alpha3
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha2-4alpha3')
+
+def alpha3_beta1(context):
+    """4.0alpha3 -> 4.0beta1
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha3-4beta1')

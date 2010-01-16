@@ -329,6 +329,19 @@ class TestMigrations_v4_0alpha3(MigrationTest):
         self.assertEqual(self.portal.portal_actions.user.join.url_expr,
             'string:${globals_view/navigationRootUrl}/@@register')
 
+class TestMigrations_v4_0beta1(MigrationTest):
+
+    profile = "profile-plone.app.upgrade.v40:4alpha3-4beta1"
+
+    def testProfile(self):
+        # This tests the whole upgrade profile can be loaded
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless(True)
+
+    def testNewJSIsInstalled(self):
+        installedScriptIds = self.jstool.getResourceIds()
+        self.failUnless('headline_anchors.js' in installedScriptIds)
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
