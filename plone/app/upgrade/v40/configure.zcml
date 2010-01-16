@@ -54,8 +54,11 @@
 
     </genericsetup:upgradeSteps>
 
+    <!-- the source here needs to be kept in sync with the latest 3.x profile
+         version.  see also migrations/__init__.py in CMFPlone 3.x and
+         p.a.upgrade.v33's configure.zcml -->
     <genericsetup:upgradeSteps
-        source="3.3.2"
+        source="3.3.6"
         destination="4001"
         profile="Products.CMFPlone:plone">
 

@@ -4,6 +4,13 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Add missing upgrades from Plone 3.3.2 to 3.3.3 to 3.3.4 to 4.0a1.
+  [davisagli]
+
+- Call the portal_metadata DCMI upgrade step from CMFDefault when upgrading
+  to Plone 4.0b1.
+  [davisagli]
+
 - Enable the diff export in functional upgrade tests, we do a complete
   GenericSetup export of all upgraded sites now.
   [hannosch]
