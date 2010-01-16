@@ -134,6 +134,13 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         len_diff = len(diff.split('\n'))
         # self.failUnless(len_diff <= 2800)
 
+    def testDCMIStorageUpdated(self):
+        self.importFile(__file__, 'test-base.zexp')
+        oldsite, result = self.migrate()
+        
+        dcmi = getattr(oldsite.portal_metadata, 'DCMI', None)
+        self.failIf(dcmi is None)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

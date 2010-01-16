@@ -150,4 +150,16 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4003"
+        destination="4004"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Upgrade DCMI metadata storage in portal_metadata"
+            handler="Products.CMFDefault.upgrade.to22.upgrade_dcmi_metadata"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>
