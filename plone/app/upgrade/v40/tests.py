@@ -338,10 +338,6 @@ class TestMigrations_v4_0beta1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
-    def testNewJSIsInstalled(self):
-        installedScriptIds = self.jstool.getResourceIds()
-        self.failUnless('headline_anchors.js' in installedScriptIds)
-
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
