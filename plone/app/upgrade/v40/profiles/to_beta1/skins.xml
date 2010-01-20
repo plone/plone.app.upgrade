@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+  <object name="classic_ecmascript"
+          meta_type="Filesystem Directory View"
+          directory="plonetheme.classic:skins/classic_ecmascript"/>
+
+<skin-path name="Plone Classic Theme" based-on="Plone Default">
+  <layer name="classic_ecmascript"
+         insert-after="classic_styles" />
+</skin-path>
+
+</object>

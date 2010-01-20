@@ -4,6 +4,10 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Add upgrade to pull iefixes from ResourceRegistries.
+  Refs http://dev.plone.org/plone/ticket/9278.
+  [dukebody]
+
 - Add missing upgrades from Plone 3.3.2 to 3.3.3 to 3.3.4 to 4.0a1.
   [davisagli]
 
