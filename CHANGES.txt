@@ -4,6 +4,10 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Make sure the step registry gets cleaned up before the toolset-fixing
+  profile gets imported, when upgrading to 4.x.
+  [davisagli]
+
 - Add upgrade to pull iefixes from ResourceRegistries.
   Refs http://dev.plone.org/plone/ticket/9278.
   [dukebody]

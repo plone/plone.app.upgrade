@@ -28,6 +28,11 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
+            title="Unregister old export and import steps."
+            handler=".alphas.unregisterOldSteps"
+            />
+
+        <genericsetup:upgradeStep
             title="Cleanup the persistent tool registry."
             handler=".alphas.cleanUpToolRegistry"
             />
@@ -35,11 +40,6 @@
         <genericsetup:upgradeStep
             title="Update the toolset registry."
             handler=".alphas.updateToolset"
-            />
-
-        <genericsetup:upgradeStep
-            title="Unregister old export and import steps."
-            handler=".alphas.unregisterOldSteps"
             />
 
         <genericsetup:upgradeStep
