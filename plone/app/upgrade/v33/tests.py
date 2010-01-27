@@ -62,6 +62,20 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         len_diff = len(diff.split('\n'))
         # self.failUnless(len_diff <= 2700)
 
+    def testFolderUpgrade(self):
+        from plone.folder.interfaces import IOrderableFolder
+        self.importFile(__file__, 'test-full.zexp')
+        oldsite, result = self.migrate()
+        self.failIf(oldsite.portal_migration.needUpgrading())
+        # after migration `/news`, `/events` and `/Members` are based on
+        # `plone.(app.)folder`, but still have no ordering set...
+        for id in 'news', 'events', 'Members':
+            obj = oldsite[id]
+            self.failUnless(IOrderableFolder.providedBy(obj),
+                '%s not orderable?' % id)
+            self.assertEquals(obj._ordering, 'unordered',
+                '%s has no `_ordering`?' % id)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
