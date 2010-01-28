@@ -338,10 +338,12 @@ class TestMigrations_v4_0beta1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestMigrations_v4_0alpha1))
     suite.addTest(makeSuite(TestMigrations_v4_0alpha2))
     suite.addTest(makeSuite(TestMigrations_v4_0alpha3))
+    suite.addTest(makeSuite(TestMigrations_v4_0beta1))
     return suite
