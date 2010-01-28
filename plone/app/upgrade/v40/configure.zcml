@@ -162,6 +162,11 @@
             title="Upgrade DCMI metadata storage in portal_metadata"
             handler="Products.CMFDefault.upgrade.to22.upgrade_dcmi_metadata"
             />
+            
+        <genericsetup:upgradeStep
+            title="Add the recursive groups PAS plugin."
+            handler=".alphas.addRecursiveGroupsPlugin"
+            />
 
         <genericsetup:upgradeStep
             title="Update portal type of former 'Large Folder' content"

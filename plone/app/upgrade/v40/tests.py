@@ -19,6 +19,7 @@ from plone.app.upgrade.v40.alphas import migrateMailHost
 from plone.app.upgrade.v40.alphas import migrateFolders
 from plone.app.upgrade.v40.alphas import renameJoinFormFields
 from plone.app.upgrade.v40.alphas import updateLargeFolderType
+from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
 
 
 class FakeSecureMailHost(object):

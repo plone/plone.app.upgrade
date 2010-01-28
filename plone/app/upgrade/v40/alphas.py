@@ -435,3 +435,17 @@ def updateLargeFolderType(context):
     for brain in search(Type='Large Folder'):   # just to make sure...
         update(brain)
     logger.info('Updated `portal_type` for former "Large Folder" content')
+
+def addRecursiveGroupsPlugin(context):
+    """Add a recursive groups plugin to acl_users"""
+    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import addRecursiveGroupsPlugin
+    from Products.PlonePAS.Extensions.Install import activatePluginInterfaces
+    from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
+
+    acl = getToolByName(context, 'acl_users')
+    if not 'recursive_groups' in acl:
+        addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
+    activatePluginInterfaces(context, "recursive_groups")
+    while not acl.plugins.listPluginIds(IGroupsPlugin).index('recursive_groups') == 0:
+        acl.plugins.movePluginsUp(IGroupsPlugin, ['recursive_groups'])
+        

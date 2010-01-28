@@ -3,6 +3,8 @@ Changelog
 
 1.0a4 - Unreleased
 ------------------
+- Add upgrade step to install a recursive groups PAS plugin.
+  [esteele]
 
 - Update the `portal_type` of former "Large Folder" content to "Folder".
   Refs http://dev.plone.org/plone/ticket/9791.
