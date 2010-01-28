@@ -420,3 +420,18 @@ def alpha3_beta1(context):
     """4.0alpha3 -> 4.0beta1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha3-4beta1')
+
+
+def updateLargeFolderType(context):
+    """Update portal type of former 'Large Folder' content"""
+    catalog = getToolByName(context, 'portal_catalog')
+    search = catalog.unrestrictedSearchResults
+    def update(brain):
+        obj = brain.getObject()
+        obj._setPortalTypeName('Folder')
+        obj.reindexObject(idxs=['portal_type', 'Type', 'object_provides'])
+    for brain in search(portal_type='Large Plone Folder'):
+        update(brain)
+    for brain in search(Type='Large Folder'):   # just to make sure...
+        update(brain)
+    logger.info('Updated `portal_type` for former "Large Folder" content')

@@ -65,16 +65,32 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
     def testFolderUpgrade(self):
         from plone.folder.interfaces import IOrderableFolder
         self.importFile(__file__, 'test-full.zexp')
+        # `portal_type` and `Type` can be checked before migration...
+        oldsite = getattr(self.app, self.site_id)
+        ids = 'news', 'events', 'Members'
+        for id in ids:
+            obj = oldsite[id]
+            self.assertEquals(obj.portal_type, 'Large Plone Folder')
+            self.assertEquals(obj.Type(), 'Large Folder')
+            brain, = oldsite.portal_catalog(getId=id)   # asserts only one
+            self.assertEquals(brain.portal_type, 'Large Plone Folder')
+            self.assertEquals(brain.Type, 'Large Folder')
+        # now let's migrate...
         oldsite, result = self.migrate()
         self.failIf(oldsite.portal_migration.needUpgrading())
         # after migration `/news`, `/events` and `/Members` are based on
         # `plone.(app.)folder`, but still have no ordering set...
-        for id in 'news', 'events', 'Members':
+        for id in ids:
             obj = oldsite[id]
             self.failUnless(IOrderableFolder.providedBy(obj),
                 '%s not orderable?' % id)
             self.assertEquals(obj._ordering, 'unordered',
                 '%s has no `_ordering`?' % id)
+            self.assertEquals(obj.portal_type, 'Folder')
+            self.assertEquals(obj.Type(), 'Folder')
+            brain, = oldsite.portal_catalog(getId=id)   # asserts only one
+            self.assertEquals(brain.portal_type, 'Folder')
+            self.assertEquals(brain.Type, 'Folder')
 
 
 def test_suite():

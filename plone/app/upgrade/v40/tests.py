@@ -18,6 +18,7 @@ from plone.app.upgrade.v40.alphas import setupReferencebrowser
 from plone.app.upgrade.v40.alphas import migrateMailHost
 from plone.app.upgrade.v40.alphas import migrateFolders
 from plone.app.upgrade.v40.alphas import renameJoinFormFields
+from plone.app.upgrade.v40.alphas import updateLargeFolderType
 
 
 class FakeSecureMailHost(object):
@@ -337,6 +338,30 @@ class TestMigrations_v4_0beta1(MigrationTest):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
+
+    def testMigrateLargeFolderType(self):
+        portal = self.portal
+        catalog = getToolByName(portal, 'portal_catalog')
+        # set things up in the old way...
+        ids = 'news', 'events', 'Members'
+        for id in ids:
+            obj = portal[id]
+            obj._setPortalTypeName('Large Plone Folder')
+            obj.reindexObject()
+            self.assertEquals(obj.portal_type, 'Large Plone Folder')
+            self.assertEquals(obj.Type(), 'Large Folder')
+            brain, = catalog(getId=id)
+            self.assertEquals(brain.portal_type, 'Large Plone Folder')
+            self.assertEquals(brain.Type, 'Large Folder')
+        # migrate & check again...
+        updateLargeFolderType(self.portal)
+        for id in ids:
+            obj = portal[id]
+            self.assertEquals(obj.portal_type, 'Folder')
+            self.assertEquals(obj.Type(), 'Folder')
+            brain, = catalog(getId=id)
+            self.assertEquals(brain.portal_type, 'Folder')
+            self.assertEquals(brain.Type, 'Folder')
 
 
 def test_suite():

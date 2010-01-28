@@ -163,6 +163,11 @@
             handler="Products.CMFDefault.upgrade.to22.upgrade_dcmi_metadata"
             />
 
+        <genericsetup:upgradeStep
+            title="Update portal type of former 'Large Folder' content"
+            handler="plone.app.upgrade.v40.alphas.updateLargeFolderType"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

@@ -4,6 +4,10 @@ Changelog
 1.0a4 - Unreleased
 ------------------
 
+- Update the `portal_type` of former "Large Folder" content to "Folder".
+  Refs http://dev.plone.org/plone/ticket/9791.
+  [witsch]
+
 - Make sure the step registry gets cleaned up before the toolset-fixing
   profile gets imported, when upgrading to 4.x.
   [davisagli]
