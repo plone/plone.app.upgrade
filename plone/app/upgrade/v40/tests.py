@@ -365,10 +365,5 @@ class TestMigrations_v4_0beta1(MigrationTest):
 
 
 def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(TestMigrations_v4_0alpha1))
-    suite.addTest(makeSuite(TestMigrations_v4_0alpha2))
-    suite.addTest(makeSuite(TestMigrations_v4_0alpha3))
-    suite.addTest(makeSuite(TestMigrations_v4_0beta1))
-    return suite
+    from unittest import defaultTestLoader
+    return defaultTestLoader.loadTestsFromName(__name__)
