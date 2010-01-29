@@ -1,7 +1,7 @@
 import transaction
 
 from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
-from zope.component import getSiteManager
+from zope.component import getSiteManager, providedBy
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
@@ -416,10 +416,10 @@ def alpha2_alpha3(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha2-4alpha3')
 
-def alpha3_beta1(context):
-    """4.0alpha3 -> 4.0beta1
+def alpha3_alpha4(context):
+    """4.0alpha3 -> 4.0alpha4
     """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha3-4beta1')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha3-4alpha4')
 
 
 def updateLargeFolderType(context):
@@ -438,14 +438,26 @@ def updateLargeFolderType(context):
 
 def addRecursiveGroupsPlugin(context):
     """Add a recursive groups plugin to acl_users"""
-    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import addRecursiveGroupsPlugin
+    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import addRecursiveGroupsPlugin, IRecursiveGroupsPlugin
     from Products.PlonePAS.Extensions.Install import activatePluginInterfaces
     from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
-
     acl = getToolByName(context, 'acl_users')
+    plugins = acl.plugins
+
+    existingPlugins = plugins.listPlugins(IGroupsPlugin)
+    if existingPlugins:
+        for p, id in existingPlugins:
+            if IRecursiveGroupsPlugin.providedBy(p):
+                plugins.deactivatePlugin(IGroupsPlugin, id)
+                logger.warn('Found an existing Recursive Groups plugin, %s, in acl_users, deactivating.' % id)
+
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
     activatePluginInterfaces(context, "recursive_groups")
-    while not acl.plugins.listPluginIds(IGroupsPlugin).index('recursive_groups') == 0:
-        acl.plugins.movePluginsUp(IGroupsPlugin, ['recursive_groups'])
+    if plugins.listPluginIds(IGroupsPlugin).index('recursive_groups'):
+        while not plugins.listPluginIds(IGroupsPlugin).index('recursive_groups') == 0:
+            plugins.movePluginsUp(IGroupsPlugin, ['recursive_groups'])
+        logger.info('PAS Plugin "recursive_groups" added.')
+    else:
+        logger.error('Unable to install "recursive_groups" PAS Plugin.')
         

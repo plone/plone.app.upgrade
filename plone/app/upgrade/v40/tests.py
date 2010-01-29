@@ -331,9 +331,9 @@ class TestMigrations_v4_0alpha3(MigrationTest):
         self.assertEqual(self.portal.portal_actions.user.join.url_expr,
             'string:${globals_view/navigationRootUrl}/@@register')
 
-class TestMigrations_v4_0beta1(MigrationTest):
+class TestMigrations_v4_0alpha4(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha3-4beta1"
+    profile = "profile-plone.app.upgrade.v40:4alpha3-4alpha4"
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -364,6 +364,17 @@ class TestMigrations_v4_0beta1(MigrationTest):
             self.assertEquals(brain.portal_type, 'Folder')
             self.assertEquals(brain.Type, 'Folder')
 
+    def testAddRecursiveGroupsPlugin(self):
+        acl = getToolByName(self.portal, 'acl_users')
+        addRecursiveGroupsPlugin(self.portal)
+        self.failUnless('recursive_groups' in acl)
+        # Now that we have an existing one, let's make sure it's handled
+        # properly if this migration is run again.
+        addRecursiveGroupsPlugin(self.portal)
+        self.failUnless('recursive_groups' in acl)
+        # It should be the first IGroupsPlugin listed
+        from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
+        self.assertEquals(acl.plugins.listPluginIds(IGroupsPlugin).index('recursive_groups'), 0)
 
 def test_suite():
     from unittest import defaultTestLoader
