@@ -372,9 +372,6 @@ class TestMigrations_v4_0alpha4(MigrationTest):
         # properly if this migration is run again.
         addRecursiveGroupsPlugin(self.portal)
         self.failUnless('recursive_groups' in acl)
-        # It should be the first IGroupsPlugin listed
-        from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
-        self.assertEquals(acl.plugins.listPluginIds(IGroupsPlugin).index('recursive_groups'), 0)
 
 def test_suite():
     from unittest import defaultTestLoader

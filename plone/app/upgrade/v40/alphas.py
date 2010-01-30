@@ -453,11 +453,4 @@ def addRecursiveGroupsPlugin(context):
 
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
-    activatePluginInterfaces(context, "recursive_groups")
-    if plugins.listPluginIds(IGroupsPlugin).index('recursive_groups'):
-        while not plugins.listPluginIds(IGroupsPlugin).index('recursive_groups') == 0:
-            plugins.movePluginsUp(IGroupsPlugin, ['recursive_groups'])
-        logger.info('PAS Plugin "recursive_groups" added.')
-    else:
-        logger.error('Unable to install "recursive_groups" PAS Plugin.')
         

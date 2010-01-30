@@ -3,7 +3,7 @@ Changelog
 
 1.0a4 - Unreleased
 ------------------
-- Add upgrade step to install a recursive groups PAS plugin.
+- Add upgrade step to create, but not install, a recursive groups PAS plugin.
   [esteele]
 
 - Update the `portal_type` of former "Large Folder" content to "Folder".
