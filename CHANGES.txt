@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.0b1 - Unreleased
+------------------
+
 1.0a4 - 2010-02-01
 ------------------
 - Add upgrade step to create, but not install, a recursive groups PAS plugin.
