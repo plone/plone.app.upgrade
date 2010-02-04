@@ -1,13 +1,12 @@
 import transaction
 
 from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
-from zope.component import getSiteManager, providedBy
+from zope.component import getSiteManager
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
 from Acquisition import aq_base
 from Acquisition import aq_get
-from App.Common import package_home
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.DirectoryView import _dirreg
@@ -315,22 +314,8 @@ def cleanUpProductRegistry(context):
     control = getattr(context, 'Control_Panel')
     products = control.Products
 
-    gone = []
-    for name, product in products.items():
-        path = getattr(product, 'package_name', 'Products.' + product.id)
-        try:
-            prod_path = package_home({'__name__': path})
-        except KeyError:
-            gone.append(name)
-        else:
-            # Remove and reinitialize the help sections. Their internal
-            # catalog has changed in Zope 2.12
-            if product.get('Help'):
-                product._delObject('Help')
-                product.getProductHelp()
-
-    # Remove product entries for products gone from the filesystem
-    for name in gone:
+    # Remove all product entries
+    for name in products.keys():
         products._delObject(name)
 
 
@@ -411,10 +396,12 @@ def renameJoinFormFields(context):
             sprop.manage_addProperty('user_registration_fields', oldValue, 'lines')
         sprop.manage_delProperties(['join_form_fields'])    
 
+
 def alpha2_alpha3(context):
     """4.0alpha2 -> 4.0alpha3
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha2-4alpha3')
+
 
 def alpha3_alpha4(context):
     """4.0alpha3 -> 4.0alpha4
@@ -436,10 +423,10 @@ def updateLargeFolderType(context):
         update(brain)
     logger.info('Updated `portal_type` for former "Large Folder" content')
 
+
 def addRecursiveGroupsPlugin(context):
     """Add a recursive groups plugin to acl_users"""
     from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import addRecursiveGroupsPlugin, IRecursiveGroupsPlugin
-    from Products.PlonePAS.Extensions.Install import activatePluginInterfaces
     from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
     acl = getToolByName(context, 'acl_users')
     plugins = acl.plugins
@@ -453,4 +440,3 @@ def addRecursiveGroupsPlugin(context):
 
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
-        

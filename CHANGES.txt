@@ -4,8 +4,13 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Changed the cleanUpProductRegistry upgrade step to remove all entries from the
+  persistent registry and run it again for existing alpha sites.
+  [hannosch]
+
 1.0a4 - 2010-02-01
 ------------------
+
 - Add upgrade step to create, but not install, a recursive groups PAS plugin.
   [esteele]
 
