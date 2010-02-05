@@ -4,6 +4,11 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Add upgrade step to cleanup plonetheme.classic CSS resources upon
+  migration. Make plonetheme.classic visible in the QI.
+  Refs http://dev.plone.org/plone/ticket/9988.
+  [dukebody]
+
 - Added upgrade step to optimize the internal data structures of date range
   indexes as introduced in Zope 2.12.2.
   [hannosch]

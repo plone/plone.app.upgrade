@@ -20,6 +20,7 @@ from plone.app.upgrade.v40.alphas import migrateFolders
 from plone.app.upgrade.v40.alphas import renameJoinFormFields
 from plone.app.upgrade.v40.alphas import updateLargeFolderType
 from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
+from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
 
 
 class FakeSecureMailHost(object):
@@ -372,6 +373,20 @@ class TestMigrations_v4_0alpha4(MigrationTest):
         # properly if this migration is run again.
         addRecursiveGroupsPlugin(self.portal)
         self.failUnless('recursive_groups' in acl)
+
+class TestMigrations_v4_0alpha5(MigrationTest):
+
+    def testClassicThemeResourcesCleanUp(self):
+        """Test that the plonetheme.classic product doesn't have any
+        registered CSS resource in its metadata after migration.
+        """
+        portal = self.portal
+        qi = getToolByName(portal, 'portal_quickinstaller')
+        qi.installProduct('plonetheme.classic')
+        classictheme = qi['plonetheme.classic']
+        classictheme.resources_css = ['something'] # add a random resource
+        cleanUpClassicThemeResources(portal)
+        self.failUnlessEqual(classictheme.resources_css, [])
 
 def test_suite():
     from unittest import defaultTestLoader
