@@ -4,6 +4,10 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Added upgrade step to optimize the internal data structures of date range
+  indexes as introduced in Zope 2.12.2.
+  [hannosch]
+
 - Changed the cleanUpProductRegistry upgrade step to remove all entries from the
   persistent registry and run it again for existing alpha sites.
   [hannosch]

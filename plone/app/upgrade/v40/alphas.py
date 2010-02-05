@@ -7,10 +7,12 @@ from zope.ramcache.ram import RAMCache
 
 from Acquisition import aq_base
 from Acquisition import aq_get
-from Products.MailHost.MailHost import MailHost
-from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
+from Products.MailHost.MailHost import MailHost
+from Products.MailHost.interfaces import IMailHost
+from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
+from Products.ZCatalog.ProgressHandler import ZLogHandler
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
@@ -440,3 +442,17 @@ def addRecursiveGroupsPlugin(context):
 
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
+
+
+def optimizeDateRangeIndexes(context):
+    """Take advantage of the optimized data structures for range indexes."""
+    catalog = getToolByName(context, 'portal_catalog')
+    range_indexes = []
+    for index in catalog.getIndexObjects():
+        if isinstance(index, DateRangeIndex):
+            range_indexes.append(index.getId())
+
+    request = aq_get(context, 'REQUEST', None)
+    catalog.reindexIndex(tuple(range_indexes), request, ZLogHandler(1000))
+
+    logger.info('Optimized internal date range structures.')

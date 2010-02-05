@@ -185,6 +185,11 @@
             handler=".alphas.cleanUpProductRegistry"
             />
 
+        <genericsetup:upgradeStep
+            title="Optimize date range indexes."
+            handler=".alphas.optimizeDateRangeIndexes"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
