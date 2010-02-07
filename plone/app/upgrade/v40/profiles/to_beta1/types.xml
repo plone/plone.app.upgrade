@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_types" meta_type="Plone Types Tool">
+ <object name="Folder"
+    meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Large Plone Folder"
+    meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Plone Site"
+    meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Topic"
+    meta_type="Factory-based Type Information with dynamic views"/>
+</object>

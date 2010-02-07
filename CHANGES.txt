@@ -4,6 +4,10 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Added upgrade step to update folderish types to add the 'All content'
+  folder_full_view. Include IE fixes and disabling of base2 js.
+  [elro]
+
 - Add upgrade step to cleanup plonetheme.classic CSS resources upon
   migration. Make plonetheme.classic visible in the QI.
   Refs http://dev.plone.org/plone/ticket/9988.

@@ -31,10 +31,10 @@
         />
 
     <genericsetup:registerProfile
-        name="4alpha3-4alpha4"
-        title="Upgrade profile for Plone 4.0alpha3 to Plone 4.0alpha4"
-        description="This profile contains configuration changes that are applied during the Plone 4.0a3 to 4.0a4 upgrade." 
-        directory="profiles/to_alpha4"
+        name="4alpha3-4beta1"
+        title="Upgrade profile for Plone 4.0alpha5 to Plone 4.0beta1"
+        description="This profile contains configuration changes that are applied during the Plone 4.0a4 to 4.0b1 upgrade." 
+        directory="profiles/to_beta1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />

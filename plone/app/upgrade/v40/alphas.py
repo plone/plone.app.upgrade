@@ -405,12 +405,6 @@ def alpha2_alpha3(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha2-4alpha3')
 
 
-def alpha3_alpha4(context):
-    """4.0alpha3 -> 4.0alpha4
-    """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha3-4alpha4')
-
-
 def updateLargeFolderType(context):
     """Update portal type of former 'Large Folder' content"""
     catalog = getToolByName(context, 'portal_catalog')

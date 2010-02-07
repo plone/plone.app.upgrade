@@ -197,4 +197,16 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4005"
+        destination="4006"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="IE css/js fixes. Disable base2 js (KSS now uses jquery). Update folderish types to have 'All content' view."
+            handler="plone.app.upgrade.v40.betas.alpha4_beta1"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>
