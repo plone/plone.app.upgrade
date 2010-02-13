@@ -4,6 +4,9 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Add new editing control panel.
+  [hannosch]
+
 - Removed the no longer needed history viewlet. This refs
   http://dev.plone.org/plone/ticket/10102.
   [hannosch]
