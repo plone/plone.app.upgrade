@@ -4,6 +4,10 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Removed the no longer needed history viewlet. This refs
+  http://dev.plone.org/plone/ticket/10102.
+  [hannosch]
+
 - Added upgrade step to update folderish types to add the 'All content'
   folder_full_view. Include IE fixes and disabling of base2 js.
   [elro]
