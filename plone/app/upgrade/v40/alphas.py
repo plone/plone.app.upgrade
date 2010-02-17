@@ -462,3 +462,7 @@ def cleanUpClassicThemeResources(context):
         classictheme = qi['plonetheme.classic']
         classictheme.resources_css = []  # empty the list of installed resources
 
+def alpha4_alpha5(context):
+    """4.0alpha4 -> 4.0alpha5
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha4-4alpha5')

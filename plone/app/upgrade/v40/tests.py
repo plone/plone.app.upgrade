@@ -332,9 +332,9 @@ class TestMigrations_v4_0alpha3(MigrationTest):
         self.assertEqual(self.portal.portal_actions.user.join.url_expr,
             'string:${globals_view/navigationRootUrl}/@@register')
 
-class TestMigrations_v4_0alpha4(MigrationTest):
+class TestMigrations_v4_0alpha5(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha3-4alpha4"
+    profile = "profile-plone.app.upgrade.v40:4alpha4-4alpha5"
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -373,8 +373,6 @@ class TestMigrations_v4_0alpha4(MigrationTest):
         # properly if this migration is run again.
         addRecursiveGroupsPlugin(self.portal)
         self.failUnless('recursive_groups' in acl)
-
-class TestMigrations_v4_0alpha5(MigrationTest):
 
     def testClassicThemeResourcesCleanUp(self):
         """Test that the plonetheme.classic product doesn't have any
