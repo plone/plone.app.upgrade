@@ -4,6 +4,10 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Migrate `getObjPositionInParent` to stub index capable of sorting search
+  results according to their position in the container, a.k.a. "nogopip".
+  [witsch]
+
 - In migration to 4.0a5, hide the plone.path_bar viewlet from the
   plone.portaltop manager for the Sunburst Theme.
   [davisagli]

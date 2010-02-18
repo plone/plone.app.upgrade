@@ -386,6 +386,19 @@ class TestMigrations_v4_0alpha5(MigrationTest):
         cleanUpClassicThemeResources(portal)
         self.failUnlessEqual(classictheme.resources_css, [])
 
+    def testGetObjPositionInParentIndex(self):
+        from plone.app.folder.nogopip import GopipIndex
+        catalog = self.portal.portal_catalog
+        catalog.delIndex('getObjPositionInParent')
+        catalog.addIndex('getObjPositionInParent', 'FieldIndex')
+        self.failIf(isinstance(catalog.Indexes['getObjPositionInParent'],
+            GopipIndex))
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless('getObjPositionInParent' in catalog.indexes())
+        self.failUnless(isinstance(catalog.Indexes['getObjPositionInParent'],
+            GopipIndex))
+
+
 def test_suite():
     from unittest import defaultTestLoader
     return defaultTestLoader.loadTestsFromName(__name__)
