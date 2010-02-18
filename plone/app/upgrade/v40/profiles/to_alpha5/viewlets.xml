@@ -3,4 +3,7 @@
   <order manager="plone.belowcontentbody" skinname="*">
     <viewlet name="plone.belowcontentbody.contenthistory" remove="True" />
   </order>
+  <hidden manager="plone.portaltop" skinname="Sunburst Theme">
+    <viewlet name="plone.path_bar" />
+  </hidden>
 </object>

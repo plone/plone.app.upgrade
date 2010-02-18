@@ -4,6 +4,10 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- In migration to 4.0a5, hide the plone.path_bar viewlet from the
+  plone.portaltop manager for the Sunburst Theme.
+  [davisagli]
+
 - Add new editing control panel.
   [hannosch]
 
