@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b1 - 2010-02-19
+1.0a5 - 2010-02-19
 ------------------
 
 - Migrate `getObjPositionInParent` to stub index capable of sorting search
