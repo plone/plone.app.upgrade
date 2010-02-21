@@ -4,6 +4,9 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Added upgrade step to profile version 4007.
+  [hannosch]
+
 1.0a5 - 2010-02-19
 ------------------
 

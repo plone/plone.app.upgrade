@@ -209,4 +209,16 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4006"
+        destination="4007"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Empty upgrade step"
+            handler="plone.app.upgrade.utils.null_upgrade_step"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>
