@@ -398,6 +398,13 @@ class TestMigrations_v4_0alpha5(MigrationTest):
         self.failUnless(isinstance(catalog.Indexes['getObjPositionInParent'],
             GopipIndex))
 
+    def testGetEventTypeIndex(self):
+        catalog = self.portal.portal_catalog
+        catalog.addIndex('getEventType', 'KeywordIndex')
+        self.failUnless('getEventType' in catalog.indexes())
+        loadMigrationProfile(self.portal, self.profile)
+        self.failIf('getEventType' in catalog.indexes())
+
 
 def test_suite():
     from unittest import defaultTestLoader
