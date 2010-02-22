@@ -21,7 +21,7 @@ from plone.app.upgrade.v40.alphas import renameJoinFormFields
 from plone.app.upgrade.v40.alphas import updateLargeFolderType
 from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
 from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
-
+from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
 
 class FakeSecureMailHost(object):
     meta_type = 'Secure Mail Host'
@@ -414,7 +414,22 @@ class TestMigrations_v4_0beta1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
+    def testRepositionRecursiveGroupsPlugin(self):
+        # Ensure that the recursive groups plugin is moved to the bottom of the IGroups plugins list, if active.
+        addRecursiveGroupsPlugin(self.portal)
+        # Plugin is installed, but not active, run against this state.
+        from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
+        acl = getToolByName(self.portal, 'acl_users')
+        plugins = acl.plugins
+        # The plugin was originally moved to the top of the list of IGroupsPlugin plugins by p.a.controlpanel. Recreate that state.
+        plugins.activatePlugin(IGroupsPlugin, 'recursive_groups')
+        while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') > 0:
+            plugins.movePluginsUp(IGroupsPlugin,['recursive_groups'])
+        self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][0] == 'recursive_groups')
 
+        # Rerun the migration, making sure that it's now the last item in the list of IGroupsPlugin plugins.
+        repositionRecursiveGroupsPlugin(self.portal)
+        self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][-1] == 'recursive_groups')
 
 def test_suite():
     from unittest import defaultTestLoader

@@ -219,6 +219,11 @@
             handler="plone.app.upgrade.v40.betas.alpha5_beta1"
             />
 
+        <genericsetup:upgradeStep
+            title="Ensure recursive groups plugin is properly placed."
+            handler=".betas.repositionRecursiveGroupsPlugin"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

@@ -4,6 +4,9 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Add upgrade step to move added recursive_groups plugin to the bottom of the IGroupsPlugin list.
+  [esteele]
+
 - Added upgrade step to profile version 4007.
   [hannosch]
 
