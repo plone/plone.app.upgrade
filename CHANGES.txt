@@ -4,7 +4,12 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
-- Add upgrade step to move added recursive_groups plugin to the bottom of the IGroupsPlugin list.
+- Add step to update viewlet order and hidden managers for the Sunburst theme
+  to reflect recent changes.
+  [davisagli]
+
+- Add upgrade step to move added recursive_groups plugin to the bottom of the
+  IGroupsPlugin list.
   [esteele]
 
 - Added upgrade step to profile version 4007.
