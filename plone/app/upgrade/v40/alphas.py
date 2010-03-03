@@ -13,6 +13,7 @@ from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from Products.ZCatalog.ProgressHandler import ZLogHandler
+from zExceptions import NotFound
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
@@ -120,7 +121,7 @@ def migrateActionIcons(context):
                 png_expr = expr[:-4] + '.png'
                 portal.restrictedTraverse(png_expr)
                 expr = png_expr
-            except (AttributeError, KeyError):
+            except (AttributeError, KeyError, NotFound):
                 pass
         prefix = ''
 
