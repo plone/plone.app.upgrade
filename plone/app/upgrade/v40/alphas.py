@@ -111,6 +111,10 @@ def migrateActionIcons(context):
         cat = ic.getCategory()
         ident = ic.getActionId()
         expr = ic.getExpression()
+        try:
+            expr = str(expr)
+        except UnicodeEncodeError:
+            pass
         if expr.endswith('gif'):
             try:
                 png_expr = expr[:-4] + '.png'

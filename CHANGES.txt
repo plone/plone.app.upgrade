@@ -4,6 +4,10 @@ Changelog
 1.0b1 - Unreleased
 ------------------
 
+- Update the Plone 4 action icons upgrade step to avoid storing icon
+  expressions as unicode when possible.
+  [davisagli]
+
 - Add step to update viewlet order and hidden managers for the Sunburst theme
   to reflect recent changes.
   [davisagli]
