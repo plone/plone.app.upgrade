@@ -57,6 +57,10 @@ Changelog
 1.0a4 - 2010-02-01
 ------------------
 
+- Fix theme upgrades by making sure that plone_styles gets updated to
+  classic_styles even when it already exists in the skins tool.
+  [davisagli]
+
 - Add upgrade step to create, but not install, a recursive groups PAS plugin.
   [esteele]
 

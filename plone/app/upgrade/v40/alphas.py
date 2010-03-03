@@ -309,11 +309,11 @@ def cleanUpSkinsTool(context):
     for layer, paths in skins.selections.items():
         new_paths = []
         for name in paths.split(','):
-            if name in existing:
-                new_paths.append(name)
-            elif name == 'plone_styles':
+            if name == 'plone_styles':
                 # plone_styles has been moved and renamed
                 new_paths.append('classic_styles')
+            elif name in existing:
+                new_paths.append(name)
         skins.selections[layer] = ','.join(new_paths)
 
 
