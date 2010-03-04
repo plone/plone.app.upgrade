@@ -422,7 +422,6 @@ class TestMigrations_v4_0beta1(MigrationTest):
         acl = getToolByName(self.portal, 'acl_users')
         plugins = acl.plugins
         # The plugin was originally moved to the top of the list of IGroupsPlugin plugins by p.a.controlpanel. Recreate that state.
-        plugins.activatePlugin(IGroupsPlugin, 'recursive_groups')
         while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') > 0:
             plugins.movePluginsUp(IGroupsPlugin,['recursive_groups'])
         self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][0] == 'recursive_groups')
