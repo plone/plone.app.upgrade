@@ -17,3 +17,9 @@ def repositionRecursiveGroupsPlugin(context):
     if 'recursive_groups' in [a[0] for a in existingGroupsPlugins]:
         while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') < len(existingGroupsPlugins)-1:
             plugins.movePluginsDown(IGroupsPlugin,['recursive_groups'])
+
+
+def beta1_beta2(context):
+    """4.0beta1 -> 4.0beta2
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta1-4beta2')

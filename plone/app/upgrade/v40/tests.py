@@ -430,6 +430,15 @@ class TestMigrations_v4_0beta1(MigrationTest):
         repositionRecursiveGroupsPlugin(self.portal)
         self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][-1] == 'recursive_groups')
 
+class TestMigrations_v4_0beta2(MigrationTest):
+
+    profile = "profile-plone.app.upgrade.v40:4beta1-4beta2"
+
+    def testProfile(self):
+        # This tests the whole upgrade profile can be loaded
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless(True)
+
 def test_suite():
     from unittest import defaultTestLoader
     return defaultTestLoader.loadTestsFromName(__name__)
