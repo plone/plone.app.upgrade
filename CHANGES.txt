@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b1 - Unreleased
+1.0b1 - 2010-03-08
 ------------------
 
 - Update the Plone 4 action icons upgrade step to avoid storing icon
