@@ -4,6 +4,9 @@ Changelog
 1.0b2 - Unreleased
 ------------------
 
+- Added upgrade step for viewlet changes in Plone 4.0b2.
+  [davisagli]
+
 1.0b1 - 2010-03-08
 ------------------
 

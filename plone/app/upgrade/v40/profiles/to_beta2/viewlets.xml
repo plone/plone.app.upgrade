@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<object>
+  <!-- Plone Default -->
+  <order manager="plone.portaltop" skinname="Plone Default">
+    <viewlet name="plone.personal_bar" remove="True"/>
+    <viewlet name="plone.app.i18n.locales.languageselector" remove="True"/>
+    <viewlet name="plone.path_bar" remove="True"/>
+  </order>
+  <order manager="plone.portalheader" skinname="Plone Default">
+    <viewlet name="plone.site_actions" remove="True"/>
+    <viewlet name="plone.personal_bar" insert-after="plone.skip_links"/>
+    <viewlet name="plone.app.i18n.locales.languageselector" insert-before="plone.searchbox"/>
+  </order>
+  <order manager="plone.abovecontent" skinname="Plone Default">
+    <viewlet name="plone.path_bar"/>
+  </order>
+  <order manager="plone.belowcontent" skinname="Plone Default">
+    <viewlet name="plone.belowcontenttitle.keywords" insert-before="*"/>
+  </order>
+  <order manager="plone.portalfooter" skinname="Plone Default">
+    <viewlet name="plone.site_actions" insert-after="*"/>
+  </order>
+  
+  <!-- Plone Classic Theme -->
+  <order manager="plone.portaltop" skinname="Plone Classic Theme" based-on="Plone Default">
+    <viewlet name="plone.personal_bar" insert-after="*" />
+    <viewlet name="plone.app.i18n.locales.languageselector" insert-after="*" />
+    <viewlet name="plone.path_bar" insert-after="*" />
+  </order>
+  <order manager="plone.portalheader" skinname="Plone Classic Theme" based-on="Plone Default">
+    <viewlet name="plone.site_actions" insert-after="plone.skip_links" />
+  </order>
+  <hidden manager="plone.portalheader" skinname="Plone Classic Theme">
+    <viewlet name="plone.personal_bar" />
+    <viewlet name="plone.app.i18n.locales.languageselector" />
+  </hidden>
+  <hidden manager="plone.abovecontent" skinname="Plone Classic Theme">
+    <viewlet name="plone.path_bar" />
+  </hidden>
+  <hidden manager="plone.belowcontent" skinname="Plone Classic Theme">
+    <viewlet name="plone.belowcontenttitle.keywords" />
+  </hidden>
+  <hidden manager="plone.portalfooter" skinname="Plone Classic Theme">
+    <viewlet name="plone.site_actions" />
+  </hidden>
+  
+  <!-- Sunburst Theme -->
+  <hidden manager="plone.portaltop" skinname="Sunburst Theme"
+    purge="True"/>
+  <hidden manager="plone.portalheader" skinname="Sunburst Theme"
+    purge="True"/>
+  <order manager="plone.portaltop" skinname="Sunburst Theme"
+    purge="True"/>
+  <order manager="plone.portalheader" skinname="Sunburst Theme"
+    purge="True"/>
+  <order manager="plone.portalfooter" skinname="Sunburst Theme"
+    purge="True"/>
+</object>
