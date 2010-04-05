@@ -23,3 +23,30 @@ def beta1_beta2(context):
     """4.0beta1 -> 4.0beta2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta1-4beta2')
+
+def updateSafeHTMLConfig(context):
+    """Update the safe_html transform with the new config params, migrating existing config from Kupu."""
+    transform = getToolByName(context, 'portal_transforms').safe_html
+    transform._tr_init(1) # load new config items
+    kupu_tool = getToolByName(context, 'kupu_library_tool', None)
+    if kupu_tool is None:
+        return
+    list_conf = dict(
+        style_whitelist=kupu_tool.style_whitelist,
+        class_blacklist=kupu_tool.class_blacklist,
+        stripped_attributes=kupu_tool.get_stripped_attributes(),
+        )
+    for k, v in list_conf.items():
+        tdata = transform._config[k]
+        if tdata == v:
+            continue
+        while tdata:
+            tdata.pop()
+        tdata.extend(v)
+    ksc = dict((str(' '.join(k)), str(' '.join(v))) for k, v in kupu_tool.get_stripped_combinations())
+    tsc = transform._config['stripped_combinations']
+    if tsc != ksc:
+        tsc.clear()
+        tsc.update(ksc)
+    transform._p_changed = True
+    transform.reload()

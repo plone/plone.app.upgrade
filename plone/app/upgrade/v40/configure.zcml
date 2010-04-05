@@ -236,6 +236,11 @@
             handler="plone.app.upgrade.v40.betas.beta1_beta2"
             />
             
+        <genericsetup:upgradeStep
+            title="Update the safe_html transform with the new config params, migrating existing config from Kupu."
+            handler=".betas.updateSafeHTMLConfig"
+            />
+
     </genericsetup:upgradeSteps>
 
 

@@ -4,6 +4,10 @@ Changelog
 1.0b2 - Unreleased
 ------------------
 
+- Update the safe_html transform with the new config params, migrating existing
+  config from Kupu.
+  [elro]
+
 - Added upgrade step for viewlet changes in Plone 4.0b2.
   [davisagli]
 
