@@ -31,22 +31,26 @@ def updateSafeHTMLConfig(context):
     kupu_tool = getToolByName(context, 'kupu_library_tool', None)
     if kupu_tool is None:
         return
-    list_conf = dict(
-        style_whitelist=kupu_tool.style_whitelist,
-        class_blacklist=kupu_tool.class_blacklist,
-        stripped_attributes=kupu_tool.get_stripped_attributes(),
-        )
-    for k, v in list_conf.items():
+    list_conf = []
+    # Kupu sets its attributes on first use, rather than providing class level defaults.
+    if hasattr(kupu_tool.aq_base, 'style_whitelist'):
+        list_conf.append(('style_whitelist', kupu_tool.style_whitelist))
+    if hasattr(kupu_tool.aq_base, 'class_blacklist'):
+        list_conf.append(('class_blacklist', kupu_tool.class_blacklist))
+    if hasattr(kupu_tool.aq_base, 'html_exclusions'):
+        list_conf.append(('stripped_attributes', kupu_tool.get_stripped_attributes()))
+    for k, v in list_conf:
         tdata = transform._config[k]
         if tdata == v:
             continue
         while tdata:
             tdata.pop()
         tdata.extend(v)
-    ksc = dict((str(' '.join(k)), str(' '.join(v))) for k, v in kupu_tool.get_stripped_combinations())
-    tsc = transform._config['stripped_combinations']
-    if tsc != ksc:
-        tsc.clear()
-        tsc.update(ksc)
+    if hasattr(kupu_tool.aq_base, 'html_exclusions'):
+        ksc = dict((str(' '.join(k)), str(' '.join(v))) for k, v in kupu_tool.get_stripped_combinations())
+        tsc = transform._config['stripped_combinations']
+        if tsc != ksc:
+            tsc.clear()
+            tsc.update(ksc)
     transform._p_changed = True
     transform.reload()
