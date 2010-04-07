@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="TempFolder" meta_type="Factory-based Type Information"
+   i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="description"
+     i18n:translate="">Specialized folder for temporary data.</property>
+ <property name="icon_expr"></property>
+</object>
