@@ -437,7 +437,6 @@ class TestMigrations_v4_0beta2(MigrationTest):
     profile = "profile-plone.app.upgrade.v40:4beta1-4beta2"
 
     def testProfile(self):
-        import pdb; pdb.set_trace( )
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
