@@ -54,3 +54,13 @@ def updateSafeHTMLConfig(context):
             tsc.update(ksc)
     transform._p_changed = True
     transform.reload()
+
+def updateIconMetadata(context):
+    """Update getIcon metadata column for all core content"""
+    catalog = getToolByName(context, 'portal_catalog')
+    search = catalog.unrestrictedSearchResults
+    typesToUpdate = ['Document', 'Event', 'File', 'Folder', 'Image', 'Large_Plone_Folder', 'Link', 'News_Item', 'Plone_Site', 'TempFolder', 'Topic']
+    for typeName in typesToUpdate:
+        for brain in search(portal_type=typeName):
+            brain.getObject().reindexObject()
+        logger.info('Updated `getIcon` for %s content' % typeName)

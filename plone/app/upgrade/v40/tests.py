@@ -4,6 +4,7 @@ from zope.ramcache.interfaces.ram import IRAMCache
 
 from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.ActionInformation import Action
+from Products.CMFCore.Expression import Expression
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.upgrade.utils import loadMigrationProfile
@@ -22,6 +23,7 @@ from plone.app.upgrade.v40.alphas import updateLargeFolderType
 from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
 from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
 from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
+from plone.app.upgrade.v40.betas import updateIconMetadata
 
 class FakeSecureMailHost(object):
     meta_type = 'Secure Mail Host'
@@ -435,10 +437,26 @@ class TestMigrations_v4_0beta2(MigrationTest):
     profile = "profile-plone.app.upgrade.v40:4beta1-4beta2"
 
     def testProfile(self):
+        import pdb; pdb.set_trace( )
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
+    def testCoreContentIconExprCleared(self):
+        types = getToolByName(self.portal, 'portal_types')
+        catalog = getToolByName(self.portal, 'portal_catalog')
+        # Reinstate the now-empty icon expression for the Document type
+        types['Document'].icon_expr_object = Expression('string:${portal_url}/document_icon.png')
+        self.portal['front-page'].reindexObject()
+        # Make sure the getIcon metadata column shows the "original" value
+        self.failUnless(catalog(id='front-page')[0].getIcon == 'document_icon.png')
+        # Run the migration
+        loadMigrationProfile(self.portal, self.profile)
+        updateIconMetadata(self.portal)
+        # The getIcon column should now be empty
+        self.failUnless(catalog(id='front-page')[0].getIcon == '')
+        
+        
 def test_suite():
     from unittest import defaultTestLoader
     return defaultTestLoader.loadTestsFromName(__name__)

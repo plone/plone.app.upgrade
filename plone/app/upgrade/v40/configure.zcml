@@ -240,6 +240,11 @@
             title="Update the safe_html transform with the new config params, migrating existing config from Kupu."
             handler=".betas.updateSafeHTMLConfig"
             />
+            
+        <genericsetup:upgradeStep
+            title="Update the getIcon metadata column for all core content types."
+            handler=".betas.updateIconMetadata"
+            />
 
     </genericsetup:upgradeSteps>
 

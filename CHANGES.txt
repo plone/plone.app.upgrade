@@ -4,6 +4,10 @@ Changelog
 1.0b2 - Unreleased
 ------------------
 
+- Add an upgrade step to update the getIcon metadata column for core types so
+  that our new CSS sprited icons can be used.
+  [esteele]
+  
 - Update the safe_html transform with the new config params, migrating existing
   config from Kupu.
   [elro]
