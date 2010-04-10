@@ -64,3 +64,8 @@ def updateIconMetadata(context):
         for brain in search(portal_type=typeName):
             brain.getObject().reindexObject()
         logger.info('Updated `getIcon` for %s content' % typeName)
+        
+def beta2_beta3(context):
+    """4.0beta2 -> 4.0beta3
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta2-4beta3')
