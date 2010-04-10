@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b2 - Unreleased
+1.0b2 - 2010-04-09
 ------------------
 
 - Add an upgrade step to update the getIcon metadata column for core types so
