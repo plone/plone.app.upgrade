@@ -2,11 +2,11 @@ from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 
+
 def alpha5_beta1(context):
-    """4.0alpha5 -> 4.0beta1
-    """
+    """4.0alpha5 -> 4.0beta1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha5-4beta1')
-    
+
 
 def repositionRecursiveGroupsPlugin(context):
     """If the recursive groups plugin is active, make sure it's at the bottom of the active plugins list"""
@@ -16,13 +16,14 @@ def repositionRecursiveGroupsPlugin(context):
     existingGroupsPlugins = plugins.listPlugins(IGroupsPlugin)
     if 'recursive_groups' in [a[0] for a in existingGroupsPlugins]:
         while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') < len(existingGroupsPlugins)-1:
-            plugins.movePluginsDown(IGroupsPlugin,['recursive_groups'])
+            plugins.movePluginsDown(IGroupsPlugin, ['recursive_groups'])
 
 
 def beta1_beta2(context):
     """4.0beta1 -> 4.0beta2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta1-4beta2')
+
 
 def updateSafeHTMLConfig(context):
     """Update the safe_html transform with the new config params, migrating existing config from Kupu."""
@@ -60,7 +61,11 @@ def updateIconMetadata(context):
     """Update getIcon metadata column for all core content"""
     catalog = getToolByName(context, 'portal_catalog')
     search = catalog.unrestrictedSearchResults
-    typesToUpdate = ['Document', 'Event', 'File', 'Folder', 'Image', 'Large_Plone_Folder', 'Link', 'News_Item', 'Plone_Site', 'TempFolder', 'Topic']
+    typesToUpdate = [
+        'Document', 'Event', 'File', 'Folder', 'Image',
+        'Large_Plone_Folder', 'Link', 'News_Item', 'Plone_Site', 'TempFolder',
+        'Topic',
+        ]
     for typeName in typesToUpdate:
         for brain in search(portal_type=typeName):
             obj = brain.getObject()
