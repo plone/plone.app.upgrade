@@ -432,6 +432,7 @@ class TestMigrations_v4_0beta1(MigrationTest):
         repositionRecursiveGroupsPlugin(self.portal)
         self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][-1] == 'recursive_groups')
 
+
 class TestMigrations_v4_0beta2(MigrationTest):
 
     profile = "profile-plone.app.upgrade.v40:4beta1-4beta2"
@@ -446,7 +447,9 @@ class TestMigrations_v4_0beta2(MigrationTest):
         catalog = getToolByName(self.portal, 'portal_catalog')
         # Reinstate the now-empty icon expression for the Document type
         types['Document'].icon_expr_object = Expression('string:${portal_url}/document_icon.png')
-        self.portal['front-page'].reindexObject()
+        front = self.portal['front-page']
+        catalog.reindexObject(front)
+        old_modified = front.modified()
         # Make sure the getIcon metadata column shows the "original" value
         self.failUnless(catalog(id='front-page')[0].getIcon == 'document_icon.png')
         # Run the migration
@@ -454,8 +457,9 @@ class TestMigrations_v4_0beta2(MigrationTest):
         updateIconMetadata(self.portal)
         # The getIcon column should now be empty
         self.failUnless(catalog(id='front-page')[0].getIcon == '')
-        
-        
+        self.assertEquals(front.modified(), old_modified)
+
+
 def test_suite():
     from unittest import defaultTestLoader
     return defaultTestLoader.loadTestsFromName(__name__)

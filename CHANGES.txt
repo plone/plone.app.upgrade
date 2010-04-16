@@ -4,6 +4,10 @@ Changelog
 1.0b3 - Unreleased
 ------------------
 
+- Added an automated upgrade step to remove old persistent Zope2 Interface
+  records. This refs http://dev.plone.org/plone/ticket/10446.
+  [dunlapm, hannosch]
+
 1.0b2 - 2010-04-09
 ------------------
 

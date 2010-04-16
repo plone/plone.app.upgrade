@@ -61,6 +61,7 @@ def updateIconMetadata(context):
     """Update getIcon metadata column for all core content"""
     catalog = getToolByName(context, 'portal_catalog')
     search = catalog.unrestrictedSearchResults
+    reindex = catalog.reindexObject
     typesToUpdate = [
         'Document', 'Event', 'File', 'Folder', 'Image',
         'Large_Plone_Folder', 'Link', 'News_Item', 'Plone_Site', 'TempFolder',
@@ -74,7 +75,10 @@ def updateIconMetadata(context):
             if '__implements__' in obj.__dict__:
                 del obj.__dict__['__implements__']
                 obj._p_changed = True
-            obj.reindexObject()
+            # passing in a valid but inexpensive index, makes sure we don't
+            # reindex the entire catalog including expensive indexes like
+            # SearchableText
+            reindex(obj, idxs=['id'])
         logger.info('Updated `getIcon` for %s content' % typeName)
 
 
