@@ -414,10 +414,11 @@ def updateLargeFolderType(context):
     """Update portal type of former 'Large Folder' content"""
     catalog = getToolByName(context, 'portal_catalog')
     search = catalog.unrestrictedSearchResults
+    reindex = catalog.reindexObject
     def update(brain):
         obj = brain.getObject()
         obj._setPortalTypeName('Folder')
-        obj.reindexObject(idxs=['portal_type', 'Type', 'object_provides'])
+        reindex(obj, idxs=['portal_type', 'Type', 'object_provides'])
     for brain in search(portal_type='Large Plone Folder'):
         update(brain)
     for brain in search(Type='Large Folder'):   # just to make sure...
