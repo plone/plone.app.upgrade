@@ -55,6 +55,7 @@ def updateSafeHTMLConfig(context):
     transform._p_changed = True
     transform.reload()
 
+
 def updateIconMetadata(context):
     """Update getIcon metadata column for all core content"""
     catalog = getToolByName(context, 'portal_catalog')
@@ -62,9 +63,16 @@ def updateIconMetadata(context):
     typesToUpdate = ['Document', 'Event', 'File', 'Folder', 'Image', 'Large_Plone_Folder', 'Link', 'News_Item', 'Plone_Site', 'TempFolder', 'Topic']
     for typeName in typesToUpdate:
         for brain in search(portal_type=typeName):
-            brain.getObject().reindexObject()
+            obj = brain.getObject()
+            # Abuse this step to conveniently get rid of old persistent
+            # uppercase Interface records
+            if '__implements__' in obj.__dict__:
+                del obj.__dict__['__implements__']
+                obj._p_changed = True
+            obj.reindexObject()
         logger.info('Updated `getIcon` for %s content' % typeName)
-        
+
+
 def beta2_beta3(context):
     """4.0beta2 -> 4.0beta3
     """
