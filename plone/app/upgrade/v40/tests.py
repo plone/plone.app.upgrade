@@ -459,7 +459,6 @@ class TestMigrations_v4_0beta2(MigrationTest):
         self.failUnless(catalog(id='front-page')[0].getIcon == '')
         self.assertEquals(front.modified(), old_modified)
 
-
 def test_suite():
     from unittest import defaultTestLoader
     return defaultTestLoader.loadTestsFromName(__name__)
