@@ -64,7 +64,7 @@ def updateIconMetadata(context):
     reindex = catalog.reindexObject
     typesToUpdate = [
         'Document', 'Event', 'File', 'Folder', 'Image',
-        'Large_Plone_Folder', 'Link', 'News_Item', 'Plone_Site', 'TempFolder',
+        'Link', 'News_Item', 'Plone_Site', 'TempFolder',
         'Topic',
         ]
     for typeName in typesToUpdate:
@@ -92,3 +92,12 @@ def beta3_beta4(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta3-4beta4')
 
+def removeLargePloneFolder(context):
+    """Complete removal of Large Plone Folder
+    (Most of it is accomplished by the profile.)
+    """
+    ftool = getToolByName(context, 'portal_factory')
+    l = set(ftool.getFactoryTypes())
+    if 'Large Plone Folder' in l:
+        l.remove('Large Plone Folder')
+        ftool.manage_setPortalFactoryTypes(listOfTypeIds=list(l))

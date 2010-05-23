@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+ <object name="navtree_properties" meta_type="Plone Property Sheet">
+  <property name="parentMetaTypesNotToQuery" purge="False">
+   <element value="Large Plone Folder" remove="True"/>
+  </property>
+ </object>
+ <object name="site_properties" meta_type="Plone Property Sheet">
+  <property name="typesLinkToFolderContentsInFC" purge="False">
+   <element value="Large Plone Folder" remove="True"/>
+  </property>
+ </object>
+</object>

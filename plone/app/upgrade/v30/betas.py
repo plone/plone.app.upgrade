@@ -192,8 +192,8 @@ def addContributorToCreationPermissions(context):
     for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
                 'ATContentTypes: Add Event',
                 'ATContentTypes: Add File', 'ATContentTypes: Add Folder', 
-                'ATContentTypes: Add Image', 'ATContentTypes: Add Large Plone Folder',
-                'ATContentTypes: Add Link', 'ATContentTypes: Add News Item', ]:
+                'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
+                'ATContentTypes: Add News Item', ]:
         roles = [r['name'] for r in portal.rolesOfPermission(p) if r['selected']]
         if 'Contributor' not in roles:
             roles.append('Contributor')
@@ -220,13 +220,12 @@ def addEditorToSecondaryEditorPermissions(context):
 def updateEditActionConditionForLocking(context):
     """
     Condition on edit views for Document, Event, File, Folder, Image, 
-    Large_Plone_Folder, Link, Topic has been added to not display the Edit
+    Link, Topic has been added to not display the Edit
     tab if an item is locked
     """
     portal_types = getToolByName(context, 'portal_types', None)
     lockable_types = ['Document', 'Event', 'File', 'Folder',
-                      'Image', 'Large Plone Folder', 'Link',
-                      'News Item', 'Topic']
+                      'Image', 'Link', 'News Item', 'Topic']
     if portal_types is not None:
         for contentType in lockable_types:
             fti = portal_types.getTypeInfo(contentType)

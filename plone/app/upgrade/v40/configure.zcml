@@ -269,7 +269,12 @@
             title="General upgrade steps"
             handler="plone.app.upgrade.v40.betas.beta3_beta4"
             />
-            
+        
+        <genericsetup:upgradeStep
+            title="Complete removal of Large Plone Folder content type"
+            handler="plone.app.upgrade.v40.betas.removeLargePloneFolder"
+            />
+        
     </genericsetup:upgradeSteps>
 
 </configure>

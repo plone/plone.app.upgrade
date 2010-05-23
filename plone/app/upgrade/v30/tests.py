@@ -1055,8 +1055,8 @@ class TestMigrations_v3_0(MigrationTest):
         for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
                     'ATContentTypes: Add Event',
                     'ATContentTypes: Add File', 'ATContentTypes: Add Folder', 
-                    'ATContentTypes: Add Image', 'ATContentTypes: Add Large Plone Folder',
-                    'ATContentTypes: Add Link', 'ATContentTypes: Add News Item', ]:
+                    'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
+                    'ATContentTypes: Add News Item', ]:
             self.portal.manage_permission(p, ['Manager', 'Owner'], True)
         # Test it twice
         for i in range(2):
@@ -1066,8 +1066,8 @@ class TestMigrations_v3_0(MigrationTest):
             for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
                         'ATContentTypes: Add Event',
                         'ATContentTypes: Add File', 'ATContentTypes: Add Folder', 
-                        'ATContentTypes: Add Image', 'ATContentTypes: Add Large Plone Folder',
-                        'ATContentTypes: Add Link', 'ATContentTypes: Add News Item', ]:
+                        'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
+                        'ATContentTypes: Add News Item', ]:
                 self.failUnless(p in [r['name'] for r in 
                                     self.portal.permissionsOfRole('Contributor') if r['selected']])
 
@@ -1139,8 +1139,7 @@ class TestMigrations_v3_0(MigrationTest):
 
     def testUpdateEditActionConditionForLocking(self):
         lockable_types = ['Document', 'Event', 'File', 'Folder',
-                          'Image', 'Large Plone Folder', 'Link',
-                          'News Item', 'Topic']
+                          'Image', 'Link', 'News Item', 'Topic']
         for contentType in lockable_types:
             fti = self.types.getTypeInfo(contentType)
             for action in fti.listActions():

@@ -4,6 +4,12 @@ Changelog
 1.0b4 - Unreleased
 ------------------
 
+- Add upgrade step to remove the Large Plone Folder type for Plone 4.0rc1
+  (there is another step which already turns Large Plone Folders into
+  unordered regular Folders). Removed references to Large Plone Folder from
+  old upgrade steps.
+  [davisagli]
+
 1.0b3 - 2010-05-03
 ------------------
 

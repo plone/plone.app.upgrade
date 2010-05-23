@@ -419,7 +419,9 @@ def updateLargeFolderType(context):
         obj = brain.getObject()
         obj._setPortalTypeName('Folder')
         reindex(obj, idxs=['portal_type', 'Type', 'object_provides'])
-    for brain in search(portal_type='Large Plone Folder'):
+    # [:] copies the search results; without this we miss some of them
+    # due to the reindexing in update()
+    for brain in search(portal_type='Large Plone Folder')[:]:
         update(brain)
     for brain in search(Type='Large Folder'):   # just to make sure...
         update(brain)
