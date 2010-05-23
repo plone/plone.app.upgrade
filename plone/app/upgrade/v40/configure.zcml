@@ -162,7 +162,7 @@
             title="Upgrade DCMI metadata storage in portal_metadata"
             handler="Products.CMFDefault.upgrade.to22.upgrade_dcmi_metadata"
             />
-            
+
         <genericsetup:upgradeStep
             title="Add the recursive groups PAS plugin."
             handler=".alphas.addRecursiveGroupsPlugin"
@@ -235,12 +235,12 @@
             title="General upgrade steps"
             handler="plone.app.upgrade.v40.betas.beta1_beta2"
             />
-            
+
         <genericsetup:upgradeStep
             title="Update the safe_html transform with the new config params, migrating existing config from Kupu."
             handler=".betas.updateSafeHTMLConfig"
             />
-            
+
         <genericsetup:upgradeStep
             title="Update the getIcon metadata column for all core content types."
             handler=".betas.updateIconMetadata"
@@ -257,7 +257,7 @@
             title="General upgrade steps"
             handler="plone.app.upgrade.v40.betas.beta2_beta3"
             />
-            
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -269,12 +269,12 @@
             title="General upgrade steps"
             handler="plone.app.upgrade.v40.betas.beta3_beta4"
             />
-        
+
         <genericsetup:upgradeStep
             title="Complete removal of Large Plone Folder content type"
             handler="plone.app.upgrade.v40.betas.removeLargePloneFolder"
             />
-        
+
     </genericsetup:upgradeSteps>
 
 </configure>
