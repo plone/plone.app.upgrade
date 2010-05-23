@@ -275,6 +275,11 @@
             handler="plone.app.upgrade.v40.betas.removeLargePloneFolder"
             />
 
+        <genericsetup:upgradeStep
+            title="Convert standard file and image types to blobs."
+            handler="plone.app.upgrade.v40.betas.convertToBlobs"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

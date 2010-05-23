@@ -1,6 +1,7 @@
+from Products.CMFCore.utils import getToolByName
+
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
-from Products.CMFCore.utils import getToolByName
 
 
 def alpha5_beta1(context):
@@ -87,10 +88,12 @@ def beta2_beta3(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta2-4beta3')
 
+
 def beta3_beta4(context):
     """4.0beta3 -> 4.0beta4
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta3-4beta4')
+
 
 def removeLargePloneFolder(context):
     """Complete removal of Large Plone Folder
@@ -101,3 +104,17 @@ def removeLargePloneFolder(context):
     if 'Large Plone Folder' in l:
         l.remove('Large Plone Folder')
         ftool.manage_setPortalFactoryTypes(listOfTypeIds=list(l))
+
+
+def convertToBlobs(context):
+    logger.info('Started migration of files to blobs.')
+    from plone.app.blob.migrations import migrateATBlobFiles
+    output = migrateATBlobFiles(context)
+    count = len(output.split('\n')) - 1
+    logger.info('Migrated %s files to blobs.' % count)
+
+    logger.info('Started migration of images to blobs.')
+    from plone.app.blob.migrations import migrateATBlobImages
+    output = migrateATBlobImages(context)
+    count = len(output.split('\n')) - 1
+    logger.info('Migrated %s images to blobs.' % count)
