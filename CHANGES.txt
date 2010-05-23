@@ -4,6 +4,10 @@ Changelog
 1.0b4 - Unreleased
 ------------------
 
+- Upgrade the standard File and Image FTI's to use blobs. This refs
+  http://dev.plone.org/plone/ticket/10366.
+  [hannosch]
+
 - Add upgrade step to remove the Large Plone Folder type for Plone 4.0rc1
   (there is another step which already turns Large Plone Folders into
   unordered regular Folders). Removed references to Large Plone Folder from

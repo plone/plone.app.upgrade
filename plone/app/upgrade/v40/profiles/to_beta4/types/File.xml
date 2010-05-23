@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name="File"
+   meta_type="Factory-based Type Information with dynamic views">
+ <property name="product">plone.app.blob</property>
+ <property name="factory">addATBlobFile</property>
+</object>
