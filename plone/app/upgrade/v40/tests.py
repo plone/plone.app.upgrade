@@ -495,6 +495,9 @@ class TestMigrations_v4_0beta4(MigrationTest):
             self.failUnless('TempFolder' in ptool.navtree_properties.parentMetaTypesNotToQuery)
             self.failIf('Large Plone Folder' in ptool.site_properties.typesLinkToFolderContentsInFC)
             self.failUnless('Folder' in ptool.site_properties.typesLinkToFolderContentsInFC)
+            # sleep to avoid a GS log filename collision :-o
+            time.sleep(1)
+
 
 def test_suite():
     from unittest import defaultTestLoader
