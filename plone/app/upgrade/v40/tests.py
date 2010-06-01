@@ -265,7 +265,6 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             # js resources that are part of plone.app.jquerytools
             '++resource++plone.app.jquerytools.js',
             '++resource++plone.app.jquerytools.overlayhelpers.js',
-            '++resource++plone.app.jquerytools.form.js',
             # js resource that is new in CMFPlone
             'popupforms.js']
         for e in expected:
