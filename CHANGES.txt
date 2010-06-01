@@ -4,6 +4,11 @@ Changelog
 1.0b4 - Unreleased
 ------------------
 
+- Add ++resource++plone.app.jquerytools.form.js to jsregistry to accomodate
+  new jQuery Forms plug in.
+  http://dev.plone.org/plone/ticket/10603
+  [smcmahon]
+
 - Add upgrade step to convert all files and images to blobs. This closes
   http://dev.plone.org/plone/ticket/10366.
   [hannosch]
