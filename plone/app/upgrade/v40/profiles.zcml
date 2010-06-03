@@ -75,4 +75,13 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
+    <genericsetup:registerProfile
+        name="4beta4-4beta5"
+        title="Upgrade profile for Plone 4.0beta4 to Plone 4.0beta5"
+        description="This profile contains configuration changes that are applied during the Plone 4.0b4 to 4.0b5 upgrade." 
+        directory="profiles/to_beta5"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
 </configure>

@@ -282,4 +282,12 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4010"
+        destination="4011"
+        profile="Products.CMFPlone:plone">
+
+    </genericsetup:upgradeSteps>
+
+
 </configure>
