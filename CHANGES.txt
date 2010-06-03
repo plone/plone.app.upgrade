@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b4 - Unreleased
+1.0b4 - 2010-06-03
 ------------------
 
 - Add ++resource++plone.app.jquerytools.form.js to jsregistry to accomodate
