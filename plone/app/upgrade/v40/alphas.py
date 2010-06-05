@@ -1,7 +1,7 @@
 import transaction
 
 from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
-from zope.component import getSiteManager
+from zope.component import getSiteManager, getUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
 
@@ -14,6 +14,7 @@ from Products.MailHost.interfaces import IMailHost
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zExceptions import NotFound
+from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
@@ -65,6 +66,36 @@ def restoreTheme(context):
     skins = getToolByName(context, 'portal_skins')
     portal = getToolByName(context, 'portal_url').getPortalObject()
     old_default_skin = getattr(aq_base(skins), 'old_default_skin', None)
+    
+    if old_default_skin == 'Plone Default':
+        v_storage = getUtility(IViewletSettingsStorage)
+        uncustomized_layers = ('custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
+                              'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
+                              'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
+                              'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
+                              'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
+                              'plone_images,plone_content,plone_login,plone_deprecated,'
+                              'plone_3rdParty,cmf_legacy')
+        if skins.selections.get('Plone Default') == uncustomized_layers:
+            # if the old theme's layers hadn't been mucked with, we can just
+            # use Plone Classic Theme
+            old_default_skin = 'Plone Classic Theme'
+        else:
+            # otherwise, copy Plone Default to a new theme
+            skins.selections['Old Plone 3 Custom Theme'] = skins.selections.get('Plone Default')
+            # copy the viewlet order
+            v_storage._order['Old Plone 3 Custom Theme'] = dict(v_storage._order.get('Plone Default', {}))
+            v_storage._hidden['Old Plone 3 Custom Theme'] = dict(v_storage._hidden.get('Plone Default', {}))
+            
+            old_default_skin = 'Old Plone 3 Custom Theme'
+        
+        # reset the Plone Default theme to the standard layers and viewlets
+        skins.selections['Plone Default'] = ''
+        v_storage._order['Plone Default'] = {}
+        v_storage._hidden['Plone Default'] = {}
+        loadMigrationProfile(context, 'profile-Products.CMFPlone:plone',
+                             steps=('skins','viewlets'))
+    
     if old_default_skin is not None:
         setattr(aq_base(skins), 'default_skin', old_default_skin)
         request = aq_get(context, 'REQUEST', None)

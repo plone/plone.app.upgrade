@@ -287,6 +287,11 @@
         destination="4011"
         profile="Products.CMFPlone:plone">
 
+        <genericsetup:upgradeStep
+            title="General upgrade steps"
+            handler="plone.app.upgrade.v40.betas.beta4_beta5"
+            />
+
     </genericsetup:upgradeSteps>
 
 

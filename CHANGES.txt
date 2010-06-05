@@ -4,6 +4,15 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Modify the restoreTheme upgrade step to improve handling of themes when
+  upgrading from Plone 3. Now if the skin was "Plone Default", it will be
+  set to "Plone Classic Theme" if the layers were uncustomized.  If the
+  layers were customized, the layers and viewlet settings will be copied to
+  a new skin called "Old Plone 3 Custom Theme", and then "Plone Default"
+  will be reset to its typical configuration in a fresh Plone 4 site.
+  This closes http://dev.plone.org/plone/ticket/10399
+  [davisagli]
+
 1.0b4 - 2010-06-03
 ------------------
 
