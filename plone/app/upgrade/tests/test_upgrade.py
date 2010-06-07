@@ -12,17 +12,17 @@ class TestUpgrade(MigrationTest):
     def testListUpgradeSteps(self):
         # There should be no upgrade steps from the current version
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
-        self.failUnless(len(upgrades) == 0)
+        self.assertEqual(len(upgrades), 0)
 
     def testProfileVersion(self):
         # The profile version for the base profile should be the same
         # as the file system version and the instance version
-        setup = getToolByName(self.portal, 'portal_setup')
+        self.setup = getToolByName(self.portal, 'portal_setup')
 
         current = self.setup.getVersionForProfile(_DEFAULT_PROFILE)
         current = tuple(current.split('.'))
         last = self.setup.getLastVersionForProfile(_DEFAULT_PROFILE)
-        self.failUnless(last == current)
+        self.assertEqual(last, current)
 
     def testDoUpgrades(self):
         self.setRoles(['Manager'])
@@ -48,11 +48,11 @@ class TestUpgrade(MigrationTest):
         current = self.setup.getVersionForProfile(_DEFAULT_PROFILE)
         current = tuple(current.split('.'))
         last = self.setup.getLastVersionForProfile(_DEFAULT_PROFILE)
-        self.failUnless(last == current)
+        self.assertEqual(last, current)
 
         # There are no more upgrade steps available
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
-        self.failUnless(len(upgrades) == 0)
+        self.assertEqual(len(upgrades), 0)
 
 
 def test_suite():

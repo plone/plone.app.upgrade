@@ -164,10 +164,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             sm = getSiteManager()
             sm.unregisterUtility(provided=IRAMCache)
             util = queryUtility(IRAMCache)
-            self.failUnless(util.maxAge == 86400)
+            self.assertEqual(util.maxAge, 86400)
             addOrReplaceRamCache(self.portal)
             util = queryUtility(IRAMCache)
-            self.failUnless(util.maxAge == 3600)
+            self.assertEqual(util.maxAge, 3600)
 
     def testReplaceOldRamCache(self):
         sm = getSiteManager()
@@ -181,7 +181,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
             addOrReplaceRamCache(self.portal)
             util = queryUtility(IRAMCache)
-            self.failUnless(util.maxAge == 3600)
+            self.assertEqual(util.maxAge, 3600)
 
     def testChangeWorkflowActorVariableExpression(self):
         self.wftool.intranet_folder_workflow.variables.actor.setProperties('')
@@ -428,11 +428,11 @@ class TestMigrations_v4_0beta1(MigrationTest):
         # The plugin was originally moved to the top of the list of IGroupsPlugin plugins by p.a.controlpanel. Recreate that state.
         while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') > 0:
             plugins.movePluginsUp(IGroupsPlugin,['recursive_groups'])
-        self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][0] == 'recursive_groups')
+        self.assertEqual(plugins.getAllPlugins('IGroupsPlugin')['active'][0], 'recursive_groups')
 
         # Rerun the migration, making sure that it's now the last item in the list of IGroupsPlugin plugins.
         repositionRecursiveGroupsPlugin(self.portal)
-        self.failUnless(plugins.getAllPlugins('IGroupsPlugin')['active'][-1] == 'recursive_groups')
+        self.assertEqual(plugins.getAllPlugins('IGroupsPlugin')['active'][-1], 'recursive_groups')
 
 
 class TestMigrations_v4_0beta2(MigrationTest):
@@ -453,16 +453,16 @@ class TestMigrations_v4_0beta2(MigrationTest):
         catalog.reindexObject(front)
         old_modified = front.modified()
         # Make sure the getIcon metadata column shows the "original" value
-        self.failUnless(catalog(id='front-page')[0].getIcon == 'document_icon.png')
+        self.assertEqual(catalog(id='front-page')[0].getIcon, 'document_icon.png')
         # Run the migration
         loadMigrationProfile(self.portal, self.profile)
         updateIconMetadata(self.portal)
         # The getIcon column should now be empty
-        self.failUnless(catalog(id='front-page')[0].getIcon == '')
+        self.assertEqual(catalog(id='front-page')[0].getIcon, '')
         self.assertEquals(front.modified(), old_modified)
 
 class TestMigrations_v4_0beta4(MigrationTest):
-    
+
     profile = 'profile-plone.app.upgrade.v40:4beta3-4beta4'
 
     def testProfile(self):

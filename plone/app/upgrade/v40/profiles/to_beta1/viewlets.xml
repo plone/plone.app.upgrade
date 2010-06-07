@@ -1,16 +1,10 @@
 <?xml version="1.0"?>
 <object>
- <hidden manager="plone.portaltop" skinname="Sunburst Theme">
-   <viewlet name="plone.app.i18n.locales.languageselector" />
- </hidden>
  <hidden manager="plone.belowcontentbody" skinname="Sunburst Theme">
    <viewlet name="plone.abovecontenttitle.documentactions" remove="True" />
  </hidden>
 
  <order manager="plone.portaltop" skinname="Sunburst Theme">
    <viewlet name="plonetheme.sunburst.personal_bar" remove="True" />
- </order>
- <order manager="plone.portalheader" skinname="Sunburst Theme">
-   <viewlet name="plone.app.i18n.locales.languageselector" insert-after="plonetheme.sunburst.personal_bar"/>
  </order>
 </object>

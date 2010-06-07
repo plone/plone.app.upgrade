@@ -44,6 +44,29 @@
     <viewlet name="plone.site_actions" />
   </hidden>
   
+  <!-- Old Plone 3 Custom Theme -->
+  <order manager="plone.portaltop" skinname="Old Plone 3 Custom Theme">
+    <viewlet name="plone.personal_bar" insert-after="*" />
+    <viewlet name="plone.app.i18n.locales.languageselector" insert-after="*" />
+    <viewlet name="plone.path_bar" insert-after="*" />
+  </order>
+  <order manager="plone.portalheader" skinname="Old Plone 3 Custom Theme">
+    <viewlet name="plone.site_actions" insert-after="plone.skip_links" />
+  </order>
+  <hidden manager="plone.portalheader" skinname="Old Plone 3 Custom Theme">
+    <viewlet name="plone.personal_bar" />
+    <viewlet name="plone.app.i18n.locales.languageselector" />
+  </hidden>
+  <hidden manager="plone.abovecontent" skinname="Old Plone 3 Custom Theme">
+    <viewlet name="plone.path_bar" />
+  </hidden>
+  <hidden manager="plone.belowcontent" skinname="Old Plone 3 Custom Theme">
+    <viewlet name="plone.belowcontenttitle.keywords" />
+  </hidden>
+  <hidden manager="plone.portalfooter" skinname="Old Plone 3 Custom Theme">
+    <viewlet name="plone.site_actions" />
+  </hidden>
+  
   <!-- Sunburst Theme -->
   <hidden manager="plone.portaltop" skinname="Sunburst Theme"
     purge="True"/>

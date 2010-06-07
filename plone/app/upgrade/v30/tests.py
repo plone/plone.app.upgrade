@@ -128,7 +128,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
         self.actions = self.portal.portal_actions
         self.types = self.portal.portal_types
         self.workflow = self.portal.portal_workflow
-        
+
         # Create dummy old ActionInformation
         self.reply = ActionInformation('reply',
             title='Reply',
@@ -143,7 +143,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
         self.discussion._actions = (self.reply, )
 
     def testMigrateActions(self):
-        self.failUnless(self.discussion._actions == (self.reply, ))
+        self.assertEqual(self.discussion._actions, (self.reply, ))
 
         # Test it twice
         for i in range(2):
@@ -162,7 +162,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
             self.assertEquals(data['available'].text, 'context/replyAllowed')
             self.assertEquals(data['url'].text, 'context/reply')
             # Make sure the original action has been removed
-            self.failUnless(len(self.discussion._actions) == 0)
+            self.assertEqual(len(self.discussion._actions), 0)
 
     def testUpdateActionsI18NDomain(self):
         migrateOldActions(self.portal)
@@ -181,7 +181,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
         self.assertEquals(reply.title, 'Foo\xc3')
 
         updateActionsI18NDomain(self.portal)
-        
+
         self.assertEquals(reply.i18n_domain, '')
 
     def testHistoryActionID(self):
@@ -249,16 +249,16 @@ class TestMigrations_v2_5_x(MigrationTest):
             sm = getSiteManager(self.portal)
             self.failIf(gsm is sm)
             lc = sm.utilities.LookupClass
-            self.failUnless(lc == FiveVerifyingAdapterLookup)
+            self.assertEqual(lc, FiveVerifyingAdapterLookup)
 
         # Test the lookupclass migration
         sm.utilities.LookupClass = None
         # Test it twice
         for i in range(2):
             enableZope3Site(self.portal)
-            self.failUnless(sm.utilities.LookupClass == FiveVerifyingAdapterLookup)
-            self.failUnless(sm.utilities.__parent__ == sm)
-            self.failUnless(sm.__parent__ == self.portal)
+            self.assertEqual(sm.utilities.LookupClass, FiveVerifyingAdapterLookup)
+            self.assertEqual(sm.utilities.__parent__, sm)
+            self.assertEqual(sm.__parent__, self.portal)
 
     def testUpdateFTII18NDomain(self):
         doc = self.types.Document
@@ -303,7 +303,7 @@ class TestMigrations_v2_5_x(MigrationTest):
             loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
             self.failUnless(self.properties.site_properties.hasProperty('forbidden_contenttypes'))
             self.failUnless(self.properties.site_properties.hasProperty('default_contenttype'))
-            self.failUnless(self.properties.site_properties.forbidden_contenttypes ==
+            self.assertEquals(self.properties.site_properties.forbidden_contenttypes,
                 ('text/structured', 'text/restructured', 'text/x-rst',
                 'text/plain', 'text/plain-pre', 'text/x-python',
                 'text/x-web-markdown', 'text/x-web-intelligent', 'text/x-web-textile')
@@ -323,10 +323,10 @@ class TestMigrations_v2_5_x(MigrationTest):
         self.setRoles(('Manager',))
         leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
         rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn', context=self.portal)
-        
+
         left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
         right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
-        
+
         for k in left:
             del left[k]
         for k in right:
@@ -363,105 +363,105 @@ class TestMigrations_v2_5_x(MigrationTest):
         self.setRoles(('Manager',))
         leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
         rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn', context=self.portal)
-        
+
         left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
         right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
-        
+
         for k in left:
             del left[k]
         for k in right:
             del right[k]
-            
+
         self.portal.left_slots = ['here/portlet_recent/macros/portlet',
                                   'here/portlet_news/macros/portlet']
         if hasattr(self.portal.aq_base, 'right_slots'):
             delattr(self.portal, 'right_slots')
-        
+
         convertLegacyPortlets(self.portal)
-        
+
         self.assertEquals(self.portal.left_slots, [])
-        
-        lp = left.values()
-        self.assertEquals(2, len(lp))
-        
-        self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
-        self.failUnless(isinstance(lp[1], portlets.news.Assignment))
-        
-        rp = right.values()
-        self.assertEquals(0, len(rp))
-        
-        members = self.portal.Members
-        portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
-        
-    def testLegacyPortletsConvertedBadSlots(self):
-        self.setRoles(('Manager',))
-        leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
-        rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn', context=self.portal)
-        
-        left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
-        right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
-        
-        for k in left:
-            del left[k]
-        for k in right:
-            del right[k]
-        
-        self.portal.left_slots = ['here/portlet_recent/macros/portlet',
-                                  'here/portlet_news/macros/portlet',
-                                  'foobar',]
-        self.portal.right_slots = ['here/portlet_login/macros/portlet']
-        
-        convertLegacyPortlets(self.portal)
-        
-        self.assertEquals(self.portal.left_slots, [])
-        self.assertEquals(self.portal.right_slots, [])
-        
+
         lp = left.values()
         self.assertEquals(2, len(lp))
 
         self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
         self.failUnless(isinstance(lp[1], portlets.news.Assignment))
-        
+
         rp = right.values()
-        self.assertEquals(1, len(rp))
-        self.failUnless(isinstance(rp[0], portlets.login.Assignment))
-        
+        self.assertEquals(0, len(rp))
+
         members = self.portal.Members
         portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
         self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
-        
-    def testLegacyPortletsConvertedNoMembersFolder(self):
+
+    def testLegacyPortletsConvertedBadSlots(self):
         self.setRoles(('Manager',))
         leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
         rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn', context=self.portal)
-        
+
         left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
         right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
-        
+
         for k in left:
             del left[k]
         for k in right:
             del right[k]
-        
+
         self.portal.left_slots = ['here/portlet_recent/macros/portlet',
                                   'here/portlet_news/macros/portlet',
                                   'foobar',]
         self.portal.right_slots = ['here/portlet_login/macros/portlet']
-        
-        self.portal._delObject('Members')
-        
+
         convertLegacyPortlets(self.portal)
-        
+
         self.assertEquals(self.portal.left_slots, [])
         self.assertEquals(self.portal.right_slots, [])
-        
+
         lp = left.values()
         self.assertEquals(2, len(lp))
-        
+
         self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
         self.failUnless(isinstance(lp[1], portlets.news.Assignment))
-        
+
+        rp = right.values()
+        self.assertEquals(1, len(rp))
+        self.failUnless(isinstance(rp[0], portlets.login.Assignment))
+
+        members = self.portal.Members
+        portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
+        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
+
+    def testLegacyPortletsConvertedNoMembersFolder(self):
+        self.setRoles(('Manager',))
+        leftColumn = getUtility(IPortletManager, name=u'plone.leftcolumn', context=self.portal)
+        rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn', context=self.portal)
+
+        left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
+        right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
+
+        for k in left:
+            del left[k]
+        for k in right:
+            del right[k]
+
+        self.portal.left_slots = ['here/portlet_recent/macros/portlet',
+                                  'here/portlet_news/macros/portlet',
+                                  'foobar',]
+        self.portal.right_slots = ['here/portlet_login/macros/portlet']
+
+        self.portal._delObject('Members')
+
+        convertLegacyPortlets(self.portal)
+
+        self.assertEquals(self.portal.left_slots, [])
+        self.assertEquals(self.portal.right_slots, [])
+
+        lp = left.values()
+        self.assertEquals(2, len(lp))
+
+        self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
+        self.failUnless(isinstance(lp[1], portlets.news.Assignment))
+
         rp = right.values()
         self.assertEquals(1, len(rp))
         self.failUnless(isinstance(rp[0], portlets.login.Assignment))
@@ -541,7 +541,7 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
         for i in range(2):
             loadMigrationProfile(self.portal, self.profile, ('cssregistry', ))
             expr = rtl.getExpression()
-            self.failUnless(expr == "python:portal.restrictedTraverse('@@plone_portal_state').is_rtl()")
+            self.assertEqual(expr, "python:portal.restrictedTraverse('@@plone_portal_state').is_rtl()")
 
     def testAddReaderEditorRoles(self):
         self.portal._delRoles(['Reader', 'Editor'])
@@ -670,7 +670,7 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
             selections = st._getSelections()
             for s in skins:
                 if not selections.has_key(s):
-                   continue
+                    continue
                 path = st.getSkinPath(s)
                 path = [p.strip() for p in  path.split(',')]
                 self.assert_('plone_kss' in path)
@@ -724,12 +724,12 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             if 'collapsiblesections.js' in script_ids:
                 posSE = jsreg.getResourcePosition('form_tabbing.js')
                 posHST = jsreg.getResourcePosition('collapsiblesections.js')
-                self.failUnless((posSE - 1) == posHST)
+                self.assertEqual((posSE - 1), posHST)
             # webstats tests
             if 'webstats.js' in script_ids:
                 pos1 = jsreg.getResourcePosition('toc.js')
                 pos2 = jsreg.getResourcePosition('webstats.js')
-                self.failUnless((pos2 - 1) == pos1)
+                self.assertEqual((pos2 - 1), pos1)
             # check if enabled
             res = jsreg.getResource('webstats.js')
             self.assertEqual(res.getEnabled(), True)
@@ -751,7 +751,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         script_ids = jsreg.getResourceIds()
         self.failUnless('++resource++kukit-src.js' in script_ids)
         resource = jsreg.getResource('++resource++kukit-src.js')
-        self.failUnless(resource.getCompression() == 'full')
+        self.assertEqual(resource.getCompression(), 'full')
         # Run the last upgrade and check that everything is in its
         # place. We must have both the devel and production resources.
         # They both should be uncompressed since kss compresses them
@@ -761,8 +761,8 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         self.failIf('++resource++kukit-src.js' in script_ids)
         resource1 = jsreg.getResource('++resource++kukit.js')
         resource2 = jsreg.getResource('++resource++kukit-devel.js')
-        self.failUnless(resource1.getCompression() == 'none')
-        self.failUnless(resource2.getCompression() == 'none')
+        self.assertEqual(resource1.getCompression(), 'none')
+        self.assertEqual(resource2.getCompression(), 'none')
         self.failUnless('@@kss_devel_mode' in resource1.getExpression())
         self.failUnless('@@kss_devel_mode' in resource2.getExpression())
         self.failUnless('isoff' in resource1.getExpression())
@@ -808,7 +808,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
                 reg_roles.append(appperm['name'])
         self.failUnless('Manager' in reg_roles)
         self.failUnless('Owner' in reg_roles)
-        self.failUnless(acquire_check == '')
+        self.assertEqual(acquire_check, '')
 
     def testPASPluginInterfaces(self):
         pas = self.portal.acl_users
@@ -822,7 +822,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
                 intf = pas.plugins._getInterfaceFromName(intf_id)
                 self.failUnless('mutable_properties' in pas.plugins.listPluginIds(intf))
             except KeyError:
-                # Ignore unregistered interface types 
+                # Ignore unregistered interface types
                 pass
 
     def testUpdateConfigletTitles(self):
@@ -1054,7 +1054,7 @@ class TestMigrations_v3_0(MigrationTest):
         self.portal._delRoles(['Contributor',])
         for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
                     'ATContentTypes: Add Event',
-                    'ATContentTypes: Add File', 'ATContentTypes: Add Folder', 
+                    'ATContentTypes: Add File', 'ATContentTypes: Add Folder',
                     'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
                     'ATContentTypes: Add News Item', ]:
             self.portal.manage_permission(p, ['Manager', 'Owner'], True)
@@ -1065,10 +1065,10 @@ class TestMigrations_v3_0(MigrationTest):
             self.failUnless('Contributor' in self.portal.acl_users.portal_role_manager.listRoleIds())
             for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
                         'ATContentTypes: Add Event',
-                        'ATContentTypes: Add File', 'ATContentTypes: Add Folder', 
+                        'ATContentTypes: Add File', 'ATContentTypes: Add Folder',
                         'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
                         'ATContentTypes: Add News Item', ]:
-                self.failUnless(p in [r['name'] for r in 
+                self.failUnless(p in [r['name'] for r in
                                     self.portal.permissionsOfRole('Contributor') if r['selected']])
 
     def testAddContributerToCreationPermissionsNoStomp(self):
@@ -1098,18 +1098,18 @@ class TestMigrations_v3_0(MigrationTest):
             for p in ['CMFEditions: Apply version control',
                       'CMFEditions: Save new version',
                       'CMFEditions: Access previous versions']:
-                self.failUnless(p in [r['name'] for r in 
+                self.failUnless(p in [r['name'] for r in
                                     self.portal.permissionsOfRole('Contributor') if r['selected']])
-                self.failUnless(p in [r['name'] for r in 
+                self.failUnless(p in [r['name'] for r in
                                     self.portal.permissionsOfRole('Editor') if r['selected']])
             for p in ['CMFEditions: Revert to previous versions',
                       'CMFEditions: Checkout to location']:
-                self.failUnless(p in [r['name'] for r in 
+                self.failUnless(p in [r['name'] for r in
                                     self.portal.permissionsOfRole('Editor') if r['selected']])
 
     def testRemoveSharingAction(self):
         fti = self.types['Document']
-        fti.addAction(id='local_roles', name='Sharing', 
+        fti.addAction(id='local_roles', name='Sharing',
                       action='string:${object_url}/sharing',
                       condition=None, permission='Manage properties',
                       category='object')
@@ -1125,7 +1125,7 @@ class TestMigrations_v3_0(MigrationTest):
         for i in range(2):
             addEditorToSecondaryEditorPermissions(self.portal)
             for p in ['Manage properties', 'Modify view template', 'Request review']:
-                self.failUnless(p in [r['name'] for r in 
+                self.failUnless(p in [r['name'] for r in
                     self.portal.permissionsOfRole('Editor') if r['selected']])
 
     def testAddEditorToCreationPermissionsNoStomp(self):
@@ -1186,7 +1186,7 @@ class TestMigrations_v3_0(MigrationTest):
         # Test it twice
         for i in range(2):
             updateTopicTitle(self.portal)
-            self.failUnless(topic.title == 'Collection')
+            self.assertEqual(topic.title, 'Collection')
 
     def testAddIntelligentText(self):
         # Before the upgrade, the mime type and transforms of intelligent text
