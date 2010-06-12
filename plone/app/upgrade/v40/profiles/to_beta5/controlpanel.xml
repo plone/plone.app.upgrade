@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel" meta_type="Plone Control Panel Tool"
+  i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <configlet title="Add-ons" action_id="QuickInstaller" appId="QuickInstaller"
+    category="Plone" condition_expr=""
+    icon_expr="string:$portal_url/product_icon.png"
+    url_expr="string:${portal_url}/prefs_install_products_form"
+    visible="True" i18n:attributes="title">
+  <permission>Manage portal</permission>
+ </configlet>
+ <configlet title="Users and Groups" action_id="UsersGroups"
+    appId="UsersGroups" category="Plone" condition_expr=""
+    icon_expr="string:$portal_url/group.png"
+    url_expr="string:${portal_url}/@@usergroup-userprefs" visible="True"
+    i18n:attributes="title">
+  <permission>Manage portal</permission>
+ </configlet>
+ <configlet title="Users and Groups" action_id="UsersGroups2"
+    appId="UsersGroups" category="Plone" condition_expr=""
+    icon_expr="string:$portal_url/group.png"
+    url_expr="string:${portal_url}/@@usergroup-groupprefs" visible="False"
+    i18n:attributes="title">
+  <permission>Manage portal</permission>
+ </configlet>
+ <configlet title="Personal Preferences" action_id="MemberPrefs" appId="Plone"
+    category="Member" condition_expr=""
+    icon_expr="string:$portal_url/user.png"
+    url_expr="string:${portal_url}/@@personal-preferences" visible="True"
+    i18n:attributes="title">
+  <permission>Set own properties</permission>
+ </configlet>
+ <configlet title="Navigation" action_id="NavigationSettings" appId="Plone"
+    category="Plone" condition_expr=""
+    icon_expr="string:$portal_url/navigation_icon.png"
+    url_expr="string:${portal_url}/@@navigation-controlpanel" visible="True"
+    i18n:attributes="title">
+  <permission>Manage portal</permission>
+ </configlet>
+ <configlet title="Collections" action_id="portal_atct" appId="ATContentTypes"
+    category="Plone" condition_expr=""
+    icon_expr="string:$portal_url/topic_icon.png"
+    url_expr="string:${portal_url}/portal_atct/atct_manageTopicIndex"
+    visible="True" i18n:attributes="title">
+  <permission>Manage portal</permission>
+ </configlet>
+</object>

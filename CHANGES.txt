@@ -4,6 +4,10 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Add missing upgrade steps for control panels and site properties.
+  Fixes http://dev.plone.org/plone/ticket/10360
+  [davisagli]
+
 - Modify the restoreTheme upgrade step to improve handling of themes when
   upgrading from Plone 3. Now if the skin was "Plone Default", it will be
   set to "Plone Classic Theme" if the layers were uncustomized.  If the

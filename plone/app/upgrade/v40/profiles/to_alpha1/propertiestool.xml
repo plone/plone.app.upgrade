@@ -4,17 +4,4 @@
    <property name="use_email_as_login" type="boolean">False</property>
    <property name="default_editor" type="string">Kupu</property>
   </object>
-  <object name="navtree_properties" meta_type="Plone Property Sheet">
-   <property name="search_enable_title_search" type="lines"></property>
-   <property name="search_enable_description_search" type="lines"></property>
-   <property name="search_enable_sort_on" type="lines">
-     <element value="auth"/>
-     <element value="anon"/>
-   </property>
-   <property name="search_enable_batch_size" type="lines">
-     <element value="auth"/>
-     <element value="anon"/>
-   </property>
-   <property name="search_collapse_options" type="boolean">True</property>
-  </object>
 </object>
