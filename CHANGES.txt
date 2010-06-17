@@ -4,6 +4,9 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Re-add the File and Image FTI icon expressions.
+  [davisagli]
+
 - Add missing upgrade steps for control panels and site properties.
   Fixes http://dev.plone.org/plone/ticket/10360
   [davisagli]
