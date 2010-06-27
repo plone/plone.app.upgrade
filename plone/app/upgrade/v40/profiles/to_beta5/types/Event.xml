@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<object name="Event">
+ <action action_id="ics" category="document_actions" remove="True"/>
+ <action action_id="vcs" category="document_actions" remove="True"/>
+</object>
