@@ -4,6 +4,10 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Take a savepoint before starting the unified folder upgrade. This lets us
+  fail fast if there's problems pickling anything.
+  [hannosch]
+
 - Also catch TypeError's in the action icons upgrade.
   [hannosch]
 

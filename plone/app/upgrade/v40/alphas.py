@@ -429,6 +429,7 @@ def migrateFolders(context):
             return log
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
+    transaction.savepoint(optimistic=True)
     MigrationView(portal, None)()
 
 
