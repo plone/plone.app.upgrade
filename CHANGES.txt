@@ -3,6 +3,11 @@ Changelog
 
 1.0b5 - Unreleased
 ------------------
+
+- Added optional CacheFu uninstallation step. This will remove CacheFu tools
+  if they are detected to be broken.
+  [hannosch]
+
 - Removing action links from Events, since they are in the template (and were
   never supposed to have actions in the first place). This fixes
   http://dev.plone.org/plone/ticket/10540.

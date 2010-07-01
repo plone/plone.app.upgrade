@@ -28,6 +28,11 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
+            title="Uninstall a broken CacheFu"
+            handler=".alphas.removeBrokenCacheFu"
+            />
+
+        <genericsetup:upgradeStep
             title="Unregister old export and import steps."
             handler=".alphas.unregisterOldSteps"
             />

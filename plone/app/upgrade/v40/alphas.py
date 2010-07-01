@@ -7,8 +7,11 @@ from zope.ramcache.ram import RAMCache
 
 from Acquisition import aq_base
 from Acquisition import aq_get
+from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.setuphandlers import addCacheHandlers
+from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
@@ -258,6 +261,30 @@ def cleanPloneSiteFTI(context):
     if len(selection) > 0:
         temp.deleteActions(selection)
         logger.info('Updated TempFolder FTI.')
+
+
+def removeBrokenCacheFu(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    cpm = getattr(portal, 'caching_policy_manager', None)
+    if cpm and cpm.getId() == 'broken':
+        # If we detect a broken CacheFu install, remove it
+        CACHEFU_IDS = [
+            'CacheSetup_OFSCache',
+            'CacheSetup_PageCache',
+            'caching_policy_manager',
+            'HTTPCache',
+            'portal_cache_settings',
+            'portal_squid',
+        ]
+        for i in CACHEFU_IDS:
+            portal._delOb(i)
+        objects = portal._objects
+        portal._objects = tuple(
+            [i for i in objects if getattr(portal, i['id'], None)])
+        transaction.savepoint(optimistic=True)
+        manage_addCachingPolicyManager(portal)
+        addCacheHandlers(portal)
+        addCacheForResourceRegistry(portal)
 
 
 def unregisterOldSteps(context):
