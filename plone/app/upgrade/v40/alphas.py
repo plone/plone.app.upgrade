@@ -434,6 +434,8 @@ def migrateFolders(context):
 def recompilePythonScripts(context):
     """Recompile all Python Scripts"""
     portal = getToolByName(context, 'portal_url').getPortalObject()
+    logger.info('Searching for stale Python scripts...')
+    # TODO: this is quite slow
     scripts = portal.ZopeFind(portal, obj_metatypes=('Script (Python)',),
                               search_sub=1)
     names = []
@@ -443,6 +445,9 @@ def recompilePythonScripts(context):
             ob._compile()
             ob._p_changed = 1
 
+    # free up some memory
+    transaction.savepoint(optimistic=True)
+    context._p_jar.db().cacheMinimize()
     if names:
         logger.info('The following Scripts were recompiled:\n' +
                     '\n'.join(names))
