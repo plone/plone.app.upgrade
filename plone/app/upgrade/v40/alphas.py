@@ -9,6 +9,7 @@ from Acquisition import aq_base
 from Acquisition import aq_get
 from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
 from Products.CMFCore.DirectoryView import _dirreg
+from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
 from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
@@ -278,15 +279,20 @@ def removeBrokenCacheFu(context):
             'portal_cache_settings',
             'portal_squid',
         ]
+        cpm = aq_base(cpm)
         for i in CACHEFU_IDS:
             portal._delOb(i)
         objects = portal._objects
         portal._objects = tuple(
             [i for i in objects if getattr(portal, i['id'], None)])
+        sm = getSiteManager(context=portal)
+        sm.unregisterUtility(component=cpm, provided=ICachingPolicyManager)
+        del cpm
         transaction.savepoint(optimistic=True)
         manage_addCachingPolicyManager(portal)
         addCacheHandlers(portal)
         addCacheForResourceRegistry(portal)
+        logger.info('Removed CacheSetup tools.')
 
 
 def unregisterOldSteps(context):
