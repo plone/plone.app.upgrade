@@ -1,4 +1,5 @@
 from Products.CMFCore.utils import getToolByName
+from Products.ZCatalog.ProgressHandler import ZLogHandler
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
@@ -62,25 +63,31 @@ def updateIconMetadata(context):
     """Update getIcon metadata column for all core content"""
     catalog = getToolByName(context, 'portal_catalog')
     search = catalog.unrestrictedSearchResults
-    reindex = catalog.reindexObject
     typesToUpdate = [
         'Document', 'Event', 'File', 'Folder', 'Image',
         'Link', 'News_Item', 'Plone_Site', 'TempFolder',
         'Topic',
         ]
-    for typeName in typesToUpdate:
-        for brain in search(portal_type=typeName):
-            obj = brain.getObject()
-            # Abuse this step to conveniently get rid of old persistent
-            # uppercase Interface records
-            if '__implements__' in obj.__dict__:
-                del obj.__dict__['__implements__']
-                obj._p_changed = True
-            # passing in a valid but inexpensive index, makes sure we don't
-            # reindex the entire catalog including expensive indexes like
-            # SearchableText
-            reindex(obj, idxs=['id'])
-        logger.info('Updated `getIcon` for %s content' % typeName)
+    brains = search(portal_type=typesToUpdate, sort_on="path")
+    num_objects = len(brains)
+    pghandler = ZLogHandler(1000)
+    pghandler.init('Updating getIcon metadata', num_objects)
+    i = 0
+    for brain in brains:
+        pghandler.report(i)
+        obj = brain.getObject()
+        # Abuse this step to conveniently get rid of old persistent
+        # uppercase Interface records
+        if '__implements__' in obj.__dict__:
+            del obj.__dict__['__implements__']
+            obj._p_changed = True
+        # passing in a valid but inexpensive index, makes sure we don't
+        # reindex the entire catalog including expensive indexes like
+        # SearchableText
+        catalog.catalog_object(obj, brain.getPath(), ['id'], True, pghandler)
+        i += 1
+    pghandler.finish()
+    logger.info('Updated `getIcon` metadata.')
 
 
 def beta2_beta3(context):

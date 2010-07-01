@@ -4,6 +4,10 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Optimized the "update getIcon metadata" upgrade step and added a progress
+  handler to it.
+  [hannosch]
+
 - Enhance the unregisterOldSteps upgrade step, by removing all persistent
   steps for which a ZCML steps exists.
   [hannosch]
