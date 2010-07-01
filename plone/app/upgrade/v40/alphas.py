@@ -12,6 +12,8 @@ from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
 from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
+from Products.GenericSetup.registry import _export_step_registry
+from Products.GenericSetup.registry import _import_step_registry
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
@@ -289,44 +291,34 @@ def removeBrokenCacheFu(context):
 
 def unregisterOldSteps(context):
     # remove steps that are now registered via ZCML or gone completely
-    _REMOVE_STEPS = (
-        'actions',
+    _REMOVE_IMPORT_STEPS = [
         'caching_policy_mgr',
-        'catalog',
-        'componentregistry',
-        'content_type_registry',
-        # 'languagetool',
-        'mailhost',
-        'properties',
-        'rolemap',
-        'skins',
-        'toolset',
-        'typeinfo',
-        'workflow',
-    )
-    _REMOVE_IMPORT_STEPS = _REMOVE_STEPS + (
         'cookie_authentication',
-        # 'mimetypes-registry-various',
-        # 'plonepas',
         'plone-archetypes',
         'plone-site',
         'plone_various',
-        # 'portal-transforms-various',
         'various',
-    )
-    _REMOVE_EXPORT_STEPS = _REMOVE_STEPS + (
+    ]
+    registry = context.getImportStepRegistry()
+    persistent_steps = registry.listSteps()
+    zcml_steps = _import_step_registry.listSteps()
+    duplicated = [s for s in persistent_steps if s in zcml_steps]
+    remove = duplicated + _REMOVE_IMPORT_STEPS
+    for step in remove:
+        if step in registry._registered:
+            registry.unregisterStep(step)
+    _REMOVE_EXPORT_STEPS = [
+        'caching_policy_mgr',
         'cookieauth',
         'step_registries',
-    )
-    registry = context.getImportStepRegistry()
-    steps = registry.listSteps()
-    for step in _REMOVE_IMPORT_STEPS:
-        if step in steps:
-            registry.unregisterStep(step)
+    ]
     registry = context.getExportStepRegistry()
-    steps = registry.listSteps()
-    for step in _REMOVE_EXPORT_STEPS:
-        if step in steps:
+    persistent_steps = registry.listSteps()
+    zcml_steps = _export_step_registry.listSteps()
+    duplicated = [s for s in persistent_steps if s in zcml_steps]
+    remove = duplicated + _REMOVE_EXPORT_STEPS
+    for step in remove:
+        if step in registry._registered:
             registry.unregisterStep(step)
     context._p_changed = True
 

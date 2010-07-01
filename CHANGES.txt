@@ -4,6 +4,10 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Enhance the unregisterOldSteps upgrade step, by removing all persistent
+  steps for which a ZCML steps exists.
+  [hannosch]
+
 - Take a savepoint before starting the unified folder upgrade. This lets us
   fail fast if there's problems pickling anything.
   [hannosch]
