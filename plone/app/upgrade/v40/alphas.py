@@ -155,7 +155,7 @@ def migrateActionIcons(context):
                 png_expr = expr[:-4] + '.png'
                 portal.restrictedTraverse(png_expr)
                 expr = png_expr
-            except (AttributeError, KeyError, NotFound):
+            except (AttributeError, KeyError, TypeError, NotFound):
                 pass
         prefix = ''
 
