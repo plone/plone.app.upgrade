@@ -431,26 +431,40 @@ def migrateFolders(context):
     MigrationView(portal, None)()
 
 
+def findObjects(origin):
+    """ generator to recursively find and yield all zope objects below
+        the given start point """
+    traverse = origin.unrestrictedTraverse
+    base = '/'.join(origin.getPhysicalPath())
+    cut = len(base) + 1
+    paths = [base]
+    for idx, path in enumerate(paths):
+        obj = traverse(path)
+        yield path[cut:], obj
+        if hasattr(aq_base(obj), 'objectIds'):
+            for id in obj.objectIds():
+                paths.insert(idx + 1, path + '/' + id)
+
+
 def recompilePythonScripts(context):
     """Recompile all Python Scripts"""
     portal = getToolByName(context, 'portal_url').getPortalObject()
     logger.info('Searching for stale Python scripts...')
-    # TODO: this is quite slow
-    scripts = portal.ZopeFind(portal, obj_metatypes=('Script (Python)',),
-                              search_sub=1)
-    names = []
-    for name, ob in scripts:
-        if ob._v_change:
-            names.append(name)
-            ob._compile()
-            ob._p_changed = 1
+    paths = []
+    for path, obj in findObjects(portal):
+        meta_type = getattr(obj, 'meta_type', None)
+        if meta_type == 'Script (Python)':
+            if obj._v_change:
+                paths.append(path)
+                obj._compile()
+                obj._p_changed = 1
 
     # free up some memory
     transaction.savepoint(optimistic=True)
     context._p_jar.db().cacheMinimize()
-    if names:
+    if paths:
         logger.info('The following Scripts were recompiled:\n' +
-                    '\n'.join(names))
+                    '\n'.join(paths))
 
 
 def renameJoinFormFields(context):
