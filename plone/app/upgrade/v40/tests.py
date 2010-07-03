@@ -440,8 +440,8 @@ class TestMigrations_v4_0beta1(MigrationTest):
         plugins = acl.plugins
         # The plugin was originally moved to the top of the list of
         # IGroupsPlugin plugins by p.a.controlpanel. Recreate that state.
-        active_groups = plugins.getAllPlugins('IGroupsPlugin')['active']
-        while active_groups.index('recursive_groups') > 0:
+        while (plugins.getAllPlugins('IGroupsPlugin')['active'].index(
+               'recursive_groups') > 0):
             plugins.movePluginsUp(IGroupsPlugin, ['recursive_groups'])
 
         active_groups = plugins.getAllPlugins('IGroupsPlugin')['active']
