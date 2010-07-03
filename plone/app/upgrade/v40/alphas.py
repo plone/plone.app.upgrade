@@ -72,7 +72,7 @@ def restoreTheme(context):
     skins = getToolByName(context, 'portal_skins')
     portal = getToolByName(context, 'portal_url').getPortalObject()
     old_default_skin = getattr(aq_base(skins), 'old_default_skin', None)
-    
+
     if old_default_skin == 'Plone Default':
         v_storage = getUtility(IViewletSettingsStorage)
         uncustomized_layers = ('custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
@@ -92,16 +92,16 @@ def restoreTheme(context):
             # copy the viewlet order
             v_storage._order['Old Plone 3 Custom Theme'] = dict(v_storage._order.get('Plone Default', {}))
             v_storage._hidden['Old Plone 3 Custom Theme'] = dict(v_storage._hidden.get('Plone Default', {}))
-            
+
             old_default_skin = 'Old Plone 3 Custom Theme'
-        
+
         # reset the Plone Default theme to the standard layers and viewlets
         skins.selections['Plone Default'] = ''
         v_storage._order['Plone Default'] = {}
         v_storage._hidden['Plone Default'] = {}
         loadMigrationProfile(context, 'profile-Products.CMFPlone:plone',
-                             steps=('skins','viewlets'))
-    
+                             steps=('skins', 'viewlets'))
+
     if old_default_skin is not None:
         setattr(aq_base(skins), 'default_skin', old_default_skin)
         request = aq_get(context, 'REQUEST', None)
@@ -355,7 +355,7 @@ def cleanUpSkinsTool(context):
             continue
         try:
             reg_key = _dirreg.getCurrentKeyFormat(reg_key)
-            info = _dirreg.getDirectoryInfo(reg_key)
+            _dirreg.getDirectoryInfo(reg_key)
         except ValueError:
             skins._delObject(name)
 
@@ -477,7 +477,7 @@ def renameJoinFormFields(context):
             oldValue.remove('groups')
         if not sprop.hasProperty('user_registration_fields'):
             sprop.manage_addProperty('user_registration_fields', oldValue, 'lines')
-        sprop.manage_delProperties(['join_form_fields'])    
+        sprop.manage_delProperties(['join_form_fields'])
 
 
 def alpha2_alpha3(context):
@@ -491,10 +491,12 @@ def updateLargeFolderType(context):
     catalog = getToolByName(context, 'portal_catalog')
     search = catalog.unrestrictedSearchResults
     reindex = catalog.reindexObject
+
     def update(brain):
         obj = brain.getObject()
         obj._setPortalTypeName('Folder')
         reindex(obj, idxs=['portal_type', 'Type', 'object_provides'])
+
     # [:] copies the search results; without this we miss some of them
     # due to the reindexing in update()
     for brain in search(portal_type='Large Plone Folder')[:]:
@@ -521,6 +523,7 @@ def addRecursiveGroupsPlugin(context):
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
 
+
 def optimizeDateRangeIndexes(context):
     """Take advantage of the optimized data structures for range indexes."""
     catalog = getToolByName(context, 'portal_catalog')
@@ -535,6 +538,7 @@ def optimizeDateRangeIndexes(context):
 
     logger.info('Optimized internal date range index structures.')
 
+
 def cleanUpClassicThemeResources(context):
     """
     Remove the metadata of all registered CSS resources for the
@@ -546,6 +550,7 @@ def cleanUpClassicThemeResources(context):
     if 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
         classictheme.resources_css = []  # empty the list of installed resources
+
 
 def alpha4_alpha5(context):
     """4.0alpha4 -> 4.0alpha5
