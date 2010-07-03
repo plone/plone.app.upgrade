@@ -84,6 +84,8 @@ def updateIconMetadata(context):
     i = 0
     for brain in brains:
         pghandler.report(i)
+        if not brain.getIcon:
+            continue
         obj = brain.getObject()
         # passing in a valid but inexpensive index, makes sure we don't
         # reindex the entire catalog including expensive indexes like
