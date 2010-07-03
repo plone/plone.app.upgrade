@@ -495,30 +495,39 @@ class TestMigrations_v4_0beta4(MigrationTest):
     def testRemoveLargePloneFolder(self):
         # re-create pre-migration settings
         ptool = self.portal.portal_properties
-        l = list(ptool.navtree_properties.parentMetaTypesNotToQuery)
-        ptool.navtree_properties.parentMetaTypesNotToQuery = l + ['Large Plone Folder']
-        l = list(ptool.site_properties.typesLinkToFolderContentsInFC)
-        ptool.site_properties.typesLinkToFolderContentsInFC = l + ['Large Plone Folder']
-        l = list(self.portal.portal_types['TempFolder'].allowed_content_types)
-        self.portal.portal_types['TempFolder'].allowed_content_types = l + ['Large Plone Folder']
+        nav_props = ptool.navtree_properties
+        l = list(nav_props.parentMetaTypesNotToQuery)
+        nav_props.parentMetaTypesNotToQuery = l + ['Large Plone Folder']
+        site_props = ptool.site_properties
+        l = list(site_props.typesLinkToFolderContentsInFC)
+        site_props.typesLinkToFolderContentsInFC = l + ['Large Plone Folder']
+        temp_folder_fti = self.portal.portal_types['TempFolder']
+        l = list(temp_folder_fti.allowed_content_types)
+        temp_folder_fti.allowed_content_types = l + ['Large Plone Folder']
         l = set(self.portal.portal_factory.getFactoryTypes())
         l.add('Large Plone Folder')
-        self.portal.portal_factory.manage_setPortalFactoryTypes(listOfTypeIds=list(l))
+        ftool = self.portal.portal_factory
+        ftool.manage_setPortalFactoryTypes(listOfTypeIds=list(l))
 
         for i in xrange(2):
             loadMigrationProfile(self.portal, self.profile)
             removeLargePloneFolder(self.portal)
             self.failIf('Large Plone Folder' in self.portal.portal_types)
-            self.failIf('Large Plone Folder' in self.portal.portal_types['TempFolder'].allowed_content_types)
-            self.failUnless('Folder' in self.portal.portal_types['TempFolder'].allowed_content_types)
-            self.failIf('Large Plone Folder' in self.portal.portal_factory.getFactoryTypes())
-            self.failUnless('Folder' in self.portal.portal_factory.getFactoryTypes())
-            self.failIf('Large Plone Folder' in ptool.navtree_properties.parentMetaTypesNotToQuery)
-            self.failUnless('TempFolder' in ptool.navtree_properties.parentMetaTypesNotToQuery)
-            self.failIf('Large Plone Folder' in ptool.site_properties.typesLinkToFolderContentsInFC)
-            self.failUnless('Folder' in ptool.site_properties.typesLinkToFolderContentsInFC)
+            self.failIf('Large Plone Folder' in
+                        temp_folder_fti.allowed_content_types)
+            self.failUnless('Folder' in temp_folder_fti.allowed_content_types)
+            self.failIf('Large Plone Folder' in ftool.getFactoryTypes())
+            self.failUnless('Folder' in ftool.getFactoryTypes())
+            self.failIf('Large Plone Folder' in
+                        nav_props.parentMetaTypesNotToQuery)
+            self.failUnless('TempFolder' in
+                            nav_props.parentMetaTypesNotToQuery)
+            self.failIf('Large Plone Folder' in
+                        site_props.typesLinkToFolderContentsInFC)
+            self.failUnless('Folder' in
+                            site_props.typesLinkToFolderContentsInFC)
             # sleep to avoid a GS log filename collision :-o
-            time.sleep(1)
+            time.sleep(0.5)
 
 
 class TestMigrations_v4_0beta5(MigrationTest):
