@@ -1,15 +1,14 @@
 import time
+
 from zope.component import getSiteManager, queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
-from Products.MailHost.interfaces import IMailHost
 from Products.CMFCore.ActionInformation import Action
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.utils import getToolByName
+from Products.MailHost.interfaces import IMailHost
 
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.tests.base import MigrationTest
-
 from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
 from plone.app.upgrade.v40.alphas import migrateActionIcons
 from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
@@ -25,8 +24,11 @@ from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
 from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
 from plone.app.upgrade.v40.betas import updateIconMetadata
 from plone.app.upgrade.v40.betas import removeLargePloneFolder
+from plone.app.upgrade.tests.base import MigrationTest
+
 
 class FakeSecureMailHost(object):
+
     meta_type = 'Secure Mail Host'
     id = 'MailHost'
     title = 'Fake MailHost'
@@ -35,8 +37,10 @@ class FakeSecureMailHost(object):
     smtp_userid='me'
     smtp_pass='secret'
     smtp_notls=False
+
     def manage_fixupOwnershipAfterAdd(self):
         pass
+
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
@@ -307,6 +311,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertEqual(folder.getId(), 'foo')
         self.assertEqual(folder.Title(), 'Foo')
 
+
 class TestMigrations_v4_0alpha2(MigrationTest):
 
     def testMigrateJoinFormFields(self):
@@ -314,11 +319,14 @@ class TestMigrations_v4_0alpha2(MigrationTest):
         sheet = getattr(ptool, 'site_properties')
         self.removeSiteProperty('user_registration_fields')
         self.addSiteProperty('join_form_fields')
-        sheet.join_form_fields = ('username', 'password', 'email', 'mail_me', 'groups')
+        sheet.join_form_fields = (
+            'username', 'password', 'email', 'mail_me', 'groups')
         renameJoinFormFields(self)
         self.assertEqual(sheet.hasProperty('join_form_fields'), False)
         self.assertEqual(sheet.hasProperty('user_registration_fields'), True)
-        self.assertEqual(sheet.getProperty('user_registration_fields'), ('username', 'password', 'email', 'mail_me'))
+        self.assertEqual(sheet.getProperty('user_registration_fields'),
+                         ('username', 'password', 'email', 'mail_me'))
+
 
 class TestMigrations_v4_0alpha3(MigrationTest):
 
@@ -334,6 +342,7 @@ class TestMigrations_v4_0alpha3(MigrationTest):
         loadMigrationProfile(self.portal, self.profile, ('actions', ))
         self.assertEqual(self.portal.portal_actions.user.join.url_expr,
             'string:${globals_view/navigationRootUrl}/@@register')
+
 
 class TestMigrations_v4_0alpha5(MigrationTest):
 
@@ -354,7 +363,8 @@ class TestMigrations_v4_0alpha5(MigrationTest):
             obj._setPortalTypeName('Large Plone Folder')
             obj.reindexObject()
             self.assertEquals(obj.portal_type, 'Large Plone Folder')
-            # Type falls back to meta_type since there's no Large Plone Folder FTI
+            # Type falls back to meta_type since there's no
+            # Large Plone Folder FTI
             self.assertEquals(obj.Type(), 'ATFolder')
             brain, = catalog(getId=id)
             self.assertEquals(brain.portal_type, 'Large Plone Folder')
@@ -409,6 +419,7 @@ class TestMigrations_v4_0alpha5(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.failIf('getEventType' in catalog.indexes())
 
+
 class TestMigrations_v4_0beta1(MigrationTest):
 
     profile = "profile-plone.app.upgrade.v40:4alpha5-4beta1"
@@ -419,20 +430,28 @@ class TestMigrations_v4_0beta1(MigrationTest):
         self.failUnless(True)
 
     def testRepositionRecursiveGroupsPlugin(self):
-        # Ensure that the recursive groups plugin is moved to the bottom of the IGroups plugins list, if active.
+        # Ensure that the recursive groups plugin is moved to the bottom
+        # of the IGroups plugins list, if active.
         addRecursiveGroupsPlugin(self.portal)
         # Plugin is installed, but not active, run against this state.
-        from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
+        from Products.PluggableAuthService.interfaces.plugins import \
+            IGroupsPlugin
         acl = getToolByName(self.portal, 'acl_users')
         plugins = acl.plugins
-        # The plugin was originally moved to the top of the list of IGroupsPlugin plugins by p.a.controlpanel. Recreate that state.
-        while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') > 0:
-            plugins.movePluginsUp(IGroupsPlugin,['recursive_groups'])
-        self.assertEqual(plugins.getAllPlugins('IGroupsPlugin')['active'][0], 'recursive_groups')
+        # The plugin was originally moved to the top of the list of
+        # IGroupsPlugin plugins by p.a.controlpanel. Recreate that state.
+        active_groups = plugins.getAllPlugins('IGroupsPlugin')['active']
+        while active_groups.index('recursive_groups') > 0:
+            plugins.movePluginsUp(IGroupsPlugin, ['recursive_groups'])
 
-        # Rerun the migration, making sure that it's now the last item in the list of IGroupsPlugin plugins.
+        active_groups = plugins.getAllPlugins('IGroupsPlugin')['active']
+        self.assertEqual(active_groups[0], 'recursive_groups')
+
+        # Rerun the migration, making sure that it's now the last item in the
+        # list of IGroupsPlugin plugins.
         repositionRecursiveGroupsPlugin(self.portal)
-        self.assertEqual(plugins.getAllPlugins('IGroupsPlugin')['active'][-1], 'recursive_groups')
+        active_groups = plugins.getAllPlugins('IGroupsPlugin')['active']
+        self.assertEqual(active_groups[-1], 'recursive_groups')
 
 
 class TestMigrations_v4_0beta2(MigrationTest):
@@ -448,18 +467,21 @@ class TestMigrations_v4_0beta2(MigrationTest):
         types = getToolByName(self.portal, 'portal_types')
         catalog = getToolByName(self.portal, 'portal_catalog')
         # Reinstate the now-empty icon expression for the Document type
-        types['Document'].icon_expr_object = Expression('string:${portal_url}/document_icon.png')
+        doc_icon_expr = Expression('string:${portal_url}/document_icon.png')
+        types['Document'].icon_expr_object = doc_icon_expr
         front = self.portal['front-page']
         catalog.reindexObject(front)
         old_modified = front.modified()
         # Make sure the getIcon metadata column shows the "original" value
-        self.assertEqual(catalog(id='front-page')[0].getIcon, 'document_icon.png')
+        brains = catalog(id='front-page')
+        self.assertEqual(brains[0].getIcon, 'document_icon.png')
         # Run the migration
         loadMigrationProfile(self.portal, self.profile)
         updateIconMetadata(self.portal)
         # The getIcon column should now be empty
         self.assertEqual(catalog(id='front-page')[0].getIcon, '')
         self.assertEquals(front.modified(), old_modified)
+
 
 class TestMigrations_v4_0beta4(MigrationTest):
 
@@ -499,7 +521,6 @@ class TestMigrations_v4_0beta4(MigrationTest):
             time.sleep(1)
 
 
-
 class TestMigrations_v4_0beta5(MigrationTest):
 
     profile = 'profile-plone.app.upgrade.v40:4beta4-4beta5'
@@ -508,6 +529,7 @@ class TestMigrations_v4_0beta5(MigrationTest):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
+
 
 def test_suite():
     from unittest import defaultTestLoader
