@@ -524,6 +524,7 @@ def addRecursiveGroupsPlugin(context):
 def optimizeDateRangeIndexes(context):
     """Take advantage of the optimized data structures for range indexes."""
     catalog = getToolByName(context, 'portal_catalog')
+    logger.info('Optimizing internal date range index structures.')
     range_indexes = []
     for index in catalog.getIndexObjects():
         if isinstance(index, DateRangeIndex):
@@ -532,7 +533,7 @@ def optimizeDateRangeIndexes(context):
     request = aq_get(context, 'REQUEST', None)
     catalog.reindexIndex(tuple(range_indexes), request, ZLogHandler(1000))
 
-    logger.info('Optimized internal date range structures.')
+    logger.info('Optimized internal date range index structures.')
 
 def cleanUpClassicThemeResources(context):
     """
