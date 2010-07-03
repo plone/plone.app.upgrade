@@ -127,11 +127,6 @@
             handler=".alphas.migrateFolders"
             />
 
-        <genericsetup:upgradeStep
-            title="Recompile all persistent Python Scripts."
-            handler=".alphas.recompilePythonScripts"
-            />
-
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps

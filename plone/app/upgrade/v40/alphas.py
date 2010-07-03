@@ -426,38 +426,22 @@ def migrateFolders(context):
                     msgs[:] = []
             return log
 
+        def postprocess(self, obj):
+            # Recompile any Python script with stale code
+            meta_type = getattr(aq_base(obj), 'meta_type', None)
+            if meta_type == 'Script (Python)':
+                if obj._v_change:
+                    obj._compile()
+                    obj._p_changed = 1
+            # Abuse this step to conveniently get rid of old persistent
+            # uppercase Interface records
+            if '__implements__' in obj.__dict__:
+                del obj.__dict__['__implements__']
+                obj._p_changed = 1
+
     portal = getToolByName(context, 'portal_url').getPortalObject()
     transaction.savepoint(optimistic=True)
     MigrationView(portal, None)()
-
-
-from plone.app.folder.utils import findObjects
-
-
-def recompilePythonScripts(context):
-    """Recompile all Python Scripts"""
-    portal = getToolByName(context, 'portal_url').getPortalObject()
-    logger.info('Searching for stale Python scripts...')
-    paths = []
-    for path, obj in findObjects(portal):
-        meta_type = getattr(obj, 'meta_type', None)
-        if meta_type == 'Script (Python)':
-            if obj._v_change:
-                paths.append(path)
-                obj._compile()
-                obj._p_changed = 1
-        # Abuse this step to conveniently get rid of old persistent
-        # uppercase Interface records
-        if '__implements__' in obj.__dict__:
-            del obj.__dict__['__implements__']
-            obj._p_changed = 1
-
-    # free up some memory
-    transaction.savepoint(optimistic=True)
-    context._p_jar.db().cacheMinimize()
-    if paths:
-        logger.info('The following Scripts were recompiled:\n' +
-                    '\n'.join(paths))
 
 
 def renameJoinFormFields(context):

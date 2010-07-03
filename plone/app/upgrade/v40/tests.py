@@ -527,7 +527,7 @@ class TestMigrations_v4_0beta4(MigrationTest):
             self.failUnless('Folder' in
                             site_props.typesLinkToFolderContentsInFC)
             # sleep to avoid a GS log filename collision :-o
-            time.sleep(0.5)
+            time.sleep(1)
 
 
 class TestMigrations_v4_0beta5(MigrationTest):
