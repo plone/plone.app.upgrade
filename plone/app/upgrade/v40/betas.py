@@ -68,7 +68,16 @@ def updateIconMetadata(context):
         'Document', 'Event', 'File', 'Folder', 'Image',
         'Link', 'News Item', 'Topic',
         ]
-    brains = search(portal_type=typesToUpdate, sort_on="path")
+    ttool = getToolByName(context, 'portal_types')
+    empty_icons = []
+    for name in typesToUpdate:
+        fti = ttool.get(name)
+        if fti:
+            icon_expr = fti.getIconExprObject()
+            if not icon_expr:
+                empty_icons.append(name)
+
+    brains = search(portal_type=empty_icons, sort_on="path")
     num_objects = len(brains)
     pghandler = ZLogHandler(1000)
     pghandler.init('Updating getIcon metadata', num_objects)
