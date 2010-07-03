@@ -66,7 +66,7 @@ def updateIconMetadata(context):
     search = catalog.unrestrictedSearchResults
     typesToUpdate = [
         'Document', 'Event', 'File', 'Folder', 'Image',
-        'Link', 'News_Item', 'Plone_Site', 'TempFolder',
+        'Link', 'News Item', 'Plone Site', 'TempFolder',
         'Topic',
         ]
     brains = search(portal_type=typesToUpdate, sort_on="path")
