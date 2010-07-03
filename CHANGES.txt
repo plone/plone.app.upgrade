@@ -4,6 +4,10 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Optimized the ``optimizeDateRangeIndexes`` upgrade step to take advantage of
+  knowledge about index internals instead of a brute force reindexIndex call.
+  [hannosch]
+
 - Optimized the "update getIcon metadata" upgrade step and added a progress
   handler to it.
   [hannosch]
