@@ -62,6 +62,7 @@ def updateSafeHTMLConfig(context):
 def updateIconMetadata(context):
     """Update getIcon metadata column for all core content"""
     catalog = getToolByName(context, 'portal_catalog')
+    logger.info('Updating `getIcon` metadata.')
     search = catalog.unrestrictedSearchResults
     typesToUpdate = [
         'Document', 'Event', 'File', 'Folder', 'Image',
