@@ -4,6 +4,9 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Import ``findObjects`` function from plone.app.folder.
+  [hannosch]
+
 - Rewrote the ``updateIconMetadata`` upgrade step for speed.
   [hannosch]
 
