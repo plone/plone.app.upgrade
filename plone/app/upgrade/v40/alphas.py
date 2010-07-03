@@ -458,6 +458,11 @@ def recompilePythonScripts(context):
                 paths.append(path)
                 obj._compile()
                 obj._p_changed = 1
+        # Abuse this step to conveniently get rid of old persistent
+        # uppercase Interface records
+        if '__implements__' in obj.__dict__:
+            del obj.__dict__['__implements__']
+            obj._p_changed = 1
 
     # free up some memory
     transaction.savepoint(optimistic=True)

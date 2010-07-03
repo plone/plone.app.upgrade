@@ -4,6 +4,10 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Moved the code to remove old persistent Interface records into the
+  recompilePythonScripts step. This step actually covers all objects.
+  [hannosch]
+
 - Optimized the ``optimizeDateRangeIndexes`` upgrade step to take advantage of
   knowledge about index internals instead of a brute force reindexIndex call.
   [hannosch]

@@ -77,11 +77,6 @@ def updateIconMetadata(context):
     for brain in brains:
         pghandler.report(i)
         obj = brain.getObject()
-        # Abuse this step to conveniently get rid of old persistent
-        # uppercase Interface records
-        if '__implements__' in obj.__dict__:
-            del obj.__dict__['__implements__']
-            obj._p_changed = True
         # passing in a valid but inexpensive index, makes sure we don't
         # reindex the entire catalog including expensive indexes like
         # SearchableText
