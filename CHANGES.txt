@@ -4,6 +4,9 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Rewrote the ``updateIconMetadata`` upgrade step for speed.
+  [hannosch]
+
 - Moved the code to remove old persistent Interface records into the
   recompilePythonScripts step. This step actually covers all objects.
   [hannosch]
