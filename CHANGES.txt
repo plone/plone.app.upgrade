@@ -4,6 +4,9 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Upgrade step for removing IE8.js from Sunburst.
+  [spliter]
+
 - Merged the ``recompilePythonScripts`` upgrade step with the unified folder
   upgrade step. This avoids an extra complete traversal of the entire site.
   [hannosch]
