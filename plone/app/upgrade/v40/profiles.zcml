@@ -85,7 +85,7 @@
         />
 
     <genericsetup:registerProfile
-        name="4beta4-4beta5"
+        name="4beta5-4rc1"
         title="Upgrade profile for Plone 4.0beta5 to Plone 4.0rc1"
         description="This profile contains configuration changes that are applied during the Plone 4.0b5 to 4.0rc1 upgrade." 
         directory="profiles/to_rc1"

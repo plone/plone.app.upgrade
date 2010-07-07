@@ -185,3 +185,8 @@ def beta4_beta5(context):
     """4.0beta4 -> 4.0beta5
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta4-4beta5')
+
+def beta5_rc1(context):
+    """4.0beta5 -> 4.0rc1
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta5-4rc1')
