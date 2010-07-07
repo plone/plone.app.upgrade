@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0b5 - Unreleased
+1.0b5 - 2010-07-07
 ------------------
 
 - Added upgrade step to remove the ``sunburst_js`` skin layer.
