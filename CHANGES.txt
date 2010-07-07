@@ -4,6 +4,9 @@ Changelog
 1.0b5 - Unreleased
 ------------------
 
+- Added upgrade step to remove the ``sunburst_js`` skin layer.
+  [hannosch]
+
 - Upgrade step for removing IE8.js from Sunburst.
   [spliter]
 
