@@ -4,6 +4,9 @@ Changelog
 1.0rc1 - Unreleased
 -------------------
 
+- Update license to GPL version 2 only.
+  [hannosch]
+
 1.0b5 - 2010-07-07
 ------------------
 
