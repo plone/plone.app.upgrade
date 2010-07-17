@@ -39,7 +39,10 @@ def updateSafeHTMLConfig(context):
     list_conf = []
     # Kupu sets its attributes on first use, rather than providing class level defaults.
     if hasattr(kupu_tool.aq_base, 'style_whitelist'):
-        list_conf.append(('style_whitelist', kupu_tool.style_whitelist))
+        styles = list(kupu_tool.style_whitelist)
+        if 'padding-left' not in styles:
+            styles.append('padding-left')
+        list_conf.append(('style_whitelist', styles))
     if hasattr(kupu_tool.aq_base, 'class_blacklist'):
         list_conf.append(('class_blacklist', kupu_tool.class_blacklist))
     if hasattr(kupu_tool.aq_base, 'html_exclusions'):

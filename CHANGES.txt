@@ -4,6 +4,10 @@ Changelog
 1.0rc1 - Unreleased
 -------------------
 
+- Added `padding-left` to the safe_html style whitelist. This refs
+  http://dev.plone.org/plone/ticket/10557.
+  [hannosch]
+
 - Update license to GPL version 2 only.
   [hannosch]
 
