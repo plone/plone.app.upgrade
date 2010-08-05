@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0rc1 - Unreleased
+1.0rc1 - 2010-08-05
 -------------------
 
 - Update personal preferences action to its new URL.
