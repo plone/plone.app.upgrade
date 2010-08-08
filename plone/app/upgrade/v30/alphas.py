@@ -355,8 +355,7 @@ def installProduct(product, portal, out=None, hidden=False):
     """Quickinstalls a product if it is not installed yet."""
     if out is None:
         out = []
-    if product in portal.Control_Panel.Products.objectIds():
-        installOrReinstallProduct(portal, product, out, hidden=hidden)
+    installOrReinstallProduct(portal, product, out, hidden=hidden)
 
 
 registration = (('mimetypes_registry', IMimetypesRegistryTool),
