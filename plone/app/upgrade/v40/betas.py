@@ -193,13 +193,3 @@ def beta5_rc1(context):
     """4.0beta5 -> 4.0rc1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta5-4rc1')
-
-def rc1_final(context):
-    """4.0rc1 -> 4.0
-    """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4rc1-4final')
-
-def final_four01(context):
-    """4.0 -> 4.0.1
-    """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4final-4.0.1')

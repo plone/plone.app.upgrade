@@ -549,24 +549,6 @@ class TestMigrations_v4_0rc1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
-class TestMigrations_v4_0(MigrationTest):
-
-    profile = 'profile-plone.app.upgrade.v40:4rc1-4final'
-
-    def testProfile(self):
-        # This tests the whole upgrade profile can be loaded
-        loadMigrationProfile(self.portal, self.profile)
-        self.failUnless(True)
-
-class TestMigrations_v4_01(MigrationTest):
-
-    profile = 'profile-plone.app.upgrade.v40:4final-4.0.1'
-
-    def testProfile(self):
-        # This tests the whole upgrade profile can be loaded
-        loadMigrationProfile(self.portal, self.profile)
-        self.failUnless(True)
-
 def test_suite():
     from unittest import defaultTestLoader
     return defaultTestLoader.loadTestsFromName(__name__)
