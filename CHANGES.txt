@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0 - 2010-08-28
+-------------------
+
+- Add empty profile for rc1-final upgrade.
+  [esteele]
+
 1.0rc1 - 2010-08-05
 -------------------
 
