@@ -5,12 +5,30 @@
 
     <include file="profiles.zcml" />
 
-    <genericsetup:upgradeStep
-        source="4012"
+    <genericsetup:upgradeSteps
+        source="4013"
         destination="4100"
-        title="Empty upgrade step"
-        profile="Products.CMFPlone:plone"
-        handler="plone.app.upgrade.utils.null_upgrade_step"
+        profile="Products.CMFPlone:plone">
+      
+      <genericsetup:upgradeStep
+        title="Add SiteAdmin role"
+        description="Update rolemap and workflows to support the SiteAdmin role. (Includes a partial reindex.)"
+        handler=".alphas.add_siteadmin_role"
         />
+
+      <genericsetup:upgradeStep
+        title="Update control panel permissions"
+        description=""
+        handler=".alphas.update_controlpanel_permissions"
+        />
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
+        description=""
+        handler=".alphas.to41alpha1"
+        />
+
+    
+    </genericsetup:upgradeSteps>
 
 </configure>

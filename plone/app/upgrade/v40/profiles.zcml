@@ -93,4 +93,13 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
+    <genericsetup:registerProfile
+        name="4rc1-4final"
+        title="Upgrade profile for Plone 4.0rc1 to Plone 4.0"
+        description="This profile contains configuration changes that are applied during the Plone 4.0rc1 to 4.0 upgrade." 
+        directory="profiles/to_final"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
 </configure>
