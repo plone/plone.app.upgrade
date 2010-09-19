@@ -313,7 +313,7 @@
 
         <genericsetup:upgradeStep
             title="General upgrade steps"
-            handler="plone.app.upgrade.v40.betas.rc1-final"
+            handler="plone.app.upgrade.v40.betas.rc1_final"
             />
 
     </genericsetup:upgradeSteps>
