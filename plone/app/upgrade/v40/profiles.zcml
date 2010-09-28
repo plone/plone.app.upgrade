@@ -112,4 +112,13 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
+    <genericsetup:registerProfile
+        name="4.0.1-4.0.2"
+        title="Upgrade profile for Plone 4.0.1 to Plone 4.0.2"
+        description="This profile contains configuration changes that are applied during the Plone 4.0.1 to 4.0.2 upgrade."
+        directory="profiles/to_four02"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
 </configure>

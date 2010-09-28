@@ -330,4 +330,16 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4014"
+        destination="4015"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="General upgrade steps"
+            handler="plone.app.upgrade.v40.betas.four02"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>
