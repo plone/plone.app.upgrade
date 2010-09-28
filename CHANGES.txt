@@ -4,6 +4,9 @@ Changelog
 1.0.1 - unreleased
 ------------------
 
+- Add empty profile for 4.0-4.0.1 upgrade.
+  [esteele]
+
 - Avoid relying on the ``Control_Panel/Products`` section, as it is no longer
   used. This closes http://dev.plone.org/plone/ticket/10824.
   [hannosch]
