@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 - unreleased
+1.0.1 - 2010-09-28
 ------------------
 
 - Add empty profile for 4.0-4.0.1 upgrade.
