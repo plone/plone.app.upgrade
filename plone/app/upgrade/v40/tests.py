@@ -569,7 +569,7 @@ class TestMigrations_v4_0_1(MigrationTest):
 
 class TestMigrations_v4_0_2(MigrationTest):
 
-    profile = 'profile-plone.app.upgrade.v40:4.0/1-4.0.2'
+    profile = 'profile-plone.app.upgrade.v40:4.0.1-4.0.2'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
