@@ -4,6 +4,13 @@ Changelog
 1.0.2 - Unreleased
 ------------------
 
+- During the blob migration of files and images, disable link
+  integrity checking, as it can lead to problems, even though no
+  content is permanently removed.
+  Fixes http://dev.plone.org/plone/ticket/10992
+  and   http://dev.plone.org/plone/ticket/11167
+  [maurits]
+
 1.0.1 - 2010-09-28
 ------------------
 

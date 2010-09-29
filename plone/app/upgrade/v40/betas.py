@@ -172,8 +172,23 @@ def removeLargePloneFolder(context):
 
 
 def convertToBlobs(context):
+    """Convert files and images to blobs.
+
+    We disable link integrity checks here, as the migration only
+    removes objects to recreate them fresh, so in the end nothing is
+    permanently removed.
+    """
     logger.info('Started migration of files to blobs.')
     from plone.app.blob.migrations import migrateATBlobFiles
+    sprop = getToolByName(context, 'portal_properties').site_properties
+    if sprop.hasProperty('enable_link_integrity_checks'):
+        ori_enable_link_integrity_checks = sprop.getProperty('enable_link_integrity_checks')
+        if ori_enable_link_integrity_checks:
+            logger.info('Temporarily disabled link integrity checking')
+            sprop.enable_link_integrity_checks = False
+    else:
+        ori_enable_link_integrity_checks = None
+
     output = migrateATBlobFiles(context)
     count = len(output.split('\n')) - 1
     logger.info('Migrated %s files to blobs.' % count)
@@ -183,6 +198,10 @@ def convertToBlobs(context):
     output = migrateATBlobImages(context)
     count = len(output.split('\n')) - 1
     logger.info('Migrated %s images to blobs.' % count)
+    if ori_enable_link_integrity_checks:
+        logger.info('Restored original link integrity checking setting')
+        sprop.enable_link_integrity_checks = ori_enable_link_integrity_checks
+
 
 def beta4_beta5(context):
     """4.0beta4 -> 4.0beta5
