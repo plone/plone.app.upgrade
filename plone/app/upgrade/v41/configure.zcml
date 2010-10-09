@@ -8,21 +8,21 @@
     <!-- temporary steps for PLIP testing; will merge with actual recent
          upgrade steps when merging PLIP branches -->
 
-     <genericsetup:upgradeSteps
+     <genericsetup:upgradeStep
          source="4013"
          destination="4014"
          profile="Products.CMFPlone:plone"
          title="Null upgrade"
          handler="plone.app.upgrade.utils.null_upgrade_step"/>
 
-     <genericsetup:upgradeSteps
+     <genericsetup:upgradeStep
          source="4014"
          destination="4015"
          profile="Products.CMFPlone:plone"
          title="Null upgrade"
          handler="plone.app.upgrade.utils.null_upgrade_step"/>
 
-     <genericsetup:upgradeSteps
+     <genericsetup:upgradeStep
          source="4015"
          destination="4016"
          profile="Products.CMFPlone:plone"
