@@ -84,7 +84,8 @@ def add_siteadmin_role(context):
                     new_roles.append('SiteAdmin')
                     state.setPermission(permission_id, isinstance(roles, list), new_roles)
 
-    # update role mappings and reindex allowedRolesAndUsers
+def update_role_mappings(context):
+    wtool = getToolByName(context, 'portal_workflow')
     wtool.updateRoleMappings()
 
 def update_controlpanel_permissions(context):

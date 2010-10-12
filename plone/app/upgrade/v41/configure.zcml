@@ -38,8 +38,14 @@
       
       <genericsetup:upgradeStep
         title="Add SiteAdmin role"
-        description="Update rolemap and workflows to support the SiteAdmin role. (Includes a partial reindex.)"
+        description="Update rolemap and workflows to support the SiteAdmin role."
         handler=".alphas.add_siteadmin_role"
+        />
+      
+      <genericsetup:upgradeStep
+        title="Update role mappings"
+        description="Make sure the updated rolemap/workflows take effect. (Reindexes the allowedRolesAndUsers index.)"
+        handler=".alphas.update_role_mappings"
         />
 
       <genericsetup:upgradeStep
