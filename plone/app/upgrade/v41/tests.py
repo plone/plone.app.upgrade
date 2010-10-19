@@ -13,7 +13,6 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         diff = self.export()
         len_diff = len(diff.split('\n'))
         # self.failUnless(len_diff <= 2700)
-        import pdb; pdb.set_trace( )
 
 
 def test_suite():
