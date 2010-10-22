@@ -2,7 +2,7 @@
 <componentregistry>
  <adapters/>
  <utilities>
-  <utility 
+  <utility
       interface="plone.keyring.interfaces.IKeyManager"
       factory="plone.keyring.keymanager.KeyManager"
       />

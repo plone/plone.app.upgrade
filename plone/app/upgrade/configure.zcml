@@ -14,7 +14,7 @@
         factory=".HiddenProducts"
         name="plone.app.upgrade"
         />
-    
+
     <browser:page
         name="index.html"
         for=".gruf_bbb.UpgradeProcessError"

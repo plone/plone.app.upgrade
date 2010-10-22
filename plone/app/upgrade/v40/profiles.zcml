@@ -6,7 +6,7 @@
     <genericsetup:registerProfile
         name="update-toolset"
         title="Update toolset"
-        description="This profile updates the toolset to make sure other profiles don't try to use broken tools." 
+        description="This profile updates the toolset to make sure other profiles don't try to use broken tools."
         directory="profiles/update_toolset"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -15,7 +15,7 @@
     <genericsetup:registerProfile
         name="3-4alpha1"
         title="Upgrade profile for Plone 3.x to Plone 4.0alpha1"
-        description="This profile contains configuration changes that are applied during the Plone 3.x to 4.0alpha1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.x to 4.0alpha1 upgrade."
         directory="profiles/to_alpha1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -24,7 +24,7 @@
     <genericsetup:registerProfile
         name="4alpha2-4alpha3"
         title="Upgrade profile for Plone 4.0alpha2 to Plone 4.0alpha3"
-        description="This profile contains configuration changes that are applied during the Plone 4.0a2 to 4.0a3 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0a2 to 4.0a3 upgrade."
         directory="profiles/to_alpha3"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -33,7 +33,7 @@
     <genericsetup:registerProfile
         name="4alpha4-4alpha5"
         title="Upgrade profile for Plone 4.0alpha4 to Plone 4.0alpha5"
-        description="This profile contains configuration changes that are applied during the Plone 4.0a4 to 4.0a5 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0a4 to 4.0a5 upgrade."
         directory="profiles/to_alpha5"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -42,7 +42,7 @@
     <genericsetup:registerProfile
         name="4alpha5-4beta1"
         title="Upgrade profile for Plone 4.0alpha5 to Plone 4.0beta1"
-        description="This profile contains configuration changes that are applied during the Plone 4.0a5 to 4.0b1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0a5 to 4.0b1 upgrade."
         directory="profiles/to_beta1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -51,7 +51,7 @@
     <genericsetup:registerProfile
         name="4beta1-4beta2"
         title="Upgrade profile for Plone 4.0beta1 to Plone 4.0beta2"
-        description="This profile contains configuration changes that are applied during the Plone 4.0b1 to 4.0b2 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0b1 to 4.0b2 upgrade."
         directory="profiles/to_beta2"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -60,7 +60,7 @@
     <genericsetup:registerProfile
         name="4beta2-4beta3"
         title="Upgrade profile for Plone 4.0beta2 to Plone 4.0beta3"
-        description="This profile contains configuration changes that are applied during the Plone 4.0b2 to 4.0b3 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0b2 to 4.0b3 upgrade."
         directory="profiles/to_beta3"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -69,7 +69,7 @@
     <genericsetup:registerProfile
         name="4beta3-4beta4"
         title="Upgrade profile for Plone 4.0beta3 to Plone 4.0beta4"
-        description="This profile contains configuration changes that are applied during the Plone 4.0b3 to 4.0b4 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0b3 to 4.0b4 upgrade."
         directory="profiles/to_beta4"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -78,7 +78,7 @@
     <genericsetup:registerProfile
         name="4beta4-4beta5"
         title="Upgrade profile for Plone 4.0beta4 to Plone 4.0beta5"
-        description="This profile contains configuration changes that are applied during the Plone 4.0b4 to 4.0b5 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0b4 to 4.0b5 upgrade."
         directory="profiles/to_beta5"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -87,7 +87,7 @@
     <genericsetup:registerProfile
         name="4beta5-4rc1"
         title="Upgrade profile for Plone 4.0beta5 to Plone 4.0rc1"
-        description="This profile contains configuration changes that are applied during the Plone 4.0b5 to 4.0rc1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0b5 to 4.0rc1 upgrade."
         directory="profiles/to_rc1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -96,7 +96,7 @@
     <genericsetup:registerProfile
         name="4rc1-4final"
         title="Upgrade profile for Plone 4.0rc1 to Plone 4.0"
-        description="This profile contains configuration changes that are applied during the Plone 4.0rc1 to 4.0 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0rc1 to 4.0 upgrade."
         directory="profiles/to_final"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -106,7 +106,7 @@
     <genericsetup:registerProfile
         name="4.0-4.0.1"
         title="Upgrade profile for Plone 4.0 to Plone 4.0.1"
-        description="This profile contains configuration changes that are applied during the Plone 4.0 to 4.0.1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 4.0 to 4.0.1 upgrade."
         directory="profiles/to_four01"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"

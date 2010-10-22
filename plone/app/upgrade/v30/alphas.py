@@ -144,7 +144,7 @@ class installKss(object):
     @staticmethod
     def _old_res(tool, id):
         return tool.getResourcesDict().get(id, None)
-     
+
     def install_resources(self):
         jstool = getToolByName(self.context, 'portal_javascripts')
         for id in self.js_unregister:
@@ -211,9 +211,9 @@ class installKss(object):
                 logger.info('Added missing skins to %s' % s)
 
     def installKss(self):
-        self.install_mimetype() 
-        self.install_resources() 
-        self.install_skins() 
+        self.install_mimetype()
+        self.install_resources()
+        self.install_skins()
         logger.info("Succesfully installed KSS into the site.")
 
 
@@ -280,7 +280,7 @@ def migrateOldActions(context):
                 available_expr=available_expr,
                 permissions=action.permissions,
                 visible = action.visible)
-                
+
             # Only add an action if there isn't one with that name already
             if getattr(aq_base(new_category), action.id, None) is None:
                 new_category._setObject(action.id, new_action)
@@ -329,11 +329,11 @@ def addPortletManagers(context):
 def convertLegacyPortlets(context):
     """Convert portlets defined in left_slots and right_slots at the portal
     root to use plone.portlets. Also block portlets in the Members folder.
-    
+
     Note - there may be other portlets defined elsewhere. These will require
-    manual upgrade from the @@manage-portlets view. This is to avoid a 
+    manual upgrade from the @@manage-portlets view. This is to avoid a
     full walk of the portal (i.e. waking up every single object) looking for
-    potential left_slots/right_slots! 
+    potential left_slots/right_slots!
     """
     portal = getToolByName(context, 'portal_url').getPortalObject()
     convert_legacy_portlets(portal)
@@ -411,7 +411,7 @@ def registerToolsAsUtilities(context):
 
 
 def addReaderAndEditorRoles(context):
-    portal = getToolByName(context, 'portal_url').getPortalObject()    
+    portal = getToolByName(context, 'portal_url').getPortalObject()
     if 'Reader' not in portal.valid_roles():
         portal._addRole('Reader')
     if 'Editor' not in portal.valid_roles():
@@ -420,14 +420,14 @@ def addReaderAndEditorRoles(context):
         portal.acl_users.portal_role_manager.addRole('Reader')
     if 'Editor' not in portal.acl_users.portal_role_manager.listRoleIds():
         portal.acl_users.portal_role_manager.addRole('Editor')
-    
+
     viewRoles = [r['name'] for r in portal.rolesOfPermission('View') if r['selected']]
     modifyRoles = [r['name'] for r in portal.rolesOfPermission('Modify portal content') if r['selected']]
-    
+
     if 'Reader' not in viewRoles:
         viewRoles.append('Reader')
         portal.manage_permission('View', viewRoles, True)
-        
+
     if 'Editor' not in modifyRoles:
         modifyRoles.append('Editor')
         portal.manage_permission('Modify portal content', modifyRoles, True)
@@ -441,14 +441,14 @@ def migrateLocalroleForm(context):
         for fti in portal_types.objectValues():
             if not hasattr(fti, '_aliases'):
                 fti._aliases={}
-            
+
             aliases = fti.getMethodAliases()
             new_aliases = aliases.copy()
             for k, v in aliases.items():
                 if 'folder_localrole_form' in v:
                     new_aliases[k] = v.replace('folder_localrole_form', '@@sharing')
             fti.setMethodAliases(new_aliases)
-            
+
             for a in fti.listActions():
                 expr = a.getActionExpression()
                 if 'folder_localrole_form' in expr:
@@ -460,7 +460,7 @@ def reorderUserActions(context):
     portal_actions = getToolByName(context, 'portal_actions', None)
     if portal_actions is not None:
         user_category = getattr(portal_actions, 'user', None)
-        if user_category is not None:        
+        if user_category is not None:
             new_actions = ['login', 'join', 'mystuff', 'preferences', 'undo', 'logout']
             new_actions.reverse()
             for action in new_actions:
@@ -607,7 +607,7 @@ def addMissingWorkflows(context):
     encoding = 'utf-8'
     path_prefix = os.path.join(package_home(cmfplone_globals), 'profiles',
             'default', 'workflows')
-    
+
     for wf_id in new_workflow_ids:
         if wf_id in wft.objectIds():
             logger.info("Workflow %s already installed; doing nothing" % wf_id)

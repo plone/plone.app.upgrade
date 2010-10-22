@@ -188,10 +188,10 @@ def addContributorToCreationPermissions(context):
         portal._addRole('Contributor')
     if 'Contributor' not in portal.acl_users.portal_role_manager.listRoleIds():
         portal.acl_users.portal_role_manager.addRole('Contributor')
-    
+
     for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
                 'ATContentTypes: Add Event',
-                'ATContentTypes: Add File', 'ATContentTypes: Add Folder', 
+                'ATContentTypes: Add File', 'ATContentTypes: Add Folder',
                 'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
                 'ATContentTypes: Add News Item', ]:
         roles = [r['name'] for r in portal.rolesOfPermission(p) if r['selected']]
@@ -206,7 +206,7 @@ def removeSharingAction(context):
             action_ids = [a.id for a in fti.listActions()]
             if 'local_roles' in action_ids:
                 fti.deleteActions([action_ids.index('local_roles')])
-                
+
         logger.info('Removed explicit references to sharing action')
 
 def addEditorToSecondaryEditorPermissions(context):
@@ -219,7 +219,7 @@ def addEditorToSecondaryEditorPermissions(context):
 
 def updateEditActionConditionForLocking(context):
     """
-    Condition on edit views for Document, Event, File, Folder, Image, 
+    Condition on edit views for Document, Event, File, Folder, Image,
     Link, Topic has been added to not display the Edit
     tab if an item is locked
     """
@@ -276,7 +276,7 @@ def hidePropertiesAction(context):
     for ti in tt.listTypeInfo():
         actions = ti.listActions()
         index=[i for i in range(len(actions) )
-                if actions[i].category=="object" and 
+                if actions[i].category=="object" and
                    actions[i].id=="metadata"]
         if index:
             ti.deleteActions(index)

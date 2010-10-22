@@ -6,7 +6,7 @@
     <genericsetup:registerProfile
         name="2.5final-2.5.1"
         title="Upgrade profile for Plone 2.5-final to Plone 2.5.1"
-        description="This profile contains configuration changes that are applied during the Plone 2.5-final to 2.5.1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 2.5-final to 2.5.1 upgrade."
         directory="profiles/final_two51"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"

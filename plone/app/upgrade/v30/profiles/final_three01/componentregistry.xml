@@ -2,7 +2,7 @@
 <componentregistry>
  <adapters/>
  <utilities>
-  <utility 
+  <utility
      interface="five.customerize.interfaces.IViewTemplateContainer"
      object="portal_view_customizations"/>
  </utilities>

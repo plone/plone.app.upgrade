@@ -12,7 +12,7 @@ class GroupUserFolder(Persistent):
         raise UpgradeProcessError
 
 class UpgradeProcessErrorView(BrowserView):
-    
+
     def __call__(self):
         return ('Upgrades from Plone < 2.5 are not supported. Please do a '
                 'two-stage upgrade by upgrading to Plone 3 first. See '

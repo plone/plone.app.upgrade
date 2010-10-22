@@ -20,7 +20,7 @@
   <order manager="plone.portalfooter" skinname="Plone Default">
     <viewlet name="plone.site_actions" insert-after="*"/>
   </order>
-  
+
   <!-- Plone Classic Theme -->
   <order manager="plone.portaltop" skinname="Plone Classic Theme" based-on="Plone Default">
     <viewlet name="plone.personal_bar" insert-after="*" />
@@ -43,7 +43,7 @@
   <hidden manager="plone.portalfooter" skinname="Plone Classic Theme">
     <viewlet name="plone.site_actions" />
   </hidden>
-  
+
   <!-- Old Plone 3 Custom Theme -->
   <order manager="plone.portaltop" skinname="Old Plone 3 Custom Theme">
     <viewlet name="plone.personal_bar" insert-after="*" />
@@ -66,7 +66,7 @@
   <hidden manager="plone.portalfooter" skinname="Old Plone 3 Custom Theme">
     <viewlet name="plone.site_actions" />
   </hidden>
-  
+
   <!-- Sunburst Theme -->
   <hidden manager="plone.portaltop" skinname="Sunburst Theme"
     purge="True"/>

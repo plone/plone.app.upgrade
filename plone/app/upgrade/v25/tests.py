@@ -101,7 +101,7 @@ class TestMigrations_v2_5_2(MigrationTest):
 
     def afterSetUp(self):
         self.mimetypes = self.portal.mimetypes_registry
-        
+
     def testMissingMimeTypes(self):
         # we're testing for 'text/x-web-markdown' and 'text/x-web-textile'
         missing_types = ['text/x-web-markdown', 'text/x-web-textile']
@@ -137,7 +137,7 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
     def testDCMIStorageUpdated(self):
         self.importFile(__file__, 'test-base.zexp')
         oldsite, result = self.migrate()
-        
+
         dcmi = getattr(oldsite.portal_metadata, 'DCMI', None)
         self.failIf(dcmi is None)
 

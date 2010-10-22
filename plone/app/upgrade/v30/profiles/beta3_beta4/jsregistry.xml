@@ -21,27 +21,27 @@
 
   <!-- Make these resources only render for logged-in users -->
   <javascript expression="not: portal/portal_membership/isAnonymousUser"
-              id="dropdown.js" 
+              id="dropdown.js"
               insert-after="webstats.js"/>
-  <javascript expression="not: portal/portal_membership/isAnonymousUser" 
+  <javascript expression="not: portal/portal_membership/isAnonymousUser"
               id="table_sorter.js"
               insert-after="dropdown.js"/>
-  <javascript expression="not: portal/portal_membership/isAnonymousUser" 
+  <javascript expression="not: portal/portal_membership/isAnonymousUser"
               id="calendar_formfield.js"
               insert-after="table_sorter.js"/>
-  <javascript expression="not: portal/portal_membership/isAnonymousUser" 
+  <javascript expression="not: portal/portal_membership/isAnonymousUser"
               id="calendarpopup.js"
               insert-after="calendar_formfield.js"/>
-  <javascript expression="not: portal/portal_membership/isAnonymousUser" 
+  <javascript expression="not: portal/portal_membership/isAnonymousUser"
               id="formUnload.js"
               insert-after="calendarpopup.js"/>
-  <javascript expression="not: portal/portal_membership/isAnonymousUser" 
+  <javascript expression="not: portal/portal_membership/isAnonymousUser"
               id="formsubmithelpers.js"
               insert-after="formUnload.js"/>
   <javascript expression="not: portal/portal_membership/isAnonymousUser"
               id="unlockOnFormUnload.js"
               insert-after="formsubmithelpers.js"/>
- 
+
  <!-- Remove unused JS -->
  <javascript id="correctPREformatting.js" remove="True"/>
  <javascript id="plone_minwidth.js" remove="True"/>

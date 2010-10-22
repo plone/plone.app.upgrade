@@ -36,7 +36,7 @@
   <metadata name="modified"
      description="The time and date an item was last modified (non-ISO)"
      />
-  <metadata name="Subject" 
+  <metadata name="Subject"
     friendlyName="Categories"
     />
   <metadata name="UID" description="" enabled="False" friendlyName=""/>
@@ -49,7 +49,7 @@
   <metadata name="modified"
      description="The time and date an item was last modified (non-ISO)"
      />
-  <metadata name="Subject" 
+  <metadata name="Subject"
     friendlyName="Categories"
     />
   <metadata name="expires"

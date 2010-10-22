@@ -6,7 +6,7 @@
     <genericsetup:registerProfile
         name="2.5.x-3.0a1"
         title="Upgrade profile for Plone 2.5.x to Plone 3.0-alpha1"
-        description="This profile contains configuration changes that are applied during the Plone 2.5.x to Plone 3.0-alpha1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 2.5.x to Plone 3.0-alpha1 upgrade."
         directory="profiles/two5x_alpha1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -15,7 +15,7 @@
     <genericsetup:registerProfile
         name="3.0a1-3.0a2"
         title="Upgrade profile for Plone 3.0-alpha1 to Plone 3.0-alpha2"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-alpha1 to 3.0-alpha2 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-alpha1 to 3.0-alpha2 upgrade."
         directory="profiles/alpha1_alpha2"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -24,7 +24,7 @@
     <genericsetup:registerProfile
         name="3.0a2-3.0b1"
         title="Upgrade profile for Plone 3.0-alpha2 to Plone 3.0-beta1"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-alpha2 to 3.0-beta1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-alpha2 to 3.0-beta1 upgrade."
         directory="profiles/alpha2_beta1"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -33,7 +33,7 @@
     <genericsetup:registerProfile
         name="3.0b1-3.0b2"
         title="Upgrade profile for Plone 3.0-beta1 to Plone 3.0-beta2"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-beta1 to 3.0-beta2 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-beta1 to 3.0-beta2 upgrade."
         directory="profiles/beta1_beta2"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -42,7 +42,7 @@
     <genericsetup:registerProfile
         name="3.0b2-3.0b3"
         title="Upgrade profile for Plone 3.0-beta2 to Plone 3.0-beta3"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-beta2 to 3.0-beta3 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-beta2 to 3.0-beta3 upgrade."
         directory="profiles/beta2_beta3"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -51,7 +51,7 @@
     <genericsetup:registerProfile
         name="3.0b3-3.0b4"
         title="Upgrade profile for Plone 3.0-beta3 to Plone 3.0-beta4"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-beta3 to 3.0-beta4 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-beta3 to 3.0-beta4 upgrade."
         directory="profiles/beta3_beta4"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -60,7 +60,7 @@
     <genericsetup:registerProfile
         name="3.0rc2-3.0final"
         title="Upgrade profile for Plone 3.0-rc2 to Plone 3.0-final"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-rc2 to 3.0-final upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-rc2 to 3.0-final upgrade."
         directory="profiles/rc2_final"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -69,7 +69,7 @@
     <genericsetup:registerProfile
         name="3.0final-3.0.1"
         title="Upgrade profile for Plone 3.0-final to Plone 3.0.1"
-        description="This profile contains configuration changes that are applied during the Plone 3.0-final to 3.0.1 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0-final to 3.0.1 upgrade."
         directory="profiles/final_three01"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -78,7 +78,7 @@
     <genericsetup:registerProfile
         name="3.0.1-3.0.2"
         title="Upgrade profile for Plone 3.0.1 to Plone 3.0.2"
-        description="This profile contains configuration changes that are applied during the Plone 3.0.1 to 3.0.2 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0.1 to 3.0.2 upgrade."
         directory="profiles/three01_three02"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -87,7 +87,7 @@
     <genericsetup:registerProfile
         name="3.0.3-3.0.4"
         title="Upgrade profile for Plone 3.0.3 to Plone 3.0.4"
-        description="This profile contains configuration changes that are applied during the Plone 3.0.3 to 3.0.4 upgrade." 
+        description="This profile contains configuration changes that are applied during the Plone 3.0.3 to 3.0.4 upgrade."
         directory="profiles/three03_three04"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
