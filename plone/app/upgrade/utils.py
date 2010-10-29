@@ -14,12 +14,14 @@ def null_upgrade_step(tool):
     """ This is a null upgrade, use it when nothing happens """
     pass
 
+
 def safeEditProperty(obj, key, value, data_type='string'):
     """ An add or edit function, surprisingly useful :) """
     if obj.hasProperty(key):
         obj._updateProperty(key, value)
     else:
         obj._setProperty(key, value, data_type)
+
 
 def addLinesToProperty(obj, key, values):
     if obj.hasProperty(key):
@@ -36,16 +38,19 @@ def addLinesToProperty(obj, key, values):
             values = [values]
         obj._setProperty(key, values, 'lines')
 
+
 def saveCloneActions(actionprovider):
     try:
         return True, actionprovider._cloneActions()
     except AttributeError:
         # Stumbled across ancient dictionary actions
         if not hasattr(aq_base(actionprovider), '_convertActions'):
-            return False, ('Can\'t convert actions of %s! Jumping to next action.' % actionprovider.getId(), logging.ERROR)
+            return False, ("Can't convert actions of %s! Jumping to next "
+                           "action." % actionprovider.getId(), logging.ERROR)
         else:
             actionprovider._convertActions()
             return True, actionprovider._cloneActions()
+
 
 def testSkinLayer(skinsTool, layer):
     """Make sure a skin layer exists"""
@@ -61,16 +66,18 @@ def testSkinLayer(skinsTool, layer):
             return 0
     return 1
 
+
 def cleanupSkinPath(portal, skinName, test=1):
-   """Remove invalid skin layers from skins"""
-   skinstool = getToolByName(portal, 'portal_skins')
-   selections = skinstool._getSelections()
-   old_path = selections[skinName].split(',')
-   new_path = []
-   for layer in old_path:
-      if layer and testSkinLayer(skinstool, layer):
-         new_path.append(layer)
-   skinstool.addSkinSelection(skinName, ','.join(new_path), test=test)
+    """Remove invalid skin layers from skins"""
+    skinstool = getToolByName(portal, 'portal_skins')
+    selections = skinstool._getSelections()
+    old_path = selections[skinName].split(',')
+    new_path = []
+    for layer in old_path:
+        if layer and testSkinLayer(skinstool, layer):
+            new_path.append(layer)
+    skinstool.addSkinSelection(skinName, ','.join(new_path), test=test)
+
 
 def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     """Installs a product
@@ -91,8 +98,9 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
         product_version = qi.getProductVersion(product_name)
         if installed_version != product_version:
             qi.reinstallProducts([product_name])
-            logger.info('%s is out of date (installed: %s/ filesystem: %s), '\
-                'reinstalled.' % (product_name, installed_version, product_version))
+            logger.info("%s is out of date (installed: %s/ filesystem: %s), "
+                        "reinstalled." % (product_name, installed_version,
+                                          product_version))
         else:
             logger.info('%s already installed.' % product_name)
 
