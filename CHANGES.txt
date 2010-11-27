@@ -1,8 +1,15 @@
 Changelog
 =========
 
-1.0.3 - Unreleased
+1.1a1 - Unreleased
 ------------------
+
+- Added upgrade steps to add the Site Administrator role and Site Administrators
+  group and update control panel permissions on upgrading to Plone 4.1a1.
+  [davisagli]
+
+- Added infrastructure for upgrades to Plone 4.1.
+  [davisagli]
 
 1.0.2 - 2010-11-15
 ------------------

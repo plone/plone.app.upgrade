@@ -56,6 +56,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
+        self.setRoles(['Manager'])
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
@@ -234,6 +235,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertEqual(sheet.getProperty('use_email_as_login'), False)
 
     def testReplaceReferencebrowser(self):
+        self.setRoles(['Manager'])
         skins_tool = getToolByName(self.portal, 'portal_skins')
         sels = skins_tool._getSelections()
         for skinname, layer in sels.items():
@@ -252,6 +254,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             self.failUnless('referencebrowser' in layers)
 
     def testInstallNewDependencies(self):
+        self.setRoles(['Manager'])
         # test for running the TinyMCE profile by checking for the skin layer
         # it installs (the profile is marked as noninstallable, so we can't
         # ask the quick installer)

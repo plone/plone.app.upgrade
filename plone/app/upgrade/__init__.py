@@ -14,6 +14,7 @@ class HiddenProducts(object):
             'plone.app.upgrade.v32',
             'plone.app.upgrade.v33',
             'plone.app.upgrade.v40',
+            'plone.app.upgrade.v41',
             ]
 
 # Make sure folks upgrading from Plone 2.1 see a helpful message telling them
