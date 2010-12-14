@@ -18,5 +18,8 @@
     <element value="Plone Site Setup: Overview"/>
    </property>
   </object>
+  <object name="login" meta_type="CMF Action" i18n:domain="plone">
+   <property name="url_expr">string:${globals_view/navigationRootUrl}/login</property>
+  </object>
  </object>
 </object>

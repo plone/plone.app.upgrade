@@ -4,6 +4,9 @@ Changelog
 1.1a1 - Unreleased
 ------------------
 
+- Added properties / actions for Single Sign On login form.
+  [elro]
+
 - Added upgrade steps to add the Site Administrator role and Site Administrators
   group and update control panel permissions on upgrading to Plone 4.1a1.
   [davisagli]

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+ <object name="site_properties" meta_type="Plone Property Sheet">
+  <property name="allow_external_login_sites" type="lines"/>
+  <property name="external_login_url" type="string"/>
+  <property name="external_logout_url" type="string"/>
+ </object>
+</object>
