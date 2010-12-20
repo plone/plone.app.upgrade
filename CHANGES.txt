@@ -4,6 +4,9 @@ Changelog
 1.1a1 - Unreleased
 ------------------
 
+- Added upgrade step to install plone.outputfilters.
+  [davisagli]
+
 - Added properties / actions for Single Sign On login form.
   [elro]
 

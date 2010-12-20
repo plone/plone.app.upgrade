@@ -17,23 +17,16 @@
         />
       
       <genericsetup:upgradeStep
-        title="Update role mappings"
-        description="Make sure the updated rolemap/workflows take effect. (Reindexes the allowedRolesAndUsers index.)"
-        handler=".alphas.update_role_mappings"
+        title="Install plone.outputfilters"
+        description="This new package unifies the resolveuid and captioning transforms from kupu and TinyMCE."
+        handler=".alphas.install_outputfilters"
         />
-
-      <genericsetup:upgradeStep
-        title="Update control panel permissions"
-        description=""
-        handler=".alphas.update_controlpanel_permissions"
-        />
-
+      
       <genericsetup:upgradeStep
         title="Miscellaneous"
         description=""
         handler=".alphas.to41alpha1"
         />
-
     
     </genericsetup:upgradeSteps>
 

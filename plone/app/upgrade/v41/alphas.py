@@ -2,6 +2,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.rolemap import RolemapExportConfigurator
 from plone.app.upgrade.utils import loadMigrationProfile
 
+
 def to41alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41alpha1')
 
@@ -113,3 +114,9 @@ def update_controlpanel_permissions(context):
     for action in cptool._actions:
         if action.id in new_permissions:
             action.permissions = (new_permissions[action.id], )
+
+def install_outputfilters(context):
+    qi = getToolByName(context, 'portal_quickinstaller')
+    if qi.isProductInstallable('plone.outputfilters'):
+        if not qi.isProductInstalled('plone.outputfilters'):
+            qi.installProduct('plone.outputfilters')
