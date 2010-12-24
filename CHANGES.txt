@@ -4,6 +4,9 @@ Changelog
 1.1a1 - Unreleased
 ------------------
 
+- Depend on ``Products.CMFPlone`` instead of ``Plone``.
+  [elro]
+
 - Added upgrade step to install plone.outputfilters.
   [davisagli]
 
