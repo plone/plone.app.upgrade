@@ -67,6 +67,15 @@
         />
 
     <genericsetup:registerProfile
+        name="3.0rc2-3.0final-iterate"
+        title="Upgrade profile for Plone 3.0-rc2 to Plone 3.0-final with iterate step."
+        description="This profile contains configuration changes that are applied during the Plone 3.0-rc2 to 3.0-final upgrade when iterate is installed."
+        directory="profiles/rc2_final_iterate"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <genericsetup:registerProfile
         name="3.0final-3.0.1"
         title="Upgrade profile for Plone 3.0-final to Plone 3.0.1"
         description="This profile contains configuration changes that are applied during the Plone 3.0-final to 3.0.1 upgrade."

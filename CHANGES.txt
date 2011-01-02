@@ -4,7 +4,11 @@ Changelog
 1.1a1 - Unreleased
 ------------------
 
-- Make Products.CMFPlacefulWorkflow optional.
+- Add CMFPlacefulWorkflow, kupu, iterate and p.a.openid to test dependencies
+  as the test site zexps contain their objects.
+  [elro]
+
+- Make CMFPlacefulWorkflow, kupu and iterate optional during CMFPlone tests.
   [elro]
 
 - Depend on ``Products.CMFPlone`` instead of ``Plone``.

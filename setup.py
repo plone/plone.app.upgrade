@@ -26,10 +26,14 @@ setup(name='plone.app.upgrade',
       zip_safe=False,
       extras_require=dict(
         test=[
+            'Products.CMFPlacefulWorkflow',
             'Products.CMFQuickInstallerTool',
             'Products.PloneTestCase',
+            'Products.kupu',
             'plone.contentrules',
             'plone.app.i18n',
+            'plone.app.iterate',
+            'plone.app.openid',
             'plone.app.redirector',
             'plone.app.viewletmanager',
         ]

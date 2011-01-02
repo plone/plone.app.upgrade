@@ -11,7 +11,12 @@ from plone.app.upgrade.utils import loadMigrationProfile
 
 def rc2_final(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0rc2-3.0final')
-
+    try:
+        import plone.app.iterate
+    except ImportError:
+        pass
+    else:
+        loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0rc2-3.0final-iterate')
 
 def addIntelligentText(context):
     """ add intelligenttext mime type and transforms that have been

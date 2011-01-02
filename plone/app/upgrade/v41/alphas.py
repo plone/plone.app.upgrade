@@ -37,8 +37,6 @@ def add_siteadmin_role(context):
         'Change local roles',
         'Change portal events',
         'Copy or Move',
-        'Kupu: Manage libraries',
-        'Kupu: Query libraries',
         'Mail forgotten password',
         'Modify portal content',
         'Review portal content',
@@ -51,6 +49,15 @@ def add_siteadmin_role(context):
         'WebDAV Lock items',
         'WebDAV Unlock items',
         'WebDAV access',
+        ])
+    try:
+        import Products.kupu
+    except ImportError:
+        pass
+    else:
+        extra_permissions.update([
+        'Kupu: Manage libraries',
+        'Kupu: Query libraries',
         ])
     exclude_permissions = set([
         'Manage portal',
