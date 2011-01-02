@@ -1,7 +1,6 @@
 from borg.localrole.utils import replace_local_role_manager
 from zope.interface import noLongerProvides
 
-from Products.CMFPlacefulWorkflow.interfaces import IPlacefulMarker
 from Products.PlonePAS.interfaces.plugins import ILocalRolesPlugin
 
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
@@ -18,6 +17,10 @@ class TestMigrations_v3_1(MigrationTest):
         self.ps = self.portal.portal_setup
 
     def testReinstallCMFPlacefulWorkflow(self):
+        try:
+            from Products.CMFPlacefulWorkflow.interfaces import IPlacefulMarker
+        except ImportError:
+            return
         # first the product needs to be installed
         self.qi.installProduct('CMFPlacefulWorkflow')
         # Delete existing logs to prevent race condition

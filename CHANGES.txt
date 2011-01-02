@@ -4,6 +4,9 @@ Changelog
 1.1a1 - Unreleased
 ------------------
 
+- Make Products.CMFPlacefulWorkflow optional.
+  [elro]
+
 - Depend on ``Products.CMFPlone`` instead of ``Plone``.
   [elro]
 
