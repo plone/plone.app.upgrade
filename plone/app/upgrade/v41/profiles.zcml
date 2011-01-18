@@ -12,4 +12,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to41alpha2"
+      title="Upgrade profile for Plone 4.1alpha1 to Plone 4.1alpha2"
+      description="" 
+      directory="profiles/to_alpha2"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

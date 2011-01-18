@@ -127,3 +127,7 @@ def install_outputfilters(context):
     if qi.isProductInstallable('plone.outputfilters'):
         if not qi.isProductInstalled('plone.outputfilters'):
             qi.installProduct('plone.outputfilters')
+
+
+def to41alpha2(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41alpha2')
