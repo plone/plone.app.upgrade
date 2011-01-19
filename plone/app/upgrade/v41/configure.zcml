@@ -34,6 +34,13 @@
         source="4100"
         destination="4101"
         profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+          title="Miscellaneous"
+          description=""
+          handler=".alphas.to41alpha2"
+          />
+
         
     </genericsetup:upgradeSteps>
 
