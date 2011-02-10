@@ -4,6 +4,9 @@ Changelog
 1.1a2 - Unreleased
 ------------------
 
+- Added 4.1a2 steps.
+  [esteele]
+
 1.1a1 - 2011-01-18
 ------------------
 
