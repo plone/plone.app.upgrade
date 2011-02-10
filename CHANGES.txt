@@ -1,7 +1,13 @@
 Changelog
 =========
 
-1.1a2 - Unreleased
+1.1b1 - Unreleased
+------------------
+
+- Added 4.1b1 profile.
+  [esteele]
+
+1.1a2 - 2011-02-10
 ------------------
 
 - Added 4.1a2 steps.
