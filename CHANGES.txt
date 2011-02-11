@@ -4,6 +4,9 @@ Changelog
 1.1b1 - Unreleased
 ------------------
 
+- Upgrade `UID` index to new UUIDIndex.
+  [hannosch]
+
 - Upgrade `is_default_page` and `is_folderish` to new boolean index.
   [hannosch]
 

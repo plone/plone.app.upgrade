@@ -1,14 +1,20 @@
+import logging
+
 from BTrees.IIBTree import IIBTree
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
+from BTrees.OIBTree import OIBTree
 from Products.CMFCore.utils import getToolByName
 from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from Products.PluginIndexes.FieldIndex.FieldIndex import FieldIndex
 from Products.PluginIndexes.KeywordIndex.KeywordIndex import KeywordIndex
+from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
 import transaction
 
 from plone.app.upgrade.utils import loadMigrationProfile
+
+logger = logging.getLogger('plone.app.upgrade')
 
 
 def convert_to_booleanindex(index):
@@ -42,7 +48,25 @@ def convert_to_booleanindex(index):
 
 
 def convert_to_uuidindex(index):
-    pass
+    if isinstance(index, UUIDIndex):
+        return
+    index.__class__ = UUIDIndex
+    index._p_changed = True
+    # convert from OOBTree to OIBTree
+    old_index = index._index
+    if not isinstance(old_index, OIBTree):
+        index._index = _index = OIBTree()
+        for k, v in old_index.items():
+            if isinstance(v, int):
+                _index[k] = v
+            else:
+                if isinstance(v, (IISet, IITreeSet)):
+                    # inconsistent data, one uid with multiple docids
+                    _index[k] = v[0]
+                logger.error('Inconsistent UID index, UID %s is associated '
+                    'with multiple docids.' % k)
+        del old_index
+        transaction.savepoint(optimistic=True)
 
 
 def optimize_rangeindex(index):
