@@ -17,11 +17,12 @@ from plone.app.upgrade.utils import loadMigrationProfile
 logger = logging.getLogger('plone.app.upgrade')
 
 
-def convert_to_booleanindex(index):
+def convert_to_booleanindex(catalog, index):
     if isinstance(index, BooleanIndex):
         return
     index.__class__ = BooleanIndex
     index._p_changed = True
+    catalog._catalog._p_changed = True
     # convert _unindex from IOBTree to IIBTree
     old_unindex = index._unindex
     if not isinstance(old_unindex, IIBTree):
@@ -47,11 +48,12 @@ def convert_to_booleanindex(index):
         transaction.savepoint(optimistic=True)
 
 
-def convert_to_uuidindex(index):
+def convert_to_uuidindex(catalog, index):
     if isinstance(index, UUIDIndex):
         return
     index.__class__ = UUIDIndex
     index._p_changed = True
+    catalog._catalog._p_changed = True
     # convert from OOBTree to OIBTree
     old_index = index._index
     if not isinstance(old_index, OIBTree):
@@ -98,9 +100,9 @@ def optimize_indexes(context):
         if isinstance(index, DateRangeIndex):
             optimize_rangeindex(index)
         elif index_id in ('is_default_page', 'is_folderish'):
-            convert_to_booleanindex(index)
+            convert_to_booleanindex(catalog, index)
         elif index_id == 'UID':
-            convert_to_uuidindex(index)
+            convert_to_uuidindex(catalog, index)
         elif isinstance(index, (FieldIndex, KeywordIndex)):
             optimize_unindex(index)
 
