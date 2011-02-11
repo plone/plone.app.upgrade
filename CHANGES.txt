@@ -4,6 +4,9 @@ Changelog
 1.1b1 - Unreleased
 ------------------
 
+- Upgrade index internals for field, key and range indexes.
+  [hannosch]
+
 - Added 4.1b1 profile.
   [esteele]
 
