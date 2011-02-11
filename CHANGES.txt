@@ -4,6 +4,9 @@ Changelog
 1.1b1 - Unreleased
 ------------------
 
+- Upgrade `is_default_page` and `is_folderish` to new boolean index.
+  [hannosch]
+
 - Upgrade index internals for field, key and range indexes.
   [hannosch]
 
