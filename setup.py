@@ -77,6 +77,7 @@ setup(name='plone.app.upgrade',
         'Products.PortalTransforms',
         'Products.ResourceRegistries',
         'Products.SecureMailHost', # For migration only, when can we remove this?
+        'Products.ZCatalog >= 2.13.4',
         'Zope2',
       ],
       entry_points="""
