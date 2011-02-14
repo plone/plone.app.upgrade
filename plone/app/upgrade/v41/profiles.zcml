@@ -22,10 +22,10 @@
       />
 
   <genericsetup:registerProfile
-      name="to41beta1"
-      title="Upgrade profile for Plone 4.1alpha2 to Plone 4.1beta1"
+      name="to41alpha3"
+      title="Upgrade profile for Plone 4.1alpha2 to Plone 4.1alpha3"
       description="" 
-      directory="profiles/to_beta1"
+      directory="profiles/to_alpha3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />

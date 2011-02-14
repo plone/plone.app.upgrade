@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1b1 - Unreleased
+1.1a3 - 2011-02-14
 ------------------
 
 - Upgrade `UID` index to new UUIDIndex.

@@ -52,7 +52,7 @@
         <genericsetup:upgradeStep
           title="Miscellaneous"
           description=""
-          handler=".betas.to41beta1"
+          handler=".alphas.to41alpha3"
           />
 
         
