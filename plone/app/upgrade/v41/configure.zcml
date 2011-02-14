@@ -41,7 +41,6 @@
           handler=".alphas.to41alpha2"
           />
 
-        
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -55,6 +54,20 @@
           handler=".alphas.to41alpha3"
           />
 
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4102"
+        destination="4103"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+          title="Miscellaneous"
+          description=""
+          handler=".betas.to41beta1
+                   "
+          />
         
     </genericsetup:upgradeSteps>
+
 </configure>
