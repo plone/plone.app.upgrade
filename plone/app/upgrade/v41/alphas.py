@@ -1,15 +1,22 @@
+import logging
+
 import transaction
-from BTrees.IIBTree import IIBTree, IISet, IITreeSet
+from BTrees.IIBTree import IIBTree
+from BTrees.IIBTree import IISet
+from BTrees.IIBTree import IITreeSet
 from BTrees.OIBTree import OIBTree
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.rolemap import RolemapExportConfigurator
 from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
+from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from Products.PluginIndexes.FieldIndex.FieldIndex import FieldIndex
 from Products.PluginIndexes.KeywordIndex.KeywordIndex import KeywordIndex
 from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
 
 from plone.app.upgrade.utils import loadMigrationProfile
+
+logger = logging.getLogger('plone.app.upgrade')
 
 
 def to41alpha1(context):
@@ -196,6 +203,17 @@ def convert_to_uuidindex(catalog, index):
         transaction.savepoint(optimistic=True)
 
 
+def optimize_dateindex(index):
+    # migrate _unindex from OIBTree to IIBTree
+    old_unindex = index._unindex
+    if isinstance(old_unindex, IIBTree):
+        return
+    index._unindex = _unindex = IIBTree()
+    for k, v in old_unindex.items():
+        _unindex[k] = v
+    transaction.savepoint(optimistic=True)
+
+
 def optimize_rangeindex(index):
     # migrate internal IISet to IITreeSet
     for name in ('_since', '_since_only', '_until', '_until_only'):
@@ -224,6 +242,8 @@ def optimize_indexes(context):
         index_id = index.getId()
         if isinstance(index, DateRangeIndex):
             optimize_rangeindex(index)
+        elif isinstance(index, DateIndex):
+            optimize_dateindex(index)
         elif index_id in ('is_default_page', 'is_folderish'):
             convert_to_booleanindex(catalog, index)
         elif index_id == 'UID':

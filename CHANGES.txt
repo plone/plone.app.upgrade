@@ -4,6 +4,9 @@ Changelog
 1.1b1 - Unreleased
 ------------------
 
+- Optimize `DateIndex._unindex` internals.
+  [hannosch]
+
 1.1a3 - 2011-02-14
 ------------------
 
