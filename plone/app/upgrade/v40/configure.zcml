@@ -365,4 +365,18 @@
             />
 
     </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4017"
+        destination="4018"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="General upgrade steps"
+            handler="plone.app.upgrade.v40.betas.four05"
+            />
+
+    </genericsetup:upgradeSteps>
+
+
 </configure>
