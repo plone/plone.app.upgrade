@@ -196,7 +196,7 @@ def convert_to_uuidindex(catalog, index):
             else:
                 if isinstance(v, (IISet, IITreeSet)):
                     # inconsistent data, one uid with multiple docids
-                    _index[k] = v[0]
+                    _index[k] = v.keys()[0]
                 logger.error('Inconsistent UID index, UID %s is associated '
                     'with multiple docids.' % k)
         del old_index

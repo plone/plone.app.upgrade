@@ -4,6 +4,9 @@ Changelog
 1.1b1 - Unreleased
 ------------------
 
+- Fix handling of BTrees sets when converting the UUIDIndex.
+  [rossp]
+
 - Optimize `DateIndex._unindex` internals.
   [hannosch]
 
