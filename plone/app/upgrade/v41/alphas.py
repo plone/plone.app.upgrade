@@ -196,9 +196,19 @@ def convert_to_uuidindex(catalog, index):
             else:
                 if isinstance(v, (IISet, IITreeSet)):
                     # inconsistent data, one uid with multiple docids
-                    _index[k] = v.keys()[0]
-                logger.error('Inconsistent UID index, UID %s is associated '
-                    'with multiple docids.' % k)
+                    paths = dict((tuple(catalog.getpath(k).split('/')), k)
+                                 for k in v.keys())
+                    shortest = min(paths)
+                    for path, key in paths.iteritems():
+                        if path[:len(shortest)] != shortest:
+                            raise ValueError(
+                                'Inconsistent UID index, UID %s is associated '
+                                'with multiple docids: %r' % (k, paths))
+
+                    # All other docids are sub-paths of another
+                    # indicating the UID was just acquired,
+                    # choose the shortest
+                    _index[k] = paths[shortest]
         del old_index
         transaction.savepoint(optimistic=True)
 
