@@ -60,6 +60,18 @@ Changelog
 - Added infrastructure for upgrades to Plone 4.1.
   [davisagli]
 
+1.0.4 - 2011-02-26
+------------------
+
+- Add empty profile for 4.0.3-4.0.4 upgrade.
+  [esteele]
+
+1.0.3 - 2011-01-18
+------------------
+
+- Add empty profile for 4.0.2-4.0.3 upgrade.
+  [esteele]
+
 1.0.2 - 2010-11-15
 ------------------
 

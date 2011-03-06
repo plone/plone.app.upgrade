@@ -588,6 +588,23 @@ class TestMigrations_v4_0_3(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.failUnless(True)
 
+class TestMigrations_v4_0_4(MigrationTest):
+
+    profile = 'profile-plone.app.upgrade.v40:4.0.3-4.0.4'
+
+    def testProfile(self):
+        # This tests the whole upgrade profile can be loaded
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless(True)
+
+class TestMigrations_v4_0_5(MigrationTest):
+
+    profile = 'profile-plone.app.upgrade.v40:4.0.4-4.0.5'
+
+    def testProfile(self):
+        # This tests the whole upgrade profile can be loaded
+        loadMigrationProfile(self.portal, self.profile)
+        self.failUnless(True)
 
 
 def test_suite():
