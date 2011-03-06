@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1b1 - Unreleased
+1.1b1 - 2011-03-02
 ------------------
 
 - Fix handling of BTrees sets when converting the UUIDIndex.
