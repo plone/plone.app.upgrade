@@ -38,5 +38,14 @@
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-      
+
+  <genericsetup:registerProfile
+      name="to41beta2"
+      title="Upgrade profile for Plone 4.1beta1 to Plone 4.1beta2"
+      description="" 
+      directory="profiles/to_beta2"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />      
+
 </configure>
