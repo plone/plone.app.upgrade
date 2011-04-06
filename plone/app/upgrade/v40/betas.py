@@ -243,3 +243,7 @@ def four05(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.4-4.0.5')
 
+def four06(context):
+    """4.0.5 -> 4.0.6
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.5-4.0.6')

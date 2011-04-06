@@ -1,12 +1,17 @@
 Changelog
 =========
 
+1.0.6 - Unreleased
+------------------
+
+- Add empty profile for 4.0.5-4.0.6 upgrade.
+  [esteele]
+
 1.0.5 - 2011-04-05
 ------------------
 
-- Add empty profile for 4.0.3-4.0.4 upgrade.
+- Add empty profile for 4.0.4-4.0.5 upgrade.
   [esteele]
-
 
 1.0.4 - 2011-02-26
 ------------------
