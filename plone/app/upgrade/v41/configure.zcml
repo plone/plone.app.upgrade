@@ -82,4 +82,18 @@
         
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4104"
+        destination="4105"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+          title="Miscellaneous"
+          description=""
+          handler=".betas.to41beta3"
+          />
+        
+    </genericsetup:upgradeSteps>
+
+
 </configure>

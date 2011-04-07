@@ -6,3 +6,6 @@ def to41beta1(context):
 
 def to41beta2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41beta2')
+
+def to41beta3(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41beta3')
