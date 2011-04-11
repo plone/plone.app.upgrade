@@ -1,14 +1,20 @@
 Changelog
 =========
 
+
 1.1b3 - Unreleased
 ------------------
+
+- Add MANIFEST.in.
+  [WouterVH]
+
 
 1.1b2 - 2011-04-06
 ------------------
 
 - Added a 4.1b2 profile.
   [esteele]
+
 
 1.1b1 - 2011-03-02
 ------------------
@@ -18,6 +24,7 @@ Changelog
 
 - Optimize `DateIndex._unindex` internals.
   [hannosch]
+
 
 1.1a3 - 2011-02-14
 ------------------
@@ -34,11 +41,13 @@ Changelog
 - Added 4.1a3 profile.
   [esteele]
 
+
 1.1a2 - 2011-02-10
 ------------------
 
 - Added 4.1a2 steps.
   [esteele]
+
 
 1.1a1 - 2011-01-18
 ------------------
@@ -66,17 +75,20 @@ Changelog
 - Added infrastructure for upgrades to Plone 4.1.
   [davisagli]
 
+
 1.0.4 - 2011-02-26
 ------------------
 
 - Add empty profile for 4.0.3-4.0.4 upgrade.
   [esteele]
 
+
 1.0.3 - 2011-01-18
 ------------------
 
 - Add empty profile for 4.0.2-4.0.3 upgrade.
   [esteele]
+
 
 1.0.2 - 2010-11-15
 ------------------
@@ -88,6 +100,7 @@ Changelog
   and   http://dev.plone.org/plone/ticket/11167
   [maurits]
 
+
 1.0.1 - 2010-09-28
 ------------------
 
@@ -98,11 +111,13 @@ Changelog
   used. This closes http://dev.plone.org/plone/ticket/10824.
   [hannosch]
 
+
 1.0 - 2010-08-28
 ----------------
 
 - Add empty profile for rc1-final upgrade.
   [esteele]
+
 
 1.0rc1 - 2010-08-05
 -------------------
@@ -116,6 +131,7 @@ Changelog
 
 - Update license to GPL version 2 only.
   [hannosch]
+
 
 1.0b5 - 2010-07-07
 ------------------
@@ -181,6 +197,7 @@ Changelog
   This closes http://dev.plone.org/plone/ticket/10399
   [davisagli]
 
+
 1.0b4 - 2010-06-03
 ------------------
 
@@ -203,6 +220,7 @@ Changelog
   old upgrade steps.
   [davisagli]
 
+
 1.0b3 - 2010-05-03
 ------------------
 
@@ -210,19 +228,21 @@ Changelog
   records. This refs http://dev.plone.org/plone/ticket/10446.
   [dunlapm, hannosch]
 
+
 1.0b2 - 2010-04-09
 ------------------
 
 - Add an upgrade step to update the getIcon metadata column for core types so
   that our new CSS sprited icons can be used.
   [esteele]
-  
+
 - Update the safe_html transform with the new config params, migrating existing
   config from Kupu.
   [elro]
 
 - Added upgrade step for viewlet changes in Plone 4.0b2.
   [davisagli]
+
 
 1.0b1 - 2010-03-08
 ------------------
@@ -241,6 +261,7 @@ Changelog
 
 - Added upgrade step to profile version 4007.
   [hannosch]
+
 
 1.0a5 - 2010-02-19
 ------------------
@@ -276,6 +297,7 @@ Changelog
 - Changed the cleanUpProductRegistry upgrade step to remove all entries from the
   persistent registry and run it again for existing alpha sites.
   [hannosch]
+
 
 1.0a4 - 2010-02-01
 ------------------
@@ -324,6 +346,7 @@ Changelog
 - Declared missing dependencies.
   [hannosch]
 
+
 1.0a3 - 2009-12-16
 ------------------
 
@@ -349,6 +372,7 @@ Changelog
 - Removed references to content_icon, which is deprecated in CMFCore 2.2.0
   beta 1.
   [davisagli]
+
 
 1.0a2 - 2009-12-02
 ------------------
@@ -409,7 +433,7 @@ Changelog
 
 - Fixed removeal of highlightsearchterms.js.
   [naro]
-  
+
 - Added plonetheme.classic and plonetheme.sunburst as dependencies.
   [naro]
 
@@ -426,9 +450,8 @@ Changelog
   break if kupu is absent.
   [davisagli]
 
-- Make sure the TinyMCE profile and default_editor property get installed
-  when upgrading to Plone 4 (kupu remains the default editor for upgraded
-  sites).
+- Make sure the TinyMCE profile and default_editor property get installed when
+  upgrading to Plone 4 (kupu remains the default editor for upgraded sites).
   [davisagli]
 
 - Aded Migration for SecureMailHost removal
@@ -523,7 +546,7 @@ Changelog
 
 - Merged changeset 27805 from 3.3 branch migrations for 3.3rc3 to
   3.3rc4 (fix cooked expressions in css registry).
-  [maurits]  
+  [maurits]
 
 - Added the z3c.autoinclude entry point so this package is automatically loaded
   on Plone 3.3 and above.
