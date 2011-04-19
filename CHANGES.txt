@@ -8,6 +8,7 @@ Changelog
 - Add MANIFEST.in.
   [WouterVH]
 - Remove unexistant GenericSetup step dependency on plonepas-content.
+  [kiorky]
 
 
 1.1b2 - 2011-04-06
