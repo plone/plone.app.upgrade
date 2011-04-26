@@ -13,11 +13,11 @@ from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import ILocalPortletAssignmentManager
 from plone.portlets.constants import CONTEXT_CATEGORY as CONTEXT_PORTLETS
 
-from zope.app.component.hooks import clearSite
 from zope.location.interfaces import ISite
 from zope.component import getGlobalSiteManager
 from zope.component import getSiteManager
 from zope.component import getUtility, getMultiAdapter
+from zope.component.hooks import clearSite
 
 from Products.Archetypes.interfaces import IArchetypeTool
 from Products.Archetypes.interfaces import IReferenceCatalog
