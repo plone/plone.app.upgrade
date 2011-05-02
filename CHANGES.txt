@@ -4,12 +4,18 @@ Changelog
 1.1b3 - Unreleased
 ------------------
 
+- Added upgrade step to fix the cataloged ids of interfaces in the
+  `object_provides` index.
+  [hannosch]
+
 - Added new upgrade step to optimize date range index and respect the new
   floor and ceiling date settings.
+  [hannosch]
 
 - Removed `v40.alphas.optimizeDateRangeIndexes` upgrade step, as it is
   superseded by the `v41.alphas.optimize_rangeindex` code and would do an
   upgrade that the second step reverted anyways.
+  [hannosch]
 
 - Add MANIFEST.in.
   [WouterVH]
