@@ -1,12 +1,16 @@
 Changelog
 =========
 
-
 1.1b3 - Unreleased
 ------------------
 
+- Removed `v40.alphas.optimizeDateRangeIndexes` upgrade step, as it is
+  superseded by the `v41.alphas.optimize_rangeindex` code and would do an
+  upgrade that the second step reverted anyways.
+
 - Add MANIFEST.in.
   [WouterVH]
+
 - Remove unexistant GenericSetup step dependency on plonepas-content.
   [kiorky]
 

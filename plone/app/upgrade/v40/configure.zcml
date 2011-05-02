@@ -186,11 +186,6 @@
             />
 
         <genericsetup:upgradeStep
-            title="Optimize date range indexes."
-            handler=".alphas.optimizeDateRangeIndexes"
-            />
-
-        <genericsetup:upgradeStep
             title="Cleanup Classic Theme CSS registry metadata."
             handler=".alphas.cleanUpClassicThemeResources"
             />

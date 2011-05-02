@@ -7,7 +7,6 @@ from zope.ramcache.ram import RAMCache
 
 from Acquisition import aq_base
 from Acquisition import aq_get
-from BTrees.IIBTree import IISet
 from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.interfaces import ICachingPolicyManager
@@ -18,7 +17,6 @@ from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
-from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from zExceptions import NotFound
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
@@ -499,34 +497,6 @@ def addRecursiveGroupsPlugin(context):
 
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
-
-
-def optimizeIndexInternals(index):
-    # Instead of storing a persistent IISet object for single values, we can
-    # now store a simple int in the tree
-    for name in ('_since', '_since_only', '_until', '_until_only'):
-        tree = getattr(index, name, None)
-        changed = False
-        if tree is not None:
-            for k, v in tree.items():
-                if isinstance(v, IISet) and len(v) == 1:
-                    new = v[0]
-                    if isinstance(new, int):
-                        tree[k] = new
-                        changed = True
-            if changed:
-                tree._p_changed = True
-                transaction.savepoint(optimistic=True)
-
-
-def optimizeDateRangeIndexes(context):
-    """Take advantage of the optimized data structures for range indexes."""
-    catalog = getToolByName(context, 'portal_catalog')
-    for index in catalog.getIndexObjects():
-        if isinstance(index, DateRangeIndex):
-            optimizeIndexInternals(index)
-
-    logger.info('Optimized internal date range index structures.')
 
 
 def cleanUpClassicThemeResources(context):
