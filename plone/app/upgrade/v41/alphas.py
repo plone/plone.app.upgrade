@@ -225,13 +225,15 @@ def optimize_dateindex(index):
 
 
 def optimize_rangeindex(index):
-    # migrate internal IISet to IITreeSet
+    # migrate internal int and IISet to IITreeSet
     for name in ('_since', '_since_only', '_until', '_until_only'):
         tree = getattr(index, name, None)
         if tree is not None:
             for k, v in tree.items():
                 if isinstance(v, IISet):
                     tree[k] = IITreeSet(v)
+                elif isinstance(v, int):
+                    tree[k] = IITreeSet((v, ))
             transaction.savepoint(optimistic=True)
 
 
