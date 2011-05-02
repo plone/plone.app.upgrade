@@ -5,7 +5,7 @@ Changelog
 ------------------
 
 - Added upgrade step to fix the cataloged ids of interfaces in the
-  `object_provides` index.
+  `object_provides` index. Closes http://dev.plone.org/plone/ticket/11032.
   [hannosch]
 
 - Added new upgrade step to optimize date range index and respect the new
