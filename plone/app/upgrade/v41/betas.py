@@ -3,17 +3,21 @@ from Products.CMFCore.utils import getToolByName
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import logger
 from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
 
 
 def optimize_rangeindex(index):
     # respect the new ceiling and floor values
+    logger.info('Optimizing range index `%s` to respect floor and ceiling '
+        'dates' % index.getId())
     ceiling_value = index.ceiling_value
     floor_value = index.floor_value
 
     _insertForwardIndexEntry = index._insertForwardIndexEntry
     _removeForwardIndexEntry = index._removeForwardIndexEntry
     _unindex = index._unindex
+    i = 0
     for docid, datum in _unindex.iteritems():
         if datum == (None, None):
             continue
@@ -31,8 +35,13 @@ def optimize_rangeindex(index):
             # we only change the value and not the keys of the btree, so we
             # safely iterate over it while modifying it
             _unindex[docid] = (since, until)
+            i += 1
+            if i % 10000 == 0:
+                logger.info('Processed %s items.' % i)
+                transaction.savepoint(optimistic=True)
 
     transaction.savepoint(optimistic=True)
+    logger.info('Finished range index optimization.')
 
 
 def optimize_indexes(context):
