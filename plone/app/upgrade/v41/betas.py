@@ -1,13 +1,15 @@
 import transaction
 from Products.CMFCore.utils import getToolByName
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
+from BTrees.IIBTree import IISet
+from BTrees.IIBTree import IITreeSet
 
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
 
 
-def optimize_rangeindex(index):
+def optimize_rangeindex_floor_ceiling(index):
     # respect the new ceiling and floor values
     logger.info('Optimizing range index `%s` to respect floor and ceiling '
         'dates' % index.getId())
@@ -44,11 +46,35 @@ def optimize_rangeindex(index):
     logger.info('Finished range index optimization.')
 
 
+def optimize_rangeindex_int_iiset(index):
+    # migrate internal int and IISet to IITreeSet
+    logger.info('Converting to IITreeSet for index `%s`.' % index.getId())
+    for name in ('_since', '_since_only', '_until', '_until_only'):
+        tree = getattr(index, name, None)
+        if tree is not None:
+            logger.info('Converting tree `%s`.' % name)
+            i = 0
+            for k, v in tree.items():
+                if isinstance(v, IISet):
+                    tree[k] = IITreeSet(v)
+                    i += 1
+                elif isinstance(v, int):
+                    tree[k] = IITreeSet((v, ))
+                    i += 1
+                if i and i % 10000 == 0:
+                    transaction.savepoint(optimistic=True)
+                    logger.info('Processed %s items.' % i)
+
+    transaction.savepoint(optimistic=True)
+    logger.info('Finished conversion.')
+
+
 def optimize_indexes(context):
     catalog = getToolByName(context, 'portal_catalog')
     for index in catalog.getIndexObjects():
         if isinstance(index, DateRangeIndex):
-            optimize_rangeindex(index)
+            optimize_rangeindex_floor_ceiling(index)
+            optimize_rangeindex_int_iiset(index)
 
 
 def to41beta1(context):

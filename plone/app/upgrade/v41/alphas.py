@@ -9,7 +9,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.rolemap import RolemapExportConfigurator
 from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
 from Products.PluginIndexes.DateIndex.DateIndex import DateIndex
-from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from Products.PluginIndexes.FieldIndex.FieldIndex import FieldIndex
 from Products.PluginIndexes.KeywordIndex.KeywordIndex import KeywordIndex
 from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
@@ -234,29 +233,6 @@ def optimize_dateindex(index):
     logger.info('Finished conversion.')
 
 
-def optimize_rangeindex(index):
-    # migrate internal int and IISet to IITreeSet
-    logger.info('Converting to IITreeSet for index `%s`.' % index.getId())
-    for name in ('_since', '_since_only', '_until', '_until_only'):
-        tree = getattr(index, name, None)
-        if tree is not None:
-            logger.info('Converting tree `%s`.' % name)
-            i = 0
-            for k, v in tree.items():
-                if isinstance(v, IISet):
-                    tree[k] = IITreeSet(v)
-                    i += 1
-                elif isinstance(v, int):
-                    tree[k] = IITreeSet((v, ))
-                    i += 1
-                if i and i % 10000 == 0:
-                    transaction.savepoint(optimistic=True)
-                    logger.info('Processed %s items.' % i)
-
-    transaction.savepoint(optimistic=True)
-    logger.info('Finished conversion.')
-
-
 def optimize_unindex(index):
     # avoid using a simple int and always use a treeset instead to
     # allow conflict resolution inside the treeset to happen
@@ -279,9 +255,7 @@ def optimize_indexes(context):
     catalog = getToolByName(context, 'portal_catalog')
     for index in catalog.getIndexObjects():
         index_id = index.getId()
-        if isinstance(index, DateRangeIndex):
-            optimize_rangeindex(index)
-        elif isinstance(index, DateIndex):
+        if isinstance(index, DateIndex):
             optimize_dateindex(index)
         elif index_id in ('is_default_page', 'is_folderish'):
             convert_to_booleanindex(catalog, index)
