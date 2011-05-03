@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
 
 
 def optimize_rangeindex(index):
@@ -52,3 +53,7 @@ def to41beta2(context):
 def to41beta3(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41beta3')
     optimize_indexes(context)
+    # run this again to make sure we respect the blacklist, in an upgrade from
+    # Plone < 4 we do the work earlier, so we don't have to iterate twice over
+    # the object_provides index
+    fix_cataloged_interface_names(context)

@@ -4,6 +4,9 @@ Changelog
 1.1b3 - Unreleased
 ------------------
 
+- Added upgrade step to respect the new blacklisted interface list.
+  [hannosch]
+
 - Added upgrade step to fix the cataloged ids of interfaces in the
   `object_provides` index. Closes http://dev.plone.org/plone/ticket/11032.
   [hannosch]

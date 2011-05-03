@@ -1,5 +1,7 @@
+import transaction
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.CatalogTool import BLACKLISTED_INTERFACES
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from ZODB.POSException import ConflictError
 from zope.dottedname.resolve import resolve
@@ -243,9 +245,12 @@ def four04(context):
 def fix_cataloged_interface_names(context):
     # some interfaces changed their canonical location, like
     # ATContentTypes.interface.* to interfaces.*
+    # we also do the blacklist cleanup here, even though that was only
+    # introduced in Plone 4.1 - but it saves us from walking the index twice
     catalog = getToolByName(context, 'portal_catalog')
     index = catalog._catalog.indexes.get('object_provides', None)
     if index is not None:
+        logger.info('Updating `object_provides` index.')
         _index = index._index
         names = list(_index.keys())
         delete = set()
@@ -256,18 +261,26 @@ def fix_cataloged_interface_names(context):
             except ImportError:
                 delete.add(name)
                 del _index[name]
+                continue
             new_name = klass.__identifier__
-            if name != new_name:
+            if new_name in BLACKLISTED_INTERFACES:
+                delete.add(name)
+                del _index[name]
+            elif name != new_name:
                 rename.add(new_name)
                 _index[new_name] = _index[name]
                 delete.add(name)
                 del _index[name]
         if delete or rename:
+            logger.info('Cleaning up `object_provides` _unindex.')
             _unindex = index._unindex
-            for docid, value in _unindex.iteritems():
+            for pos, (docid, value) in enumerate(_unindex.iteritems()):
                 new_value = list(sorted((set(value) - delete).union(rename)))
                 if value != new_value:
                     _unindex[docid] = new_value
+                if pos and pos % 10000 == 0:
+                    logger.info('Processed %s items.' % pos)
+                    transaction.savepoint(optimistic=True)
 
 
 def four05(context):
