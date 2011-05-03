@@ -219,22 +219,38 @@ def optimize_dateindex(index):
     if isinstance(old_unindex, IIBTree):
         return
     index._unindex = _unindex = IIBTree()
-    for k, v in old_unindex.items():
+    logger.info('Converting to IIBTree for index `%s`.' % index.getId())
+    for pos, (k, v) in enumerate(old_unindex.items()):
         _unindex[k] = v
+        if pos and pos % 10000 == 0:
+            transaction.savepoint(optimistic=True)
+            logger.info('Processed %s items.' % pos)
+
     transaction.savepoint(optimistic=True)
+    logger.info('Finished conversion.')
 
 
 def optimize_rangeindex(index):
     # migrate internal int and IISet to IITreeSet
+    logger.info('Converting to IITreeSet for index `%s`.' % index.getId())
     for name in ('_since', '_since_only', '_until', '_until_only'):
         tree = getattr(index, name, None)
         if tree is not None:
+            logger.info('Converting tree `%s`.' % name)
+            i = 0
             for k, v in tree.items():
                 if isinstance(v, IISet):
                     tree[k] = IITreeSet(v)
+                    i += 1
                 elif isinstance(v, int):
                     tree[k] = IITreeSet((v, ))
-            transaction.savepoint(optimistic=True)
+                    i += 1
+                if i and i % 10000 == 0:
+                    transaction.savepoint(optimistic=True)
+                    logger.info('Processed %s items.' % i)
+
+    transaction.savepoint(optimistic=True)
+    logger.info('Finished conversion.')
 
 
 def optimize_unindex(index):
@@ -242,10 +258,17 @@ def optimize_unindex(index):
     # allow conflict resolution inside the treeset to happen
     _index = getattr(index, '_index', None)
     if _index is not None:
-        for k, v in _index.items():
+        logger.info('Converting to IITreeSet for index `%s`.' % index.getId())
+        i = 0
+        for k, v in enumerate(_index.items()):
             if isinstance(v, int):
                 _index[k] = IITreeSet((v, ))
+                i += 1
+                if i % 10000 == 0:
+                    transaction.savepoint(optimistic=True)
+                    logger.info('Processed %s items.' % i)
         transaction.savepoint(optimistic=True)
+        logger.info('Finsihed conversion.')
 
 
 def optimize_indexes(context):
