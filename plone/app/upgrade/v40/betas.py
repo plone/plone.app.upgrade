@@ -261,16 +261,19 @@ def fix_cataloged_interface_names(context):
             except ImportError:
                 delete.add(name)
                 del _index[name]
+                index._length.change(-1)
                 continue
             new_name = klass.__identifier__
             if new_name in BLACKLISTED_INTERFACES:
                 delete.add(name)
                 del _index[name]
+                index._length.change(-1)
             elif name != new_name:
                 rename.add(new_name)
                 _index[new_name] = _index[name]
                 delete.add(name)
                 del _index[name]
+                index._length.change(-1)
         if delete or rename:
             logger.info('Cleaning up `object_provides` _unindex.')
             _unindex = index._unindex
