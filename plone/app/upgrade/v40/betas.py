@@ -285,6 +285,9 @@ def fix_cataloged_interface_names(context):
                     logger.info('Processed %s items.' % pos)
                     transaction.savepoint(optimistic=True)
 
+    transaction.savepoint(optimistic=True)
+    logger.info('Updated `object_provides` index.')
+
 
 def four05(context):
     """4.0.4 -> 4.0.5
