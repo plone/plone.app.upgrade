@@ -152,6 +152,7 @@ def to41alpha2(context):
 def convert_to_booleanindex(catalog, index):
     if isinstance(index, BooleanIndex):
         return
+    logger.info('Converting index `%s` to BooleanIndex.' % index.getId())
     index.__class__ = BooleanIndex
     index._p_changed = True
     catalog._catalog._p_changed = True
@@ -178,11 +179,13 @@ def convert_to_booleanindex(catalog, index):
                     _index.update(v)
         del old_index
         transaction.savepoint(optimistic=True)
+    logger.info('Finished conversion.')
 
 
 def convert_to_uuidindex(catalog, index):
     if isinstance(index, UUIDIndex):
         return
+    logger.info('Converting index `%s` to UUIDIndex.' % index.getId())
     index.__class__ = UUIDIndex
     index._p_changed = True
     catalog._catalog._p_changed = True
@@ -211,6 +214,7 @@ def convert_to_uuidindex(catalog, index):
                     _index[k] = paths[shortest]
         del old_index
         transaction.savepoint(optimistic=True)
+    logger.info('Finished conversion.')
 
 
 def optimize_dateindex(index):
