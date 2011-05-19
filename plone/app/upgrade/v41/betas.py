@@ -1,5 +1,6 @@
 import transaction
 from Products.CMFCore.utils import getToolByName
+from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
 from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
@@ -69,12 +70,23 @@ def optimize_rangeindex_int_iiset(index):
     logger.info('Finished conversion.')
 
 
+def update_boolean_index(index):
+    index_length = index._index_length
+    if index_length is not None:
+        return
+    logger.info('Updating BooleanIndex `%s`.' % index.getId())
+    index._inline_migration()
+    logger.info('Updated BooleanIndex `%s`.' % index.getId())
+
+
 def optimize_indexes(context):
     catalog = getToolByName(context, 'portal_catalog')
     for index in catalog.getIndexObjects():
         if isinstance(index, DateRangeIndex):
             optimize_rangeindex_floor_ceiling(index)
             optimize_rangeindex_int_iiset(index)
+        elif isinstance(index, BooleanIndex):
+            update_boolean_index(index)
 
 
 def to41beta1(context):
