@@ -4,6 +4,10 @@ Changelog
 1.1b3 - Unreleased
 ------------------
 
+- Adjusted boolean index conversion to new variable index value support
+  introduced in ZCatalog 2.13.14.
+  [hannosch]
+
 - Added upgrade step to respect the new blacklisted interface list.
   [hannosch]
 

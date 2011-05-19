@@ -5,6 +5,7 @@ from BTrees.IIBTree import IIBTree
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
 from BTrees.OIBTree import OIBTree
+from BTrees.Length import Length
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.rolemap import RolemapExportConfigurator
 from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
@@ -155,29 +156,34 @@ def convert_to_booleanindex(catalog, index):
     index.__class__ = BooleanIndex
     index._p_changed = True
     catalog._catalog._p_changed = True
+
     # convert _unindex from IOBTree to IIBTree
+    sets = {0: IITreeSet(), 1: IITreeSet()}
     old_unindex = index._unindex
-    if not isinstance(old_unindex, IIBTree):
-        index._unindex = _unindex = IIBTree()
-        for k, v in old_unindex.items():
-            # docid to value (True, False)
-            _unindex[k] = int(bool(v))
-        del old_unindex
-        transaction.savepoint(optimistic=True)
-    # convert _index from OOBTree to IITreeSet
-    old_index = index._index
-    if not isinstance(old_index, IITreeSet):
-        index._index = _index = IITreeSet()
-        for k, v in old_index.items():
-            # value to docid (int or treeset)
-            if bool(k):
-                # only true values get into the new _index
-                if isinstance(v, int):
-                    _index.add(v)
-                else:
-                    _index.update(v)
-        del old_index
-        transaction.savepoint(optimistic=True)
+    index._unindex = _unindex = IIBTree()
+    for k, v in old_unindex.items():
+        # docid to value (True, False)
+        value = int(bool(v))
+        _unindex[k] = value
+        sets[value].add(k)
+    del old_unindex
+
+    # convert _index from OOBTree to IITreeSet and set lengths
+    false_length = len(sets[0])
+    true_length = len(sets[1])
+    index._length = Length(false_length + true_length)
+    # we put the smaller set into the index
+    if false_length < true_length:
+        index._index_value = 0
+        index._index_length = Length(false_length)
+        index._index = sets[0]
+        del sets[1]
+    else:
+        index._index_value = 1
+        index._index_length = Length(true_length)
+        index._index = sets[1]
+        del sets[0]
+    transaction.savepoint(optimistic=True)
     logger.info('Finished conversion.')
 
 
