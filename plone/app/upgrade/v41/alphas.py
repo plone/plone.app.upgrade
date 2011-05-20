@@ -254,7 +254,7 @@ def optimize_unindex(index):
                     transaction.savepoint(optimistic=True)
                     logger.info('Processed %s items.' % i)
         transaction.savepoint(optimistic=True)
-        logger.info('Finsihed conversion.')
+        logger.info('Finished conversion.')
 
 
 def optimize_indexes(context):
