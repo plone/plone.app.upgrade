@@ -90,7 +90,7 @@
         <genericsetup:upgradeStep
           title="Miscellaneous"
           description=""
-          handler=".betas.to41beta3"
+          handler=".betas.to41rc1"
           />
         
     </genericsetup:upgradeSteps>

@@ -97,8 +97,8 @@ def to41beta2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41beta2')
 
 
-def to41beta3(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41beta3')
+def to41rc1(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc1')
     optimize_indexes(context)
     # run this again to make sure we respect the blacklist, in an upgrade from
     # Plone < 4 we do the work earlier, so we don't have to iterate twice over
