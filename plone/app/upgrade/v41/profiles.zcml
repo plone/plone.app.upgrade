@@ -58,7 +58,7 @@
       />      
 
   <genericsetup:registerProfile
-      name="to41rc1"
+      name="to41rc2"
       title="Upgrade profile for Plone 4.1rc1 to Plone 4.1rc2"
       description="" 
       directory="profiles/to_rc2"
