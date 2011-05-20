@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.6 - Unreleased
+1.0.6 - 2011-05-20
 ------------------
 
 - Added upgrade step to fix the cataloged ids of interfaces in the
