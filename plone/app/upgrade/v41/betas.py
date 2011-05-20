@@ -104,3 +104,7 @@ def to41rc1(context):
     # Plone < 4 we do the work earlier, so we don't have to iterate twice over
     # the object_provides index
     fix_cataloged_interface_names(context)
+
+
+def to41rc2(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc2')
