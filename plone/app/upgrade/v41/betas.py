@@ -108,3 +108,7 @@ def to41rc1(context):
 
 def to41rc2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc2')
+
+
+def to41rc3(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc3')
