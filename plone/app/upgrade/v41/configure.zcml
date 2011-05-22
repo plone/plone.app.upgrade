@@ -9,25 +9,25 @@
         source="4016"
         destination="4100"
         profile="Products.CMFPlone:plone">
-      
+
       <genericsetup:upgradeStep
         title="Add Site Administrator role"
         description="Update rolemap and workflows to support the Site Administrator role."
         handler=".alphas.add_siteadmin_role"
         />
-      
+
       <genericsetup:upgradeStep
         title="Install plone.outputfilters"
         description="This new package unifies the resolveuid and captioning transforms from kupu and TinyMCE."
         handler=".alphas.install_outputfilters"
         />
-      
+
       <genericsetup:upgradeStep
         title="Miscellaneous"
         description=""
         handler=".alphas.to41alpha1"
         />
-    
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -66,7 +66,7 @@
           description=""
           handler=".betas.to41beta1"
           />
-        
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -79,7 +79,7 @@
           description=""
           handler=".betas.to41beta2"
           />
-        
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -92,7 +92,7 @@
           description=""
           handler=".betas.to41rc1"
           />
-        
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -105,7 +105,7 @@
           description=""
           handler=".betas.to41rc2"
           />
-        
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -118,7 +118,7 @@
           description=""
           handler=".betas.to41rc3"
           />
-        
+
     </genericsetup:upgradeSteps>
 
 </configure>
