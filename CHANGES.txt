@@ -4,6 +4,9 @@ Changelog
 1.1rc3 - Unreleased
 -------------------
 
+- Actually register the `update_controlpanel_permissions` and
+  `update_role_mappings` upgrade steps.
+  [hannosch]
 
 1.1rc2 - 2011-05-21
 -------------------
