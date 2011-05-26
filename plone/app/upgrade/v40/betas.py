@@ -256,6 +256,7 @@ def fix_cataloged_interface_names(context):
             except ImportError:
                 delete.add(name)
                 del _index[name]
+                continue
             new_name = klass.__identifier__
             if name != new_name:
                 rename.add(new_name)
