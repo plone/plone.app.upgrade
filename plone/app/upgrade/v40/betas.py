@@ -1,3 +1,4 @@
+import transaction
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
@@ -256,6 +257,7 @@ def fix_cataloged_interface_names(context):
             except ImportError:
                 delete.add(name)
                 del _index[name]
+                index._length.change(-1)
                 continue
             new_name = klass.__identifier__
             if name != new_name:
@@ -263,13 +265,19 @@ def fix_cataloged_interface_names(context):
                 _index[new_name] = _index[name]
                 delete.add(name)
                 del _index[name]
+                index._length.change(-1) 
         if delete or rename:
             _unindex = index._unindex
-            for docid, value in _unindex.iteritems():
+            for pos, (docid, value) in enumerate(_unindex.iteritems()):
                 new_value = list(sorted((set(value) - delete).union(rename)))
                 if value != new_value:
                     _unindex[docid] = new_value
+                if pos and pos % 10000 == 0: 
+                    logger.info('Processed %s items.' % pos) 
+                    transaction.savepoint(optimistic=True)                 
 
+    transaction.savepoint(optimistic=True) 
+    logger.info('Updated `object_provides` index.') 
 
 def four05(context):
     """4.0.4 -> 4.0.5
