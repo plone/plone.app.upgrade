@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<object name="portal_actions" meta_type="Plone Actions Tool"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+
+ <object name="object_buttons" meta_type="CMF Action Category">
+
+  <object name="cut" meta_type="CMF Action" i18n:domain="plone">
+   <property name="url_expr">string:$object_url/object_cut</property>
+  </object>
+
+  <object name="copy" meta_type="CMF Action" i18n:domain="plone">
+   <property name="url_expr">string:$object_url/object_copy</property>
+  </object>
+
+  <object name="delete" meta_type="CMF Action" i18n:domain="plone">
+   <property name="url_expr">string:$object_url/delete_confirmation</property>
+  </object>
+
+  <object name="rename" meta_type="CMF Action" i18n:domain="plone">
+   <property name="url_expr">string:$object_url/object_rename</property>
+  </object>
+
+ </object>
+
+</object>

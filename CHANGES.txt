@@ -4,9 +4,14 @@ Changelog
 1.1rc3 - Unreleased
 -------------------
 
+- In actions.xml, use object_url for the object_buttons.
+  Fixes http://dev.plone.org/plone/ticket/11733.
+  [WouterVH]
+
 - Actually register the `update_controlpanel_permissions` and
   `update_role_mappings` upgrade steps.
   [hannosch]
+
 
 1.1rc2 - 2011-05-21
 -------------------
