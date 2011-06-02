@@ -290,3 +290,8 @@ def four06(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.5-4.0.6')
     fix_cataloged_interface_names(context)
+
+def four07(context):
+    """4.0.6 -> 4.0.7
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.6-4.0.7')
