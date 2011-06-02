@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1rc3 - Unreleased
+1.1rc3 - 2011-06-02
 -------------------
 
 - In actions.xml, use object_url for the object_buttons.
