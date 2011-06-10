@@ -10,6 +10,7 @@
     <include package=".v33" />
     <include package=".v40" />
     <include package=".v41" />
+    <include package=".v42" />
 
     <utility
         factory=".HiddenProducts"
