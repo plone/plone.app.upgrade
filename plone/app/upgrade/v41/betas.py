@@ -5,6 +5,9 @@ from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
 
+from zope.event import notify
+from zope.lifecycleevent import ObjectCreatedEvent
+
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
@@ -89,6 +92,18 @@ def optimize_indexes(context):
             update_boolean_index(index)
 
 
+def fix_uuids_topic_criteria(context):
+    catalog = getToolByName(context, 'portal_catalog')
+    search = catalog.unrestrictedSearchResults
+    for brain in search(Type='Collection'):
+        obj = brain.getObject()
+        crits = [x for x in obj.contentValues() if x.getId().startswith('crit__')]
+        for crit in crits:
+            if getattr(crit, '_plone.uuid', None) is None:
+                notify(ObjectCreatedEvent(crit))
+    logger.info('Added missing UUIDs to topic-criteria')
+
+
 def to41beta1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41beta1')
 
@@ -112,3 +127,8 @@ def to41rc2(context):
 
 def to41rc3(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc3')
+
+
+def to41rc4(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc4')
+    fix_uuids_topic_criteria(context)

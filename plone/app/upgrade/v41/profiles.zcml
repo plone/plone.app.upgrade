@@ -73,6 +73,15 @@
       directory="profiles/to_rc3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      />      
+      />
+
+  <genericsetup:registerProfile
+      name="to41rc4"
+      title="Upgrade profile for Plone 4.1rc3 to Plone 4.1rc4"
+      description=""
+      directory="profiles/to_rc4"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
 </configure>

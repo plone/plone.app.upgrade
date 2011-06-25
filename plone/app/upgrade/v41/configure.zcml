@@ -133,4 +133,19 @@
 
     </genericsetup:upgradeSteps>
 
+
+    <genericsetup:upgradeSteps
+        source="4107"
+        destination="4108"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+          title="Miscellaneous"
+          description=""
+          handler=".betas.to41rc4"
+          />
+
+    </genericsetup:upgradeSteps>
+
+
 </configure>

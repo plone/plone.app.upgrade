@@ -1,6 +1,15 @@
 Changelog
 =========
 
+
+1.1rc4 - Unreleased
+-------------------
+
+- Add new upgrade step to add missing UUIDs to Collection-criteria.
+  Fixes http://dev.plone.org/plone/ticket/11904.
+  [WouterVH]
+
+
 1.1rc3 - 2011-06-02
 -------------------
 
