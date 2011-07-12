@@ -132,3 +132,6 @@ def to41rc3(context):
 def to41rc4(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc4')
     fix_uuids_topic_criteria(context)
+
+def to41final(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41final')
