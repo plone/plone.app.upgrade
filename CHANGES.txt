@@ -2,9 +2,12 @@ Changelog
 =========
 
 
-1.1rc4 - Unreleased
+1.1 - Unreleased
 -------------------
 
+- Fix misnamed metadata.xml files in the 4.1 profiles.
+  [esteele]
+  
 - Add new upgrade step to add missing UUIDs to Collection-criteria.
   Fixes http://dev.plone.org/plone/ticket/11904.
   [WouterVH]
