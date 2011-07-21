@@ -300,3 +300,8 @@ def four08(context):
     """4.0.7 -> 4.0.8
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.7-4.0.8')
+
+def four09(context):
+    """4.0.8 -> 4.0.9
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.8-4.0.9')
