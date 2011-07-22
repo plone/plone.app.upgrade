@@ -1,13 +1,16 @@
 Changelog
 =========
 
+- Migrate type icons from content_icon to icon_expr.
+  Refs http://dev.plone.org/plone/ticket/12046.
+  [thomasdesvenain]
 
 1.1 - 2011-07-12
 ----------------
 
 - Fix misnamed metadata.xml files in the 4.1 profiles.
   [esteele]
-  
+
 - Add new upgrade step to add missing UUIDs to Collection-criteria.
   Fixes http://dev.plone.org/plone/ticket/11904.
   [WouterVH]

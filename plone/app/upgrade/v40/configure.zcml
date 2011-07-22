@@ -127,6 +127,11 @@
             handler=".alphas.migrateFolders"
             />
 
+        <genericsetup:upgradeStep
+            title="Migrate type icons from content_icon to icon_expr"
+            handler=".alphas.migrateTypeIcons"
+            />
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps

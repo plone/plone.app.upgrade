@@ -13,6 +13,7 @@ from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
 from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
+from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
 from Products.MailHost.MailHost import MailHost
@@ -22,6 +23,7 @@ from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
+from Products.CMFCore.Expression import Expression
 
 
 _KNOWN_ACTION_ICONS = {
@@ -510,6 +512,22 @@ def cleanUpClassicThemeResources(context):
     if 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
         classictheme.resources_css = []  # empty the list of installed resources
+
+
+def migrateTypeIcons(context):
+    """
+    Remove content_icon value of all content types
+    and set a default icon_expr value with old content_icon value string
+    """
+    ttool = getToolByName(context, 'portal_types')
+    for type in ttool.objectValues():
+        if base_hasattr(type, 'content_icon'):
+            icon = type.content_icon
+            del type.content_icon
+            if icon:
+                type.icon_expr = "string:%s" % icon
+
+        type.icon_expr_object = Expression(type.icon_expr)
 
 
 def alpha4_alpha5(context):
