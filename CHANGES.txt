@@ -1,8 +1,8 @@
 Changelog
 =========
 
-- Migrate type icons from content_icon to icon_expr.
-  Refs http://dev.plone.org/plone/ticket/12046.
+- Migrate type icons from content_icon to icon_expr for all FTIs.
+  Closes http://dev.plone.org/plone/ticket/12046.
   [thomasdesvenain]
 
 1.1 - 2011-07-12

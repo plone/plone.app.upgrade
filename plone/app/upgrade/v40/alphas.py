@@ -13,7 +13,6 @@ from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
 from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
-from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
 from Products.MailHost.MailHost import MailHost
@@ -517,17 +516,16 @@ def cleanUpClassicThemeResources(context):
 def migrateTypeIcons(context):
     """
     Remove content_icon value of all content types
-    and set a default icon_expr value with old content_icon value string
+    and set a default icon_expr value with old content_icon value string.
     """
     ttool = getToolByName(context, 'portal_types')
-    for type in ttool.objectValues():
-        if base_hasattr(type, 'content_icon'):
+    for type in ttool.values():
+        if 'content_icon' in type.__dict__:
             icon = type.content_icon
             del type.content_icon
-            if icon:
-                type.icon_expr = "string:%s" % icon
-
-        type.icon_expr_object = Expression(type.icon_expr)
+            if icon and not 'icon_expr' in type.__dict__:
+                type.icon_expr = "string:${portal_url}/%s" % icon
+                type.icon_expr_object = Expression(type.icon_expr)
 
 
 def alpha4_alpha5(context):
