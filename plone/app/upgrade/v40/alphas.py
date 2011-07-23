@@ -22,6 +22,7 @@ from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
+from Products.CMFCore.Expression import Expression
 
 
 _KNOWN_ACTION_ICONS = {
@@ -510,6 +511,21 @@ def cleanUpClassicThemeResources(context):
     if 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
         classictheme.resources_css = []  # empty the list of installed resources
+
+
+def migrateTypeIcons(context):
+    """
+    Remove content_icon value of all content types
+    and set a default icon_expr value with old content_icon value string.
+    """
+    ttool = getToolByName(context, 'portal_types')
+    for type in ttool.values():
+        if 'content_icon' in type.__dict__:
+            icon = type.content_icon
+            del type.content_icon
+            if icon and not 'icon_expr' in type.__dict__:
+                type.icon_expr = "string:${portal_url}/%s" % icon
+                type.icon_expr_object = Expression(type.icon_expr)
 
 
 def alpha4_alpha5(context):

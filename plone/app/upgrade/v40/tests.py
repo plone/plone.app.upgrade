@@ -11,6 +11,7 @@ from Products.MailHost.interfaces import IMailHost
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
 from plone.app.upgrade.v40.alphas import migrateActionIcons
+from plone.app.upgrade.v40.alphas import migrateTypeIcons
 from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
 from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
 from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
@@ -155,6 +156,32 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.icon_expr,
                          "string:${portal_url}/document_icon.png")
+
+    def testMigrateTypeIcons(self):
+        """
+        FTIs having content_icon should be upgraded to icon_expr.
+        """
+        tt = getToolByName(self.portal, "portal_types")
+        del tt.Document.icon_expr
+        tt.Document.content_icon = 'document_icon.gif'
+        migrateTypeIcons(self.portal)
+        self.assertEqual(tt.Document.icon_expr,
+                         "string:${portal_url}/document_icon.gif")
+        self.assertTrue(hasattr(tt.Document, 'icon_expr_object'))
+
+    def testMigrateTypeIconsIfIconExpNotFound(self):
+        """
+        FTIs having content_icon should be upgraded to icon_expr.
+        Don't upgrade if there is already an icon_expr, but we still
+        delete the old content_icon property.
+        """
+        tt = getToolByName(self.portal, "portal_types")
+        tt.Document.icon_expr = "string:${portal_url}/document_icon.png"
+        tt.Document.content_icon = 'document_icon.gif'
+        migrateTypeIcons(self.portal)
+        self.assertEqual(tt.Document.icon_expr,
+                         "string:${portal_url}/document_icon.png")
+        self.assertFalse('content_icon' in tt.Document.__dict__)
 
     def testPngContentIcons(self):
         tt = getToolByName(self.portal, "portal_types")

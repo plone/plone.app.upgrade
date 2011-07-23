@@ -88,6 +88,11 @@
             />
 
         <genericsetup:upgradeStep
+            title="Migrate type icons from content_icon to icon_expr"
+            handler=".alphas.migrateTypeIcons"
+            />
+
+        <genericsetup:upgradeStep
             title="Update the local RAMCache utility import location."
             handler=".alphas.addOrReplaceRamCache"
             />
