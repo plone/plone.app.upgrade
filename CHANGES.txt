@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.2 - unreleased
-----------------
+1.2a1 - 2011-08-08
+------------------
 
 - Removed input-label.js from portal_javascript in the 4.2 alpha profile.
   [spliter]
