@@ -522,10 +522,10 @@ def migrateTypeIcons(context):
     for type in ttool.values():
         if 'content_icon' in type.__dict__:
             icon = type.content_icon
-            del type.content_icon
-            if icon and not 'icon_expr' in type.__dict__:
+            if icon and not getattr(type, 'icon_expr', False):
                 type.icon_expr = "string:${portal_url}/%s" % icon
                 type.icon_expr_object = Expression(type.icon_expr)
+                del type.content_icon
 
 
 def alpha4_alpha5(context):
