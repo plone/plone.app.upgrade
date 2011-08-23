@@ -1,4 +1,9 @@
+import unittest
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
+from Products.ZCatalog.ZCatalog import ZCatalog
+from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex, PLexicon
+from Products.ZCTextIndex.OkapiIndex import OkapiIndex
+
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 
@@ -15,8 +20,16 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         # self.failUnless(len_diff <= 2700)
 
 
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(TestFunctionalMigrations))
-    return suite
+class MigrationUnitTests(unittest.TestCase):
+    
+    def test_fixOkapiIndexes(self):
+        catalog = ZCatalog('catalog')
+        catalog.lexicon = PLexicon('lexicon')
+        catalog.addIndex('test',
+            ZCTextIndex('test', index_factory=OkapiIndex,
+                        caller=catalog, lexicon_id='lexicon'))
+        catalog.Indexes['test'].index._totaldoclen = -1000
+    
+        from plone.app.upgrade.v41.final import fixOkapiIndexes
+        fixOkapiIndexes(catalog)
+        self.assertEqual(0L, catalog.Indexes['test'].index._totaldoclen())

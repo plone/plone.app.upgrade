@@ -7,6 +7,14 @@ Changelog
 - Removed input-label.js from portal_javascript in the 4.2 alpha profile.
   [spliter]
 
+
+1.1.1 - unreleased
+------------------
+
+- Add upgrade step to fix ZCTextIndex OkapiIndex instances with an
+  incorrect _totaldoclen
+  [davisagli]
+
 - Migrate type icons from content_icon to icon_expr for all FTIs.
   Closes http://dev.plone.org/plone/ticket/12046.
   [thomasdesvenain, vincentfretin]
