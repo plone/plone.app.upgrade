@@ -14,5 +14,4 @@ def fixOkapiIndexes(catalog):
 
 def to411(context):
     catalog = getToolByName(context, 'portal_catalog')
-    for index in catalog.getIndexObjects():
-        fixOkapiIndexes(catalog)
+    fixOkapiIndexes(catalog)
