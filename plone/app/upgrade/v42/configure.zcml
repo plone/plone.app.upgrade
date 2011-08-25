@@ -18,4 +18,18 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4200"
+        destination="4201"
+        profile="Products.CMFPlone:plone">
+
+      <genericsetup:upgradeStep
+          title="Miscellaneous"
+          description=""
+          handler=".alphas.to42alpha2"
+          />
+
+    </genericsetup:upgradeSteps>
+
+
 </configure>
