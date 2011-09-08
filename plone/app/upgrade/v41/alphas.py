@@ -206,7 +206,7 @@ def convert_to_uuidindex(catalog, index):
                     # inconsistent data, one uid with multiple docids
                     paths = dict((tuple(catalog.getpath(k).split('/')), k)
                                  for k in v.keys())
-                    shortest = min(paths)
+                    shortest = min(paths, key=len)
                     for path, key in paths.iteritems():
                         if path[:len(shortest)] != shortest:
                             raise ValueError(
