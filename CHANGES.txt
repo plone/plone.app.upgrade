@@ -24,6 +24,13 @@ No changes yet.
 1.1.1 - unreleased
 ------------------
 
+- Fix v41.alphas.convert_to_uuidindex() to truly ignore acquired
+  UID values in the index instead of accidentally treating them
+  as duplicates, due to a bug in path comparison. Fixes for
+  cases where multiple items without UID() method are contained
+  in a folder with a UID in a site being upgraded to 4.1:
+  http://dev.plone.org/plone/ticket/12185
+
 - Add upgrade step to fix ZCTextIndex OkapiIndex instances with an
   incorrect _totaldoclen
   [davisagli]
