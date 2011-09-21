@@ -57,7 +57,7 @@ Changelog
 
 
 1.1rc1 - 2011-05-20
-------------------
+-------------------
 
 - Adjusted boolean index conversion to new variable index value support
   introduced in ZCatalog 2.13.14.
