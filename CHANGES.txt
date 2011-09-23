@@ -4,7 +4,9 @@ Changelog
 1.2b1 - Unreleased
 ------------------
 
-No changes yet.
+- Add upgrade step to re-enable the getObjPositionInParent index in the
+  portal_atcttool.
+  [davisagli]
 
 
 1.2a2 - 2011-08-25
