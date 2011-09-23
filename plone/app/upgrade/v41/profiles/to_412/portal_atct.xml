@@ -8,4 +8,5 @@
      i18n:attributes="description; friendlyName">
    <criteria>ATSimpleIntCriterion</criteria>
   </index>
+ </topic_indexes>
 </atcttool>
