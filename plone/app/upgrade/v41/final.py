@@ -18,3 +18,6 @@ def to411(context):
 
     catalog = getToolByName(context, 'portal_catalog')
     fixOkapiIndexes(catalog)
+
+def to412(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.1-4.1.2')
