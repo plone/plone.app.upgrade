@@ -177,6 +177,12 @@
         source="4110"
         destination="4111"
         profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+          title="Repair owner tuples"
+          description=""
+          handler=".final.to412_owner_tuples"
+          />
         
         <genericsetup:upgradeStep
           title="Miscellaneous"
