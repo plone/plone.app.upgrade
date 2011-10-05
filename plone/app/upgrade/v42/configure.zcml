@@ -38,6 +38,12 @@
         profile="Products.CMFPlone:plone">
 
       <genericsetup:upgradeStep
+          title="Repair owner tuples"
+          description=""
+          handler=".betas.to42beta1_owner_tuples"
+          />
+
+      <genericsetup:upgradeStep
           title="Miscellaneous"
           description=""
           handler=".betas.to42beta1"
