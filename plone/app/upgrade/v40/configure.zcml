@@ -392,4 +392,12 @@
         title="No upgrade steps"
         handler="plone.app.upgrade.utils.null_upgrade_step" />
 
+    <genericsetup:upgradeStep
+        source="4020"
+        destination="4022"
+        profile="Products.CMFPlone:plone"
+        title="No upgrade steps"
+        handler="plone.app.upgrade.utils.null_upgrade_step" />
+
+
 </configure>
