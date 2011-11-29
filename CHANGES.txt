@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.4 (unreleased)
+1.1.4 (2011-11-28)
 ------------------
 
 - Avoid 4020->4100 rules being overpassed from a 4022 version.
