@@ -1,11 +1,14 @@
 Changelog
 =========
 
-1.1.3 (unreleased)
+1.1.4 (unreleased)
 ------------------
 
 - Avoid 4020->4100 rules being overpassed from a 4022 version.
   [tdesvenain]
+
+1.1.3 (2011-10-08)
+------------------
 
 - Add upgrade step to re-enable the getObjPositionInParent index in the
   portal_atcttool.

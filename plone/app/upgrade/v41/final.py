@@ -43,3 +43,6 @@ def to412(context):
 def to412_owner_tuples(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     fixOwnerTuples(portal)
+
+def to413(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.2-4.1.3')
