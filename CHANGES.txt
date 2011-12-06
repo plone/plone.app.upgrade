@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2b1 - Unreleased
+1.2b1 (2011-12-05)
 ------------------
 
 - Avoid 4020->4100 rules being overpassed from a 4022 version.
@@ -11,6 +11,8 @@ Changelog
   portal_atcttool.
   [davisagli]
 
+- Add upgrade step to add Site Administrator to allowRolesToAddKeywords.
+  [esteele]
 
 1.2a2 - 2011-08-25
 ------------------
