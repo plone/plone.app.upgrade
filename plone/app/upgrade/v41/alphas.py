@@ -102,6 +102,8 @@ def add_siteadmin_role(context):
         workflow = wtool[workflow_id]
         for state_id in workflow.states:
             state = workflow.states[state_id]
+            if state.permission_roles is None:
+                continue
             for permission_id, roles in state.permission_roles.items():
                 if 'Manager' in roles:
                     new_roles = list(roles)
