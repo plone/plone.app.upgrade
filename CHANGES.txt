@@ -7,6 +7,12 @@ Changelog
 - Avoid 4020->4100 rules being overpassed from a 4022 version.
   [tdesvenain]
 
+- Fix adding Site Administrator roles for when
+  custom workflows might not have the permission_roles
+  for states set.
+  [vangheem]
+
+
 1.1.3 (2011-10-08)
 ------------------
 
