@@ -164,13 +164,13 @@
         source="4109"
         destination="4110"
         profile="Products.CMFPlone:plone">
-        
+
         <genericsetup:upgradeStep
           title="Fix OkapiIndex total document lengths"
           description=""
           handler=".final.to411"
           />
-        
+
     </genericsetup:upgradeSteps>
 
 </configure>
