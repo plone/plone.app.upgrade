@@ -6,7 +6,7 @@
   <genericsetup:registerProfile
       name="to41alpha1"
       title="Upgrade profile for Plone 4.0.x to Plone 4.1alpha1"
-      description="" 
+      description=""
       directory="profiles/to_alpha1"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -15,7 +15,7 @@
   <genericsetup:registerProfile
       name="to41alpha2"
       title="Upgrade profile for Plone 4.1alpha1 to Plone 4.1alpha2"
-      description="" 
+      description=""
       directory="profiles/to_alpha2"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -24,7 +24,7 @@
   <genericsetup:registerProfile
       name="to41alpha3"
       title="Upgrade profile for Plone 4.1alpha2 to Plone 4.1alpha3"
-      description="" 
+      description=""
       directory="profiles/to_alpha3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -33,7 +33,7 @@
   <genericsetup:registerProfile
       name="to41beta1"
       title="Upgrade profile for Plone 4.1alpha3 to Plone 4.1beta1"
-      description="" 
+      description=""
       directory="profiles/to_beta1"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -42,34 +42,34 @@
   <genericsetup:registerProfile
       name="to41beta2"
       title="Upgrade profile for Plone 4.1beta1 to Plone 4.1beta2"
-      description="" 
+      description=""
       directory="profiles/to_beta2"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      />      
+      />
 
   <genericsetup:registerProfile
       name="to41rc1"
       title="Upgrade profile for Plone 4.1beta2 to Plone 4.1rc1"
-      description="" 
+      description=""
       directory="profiles/to_rc1"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      />      
+      />
 
   <genericsetup:registerProfile
       name="to41rc2"
       title="Upgrade profile for Plone 4.1rc1 to Plone 4.1rc2"
-      description="" 
+      description=""
       directory="profiles/to_rc2"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      />      
+      />
 
   <genericsetup:registerProfile
       name="to41rc3"
       title="Upgrade profile for Plone 4.1rc2 to Plone 4.1rc3"
-      description="" 
+      description=""
       directory="profiles/to_rc3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"

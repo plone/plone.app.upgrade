@@ -1,13 +1,27 @@
 Changelog
 =========
 
-1.2b1 - Unreleased
+1.2b2 (unreleased)
 ------------------
+
+- Fix adding Site Administrator roles for when
+  custom workflows might not have the permission_roles
+  for states set.
+  [vangheem]
+
+
+1.2b1 (2011-12-05)
+------------------
+
+- Avoid 4020->4100 rules being overpassed from a 4022 version.
+  [tdesvenain]
 
 - Add upgrade step to re-enable the getObjPositionInParent index in the
   portal_atcttool.
   [davisagli]
 
+- Add upgrade step to add Site Administrator to allowRolesToAddKeywords.
+  [esteele]
 
 1.2a2 - 2011-08-25
 ------------------
@@ -73,7 +87,7 @@ Changelog
 
 
 1.1rc1 - 2011-05-20
-------------------
+-------------------
 
 - Adjusted boolean index conversion to new variable index value support
   introduced in ZCatalog 2.13.14.
