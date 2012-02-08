@@ -1,13 +1,14 @@
 Changelog
 =========
 
-1.1.5 (unreleased)
+1.1.5 (2012-02-08)
 ------------------
 
 - Fix adding Site Administrator roles for when
   custom workflows might not have the permission_roles
   for states set.
   [vangheem]
+
 
 1.1.4 (2011-11-28)
 ------------------
