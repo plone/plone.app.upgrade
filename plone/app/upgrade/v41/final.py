@@ -15,3 +15,18 @@ def fixOkapiIndexes(catalog):
 def to411(context):
     catalog = getToolByName(context, 'portal_catalog')
     fixOkapiIndexes(catalog)
+
+
+def to412(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.1-4.1.2')
+
+
+def to412_owner_tuples(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    fixOwnerTuples(portal)
+
+def to413(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.2-4.1.3')
+
+def to414(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.3-4.1.4')
