@@ -27,3 +27,8 @@ def to42beta1(context):
 def to42beta1_owner_tuples(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     fixOwnerTuples(portal)
+
+def to42beta2(context):
+    """4.2b1 -> 4.2b2
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42beta2')
