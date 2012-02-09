@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2b2 (unreleased)
+1.2b2 (2012-02-09)
 ------------------
 
 - Fix adding Site Administrator roles for when
