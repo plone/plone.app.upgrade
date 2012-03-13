@@ -1,5 +1,7 @@
 import logging
 
+from AccessControl.Permission import Permission
+
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 
@@ -32,3 +34,20 @@ def to42beta2(context):
     """4.2b1 -> 4.2b2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42beta2')
+
+
+def to42beta3_member_dashboard(context):
+    """Add Member role to "Portlets: View dashboard" permission
+    """
+
+    p = 'Portlets: View dashboard'
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    roles = Permission(p, (), portal).getRoles(default=[])
+    if not "Member" in roles:
+        acquire = isinstance(roles, list) and True or False
+        roles = list(roles)
+        roles.append("Member")
+        portal.manage_permission("Portlets: View dashboard",
+                                 roles,
+                                 acquire,
+                                 )
