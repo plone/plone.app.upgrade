@@ -17,7 +17,6 @@ class TestMigrations_v4_3alpha1(MigrationTest):
 
     def testUpgradeToI18NCaseNormalizer(self):
         ctool = self.portal.portal_catalog
-        import pdb; pdb.set_trace()
         self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'CaseNormalizer')
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
         self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'I18NNormalizer')
