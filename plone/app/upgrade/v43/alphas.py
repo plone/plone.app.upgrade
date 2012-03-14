@@ -1,5 +1,6 @@
 import logging
 
+from Acquisition import aq_get
 from Products.CMFPlone.utils import getToolByName
 from plone.app.upgrade.utils import loadMigrationProfile
 
@@ -16,5 +17,5 @@ def upgradeToI18NCaseNormalizer(context):
     for index in catalog.Indexes.objectValues():
         if IZCTextIndex.providedBy(index):
             logger.info("Reindex %s index with I18N Case Normalizer", index.getId())
-            catalog.reindexIndex(index.getId(), context.REQUEST)
+            catalog.reindexIndex(index.getId(), aq_get(context, 'REQUEST', None))
         pass
