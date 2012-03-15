@@ -32,3 +32,8 @@ def to42beta2(context):
     """4.2b1 -> 4.2b2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42beta2')
+
+def to42rc1(context):
+    """4.2b2 -> 4.2rc1
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42rc1')
