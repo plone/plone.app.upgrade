@@ -4,7 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Plone 4.1.5 upgrade step added that makes sure that plone.app.discussion 
+  has been properly installed.
+  [timo]
 
 
 1.2b2 (2012-02-09)
