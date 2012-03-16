@@ -63,7 +63,6 @@ def to414(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.3-4.1.4')
 
 
-def to415(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.4-4.1.5')
+def to415_discussion(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     installPloneAppDiscussion(portal)
