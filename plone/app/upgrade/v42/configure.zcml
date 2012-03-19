@@ -75,6 +75,12 @@
           handler=".betas.to42rc1"
           />
 
+        <genericsetup:upgradeStep
+          title="Fix discussion"
+          description=""
+          handler=".betas.to42rc1_discussion"
+          />
+
     </genericsetup:upgradeSteps>
 
 </configure>

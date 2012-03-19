@@ -1,6 +1,7 @@
 import logging
 
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import installOrReinstallProduct
 from Products.CMFCore.utils import getToolByName
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -18,6 +19,15 @@ def fixOwnerTuples(portal):
     portal.ZopeFindAndApply(portal, search_sub=True, apply_func=fixOwnerTuple)
 
 
+def installPloneAppDiscussion(portal):
+    # Make sure plone.app.discussion is properly installed.
+    installOrReinstallProduct(
+        portal,
+        "plone.app.discussion",
+        out=None,
+        hidden=True)
+
+
 def to42beta1(context):
     """4.2a2 -> 4.2b1
     """
@@ -28,12 +38,21 @@ def to42beta1_owner_tuples(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     fixOwnerTuples(portal)
 
+
 def to42beta2(context):
     """4.2b1 -> 4.2b2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42beta2')
 
+
 def to42rc1(context):
     """4.2b2 -> 4.2rc1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42rc1')
+
+
+def to42rc1_discussion(context):
+    """Fix discussion
+    """
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    installPloneAppDiscussion(portal)
