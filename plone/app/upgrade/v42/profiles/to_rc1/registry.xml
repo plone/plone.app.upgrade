@@ -90,6 +90,22 @@
     </records>
 
     <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.afterToday">
+        <value key="title">After today</value>
+        <value key="description">After the current day</value>
+        <value key="operation">plone.app.querystring.queryparser._afterToday</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.beforeToday">
+        <value key="title">Before today</value>
+        <value key="description">Before the current day</value>
+        <value key="operation">plone.app.querystring.queryparser._beforeToday</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
              prefix="plone.app.querystring.operation.list.contains">
         <value key="title">Contains</value>
         <value key="description"></value>
@@ -208,6 +224,8 @@
            <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
            <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
            <element>plone.app.querystring.operation.date.today</element>
+           <element>plone.app.querystring.operation.date.beforeToday</element>
+           <element>plone.app.querystring.operation.date.afterToday</element>
        </value>
        <value key="group">Dates</value>
     </records>
@@ -250,6 +268,8 @@
             <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
         </value>
        <value key="group">Dates</value>
     </records>
@@ -278,6 +298,8 @@
             <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
         </value>
        <value key="group">Dates</value>
     </records>
@@ -347,6 +369,8 @@
             <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
         </value>
        <value key="group">Dates</value>
     </records>
@@ -364,6 +388,8 @@
             <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
         </value>
        <value key="group">Dates</value>
     </records>
@@ -432,6 +458,8 @@
             <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
             <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
         </value>
        <value key="group">Dates</value>
     </records>
