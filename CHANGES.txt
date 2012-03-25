@@ -4,6 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Update plone.app.querystring registry values.
+  [esteele]
+
 - Install plone.app.search when upgrading.
   [esteele]
 
