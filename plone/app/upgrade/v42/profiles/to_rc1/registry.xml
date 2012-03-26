@@ -1,0 +1,493 @@
+<!-- Operation Definitions -->
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+          i18n:domain="plone">
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.boolean.isTrue">
+        <value key="title" i18n:translate="">Yes</value>
+        <value key="description" i18n:translate=""></value>
+        <value key="operation">plone.app.querystring.queryparser._isTrue</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.boolean.isFalse">
+        <value key="title" i18n:translate="">No</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._isFalse</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.int.is">
+        <value key="title" i18n:translate="">Equals</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._equal</value>
+        <value key="widget">StringWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.int.lessThan">
+        <value key="title" i18n:translate="">Less than</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._lessThan</value>
+        <value key="widget">StringWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.int.largerThan">
+        <value key="title" i18n:translate="">Larger than</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._largerThan</value>
+        <value key="widget">StringWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.lessThan">
+        <value key="title" i18n:translate="">Before date</value>
+        <value key="description">Please use YYYY/MM/DD.</value>
+        <value key="operation">plone.app.querystring.queryparser._lessThan</value>
+        <value key="widget">DateWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.largerThan">
+        <value key="title" i18n:translate="">After date</value>
+        <value key="description" i18n:translate="">Please use YYYY/MM/DD.</value>
+        <value key="operation">plone.app.querystring.queryparser._largerThan</value>
+        <value key="widget">DateWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.between">
+        <value key="title" i18n:translate="">Between dates</value>
+        <value key="description" i18n:translate="">Please use YYYY/MM/DD.</value>
+        <value key="operation">plone.app.querystring.queryparser._between</value>
+        <value key="widget">DateRangeWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.lessThanRelativeDate">
+        <value key="title" i18n:translate="">Within next</value>
+        <value key="description" i18n:translate="">Please enter the number in days.</value>
+        <value key="operation">plone.app.querystring.queryparser._lessThanRelativeDate</value>
+        <value key="widget">RelativeDateWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.largerThanRelativeDate">
+        <value key="title" i18n:translate="">Within last</value>
+        <value key="description" i18n:translate="">Please enter the number in days.</value>
+        <value key="operation">plone.app.querystring.queryparser._moreThanRelativeDate</value>
+        <value key="widget">RelativeDateWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.today">
+        <value key="title" i18n:translate="">Today</value>
+        <value key="description" i18n:translate="">The current day</value>
+        <value key="operation">plone.app.querystring.queryparser._today</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.afterToday">
+        <value key="title" i18n:translate="">After today</value>
+        <value key="description" i18n:translate="">After the current day</value>
+        <value key="operation">plone.app.querystring.queryparser._afterToday</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.beforeToday">
+        <value key="title">Before today</value>
+        <value key="description" i18n:translate="">Before the current day</value>
+        <value key="operation" i18n:translate="">plone.app.querystring.queryparser._beforeToday</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.list.contains">
+        <value key="title" i18n:translate="">Contains</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._contains</value>
+        <value key="widget">ReferenceWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.path.isWithin">
+        <value key="title" i18n:translate="">Is within</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._pathContains</value>
+        <value key="widget">ReferenceWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.path.isWithinRelative">
+        <value key="title" i18n:translate="">Is within (relative)</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._pathContainsRelative</value>
+        <value key="widget">RelativePathWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.reference.is">
+        <value key="title" i18n:translate="">Equals</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._referenceIs</value>
+        <value key="widget">ReferenceWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.string.contains">
+        <value key="title" i18n:translate="">Contains</value>
+        <value key="description"></value>
+        <value key="operation">plone.app.querystring.queryparser._contains</value>
+        <value key="widget">StringWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.string.currentUser">
+        <value key="title" i18n:translate="">Current logged in user</value>
+        <value key="description" i18n:translate="">The user viewing the querystring results</value>
+        <value key="operation">plone.app.querystring.queryparser._currentUser</value>
+        <value key="widget"></value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.string.is">
+        <value key="title" i18n:translate="">Is</value>
+        <value key="description" i18n:translate="">Tip: you can use * to autocomplete.</value>
+        <value key="operation">plone.app.querystring.queryparser._equal</value>
+        <value key="widget">StringWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.selection.is">
+        <value key="title" i18n:translate="">Is</value>
+        <value key="description" i18n:translate="">Tip: you can use * to autocomplete.</value>
+        <value key="operation">plone.app.querystring.queryparser._equal</value>
+        <value key="widget">MultipleSelectionWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.string.path">
+        <value key="title" i18n:translate="">Absolute path</value>
+        <value key="description" i18n:translate="">Location in the site structure</value>
+        <value key="operation">plone.app.querystring.queryparser._path</value>
+        <value key="widget">ReferenceWidget</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.string.relativePath">
+        <value key="title" i18n:translate="">Relative path</value>
+        <value key="description" i18n:translate="">Use '../' to navigate to parent objects.</value>
+        <value key="operation">plone.app.querystring.queryparser._relativePath</value>
+        <value key="widget">RelativePathWidget</value>
+    </records>
+
+<!-- QueryField declarations  -->
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.path">
+       <value key="title" i18n:translate="">Location</value>
+       <value key="description" i18n:translate="">The location of an item </value>
+       <value key="enabled">True</value>
+       <value key="sortable">False</value>
+       <value key="operations">
+            <element>plone.app.querystring.operation.string.relativePath</element>
+            <element>plone.app.querystring.operation.string.path</element>
+       </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.getId">
+       <value key="title" i18n:translate="">Short name (id)</value>
+       <value key="description" i18n:translate="">The short name of an item (used in the url)</value>
+       <value key="enabled">True</value>
+       <value key="sortable">True</value>
+       <value key="operations">
+            <element>plone.app.querystring.operation.string.is</element>
+       </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.created">
+       <value key="title" i18n:translate="">Creation date</value>
+       <value key="description" i18n:translate="">The date an item was created</value>
+       <value key="enabled">True</value>
+       <value key="sortable">True</value>
+       <value key="operations">
+           <element>plone.app.querystring.operation.date.lessThan</element>
+           <element>plone.app.querystring.operation.date.largerThan</element>
+           <element>plone.app.querystring.operation.date.between</element>
+           <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+           <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+           <element>plone.app.querystring.operation.date.today</element>
+           <element>plone.app.querystring.operation.date.beforeToday</element>
+           <element>plone.app.querystring.operation.date.afterToday</element>
+       </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.Creator">
+        <value key="title" i18n:translate="">Creator</value>
+        <value key="description" i18n:translate="">The person that created an item</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.string.is</element>
+            <element>plone.app.querystring.operation.string.currentUser</element>
+        </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.Description">
+        <value key="title" i18n:translate="">Description</value>
+        <value key="description" i18n:translate="">An item's description</value>
+        <value key="enabled">True</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.string.contains</element>
+        </value>
+       <value key="group" i18n:translate="">Text</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.effective">
+        <value key="title" i18n:translate="">Effective date</value>
+        <value key="description" i18n:translate="">The time and date an item was first published</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.date.lessThan</element>
+            <element>plone.app.querystring.operation.date.largerThan</element>
+            <element>plone.app.querystring.operation.date.between</element>
+            <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
+        </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.effectiveRange">
+        <value key="title" i18n:translate="">Effective range</value>
+        <value key="description" i18n:translate="">Querying this is undefined</value>
+        <value key="enabled">False</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+        </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.end">
+        <value key="title" i18n:translate="">Event end date</value>
+        <value key="description" i18n:translate="">The end date and time of an event</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.date.lessThan</element>
+            <element>plone.app.querystring.operation.date.largerThan</element>
+            <element>plone.app.querystring.operation.date.between</element>
+            <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
+        </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.getObjPositionInParent">
+        <value key="title" i18n:translate="">Order in folder</value>
+        <value key="description" i18n:translate="">The order of an item in its parent folder</value>
+        <value key="enabled">False</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.int.is</element>
+            <element>plone.app.querystring.operation.int.lessThan</element>
+            <element>plone.app.querystring.operation.int.greaterThan</element>
+        </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.getRawRelatedItems">
+        <value key="title" i18n:translate="">Related To</value>
+        <value key="description" i18n:translate="">Find items related to the selected items</value>
+        <value key="enabled">False</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.reference.is</element>
+        </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.isDefaultPage">
+        <value key="title" i18n:translate="">Default Page</value>
+        <value key="description" i18n:translate="">Find items that are the default view for their containing folder.</value>
+        <value key="enabled">False</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.boolean.isTrue</element>
+            <element>plone.app.querystring.operation.boolean.isFalse</element>
+        </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.isFolderish">
+        <value key="title" i18n:translate="">Folder-like</value>
+        <value key="description" i18n:translate="">Find items that can contain other objects</value>
+        <value key="enabled">False</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.boolean.isTrue</element>
+            <element>plone.app.querystring.operation.boolean.isFalse</element>
+        </value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.modified">
+        <value key="title" i18n:translate="">Modification date</value>
+        <value key="description" i18n:translate="">The time and date an item was last modified</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.date.lessThan</element>
+            <element>plone.app.querystring.operation.date.largerThan</element>
+            <element>plone.app.querystring.operation.date.between</element>
+            <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
+        </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.expires">
+        <value key="title" i18n:translate="">Expiration date</value>
+        <value key="description" i18n:translate="">The time and date an item was expired</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.date.lessThan</element>
+            <element>plone.app.querystring.operation.date.largerThan</element>
+            <element>plone.app.querystring.operation.date.between</element>
+            <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
+        </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.portal_type">
+        <value key="title" i18n:translate="">Type</value>
+        <value key="description" i18n:translate="">An item's type (e.g. Event)</value>
+        <value key="enabled">True</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.selection.is</element>
+        </value>
+        <value key="vocabulary">plone.app.vocabularies.ReallyUserFriendlyTypes</value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.review_state">
+        <value key="title" i18n:translate="">Review state</value>
+        <value key="description" i18n:translate="">An item's workflow state (e.g.published)</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.selection.is</element>
+        </value>
+        <value key="vocabulary">plone.app.vocabularies.WorkflowStates</value>
+       <value key="group" i18n:translate="">Metadata</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.SearchableText">
+        <value key="title" i18n:translate="">Searchable text</value>
+        <value key="description" i18n:translate="">Text search of an item's contents</value>
+        <value key="enabled">True</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.string.contains</element>
+        </value>
+       <value key="group" i18n:translate="">Text</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.sortable_title">
+        <value key="title" i18n:translate="">Sortable Title</value>
+        <value key="description" i18n:translate="">The item's title, transformed for sorting</value>
+        <value key="enabled">False</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.string.contains</element>
+            <element>plone.app.querystring.operation.string.is</element>
+        </value>
+       <value key="group" i18n:translate="">Text</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.start">
+        <value key="title" i18n:translate="">Event start date</value>
+        <value key="description" i18n:translate="">The start date and time of an event</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.date.lessThan</element>
+            <element>plone.app.querystring.operation.date.largerThan</element>
+            <element>plone.app.querystring.operation.date.between</element>
+            <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+            <element>plone.app.querystring.operation.date.today</element>
+            <element>plone.app.querystring.operation.date.beforeToday</element>
+            <element>plone.app.querystring.operation.date.afterToday</element>
+        </value>
+       <value key="group" i18n:translate="">Dates</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.Subject">
+        <value key="title" i18n:translate="">Tag</value>
+        <value key="description" i18n:translate="">Tags are used for organization of content</value>
+        <value key="enabled">True</value>
+        <value key="sortable">True</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.selection.is</element>
+        </value>
+       <value key="vocabulary">plone.app.vocabularies.Keywords</value>
+       <value key="group" i18n:translate="">Text</value>
+    </records>
+
+    <records interface="plone.app.querystring.interfaces.IQueryField"
+             prefix="plone.app.querystring.field.Title">
+        <value key="title" i18n:translate="">Title</value>
+        <value key="description" i18n:translate="">Text search of an item's title</value>
+        <value key="enabled">True</value>
+        <value key="sortable">False</value>
+        <value key="operations">
+            <element>plone.app.querystring.operation.string.contains</element>
+        </value>
+       <value key="group" i18n:translate="">Text</value>
+    </records>
+
+</registry>
