@@ -75,10 +75,16 @@
           handler=".betas.to42rc1"
           />
 
-        <genericsetup:upgradeStep
+      <genericsetup:upgradeStep
           title="Fix discussion"
           description=""
           handler=".betas.to42rc1_discussion"
+          />
+
+      <genericsetup:upgradeStep
+          title="Add Member role to 'Portlets: View dashboard' permission"
+          description=""
+          handler=".betas.to42rc1_member_dashboard"
           />
 
     </genericsetup:upgradeSteps>

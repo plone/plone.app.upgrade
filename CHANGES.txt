@@ -4,6 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Add Member role to View dashboard permission
+  [gaudenz]
+
 - Install plone.app.search when upgrading.
   [esteele]
 
