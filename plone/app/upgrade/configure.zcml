@@ -11,6 +11,7 @@
     <include package=".v40" />
     <include package=".v41" />
     <include package=".v42" />
+    <include package=".v43" />
 
     <utility
         factory=".HiddenProducts"
