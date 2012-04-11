@@ -7,5 +7,7 @@
         icon_expr="string:$portal_url/topic_icon.png"
         url_expr="string:${portal_url}/portal_atct/atct_manageTopicIndex"
         visible="True" i18n:attributes="title">
+      <permission>Manage portal</permission>
+    </configlet>
 
 </object>
