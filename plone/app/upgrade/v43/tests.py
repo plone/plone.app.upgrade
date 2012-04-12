@@ -14,8 +14,9 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         self.failUnless(True)
 
     def testUpgradeToI18NCaseNormalizer(self):
+        from Products.CMFPlone.UnicodeSplitter.splitter import Splitter, CaseNormalizer
         ctool = self.portal.portal_catalog
-        self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'CaseNormalizer')
+        ctool.plone_lexicon._pipeline[1] == (Splitter(), CaseNormalizer())
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
         self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'I18NNormalizer')
         self.failUnless(len(ctool.searchResults(SearchableText="welcome")) > 0)
