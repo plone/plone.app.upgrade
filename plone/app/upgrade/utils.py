@@ -90,7 +90,8 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
         qi.installProduct(product_name, hidden=hidden)
         # Refresh skins
         portal.clearCurrentSkin()
-        portal.setupCurrentSkin(portal.REQUEST)
+        if getattr(portal, 'REQUEST', None):
+            portal.setupCurrentSkin(portal.REQUEST)
         logger.info("Installed %s" % product_name)
     else:
         info = qi._getOb(product_name)
