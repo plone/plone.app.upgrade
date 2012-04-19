@@ -190,6 +190,8 @@
           handler=".final.to412"
           />
 
+    </genericsetup:upgradeSteps>
+
     <genericsetup:upgradeSteps
         source="4112"
         destination="4113"
