@@ -4,6 +4,10 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Fix an issue in an old upgrade step when used with current
+  ResourceRegistries.
+  [davisagli]
+
 - Add Member role to View dashboard permission
   [gaudenz]
 
