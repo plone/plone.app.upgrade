@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.2b3 (unreleased)
-------------------
+1.2rc1 (2012-05-07)
+-------------------
 
 - Fix an issue in an old upgrade step when used with current
   ResourceRegistries.
