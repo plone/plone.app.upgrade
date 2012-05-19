@@ -1,4 +1,6 @@
 import logging
+import new
+import sys
 from types import ListType, TupleType
 
 from Acquisition import aq_base
@@ -117,3 +119,28 @@ def loadMigrationProfile(context, profile, steps=_marker):
                                              step,
                                              run_dependencies=False,
                                              purge_old=False)
+
+
+def alias_module(name, target):
+    try:
+        __import__(name)
+    except ImportError:
+        pass
+    else:
+        raise Exception('Module %s already exists.' % name)
+
+    # make sure the parent is importable
+    all_parts = name.split('.')
+    for i in range(1, len(all_parts)):
+        module_name = '.'.join(all_parts[:i])
+        try:
+            module = __import__(module_name)
+        except ImportError:
+            module = new.module(module_name)
+            sys.modules[module_name] = module
+    parent = module
+
+    # add the target as an attribute of the parent
+    setattr(parent, all_parts[-1], target)
+    # also make sure sys.modules is updated
+    sys.modules[name] = target

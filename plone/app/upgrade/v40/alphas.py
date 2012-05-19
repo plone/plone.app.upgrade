@@ -1,6 +1,5 @@
 import transaction
 
-from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
 from zope.component import getSiteManager, getUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
@@ -194,6 +193,7 @@ def migrateActionIcons(context):
 def addOrReplaceRamCache(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     sm = getSiteManager(context=portal)
+    from zope.app.cache.interfaces.ram import IRAMCache as OldIRAMCache
     sm.unregisterUtility(provided=OldIRAMCache)
     sm.unregisterUtility(provided=IRAMCache)
     sm.registerUtility(factory=RAMCache, provided=IRAMCache)

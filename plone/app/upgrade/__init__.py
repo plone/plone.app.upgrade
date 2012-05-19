@@ -1,6 +1,9 @@
 import sys
 from zope.interface import implements
+from zope.interface.interface import InterfaceClass
 from Products.CMFQuickInstallerTool.interfaces import INonInstallable
+from plone.app.upgrade.utils import alias_module
+
 
 class HiddenProducts(object):
     """This hides the upgrade profiles from the quick installer tool."""
@@ -27,3 +30,12 @@ except ImportError:
     from plone.app.upgrade import gruf_bbb
     sys.modules['Products.GroupUserFolder'] = gruf_bbb
     sys.modules['Products.GroupUserFolder.GroupUserFolder'] = gruf_bbb
+
+
+try:
+    from zope.app.cache.interfaces.ram import IRAMCache
+except ImportError:
+    import zope.ramcache.interfaces.ram
+    alias_module('zope.app.cache.interfaces.ram', zope.ramcache.interfaces.ram)
+    import zope.ramcache.ram
+    alias_module('zope.app.cache.ram', zope.ramcache.ram)

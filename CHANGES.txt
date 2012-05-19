@@ -4,6 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Make the RAM cache utility upgrade work without zope.app.cache.
+  [davisagli]
+
 - Fix an issue in an old upgrade step when used with current
   ResourceRegistries.
   [davisagli]
