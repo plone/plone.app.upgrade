@@ -1,5 +1,6 @@
 import logging
 
+import pkg_resources
 import transaction
 from BTrees.IIBTree import IIBTree
 from BTrees.IIBTree import IISet
@@ -17,6 +18,8 @@ from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
 from plone.app.upgrade.utils import loadMigrationProfile
 
 logger = logging.getLogger('plone.app.upgrade')
+
+HAS_KUPU = 'products.kupu' in pkg_resources.working_set.by_key
 
 
 def to41alpha1(context):
@@ -66,11 +69,7 @@ def add_siteadmin_role(context):
         'WebDAV Unlock items',
         'WebDAV access',
         ])
-    try:
-        import Products.kupu
-    except ImportError:
-        pass
-    else:
+    if HAS_KUPU:
         extra_permissions.update([
         'Kupu: Manage libraries',
         'Kupu: Query libraries',

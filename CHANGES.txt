@@ -4,6 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Provide kupu tool module alias, so upgrade steps can read data from it.
+  [hannosch]
+
 - Remove kupu from the test dependencies.
   [hannosch]
 

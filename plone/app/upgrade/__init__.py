@@ -39,3 +39,9 @@ except ImportError:
     alias_module('zope.app.cache.interfaces.ram', zope.ramcache.interfaces.ram)
     import zope.ramcache.ram
     alias_module('zope.app.cache.ram', zope.ramcache.ram)
+
+try:
+    import Products.kupu
+except ImportError:
+    import kupu_bbb
+    alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
