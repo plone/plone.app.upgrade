@@ -4,6 +4,10 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Add 'displayPublicationDateInByline' property to site properties sheet.
+  Required for PLIP #8699.
+  [vipod]
+
 - Remove the plone_deprecated skin layer from all skins in Plone 4.3.
   [davisagli]
 
