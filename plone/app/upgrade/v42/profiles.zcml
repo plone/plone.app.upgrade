@@ -48,5 +48,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to42rc2"
+      title="Upgrade profile for Plone 4.2rc1 to Plone 4.2rc2"
+      description=""
+      directory="profiles/to_rc2"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
 </configure>
