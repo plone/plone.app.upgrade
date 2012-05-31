@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2rc2 (unreleased)
+1.2rc2 (2012-05-31)
 -------------------
 
 - Add profile for Plone 4.2rc2
