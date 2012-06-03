@@ -11,6 +11,7 @@ num_sort_regex = re.compile('\d+')
 
 
 def reindex_sortable_title(context):
+    from Products.CMFPlone.CatalogTool import MAX_SORTABLE_TITLE
     catalog = getToolByName(context, 'portal_catalog')
     _catalog = catalog._catalog
     indexes = _catalog.indexes
@@ -26,7 +27,7 @@ def reindex_sortable_title(context):
     pghandler.init('Analyzing sortable_title index', len(sort_title_index))
     for i, (name, rids) in enumerate(sort_title_index._index.iteritems()):
         pghandler.report(i)
-        if len(name) > 40 or num_sort_regex.match(name):
+        if len(name) > MAX_SORTABLE_TITLE or num_sort_regex.match(name):
             change.extend(list(rids.keys()))
     pghandler.finish()
     update_metadata = 'sortable_title' in _catalog.schema
