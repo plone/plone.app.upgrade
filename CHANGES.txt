@@ -4,6 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Added upgrade step for new sortable_title logic.
+  [hannosch]
+
 - Add 'displayPublicationDateInByline' property to site properties sheet.
   Required for PLIP #8699.
   [vipod]
