@@ -4,7 +4,9 @@ Changelog
 1.2rc3 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add upgrade step to install the CMFEditions component registry bases
+  modifier.
+  [rossp]
 
 
 1.2rc2 (2012-05-31)
