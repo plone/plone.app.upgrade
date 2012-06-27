@@ -4,13 +4,15 @@ Changelog
 1.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add Plone 4.1.6 upgrade step.
+  [esteele]
 
 
 1.1.6 (2012-04-18)
 ------------------
 
-- Nothing changed yet.
+- Add Plone 4.1.5 upgrade step.
+  [esteele]
 
 
 1.1.5 (2012-02-08)
