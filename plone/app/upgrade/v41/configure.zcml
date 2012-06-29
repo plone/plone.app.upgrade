@@ -224,12 +224,11 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-          title="Fix discussion"
+          title="Miscellaneous"
           description=""
-          handler=".final.to415_discussion"
+          handler=".final.to416"
           />
 
     </genericsetup:upgradeSteps>
-
 
 </configure>

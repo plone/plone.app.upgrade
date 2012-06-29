@@ -70,3 +70,7 @@ def to415_discussion(context):
 
 def to415(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.4-4.1.5')
+
+
+def to416(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:4.1.5-4.1.6')
