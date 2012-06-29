@@ -105,9 +105,19 @@
         source="4205"
         destination="4206"
         profile="Products.CMFPlone:plone">
+
       <genericsetup:upgradeStep
           title="Install the CMFEditions component registry bases modifier"
-          handler=".betas.to42rc3_cmfeditions_registry_bases" />
+          handler=".final.to42final_cmfeditions_registry_bases" />
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
+        description=""
+        handler=".final.to42final"
+        />
+
     </genericsetup:upgradeSteps>
+
+
 
 </configure>
