@@ -10,7 +10,7 @@
         destination="4300"
         profile="Products.CMFPlone:plone">
 
-      <genericsetup:upgradeStep
+     <genericsetup:upgradeStep
           title="Miscellaneous"
           description=""
           handler=".alphas.to43alpha1"

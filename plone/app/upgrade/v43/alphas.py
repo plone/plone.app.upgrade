@@ -1,10 +1,10 @@
 import logging
 import re
-
+from Acquisition import aq_get
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
-
 from plone.app.upgrade.utils import loadMigrationProfile
+from Products.ZCTextIndex.interfaces import IZCTextIndex
 
 logger = logging.getLogger('plone.app.upgrade')
 num_sort_regex = re.compile('\d+')
@@ -49,8 +49,22 @@ def reindex_sortable_title(context):
     logger.info('Updated `sortable_title` index.')
 
 
-def to43alpha1(context):
-    """4.2 -> 4.3alpha1
+def upgradeToI18NCaseNormalizer(context):
+    """Upgrade lexicon to I18N Case Normalizer
     """
+    catalog = getToolByName(context, 'portal_catalog')
+    for index in catalog.Indexes.objectValues():
+        if IZCTextIndex.providedBy(index):
+            logger.info("Reindex %s index with I18N Case Normalizer",\
+                        index.getId())
+            catalog.reindexIndex(index.getId(),\
+                                 aq_get(context, 'REQUEST', None))
+        pass
+
+
+def to43alpha1(context):
+    """4.2 -> 4.3alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha1')
     reindex_sortable_title(context)
+    upgradeToI18NCaseNormalizer(context)
+
