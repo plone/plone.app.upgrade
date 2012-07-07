@@ -8,6 +8,8 @@ import alphas
 
 class TestMigrations_v4_3alpha1(MigrationTest):
 
+    profile = 'profile-plone.app.upgrade.v43:to43alpha1'
+
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
