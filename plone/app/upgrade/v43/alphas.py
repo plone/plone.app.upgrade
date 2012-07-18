@@ -61,10 +61,16 @@ def upgradeToI18NCaseNormalizer(context):
                                  aq_get(context, 'REQUEST', None))
         pass
 
+def upgradeTinyMCE(context):
+    """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
+    """
+    from Products.TinyMCE.upgrades import upgrade_12_to_13
+    upgrade_12_to_13(context)
 
 def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha1')
     reindex_sortable_title(context)
     upgradeToI18NCaseNormalizer(context)
+    upgradeTinyMCE(context)
 
