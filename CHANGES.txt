@@ -1,10 +1,11 @@
 Changelog
 =========
 
-1.2.1 (unreleased)
+1.2.1 (2012-08-11)
 ------------------
 
-- Nothing changed yet.
+- Add upgrade profile for Plone 4.2.1
+  [esteele]
 
 
 1.2 (2012-06-29)
