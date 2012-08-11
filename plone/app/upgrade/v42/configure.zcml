@@ -118,6 +118,18 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4206"
+        destination="4207"
+        profile="Products.CMFPlone:plone">
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
+        description=""
+        handler=".final.to421"
+        />
+
+    </genericsetup:upgradeSteps>
 
 
 </configure>
