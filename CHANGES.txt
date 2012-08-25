@@ -4,6 +4,9 @@ Changelog
 1.2b3 (unreleased)
 ------------------
 
+- Added Plone 4.3 upgrade step to make sure TinyMCE 1.3 upgrade steps are run.
+  [davisagli]
+
 - Added upgrade step for new sortable_title logic.
   [hannosch]
 
