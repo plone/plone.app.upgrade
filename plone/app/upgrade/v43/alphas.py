@@ -67,10 +67,35 @@ def upgradeTinyMCE(context):
     from Products.TinyMCE.upgrades import upgrade_12_to_13
     upgrade_12_to_13(context)
 
+def upgradePloneAppTheming(context):
+    """Re-install plone.app.theming if previously installed
+    """
+
+    try:
+        from plone.app.theming.interfaces import IThemeSettings
+    except ImportError:
+        # plone.app.theming is not in the build
+        return
+
+    from plone.registry.interfaces import IRegistry
+    from zope.component import getUtility
+
+    registry = getUtility(IRegistry)
+
+    try:
+        registry.forInterface(IThemeSettings)
+    except KeyError:
+        # plone.app.theming not installed
+        return
+
+    portal_setup = getToolByName(context, 'portal_setup')
+    return portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+
 def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha1')
     reindex_sortable_title(context)
     upgradeToI18NCaseNormalizer(context)
     upgradeTinyMCE(context)
+    upgradePloneAppTheming(context)
 

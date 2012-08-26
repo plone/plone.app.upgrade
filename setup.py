@@ -35,6 +35,7 @@ setup(name='plone.app.upgrade',
             'plone.app.openid',
             'plone.app.redirector',
             'plone.app.viewletmanager',
+            'plone.app.theming',
         ]
       ),
       install_requires=[

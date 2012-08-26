@@ -1,6 +1,6 @@
 import unittest
 
-from zope.component import getUtility
+from zope.component import getUtility, queryUtility
 from zope.component import getAdapters, queryMultiAdapter
 from zope.contentprovider.interfaces import IContentProvider
 from zope.viewlet.interfaces import IViewlet
@@ -61,3 +61,28 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         skinname = self.portal.getCurrentSkinName()
         order_by_name = storage.getOrder('plone.htmlhead', skinname)
         self.assertEqual(order_by_name[-1], u'tinymce.configuration')
+
+    def testInstallThemingNotPreviouslyInstalled(self):
+        from plone.app.theming.interfaces import IThemeSettings
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+
+        alphas.upgradePloneAppTheming(self.portal.portal_setup)
+
+        registry = getUtility(IRegistry)
+        self.assertRaises(KeyError, registry.forInterface, IThemeSettings)
+
+    def testInstallThemingPreviouslyInstalled(self):
+        from plone.app.theming.interfaces import IThemeSettings
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+
+        self.portal.portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+        alphas.upgradePloneAppTheming(self.portal.portal_setup)
+
+        registry = getUtility(IRegistry)
+
+        try:
+            registry.forInterface(IThemeSettings)
+        except KeyError:
+            self.fail("plone.app.theming not installed")
