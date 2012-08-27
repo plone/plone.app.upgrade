@@ -230,7 +230,7 @@
             />
 
         <genericsetup:upgradeStep
-            title="Remove no longer existing action proiders"
+            title="Remove no longer existing action providers"
             handler=".betas.cleanupActionProviders"
             />
 
