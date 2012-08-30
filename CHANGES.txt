@@ -147,6 +147,11 @@ Changelog
   [thomasdesvenain, vincentfretin]
 
 
+- Migrate type icons from content_icon to icon_expr for all FTIs.
+  Closes http://dev.plone.org/plone/ticket/12046.
+  [thomasdesvenain, vincentfretin]
+
+
 1.1 - 2011-07-12
 ----------------
 
