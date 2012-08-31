@@ -174,25 +174,6 @@
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
-        source="4110"
-        destination="4111"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Repair owner tuples"
-          description=""
-          handler=".final.to412_owner_tuples"
-          />
-        
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to412"
-          />
-
-    </genericsetup:upgradeSteps>
-
-    <genericsetup:upgradeSteps
         source="4112"
         destination="4113"
         profile="Products.CMFPlone:plone">
@@ -206,99 +187,14 @@
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
-        source="4113"
-        destination="4114"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to415"
-          />
-
-    </genericsetup:upgradeSteps>
-
-    <genericsetup:upgradeSteps
         source="4114"
         destination="4115"
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-          title="Miscellaneous"
+          title="Fix discussion"
           description=""
-          handler=".final.to416"
-          />
-
-    </genericsetup:upgradeSteps>
-
-    <genericsetup:upgradeSteps
-        source="4110"
-        destination="4111"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Repair owner tuples"
-          description=""
-          handler=".final.to412_owner_tuples"
-          />
-        
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to412"
-          />
-        
-    </genericsetup:upgradeSteps>
-
-    <genericsetup:upgradeSteps
-        source="4111"
-        destination="4112"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to413"
-          />
-
-    </genericsetup:upgradeSteps>
-
-    <genericsetup:upgradeSteps
-        source="4112"
-        destination="4113"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to414"
-          />
-
-    </genericsetup:upgradeSteps>
-
-    <genericsetup:upgradeSteps
-        source="4113"
-        destination="4114"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to415"
-          />
-
-    </genericsetup:upgradeSteps>
-
-
-    <genericsetup:upgradeSteps
-        source="4114"
-        destination="4115"
-        profile="Products.CMFPlone:plone">
-
-        <genericsetup:upgradeStep
-          title="Miscellaneous"
-          description=""
-          handler=".final.to416"
+          handler=".final.to415_discussion"
           />
 
     </genericsetup:upgradeSteps>
