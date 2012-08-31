@@ -75,3 +75,11 @@ def to42rc1_member_dashboard(context):
                                  roles,
                                  acquire,
                                  )
+
+
+def to42rc2(context):
+    """4.2rc1 -> 4.2rc2
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42rc2')
+
+

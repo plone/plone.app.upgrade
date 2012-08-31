@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2b3 (unreleased)
+1.3a1 (unreleased)
 ------------------
 
 - Added Plone 4.3 upgrade step to re-install plone.app.theming (Diazo theme
@@ -30,6 +30,45 @@ Changelog
 
 - Make the RAM cache utility upgrade work without zope.app.cache.
   [davisagli]
+
+- Fix an issue in an old upgrade step when used with current
+  ResourceRegistries.
+  [davisagli]
+
+- Add Member role to View dashboard permission
+  [gaudenz]
+
+- Install plone.app.search when upgrading.
+  [esteele]
+
+- Plone 4.1.5 upgrade step added that makes sure that plone.app.discussion 
+  has been properly installed.
+  [timo]
+
+1.2.1 (2012-08-11)
+------------------
+
+- Add upgrade profile for Plone 4.2.1
+  [esteele]
+
+
+1.2 (2012-06-29)
+----------------
+
+- Add upgrade step to install the CMFEditions component registry bases
+  modifier.
+  [rossp]
+
+
+1.2rc2 (2012-05-31)
+-------------------
+
+- Add profile for Plone 4.2rc2
+  [esteele]
+
+
+1.2rc1 (2012-05-07)
+-------------------
 
 - Fix an issue in an old upgrade step when used with current
   ResourceRegistries.
@@ -82,7 +121,52 @@ Changelog
   [spliter]
 
 
-1.1.1 - unreleased
+1.1.7 (2012-06-27)
+------------------
+
+- Add Plone 4.1.6 upgrade step.
+  [esteele]
+
+
+1.1.6 (2012-04-18)
+------------------
+
+- Add Plone 4.1.5 upgrade step.
+  [esteele]
+
+
+1.1.5 (2012-02-08)
+------------------
+
+- Fix adding Site Administrator roles for when
+  custom workflows might not have the permission_roles
+  for states set.
+  [vangheem]
+
+
+1.1.4 (2011-11-28)
+------------------
+
+- Avoid 4020->4100 rules being overpassed from a 4022 version.
+  [tdesvenain]
+
+
+1.1.3 (2011-10-08)
+------------------
+
+- Add upgrade step to re-enable the getObjPositionInParent index in the
+  portal_atcttool.
+  [davisagli]
+
+
+1.1.2 (2011-09-22)
+------------------
+
+- Add missing upgrade steps from recent versions of Plone 4.0.x.
+  [davisagli]
+
+
+1.1.1 (2011-09-21)
 ------------------
 
 - Fix v41.alphas.convert_to_uuidindex() to truly ignore acquired

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<atcttool
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <topic_indexes i18n:domain="plone">
+  <index name="getObjPositionInParent"
+     description="The order of an item in its parent folder" enabled="True"
+     friendlyName="Order in folder"
+     i18n:attributes="description; friendlyName">
+   <criteria>ATSimpleIntCriterion</criteria>
+  </index>
+ </topic_indexes>
+</atcttool>

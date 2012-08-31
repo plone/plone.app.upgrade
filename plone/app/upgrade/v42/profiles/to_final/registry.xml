@@ -1,0 +1,12 @@
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+          i18n:domain="plone">
+
+    <records interface="plone.app.querystring.interfaces.IQueryOperation"
+             prefix="plone.app.querystring.operation.date.between">
+        <value key="title" i18n:translate="">Between dates</value>
+        <value key="description" i18n:translate="">Please use YYYY/MM/DD.</value>
+        <value key="operation">plone.app.querystring.queryparser._betweenDates</value>
+        <value key="widget">DateRangeWidget</value>
+    </records>
+
+</registry>
