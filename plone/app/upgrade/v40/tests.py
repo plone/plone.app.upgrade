@@ -176,20 +176,6 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertEqual(tt.Document.icon_expr,
                          "string:${portal_url}/document_icon.png")
 
-    def testMigrateTypeIconsIfIconExpNotFound(self):
-        """
-        FTIs having content_icon should be upgraded to icon_expr.
-        Don't upgrade if there is already an icon_expr, but we still
-        delete the old content_icon property.
-        """
-        tt = getToolByName(self.portal, "portal_types")
-        tt.Document.icon_expr = "string:${portal_url}/document_icon.png"
-        tt.Document.content_icon = 'document_icon.gif'
-        migrateTypeIcons(self.portal)
-        self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
-        self.assertFalse('content_icon' in tt.Document.__dict__)
-
     def testPngContentIcons(self):
         tt = getToolByName(self.portal, "portal_types")
         tt.Document.icon_expr = "string:${portal_url}/document_icon.gif"
