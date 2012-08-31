@@ -91,6 +91,12 @@ def upgradePloneAppTheming(context):
     portal_setup = getToolByName(context, 'portal_setup')
     return portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
 
+def upgradeTinyMCE(context):
+    """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
+    """
+    from plone.app.jquery.upgrades import upgrade_2_to_3
+    upgrade_2_to_3(context)
+
 def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha1')
@@ -98,4 +104,5 @@ def to43alpha1(context):
     upgradeToI18NCaseNormalizer(context)
     upgradeTinyMCE(context)
     upgradePloneAppTheming(context)
+    upgradePloneAppJQuery(context)
 
