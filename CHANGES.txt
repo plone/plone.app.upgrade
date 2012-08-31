@@ -4,6 +4,9 @@ Changelog
 1.3a1 (unreleased)
 ------------------
 
+- Added Plone 4.3 upgrade step to apply plone.app.jquery 1.5 upgrade step.
+  [esteele]
+
 - Added Plone 4.3 upgrade step to re-install plone.app.theming (Diazo theme
   support) if installed previously. This will upgrade the control panel to the
   new unified one.
