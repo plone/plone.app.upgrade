@@ -91,7 +91,7 @@ def upgradePloneAppTheming(context):
     portal_setup = getToolByName(context, 'portal_setup')
     return portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
 
-def upgradeTinyMCE(context):
+def upgradePloneAppJQuery(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
     """
     from plone.app.jquery.upgrades import upgrade_2_to_3
