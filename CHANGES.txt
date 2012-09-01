@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3a1 (unreleased)
+1.3a1 (2012-08-31)
 ------------------
 
 - Added Plone 4.3 upgrade step to apply plone.app.jquery 1.5 upgrade step.
