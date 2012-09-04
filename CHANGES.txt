@@ -4,8 +4,9 @@ Changelog
 1.3a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Make plone.app.theming upgrade steps only run when plone.app.theming is
+  installed (i.e. not for a plain Products.CMFPlone site.)
+  [elro]
 
 1.3a1 (2012-08-31)
 ------------------

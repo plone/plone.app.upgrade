@@ -1,9 +1,10 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone">
 
-    <include package="plone.app.theming" />
+    <include zcml:condition="installed plone.app.theming" package="plone.app.theming" />
     <include file="profiles.zcml" />
 
     <genericsetup:upgradeSteps
