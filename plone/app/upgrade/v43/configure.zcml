@@ -20,4 +20,17 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4300"
+        destination="4301"
+        profile="Products.CMFPlone:plone">
+
+     <genericsetup:upgradeStep
+          title="Upgrade syndication"
+          description=""
+          handler=".alphas.to43alpha2"
+          />
+
+    </genericsetup:upgradeSteps>
+
 </configure>

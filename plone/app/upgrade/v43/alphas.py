@@ -106,3 +106,37 @@ def to43alpha1(context):
     upgradePloneAppTheming(context)
     upgradePloneAppJQuery(context)
 
+
+def upgradeSyndication(context):
+    from zope.component import getUtility
+    from plone.registry.interfaces import IRegistry
+    from Products.CMFPlone.interfaces.syndication import (
+        ISiteSyndicationSettings, IFeedSettings)
+
+    logger.info('Migrating syndication tool')
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    old_synd_tool = portal.portal_syndication
+    registry = getUtility(IRegistry)
+    synd_settings = registry.forInterface(ISiteSyndicationSettings)
+    synd_settings.allowed = old_synd_tool.isAllowed
+    synd_settings.max_items = old_synd_tool.max_items
+    portal.manage_delObjects(['portal_syndication'])
+    # now, go through all containers and look for syndication_info
+    # objects
+    catalog = getToolByName(portal, 'portal_catalog')
+    for brain in catalog(portal_type=('Topic', 'Collection', 'Folder',
+                                      'Large Plone Folder')):
+        obj = brain.getObject()
+        if 'syndication_information' in obj.objectIds():
+            # just having syndication info object means
+            # syndication is enabled
+            info = obj.syndication_information
+            settings = IFeedSettings(obj)
+            settings.enabled = True
+            settings.max_items = info.max_items
+            obj.manage_delObjects(['syndication_information'])
+
+
+def to43alpha2(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha2')
+    upgradeSyndication(context)

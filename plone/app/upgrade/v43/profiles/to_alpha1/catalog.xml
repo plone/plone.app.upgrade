@@ -2,6 +2,6 @@
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
  <object name="plone_lexicon" meta_type="ZCTextIndex Lexicon">
   <element name="Unicode Whitespace splitter" group="Word Splitter"/>
-  <element name="Unicode Ignoring Accents Case Normalizer" group="Case Normalizer"/>
+  <element name="Unicode Case Normalizer" group="Case Normalizer"/>
  </object>
 </object>
