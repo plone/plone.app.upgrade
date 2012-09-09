@@ -134,6 +134,7 @@ def upgradeSyndication(context):
             settings = IFeedSettings(obj)
             settings.enabled = True
             settings.max_items = info.max_items
+            settings.feed_types = ('RSS',)
             obj.manage_delObjects(['syndication_information'])
 
 
