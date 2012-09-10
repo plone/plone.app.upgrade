@@ -110,11 +110,31 @@ def to43alpha1(context):
 def upgradeSyndication(context):
     from zope.component import getUtility
     from plone.registry.interfaces import IRegistry
+    from Products.CMFPlone.interfaces.syndication import ISyndicatable
     from Products.CMFPlone.interfaces.syndication import (
         ISiteSyndicationSettings, IFeedSettings)
 
-    logger.info('Migrating syndication tool')
     portal = getToolByName(context, 'portal_url').getPortalObject()
+
+    def getDexterityFolderTypes():
+        try:
+            from plone.dexterity.interfaces import IDexterityFTI
+            from plone.dexterity.utils import resolveDottedName
+        except ImportError:
+            return set([])
+
+        portal_types = getToolByName(portal, 'portal_types')
+        types = [fti for fti in portal_types.listTypeInfo() if
+                    IDexterityFTI.providedBy(fti)]
+
+        ftypes = set([])
+        for _type in types:
+            klass = resolveDottedName(fti.klass)
+            if ISyndicatable.implementedBy(klass):
+                ftypes.add(_type.getId())
+        return ftypes
+
+    logger.info('Migrating syndication tool')
     old_synd_tool = portal.portal_syndication
     registry = getUtility(IRegistry)
     synd_settings = registry.forInterface(ISiteSyndicationSettings)
@@ -124,8 +144,13 @@ def upgradeSyndication(context):
     # now, go through all containers and look for syndication_info
     # objects
     catalog = getToolByName(portal, 'portal_catalog')
-    for brain in catalog(portal_type=('Topic', 'Collection', 'Folder',
-                                      'Large Plone Folder')):
+    # get all folder types from portal_types
+    at_tool = getToolByName(portal, 'archetype_tool')
+    folder_types = set([])
+    for _type in at_tool.listPortalTypesWithInterfaces([ISyndicatable]):
+        folder_types.add(_type.getId())
+    folder_types = folder_types | getDexterityFolderTypes()
+    for brain in catalog(portal_type=tuple(folder_types)):
         obj = brain.getObject()
         if 'syndication_information' in obj.objectIds():
             # just having syndication info object means
