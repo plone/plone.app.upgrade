@@ -4,6 +4,10 @@ Changelog
 1.3a2 (unreleased)
 ------------------
 
+- Make sure registry settings for syndication and ResourceRegisties bundles
+  are set up for Plone 4.3.
+  [vangheem, davisagli]
+
 - Make plone.app.theming upgrade steps only run when plone.app.theming is
   installed (i.e. not for a plain Products.CMFPlone site.)
   [elro]
