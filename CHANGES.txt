@@ -4,7 +4,9 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add upgrade step to make sure the registry record for ResourceRegistries
+  bundles is installed.
+  [davisagli]
 
 
 1.2.1 (2012-08-11)
