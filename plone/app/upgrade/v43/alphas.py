@@ -104,7 +104,9 @@ def to43alpha1(context):
     upgradeToI18NCaseNormalizer(context)
     upgradeTinyMCE(context)
     upgradePloneAppTheming(context)
-    upgradePloneAppJQuery(context)
+    # XXX only for plone.app.jquery 1.7
+    # we're on 1.4 right now
+    # upgradePloneAppJQuery(context)
 
 
 def upgradeSyndication(context):
@@ -135,12 +137,23 @@ def upgradeSyndication(context):
         return ftypes
 
     logger.info('Migrating syndication tool')
-    old_synd_tool = portal.portal_syndication
     registry = getUtility(IRegistry)
     synd_settings = registry.forInterface(ISiteSyndicationSettings)
-    synd_settings.allowed = old_synd_tool.isAllowed
-    synd_settings.max_items = old_synd_tool.max_items
-    portal.manage_delObjects(['portal_syndication'])
+    # default settings work fine here if all settings are not
+    # available
+    try:
+        old_synd_tool = portal.portal_syndication
+        try:
+            synd_settings.allowed = old_synd_tool.isAllowed
+        except AttributeError:
+            pass
+        try:
+            synd_settings.max_items = old_synd_tool.max_items
+        except AttributeError:
+            pass
+        portal.manage_delObjects(['portal_syndication'])
+    except AttributeError:
+        pass
     # now, go through all containers and look for syndication_info
     # objects
     catalog = getToolByName(portal, 'portal_catalog')
@@ -158,7 +171,10 @@ def upgradeSyndication(context):
             info = obj.syndication_information
             settings = IFeedSettings(obj)
             settings.enabled = True
-            settings.max_items = info.max_items
+            try:
+                settings.max_items = info.max_items
+            except AttributeError:
+                pass
             settings.feed_types = ('RSS',)
             obj.manage_delObjects(['syndication_information'])
 
