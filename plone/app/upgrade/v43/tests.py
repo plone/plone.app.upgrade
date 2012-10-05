@@ -45,10 +45,11 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         for ne in ['tiny_mce.js', 'tiny_mce_init.js']:
             self.assertNotIn(ne, jsresourceids, ne)
 
-        ksstool = getToolByName(self.portal, 'portal_kss')
-        kssresourceids = ksstool.getResourceIds()
-        self.assertNotIn('++resource++tinymce.kss/tinymce.kss',
-                         kssresourceids)
+        ksstool = getToolByName(self.portal, 'portal_kss', None)
+        if ksstool is not None:
+            kssresourceids = ksstool.getResourceIds()
+            self.assertNotIn('++resource++tinymce.kss/tinymce.kss',
+                             kssresourceids)
 
         request = self.app.REQUEST
         plone_view = queryMultiAdapter((self.portal, request), name="plone")

@@ -4,6 +4,9 @@ Changelog
 1.3a2 (unreleased)
 ------------------
 
+- Remove old upgrades that depended on KSS being present.
+  [davisagli]
+
 - Make sure registry settings for syndication and ResourceRegisties bundles
   are set up for Plone 4.3.
   [vangheem, davisagli]

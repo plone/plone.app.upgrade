@@ -100,11 +100,6 @@
             handler=".alphas.reorderUserActions"
             />
 
-        <genericsetup:upgradeStep
-            title="Install KSS"
-            handler=".alphas.installKss"
-            />
-
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -215,16 +210,6 @@
             />
 
         <genericsetup:upgradeStep
-            title="Associate portal_kss with RAM cache"
-            handler=".betas.addCacheForKSSRegistry"
-            />
-
-        <genericsetup:upgradeStep
-            title="Disable KSS for anonymous users"
-            handler=".betas.modifyKSSResources"
-            />
-
-        <genericsetup:upgradeStep
             title="Allow contributer role to add content"
             handler=".betas.addContributorToCreationPermissions"
             />
@@ -276,11 +261,6 @@
         <genericsetup:upgradeStep
             title="Change the title of topics to collection"
             handler=".betas.updateTopicTitle"
-            />
-
-        <genericsetup:upgradeStep
-            title="Separate KSS development and production resources"
-            handler=".betas.modifyKSSResourcesForDevelMode"
             />
 
     </genericsetup:upgradeSteps>

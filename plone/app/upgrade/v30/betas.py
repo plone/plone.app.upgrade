@@ -123,64 +123,6 @@ def removeS5Actions(context):
             iconsTool.removeActionIcon('plone','s5_presentation')
             logger.info("Removed 's5_presentation' icon from actionicons tool.")
 
-def addCacheForKSSRegistry(context):
-    ram_cache_id = 'ResourceRegistryCache'
-    reg = getToolByName(context, 'portal_kss', None)
-    if reg is not None and getattr(reg.aq_explicit, 'ZCacheable_setManagerId', None) is not None:
-        reg.ZCacheable_setManagerId(ram_cache_id)
-        reg.ZCacheable_setEnabled(1)
-        logger.info('Associated portal_kss with %s' % ram_cache_id)
-
-def modifyKSSResources(context):
-    # make kukit.js conditonol and not load for anonymous
-    reg = getToolByName(context, 'portal_javascripts', None)
-    if reg is not None:
-        id = '++resource++kukit-src.js'
-        entry = reg.aq_explicit.getResourcesDict().get(id, None)
-        if entry:
-            reg.updateScript(id, expression='not:here/@@plone_portal_state/anonymous', compression='safe')
-            logger.info('Updated kss javascript resource %s, to disable kss for anonymous.' % id)
-    # register the new kss resources
-    reg = getToolByName(context, 'portal_kss', None)
-    if reg is not None:
-        new_resources = ['at_experimental.kss', 'plone_experimental.kss']
-        for id in new_resources:
-            entry = reg.aq_explicit.getResourcesDict().get(id, None)
-            if not entry:
-                reg.registerKineticStylesheet(id, enabled=0)
-                logger.info('Added kss resource %s, disabled by default.' % id)
-
-def modifyKSSResourcesForDevelMode(context):
-    # separate kukit.js and kukit-src-js based on debug mode
-    reg = getToolByName(context, 'portal_javascripts', None)
-    if reg is not None:
-        id = '++resource++kukit-src.js'
-        entry = reg.aq_explicit.getResourcesDict().get(id, None)
-        if entry:
-            pos = reg.aq_explicit.getResourcePosition(id)
-            # delete kukit-src.js
-            reg.aq_explicit.unregisterResource(id)
-            # add the new ones
-            id1 = '++resource++kukit.js'
-            if reg.aq_explicit.getResourcesDict().get(id1, None):
-                reg.aq_explicit.unregisterResource(id1)
-            reg.aq_explicit.registerScript(id1,
-                    expression="python: not here.restrictedTraverse('@@plone_portal_state').anonymous() and here.restrictedTraverse('@@kss_devel_mode').isoff()",
-                    inline=False, enabled=True,
-                    cookable=True, compression='none', cacheable=True)
-            id2 = '++resource++kukit-devel.js'
-            if reg.aq_explicit.getResourcesDict().get(id2, None):
-                reg.aq_explicit.unregisterResource(id2)
-            reg.aq_explicit.registerScript(id2,
-                    expression="python: not here.restrictedTraverse('@@plone_portal_state').anonymous() and here.restrictedTraverse('@@kss_devel_mode').ison()",
-                    inline=False, enabled=True,
-                    cookable=True, compression='none', cacheable=True)
-            # move them to where the old one has been
-            reg.aq_explicit.moveResource(id1, pos)
-            reg.aq_explicit.moveResource(id2, pos + 1)
-            logger.info('Updated kss javascript resources, to enable the use '
-                        'of production and development versions.')
-
 def addContributorToCreationPermissions(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     if 'Contributor' not in portal.valid_roles():

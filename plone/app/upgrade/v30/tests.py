@@ -86,7 +86,6 @@ from plone.app.upgrade.v30.alphas import updateFTII18NDomain
 from plone.app.upgrade.v30.alphas import convertLegacyPortlets
 from plone.app.upgrade.v30.alphas import registerToolsAsUtilities
 from plone.app.upgrade.v30.alphas import registration
-from plone.app.upgrade.v30.alphas import installKss
 from plone.app.upgrade.v30.alphas import addReaderAndEditorRoles
 from plone.app.upgrade.v30.alphas import migrateLocalroleForm
 from plone.app.upgrade.v30.alphas import reorderUserActions
@@ -105,14 +104,12 @@ from plone.app.upgrade.v30.betas import cleanupOldActions
 from plone.app.upgrade.v30.betas import cleanDefaultCharset
 from plone.app.upgrade.v30.betas import addAutoGroupToPAS
 from plone.app.upgrade.v30.betas import removeS5Actions
-from plone.app.upgrade.v30.betas import addCacheForKSSRegistry
 from plone.app.upgrade.v30.betas import addContributorToCreationPermissions
 from plone.app.upgrade.v30.betas import removeSharingAction
 from plone.app.upgrade.v30.betas import addEditorToSecondaryEditorPermissions
 from plone.app.upgrade.v30.betas import updateEditActionConditionForLocking
 from plone.app.upgrade.v30.betas import addOnFormUnloadJS
 
-from plone.app.upgrade.v30.betas import modifyKSSResourcesForDevelMode
 from plone.app.upgrade.v30.betas import updateTopicTitle
 from plone.app.upgrade.v30.betas import cleanupActionProviders
 from plone.app.upgrade.v30.betas import hidePropertiesAction
@@ -611,73 +608,6 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
             self.failUnless(sort['undo'] < sort['logout'])
             self.failUnless(sort['login'] < sort['join'])
 
-    def testInstallKss(self):
-        'Test kss migration'
-        jstool = self.portal.portal_javascripts
-        csstool = self.portal.portal_css
-        mt = self.portal.mimetypes_registry
-        mtid = 'text/kss'
-        st = self.portal.portal_skins
-        skins = ['Plone Default']
-        # unregister first
-        for id, _compression, _enabled in installKss.js_all:
-            jstool.unregisterResource(id)
-        for id in installKss.css_all + installKss.kss_all:
-            csstool.unregisterResource(id)
-        mt.manage_delObjects((mtid, ))
-        js_ids = jstool.getResourceIds()
-        for id, _compression, _enabled in installKss.js_all:
-            self.failIf(id in js_ids)
-        css_ids = csstool.getResourceIds()
-        for id in installKss.css_all + installKss.kss_all:
-            self.failIf(id in css_ids)
-        self.failIf(mtid in mt.list_mimetypes())
-        selections = st._getSelections()
-        for s in skins:
-            if not selections.has_key(s):
-                continue
-            path = st.getSkinPath(s)
-            path = [p.strip() for p in  path.split(',')]
-            path_changed = False
-            if 'plone.kss' in path:
-                path.remove('plone.kss')
-                path_changed = True
-            if 'at.kss' in path:
-                path.remove('at.kss')
-                path_changed = True
-            if path_changed:
-                st.addSkinSelection(s, ','.join(path))
-        # TODO we cannot remove the directory views, so...
-        # Test it twice
-        for i in range(2):
-            installKss(self.portal)
-            js_ids = jstool.getResourceIds()
-            css_dict = csstool.getResourcesDict()
-            for id in installKss.js_unregister:
-                self.failIf(id in js_ids)
-            for id, _compression, _enabled in installKss.js_all:
-                self.assert_(id in js_ids, '%r is not registered' % id)
-            for id in installKss.css_all:
-                self.assert_(id in css_dict)
-            for id in installKss.kss_all:
-                self.assert_(id in css_dict)
-                value = css_dict[id]
-                self.assertEqual(value.getEnabled(), True)
-                self.assertEqual(value.getRel(), 'k-stylesheet')
-                self.assertEqual(value.getRendering(), 'link')
-            self.assert_(mtid in mt.list_mimetypes())
-            # check the skins
-            selections = st._getSelections()
-            for s in skins:
-                if not selections.has_key(s):
-                    continue
-                path = st.getSkinPath(s)
-                path = [p.strip() for p in  path.split(',')]
-                self.assert_('plone_kss' in path)
-                self.assert_('archetypes_kss' in path)
-            self.assert_(hasattr(aq_base(st), 'plone_kss'))
-            self.assert_(hasattr(aq_base(st), 'archetypes_kss'))
-
 
 class TestMigrations_v3_0_alpha2(MigrationTest):
 
@@ -733,40 +663,6 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             # check if enabled
             res = jsreg.getResource('webstats.js')
             self.assertEqual(res.getEnabled(), True)
-
-    def testUpdateKukitJS(self):
-        jsreg = self.portal.portal_javascripts
-        # put into old state first
-        jsreg.unregisterResource('++resource++kukit.js')
-        jsreg.unregisterResource('++resource++kukit-devel.js')
-        script_ids = jsreg.getResourceIds()
-        self.failIf('++resource++kukit.js' in script_ids)
-        self.failIf('++resource++kukit-devel.js' in script_ids)
-        self.failIf('++resource++kukit-src.js' in script_ids)
-        jsreg.registerScript('++resource++kukit.js', compression="none")
-        script_ids = jsreg.getResourceIds()
-        self.failUnless('++resource++kukit.js' in script_ids)
-        # upgrade and test again
-        updateKukitJS(self.portal)
-        script_ids = jsreg.getResourceIds()
-        self.failUnless('++resource++kukit-src.js' in script_ids)
-        resource = jsreg.getResource('++resource++kukit-src.js')
-        self.assertEqual(resource.getCompression(), 'full')
-        # Run the last upgrade and check that everything is in its
-        # place. We must have both the devel and production resources.
-        # They both should be uncompressed since kss compresses them
-        # directly. Also they should have conditions that switches them.
-        modifyKSSResourcesForDevelMode(self.portal)
-        script_ids = jsreg.getResourceIds()
-        self.failIf('++resource++kukit-src.js' in script_ids)
-        resource1 = jsreg.getResource('++resource++kukit.js')
-        resource2 = jsreg.getResource('++resource++kukit-devel.js')
-        self.assertEqual(resource1.getCompression(), 'none')
-        self.assertEqual(resource2.getCompression(), 'none')
-        self.failUnless('@@kss_devel_mode' in resource1.getExpression())
-        self.failUnless('@@kss_devel_mode' in resource2.getExpression())
-        self.failUnless('isoff' in resource1.getExpression())
-        self.failUnless('ison' in resource2.getExpression())
 
     def testInstallContentrulesAndLanguageUtilities(self):
         sm = getSiteManager()
@@ -1037,18 +933,6 @@ class TestMigrations_v3_0(MigrationTest):
             self.failIf("s5_presentation" in action_ids)
             icon_ids = [x.getActionId() for x in ait.listActionIcons()]
             self.failIf("s5_presentation" in icon_ids)
-
-    def testAddCacheForKSSRegistry(self):
-        kssreg = self.portal.portal_kss
-        kssreg.ZCacheable_setEnabled(0)
-        kssreg.ZCacheable_setManagerId(None)
-        self.failIf(kssreg.ZCacheable_enabled())
-        self.failUnless(kssreg.ZCacheable_getManagerId() is None)
-        # Test it twice
-        for i in range(2):
-            addCacheForKSSRegistry(self.portal)
-            self.failUnless(kssreg.ZCacheable_enabled())
-            self.failIf(kssreg.ZCacheable_getManagerId() is None)
 
     def testAddContributorToCreationPermissions(self):
         self.portal._delRoles(['Contributor',])
