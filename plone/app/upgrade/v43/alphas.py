@@ -192,6 +192,7 @@ def cleanupKssSkinsLayers(context):
         layers = selections[skin_name].split(',')
         if 'plone_kss' in layers:
             layers.remove('plone_kss')
-        if 'archetypes_kss' in layers:
-            layers.remove('archetypes_kss')
+        # XXX remove this once achetypes inline editing is implemented
+        #if 'archetypes_kss' in layers:
+        #    layers.remove('archetypes_kss')
         skinstool.addSkinSelection(skin_name, ','.join(layers))
