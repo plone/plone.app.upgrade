@@ -35,6 +35,11 @@
             description="actions, controlpanel, javascript, kss, registry"
             handler=".alphas.to43alpha2"
             />
+        <genericsetup:upgradeStep
+            title="Cleanup kss skin layers"
+            description=""
+            handler=".alphas.cleanupKssSkinsLayers"
+            />
 
     </genericsetup:upgradeSteps>
 

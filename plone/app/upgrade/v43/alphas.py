@@ -4,6 +4,7 @@ from Acquisition import aq_get
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import cleanupSkinPath
 from Products.ZCTextIndex.interfaces import IZCTextIndex
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -182,3 +183,15 @@ def upgradeSyndication(context):
 def to43alpha2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha2')
     upgradeSyndication(context)
+
+
+def cleanupKssSkinsLayers(context):
+    skinstool = getToolByName(context, 'portal_skins')
+    selections = skinstool._getSelections()
+    for skin_name in selections.keys():
+        layers = selections[skin_name].split(',')
+        if 'plone_kss' in layers:
+            layers.remove('plone_kss')
+        if 'archetypes_kss' in layers:
+            layers.remove('archetypes_kss')
+        skinstool.addSkinSelection(skin_name, ','.join(layers))
