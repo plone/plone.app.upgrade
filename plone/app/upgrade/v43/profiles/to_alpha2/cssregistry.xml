@@ -1,7 +1,4 @@
 <?xml version="1.0"?>
 <object name="portal_css" meta_type="Stylesheets Registry">
- <stylesheet title="" applyPrefix="False" authenticated="False"
-    bundle="default" cacheable="True" compression="safe" conditionalcomment=""
-    cookable="True" enabled="1" expression="" id="ploneKss.css" media="screen"
-    rel="stylesheet" rendering="link" remove="True" />
+ <stylesheet id="ploneKss.css" remove="True" />
 </object>
