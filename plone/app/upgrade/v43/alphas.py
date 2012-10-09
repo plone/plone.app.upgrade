@@ -4,7 +4,7 @@ from Acquisition import aq_get
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import cleanupSkinPath
+from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from Products.ZCTextIndex.interfaces import IZCTextIndex
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -182,10 +182,10 @@ def upgradeSyndication(context):
 
 def to43alpha2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha2')
-    upgradeSyndication(context)
 
 
-def cleanupKssSkinsLayers(context):
+def removeKSS(context):
+    # remove KSS-related skin layers from all skins
     skinstool = getToolByName(context, 'portal_skins')
     selections = skinstool._getSelections()
     for skin_name in selections.keys():
@@ -196,3 +196,16 @@ def cleanupKssSkinsLayers(context):
         #if 'archetypes_kss' in layers:
         #    layers.remove('archetypes_kss')
         skinstool.addSkinSelection(skin_name, ','.join(layers))
+
+    # remove portal_kss tool
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    if 'portal_kss' in portal:
+        portal.manage_delObjects(['portal_kss'])
+
+    # make sure portal_kss is no longer listed as a required tool
+    cleanUpToolRegistry(context)
+
+    # make sure plone.app.kss is not activated in the quick installer
+    qi = getToolByName(context, 'portal_quickinstaller')
+    if qi.isProductInstalled('plone.app.kss'):
+        qi.uninstallProduct('plone.app.kss')

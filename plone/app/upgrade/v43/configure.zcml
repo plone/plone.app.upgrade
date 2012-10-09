@@ -26,19 +26,19 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Upgrade syndication"
-            description=""
-            handler=".alphas.upgradeSyndication"
-            />
-        <genericsetup:upgradeStep
             title="Upgrade Profiles for 4.3a2"
             description="actions, controlpanel, javascript, kss, registry"
             handler=".alphas.to43alpha2"
             />
         <genericsetup:upgradeStep
-            title="Cleanup kss skin layers"
+            title="Upgrade syndication"
             description=""
-            handler=".alphas.cleanupKssSkinsLayers"
+            handler=".alphas.upgradeSyndication"
+            />
+        <genericsetup:upgradeStep
+            title="Uninstall KSS"
+            description=""
+            handler=".alphas.removeKSS"
             />
 
     </genericsetup:upgradeSteps>

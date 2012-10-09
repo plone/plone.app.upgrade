@@ -4,8 +4,8 @@ Changelog
 1.3a2 (unreleased)
 ------------------
 
-- Add upgrades for kss
-  [vangheem]
+- Add upgrade step to remove KSS.
+  [vangheem, davisagli]
 
 - Remove old upgrades that depended on KSS being present.
   [davisagli]
