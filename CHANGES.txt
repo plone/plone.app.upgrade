@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.2 (unreleased)
+1.2.2 (2012-10-15)
 ------------------
 
 - Add upgrade step to make sure the registry record for ResourceRegistries
