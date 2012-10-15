@@ -338,6 +338,8 @@ class TestMigrations_v2_5_x(MigrationTest):
         self.portal.right_slots = ['here/portlet_login/macros/portlet',
                                    'here/portlet_languages/macros/portlet']
 
+        self.portal.Members.right_slots = []
+
         # Test it twice
         for i in range(2):
             convertLegacyPortlets(self.portal)
@@ -374,6 +376,9 @@ class TestMigrations_v2_5_x(MigrationTest):
 
         self.portal.left_slots = ['here/portlet_recent/macros/portlet',
                                   'here/portlet_news/macros/portlet']
+
+        self.portal.Members.right_slots = []
+
         if hasattr(self.portal.aq_base, 'right_slots'):
             delattr(self.portal, 'right_slots')
 
@@ -411,6 +416,8 @@ class TestMigrations_v2_5_x(MigrationTest):
                                   'here/portlet_news/macros/portlet',
                                   'foobar',]
         self.portal.right_slots = ['here/portlet_login/macros/portlet']
+
+        self.portal.Members.right_slots = []
 
         convertLegacyPortlets(self.portal)
 
