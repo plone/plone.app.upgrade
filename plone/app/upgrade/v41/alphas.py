@@ -200,6 +200,8 @@ def convert_to_uuidindex(catalog, index):
     if not isinstance(old_index, OIBTree):
         index._index = _index = OIBTree()
         for k, v in old_index.items():
+            if k is None:
+                continue
             if isinstance(v, int):
                 _index[k] = v
             else:

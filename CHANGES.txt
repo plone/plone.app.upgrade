@@ -4,7 +4,9 @@ Changelog
 1.3a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- In the UID index migration, if there are items whose key is None,
+  skip them instead of complaining about there being multiple items.
+  [davisagli]
 
 
 1.3a2 (2012-10-18)
