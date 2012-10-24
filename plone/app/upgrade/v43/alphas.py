@@ -209,3 +209,8 @@ def removeKSS(context):
     qi = getToolByName(context, 'portal_quickinstaller')
     if qi.isProductInstalled('plone.app.kss'):
         qi.uninstallProduct('plone.app.kss')
+
+
+def upgradeTinyMCEAgain(context):
+    qi = getToolByName(context, 'portal_quickinstaller')
+    qi.upgradeProduct('Products.TinyMCE')

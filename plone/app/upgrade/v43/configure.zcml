@@ -43,4 +43,17 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4301"
+        destination="4302"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Upgrade TinyMCE"
+            description="Update how TinyMCE's javascript resources are included"
+            handler=".alphas.upgradeTinyMCEAgain"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>
