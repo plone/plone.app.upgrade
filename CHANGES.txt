@@ -4,6 +4,10 @@ Changelog
 1.3b1 (unreleased)
 ------------------
 
+- Make sure the syndication upgrade step unregisters the old tool
+  as a utility.
+  [davisagli]
+
 - Add upgrade for version 4.3b1 to make sure TinyMCE is upgraded.
   [davisagli]
 

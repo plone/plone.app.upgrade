@@ -111,8 +111,9 @@ def to43alpha1(context):
 
 
 def upgradeSyndication(context):
-    from zope.component import getUtility
+    from zope.component import getUtility, getSiteManager
     from plone.registry.interfaces import IRegistry
+    from Products.CMFCore.interfaces import ISyndicationTool
     from Products.CMFPlone.interfaces.syndication import ISyndicatable
     from Products.CMFPlone.interfaces.syndication import (
         ISiteSyndicationSettings, IFeedSettings)
@@ -155,6 +156,8 @@ def upgradeSyndication(context):
         portal.manage_delObjects(['portal_syndication'])
     except AttributeError:
         pass
+    sm = getSiteManager()
+    sm.unregisterUtility(provided=ISyndicationTool)
     # now, go through all containers and look for syndication_info
     # objects
     catalog = getToolByName(portal, 'portal_catalog')
