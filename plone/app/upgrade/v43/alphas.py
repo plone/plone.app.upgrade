@@ -29,7 +29,10 @@ def reindex_sortable_title(context):
     for i, (name, rids) in enumerate(sort_title_index._index.iteritems()):
         pghandler.report(i)
         if len(name) > MAX_SORTABLE_TITLE or num_sort_regex.match(name):
-            change.extend(list(rids.keys()))
+            if hasattr(rids, 'keys'):
+                change.extend(list(rids.keys()))
+            else:
+                change.append(rids)
     pghandler.finish()
     update_metadata = 'sortable_title' in _catalog.schema
     pghandler = ZLogHandler(1000)
