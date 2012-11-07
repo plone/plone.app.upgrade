@@ -87,3 +87,43 @@ class TestMigrations_v4_3alpha1(MigrationTest):
             registry.forInterface(IThemeSettings)
         except KeyError:
             self.fail("plone.app.theming not installed")
+
+    def testReindexNumericalTitle(self):
+        from Products.CMFCore.utils import getToolByName
+
+        # Create 2 pages, one with a numerical title
+        portal = self.portal
+        self.setRoles(["Manager"])
+        catalog = getToolByName(portal, 'portal_catalog')
+        portal.invokeFactory(
+            id='num-title', type_name='Document',
+            title='10 green bottles, hanging on the wall',
+        )
+        portal.invokeFactory(
+            id='accidentally-fall', type_name='Document',
+            title='And if one green bottle should accidentally fall',
+        )
+
+        # Change title of both, shouldn't be reindexed yet
+        portal['accidentally-fall'].title = 'fell'
+        portal['num-title'].title = '9 green bottles, hanging on the wall'
+        self.assertEquals(
+            catalog(id=portal['num-title'].id)[0].Title,
+            '10 green bottles, hanging on the wall',
+        )
+        self.assertEquals(
+            catalog(id=portal['accidentally-fall'].id)[0].Title,
+            'And if one green bottle should accidentally fall',
+        )
+
+        # Only the numerical title got reindexed
+        portal.portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+        alphas.reindex_sortable_title(portal.portal_setup)
+        self.assertEquals(
+            catalog(id=portal['num-title'].id)[0].Title,
+            '9 green bottles, hanging on the wall'
+        )
+        self.assertEquals(
+            catalog(id=portal['accidentally-fall'].id)[0].Title,
+            'And if one green bottle should accidentally fall',
+        )
