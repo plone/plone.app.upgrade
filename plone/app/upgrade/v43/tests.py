@@ -1,6 +1,3 @@
-import unittest
-
-from zope.component import getUtility, queryUtility
 from zope.component import getAdapters, queryMultiAdapter
 from zope.contentprovider.interfaces import IContentProvider
 from zope.viewlet.interfaces import IViewlet
@@ -8,7 +5,6 @@ from zope.viewlet.interfaces import IViewlet
 from Products.CMFCore.utils import getToolByName
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
 import alphas
 
@@ -57,11 +53,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
                     (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
         viewlets = getAdapters(
                 (manager.context, manager.request, manager.__parent__, manager), IViewlet)
-        self.assertIn(u'tinymce.configuration', dict(viewlets))
-        storage = getUtility(IViewletSettingsStorage)
-        skinname = self.portal.getCurrentSkinName()
-        order_by_name = storage.getOrder('plone.htmlhead', skinname)
-        self.assertEqual(order_by_name[-1], u'tinymce.configuration')
+        self.assertNotIn(u'tinymce.configuration', dict(viewlets))
 
     def testInstallThemingNotPreviouslyInstalled(self):
         from plone.app.theming.interfaces import IThemeSettings
