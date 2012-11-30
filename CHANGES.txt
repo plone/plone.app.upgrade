@@ -15,6 +15,9 @@ Changelog
   skip them instead of complaining about there being multiple items.
   [davisagli]
 
+- Add upgrade for version 4.3b1 to make sure that plone.app.blob
+  will upgrade News Item to blob version (see #10123).
+  [keul]
 
 1.3a2 (2012-10-18)
 ------------------
