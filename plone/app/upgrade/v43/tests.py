@@ -37,15 +37,15 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         jstool = getToolByName(self.portal, 'portal_javascripts')
         jsresourceids = jstool.getResourceIds()
 
-        self.assertIn('jquery.tinymce.js', jsresourceids)
+        self.assertTrue('jquery.tinymce.js' in jsresourceids)
         for ne in ['tiny_mce.js', 'tiny_mce_init.js']:
-            self.assertNotIn(ne, jsresourceids, ne)
+            self.assertFalse(ne in jsresourceids)
 
         ksstool = getToolByName(self.portal, 'portal_kss', None)
         if ksstool is not None:
             kssresourceids = ksstool.getResourceIds()
-            self.assertNotIn('++resource++tinymce.kss/tinymce.kss',
-                             kssresourceids)
+            self.assertFalse(
+                '++resource++tinymce.kss/tinymce.kss' in kssresourceids)
 
         request = self.app.REQUEST
         plone_view = queryMultiAdapter((self.portal, request), name="plone")
@@ -53,7 +53,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
                     (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
         viewlets = getAdapters(
                 (manager.context, manager.request, manager.__parent__, manager), IViewlet)
-        self.assertNotIn(u'tinymce.configuration', dict(viewlets))
+        self.assertFalse(u'tinymce.configuration' in dict(viewlets))
 
     def testInstallThemingNotPreviouslyInstalled(self):
         from plone.app.theming.interfaces import IThemeSettings
