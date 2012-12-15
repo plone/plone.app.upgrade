@@ -84,4 +84,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+<genericsetup:registerProfile
+      name="to423"
+      title="Upgrade profile for Plone 4.2.2 to Plone 4.2.3"
+      description=""
+      directory="profiles/to_423"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

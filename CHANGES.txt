@@ -4,6 +4,9 @@ Changelog
 1.2.3 (unreleased)
 ------------------
 
+- Add upgrade profile for Plone 4.2.3
+  [esteele]
+
 - In the UID index migration, if there are items whose key is None,
   skip them instead of complaining about there being multiple items.
   [davisagli]
