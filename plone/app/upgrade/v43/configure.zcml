@@ -54,6 +54,12 @@
             handler=".alphas.upgradeTinyMCEAgain"
             />
 
+        <genericsetup:upgradeStep
+            title="Migrate News Item type to blob version"
+            description="Run plone.app.blob upgrade step to migrate all news items to blob"
+            handler=".betas.upgradeNewsItemToBlob"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
