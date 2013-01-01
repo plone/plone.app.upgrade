@@ -56,4 +56,11 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4302"
+        destination="4303"
+        profile="Products.CMFPlone:plone">
+
+    </genericsetup:upgradeSteps>
+
 </configure>
