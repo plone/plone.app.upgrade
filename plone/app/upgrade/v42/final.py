@@ -54,3 +54,8 @@ def to423(context):
     """4.2.2 -> 4.2.3
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to423')
+
+def to424(context):
+    """4.2.3 -> 4.2.4
+    """
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to424')

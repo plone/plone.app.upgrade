@@ -4,6 +4,8 @@ Changelog
 1.2.4 (unreleased)
 ------------------
 
+- Add upgrade profile for Plone 4.2.4
+  [esteele]
 
 - Add missing to_423 folder.
   [esteele]
