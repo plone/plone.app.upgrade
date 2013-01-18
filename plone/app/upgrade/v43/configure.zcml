@@ -67,6 +67,12 @@
             handler=".betas.to43beta2"
             />
 
+        <genericsetup:upgradeStep
+            title="Upgrade plonetheme.sunburst"
+            description="Recook plonetheme.sunburst css to use new @group hints"
+            handler=".betas.upgradeSunburst"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

@@ -4,7 +4,11 @@ Changelog
 1.3b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Run plonetheme.sunburst 1.4 upgrade.
+  [esteele]
+
+- Add upgrade step for plone.app.discussion.
+  [toutpt]
 
 
 1.3b1 (2013-01-01)
