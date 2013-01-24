@@ -22,7 +22,6 @@ from zope.component.hooks import clearSite
 from Products.Archetypes.interfaces import IArchetypeTool
 from Products.Archetypes.interfaces import IReferenceCatalog
 from Products.Archetypes.interfaces import IUIDCatalog
-from Products.ATContentTypes.interface import IATCTTool
 from Products.CMFActionIcons.interfaces import IActionIconsTool
 from Products.CMFCalendar.interfaces import ICalendarTool
 from Products.CMFCore.ActionInformation import Action
@@ -117,6 +116,12 @@ from plone.app.upgrade.v30.betas import hidePropertiesAction
 from plone.app.upgrade.v30.rcs import addIntelligentText
 
 from plone.app.upgrade.v30.final_three0x import installNewModifiers
+
+try:
+    from Products.ATContentTypes.interface import IATCTTool
+    HAS_ATCT = True
+except ImportError:
+    HAS_ATCT = False
 
 
 class TestMigrations_v3_0_Actions(MigrationTest):
@@ -476,8 +481,10 @@ class TestMigrations_v2_5_x(MigrationTest):
                       IActionIconsTool, ISyndicationTool,
                       IMetadataTool, IPropertiesTool, IUndoTool, IMailHost,
                       IUniqueIdAnnotationManagement, IUniqueIdGenerator,
-                      IDiffTool, IATCTTool, IMimetypesRegistryTool,
+                      IDiffTool, IMimetypesRegistryTool,
                       IPortalTransformsTool, IDiscussionTool, )
+        if HAS_ATCT:
+            interfaces += (IATCTTool,)
         for i in interfaces:
             sm.unregisterUtility(provided=i)
         registerToolsAsUtilities(self.portal)

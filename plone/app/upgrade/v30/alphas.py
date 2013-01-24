@@ -21,8 +21,6 @@ from App.Common import package_home
 from Products.Archetypes.interfaces import IArchetypeTool
 from Products.Archetypes.interfaces import IReferenceCatalog
 from Products.Archetypes.interfaces import IUIDCatalog
-from Products.ATContentTypes.interface import IATCTTool
-from Products.ATContentTypes.migration.v1_2 import upgradeATCTTool
 from Products.CMFActionIcons.interfaces import IActionIconsTool
 from Products.CMFCalendar.interfaces import ICalendarTool
 from Products.CMFCore.ActionInformation import Action
@@ -81,6 +79,13 @@ from plone.app.upgrade.utils import installOrReinstallProduct
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 
+try:
+    from Products.ATContentTypes.interface import IATCTTool
+    from Products.ATContentTypes.migration.v1_2 import upgradeATCTTool
+    HAS_ATCT = True
+except ImportError:
+    HAS_ATCT = False
+
 
 def three0_alpha1(context):
     """2.5.x -> 3.0-alpha1
@@ -91,7 +96,8 @@ def three0_alpha1(context):
 
     # The ATCT tool has lost all type migration functionality and quite some
     # metadata and index information stored on it needs to be updated.
-    upgradeATCTTool(portal)
+    if HAS_ATCT:
+        upgradeATCTTool(portal)
 
     # Install CMFEditions and CMFDiffTool
     installProduct('CMFEditions', portal, hidden=True)
@@ -257,7 +263,6 @@ def installProduct(product, portal, out=None, hidden=False):
 
 registration = (('mimetypes_registry', IMimetypesRegistryTool),
                 ('portal_transforms', IPortalTransformsTool),
-                ('portal_atct', IATCTTool),
                 ('portal_actionicons', IActionIconsTool),
                 ('portal_discussion', IDiscussionTool),
                 ('portal_metadata', IMetadataTool),
@@ -269,6 +274,8 @@ registration = (('mimetypes_registry', IMimetypesRegistryTool),
                 ('portal_uidannotation', IUniqueIdAnnotationManagement),
                 ('portal_uidgenerator', IUniqueIdGenerator),
                )
+if HAS_ATCT:
+    registration += (('portal_atct', IATCTTool),)
 
 invalid_regs = (ILanguageTool, IArchivistTool, IPortalModifierTool,
                 IPurgePolicyTool, IRepositoryTool, IStorageTool,

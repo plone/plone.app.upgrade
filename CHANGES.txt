@@ -4,7 +4,8 @@ Changelog
 1.3b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Avoid hard dependency on ATContentTypes.
+  [davisagli]
 
 
 1.3b2 (2013-01-17)
