@@ -75,4 +75,17 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4303"
+        destination="4304"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Upgrade plone lexicon"
+            description="Upgrade plone lexicon using I18N Case normalizer"
+            handler=".betas.to43beta3"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>

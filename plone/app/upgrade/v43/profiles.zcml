@@ -39,4 +39,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to43beta3"
+      title="Upgrade profile for Plone 4.3b1 to Plone 4.3beta3"
+      description=""
+      directory="profiles/to_beta3"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>
