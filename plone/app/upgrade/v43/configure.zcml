@@ -62,8 +62,8 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Upgrade plone.app.discussion and catalog"
-            description="Update tinymce to let integrator add email field and catalog case normalize"
+            title="Upgrade plone.app.discussion"
+            description="Update tinymce to let integrator add email field"
             handler=".betas.to43beta2"
             />
 
@@ -71,6 +71,19 @@
             title="Upgrade plonetheme.sunburst"
             description="Recook plonetheme.sunburst css to use new @group hints"
             handler=".betas.upgradeSunburst"
+            />
+
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4303"
+        destination="4304"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Upgrade catalog"
+            description="Update catalog case normalize"
+            handler=".betas.to43beta2"
             />
 
     </genericsetup:upgradeSteps>
