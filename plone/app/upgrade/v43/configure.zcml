@@ -62,8 +62,8 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Upgrade plone.app.discussion"
-            description="Update tinymce to let integrator add email field"
+            title="Upgrade plone.app.discussion and catalog"
+            description="Update tinymce to let integrator add email field and catalog case normalize"
             handler=".betas.to43beta2"
             />
 
