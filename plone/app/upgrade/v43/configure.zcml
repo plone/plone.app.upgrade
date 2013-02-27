@@ -83,7 +83,7 @@
         <genericsetup:upgradeStep
             title="Upgrade plone lexicon"
             description="Upgrade plone lexicon using I18N Case normalizer"
-            handler=".betas.to43beta3"
+            handler=".betas.to43rc1"
             />
 
     </genericsetup:upgradeSteps>

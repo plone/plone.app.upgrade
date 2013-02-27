@@ -4,8 +4,8 @@ from plone.app.upgrade.v43.alphas import upgradeToI18NCaseNormalizer
 def to43beta2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43beta2')
 
-def to43beta3(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43beta3')
+def to43rc1(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43rc1')
     upgradeToI18NCaseNormalizer(context)
 
 

@@ -105,7 +105,6 @@ def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43alpha1')
     reindex_sortable_title(context)
-    #upgradeToI18NCaseNormalizer(context)
     upgradeTinyMCE(context)
     upgradePloneAppTheming(context)
     # XXX only for plone.app.jquery 1.7
