@@ -75,5 +75,40 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to422"
+      title="Upgrade profile for Plone 4.2.1 to Plone 4.2.2"
+      description=""
+      directory="profiles/to_422"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+<genericsetup:registerProfile
+      name="to423"
+      title="Upgrade profile for Plone 4.2.2 to Plone 4.2.3"
+      description=""
+      directory="profiles/to_423"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+<genericsetup:registerProfile
+      name="to424"
+      title="Upgrade profile for Plone 4.2.3 to Plone 4.2.4"
+      description=""
+      directory="profiles/to_424"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+<genericsetup:registerProfile
+      name="to425"
+      title="Upgrade profile for Plone 4.2.4 to Plone 4.2.5"
+      description=""
+      directory="profiles/to_425"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
 </configure>

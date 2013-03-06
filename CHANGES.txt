@@ -100,6 +100,42 @@ Changelog
   has been properly installed.
   [timo]
 
+1.2.5 (2013-03-05)
+------------------
+
+- Add upgrade profile for Plone 4.2.5
+  [esteele]
+
+
+1.2.4 (2013-01-17)
+------------------
+
+- Add upgrade profile for Plone 4.2.4
+  [esteele]
+
+- Add missing to_423 folder.
+  [esteele]
+
+
+1.2.3 (2012-12-15)
+------------------
+
+- Add upgrade profile for Plone 4.2.3
+  [esteele]
+
+- In the UID index migration, if there are items whose key is None,
+  skip them instead of complaining about there being multiple items.
+  [davisagli]
+
+
+1.2.2 (2012-10-15)
+------------------
+
+- Add upgrade step to make sure the registry record for ResourceRegistries
+  bundles is installed.
+  [davisagli]
+
+
 1.2.1 (2012-08-11)
 ------------------
 

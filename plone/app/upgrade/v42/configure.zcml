@@ -131,13 +131,57 @@
 
     </genericsetup:upgradeSteps>
 
-    <genericsetup:upgradeStep
+    <genericsetup:upgradeSteps
         source="4207"
         destination="4208"
-        profile="Products.CMFPlone:plone"
-        title="Null upgrade step"
+        profile="Products.CMFPlone:plone">
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
         description=""
-        handler="..utils.null_upgrade_step"
+        handler=".final.to422"
         />
+
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4208"
+        destination="4209"
+        profile="Products.CMFPlone:plone">
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
+        description=""
+        handler=".final.to423"
+        />
+
+    </genericsetup:upgradeSteps>
+
+
+    <genericsetup:upgradeSteps
+        source="4209"
+        destination="4210"
+        profile="Products.CMFPlone:plone">
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
+        description=""
+        handler=".final.to424"
+        />
+
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4210"
+        destination="4211"
+        profile="Products.CMFPlone:plone">
+
+      <genericsetup:upgradeStep
+        title="Miscellaneous"
+        description=""
+        handler=".final.to425"
+        />
+
+    </genericsetup:upgradeSteps>
 
 </configure>
