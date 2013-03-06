@@ -4,7 +4,8 @@ Changelog
 1.2.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add upgrade profile for Plone 4.2.5
+  [esteele]
 
 
 1.2.4 (2013-01-17)
