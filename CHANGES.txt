@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3rc1 (unreleased)
+1.3rc1 (2013-03-05)
 -------------------
 
 - add step for rc1 to upgrade catalog correctly
