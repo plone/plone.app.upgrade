@@ -4,7 +4,8 @@ Changelog
 1.3rc2 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add basic upgrade infrastructure for the Plone 4.4 series.
+  [davisagli]
 
 
 1.3rc1 (2013-03-05)
