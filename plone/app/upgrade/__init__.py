@@ -1,3 +1,4 @@
+import pkg_resources
 import sys
 from zope.interface import implements
 from zope.interface.interface import InterfaceClass
@@ -40,8 +41,6 @@ except ImportError:
     import zope.ramcache.ram
     alias_module('zope.app.cache.ram', zope.ramcache.ram)
 
-try:
-    import Products.kupu
-except ImportError:
+if 'products.kupu' not in pkg_resources.working_set.by_key:
     import kupu_bbb
     alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
