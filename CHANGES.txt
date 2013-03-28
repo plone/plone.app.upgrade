@@ -7,6 +7,9 @@ Changelog
 - Add basic upgrade infrastructure for the Plone 4.4 series.
   [davisagli]
 
+- Do not import Products.kupu. Fixes https://dev.plone.org/ticket/13480
+  [danjacka]
+
 
 1.3rc1 (2013-03-05)
 -------------------
