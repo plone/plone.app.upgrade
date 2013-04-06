@@ -88,4 +88,17 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4304"
+        destination="4305"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>
