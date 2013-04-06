@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.3 (unreleased)
--------------------
+1.3 (2013-04-06)
+----------------
 
 - Add basic upgrade infrastructure for the Plone 4.4 series.
   [davisagli]
