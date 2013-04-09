@@ -135,7 +135,7 @@ def upgradeSyndication(context):
 
         ftypes = set([])
         for _type in types:
-            klass = resolveDottedName(fti.klass)
+            klass = resolveDottedName(_type.klass)
             if ISyndicatable.implementedBy(klass):
                 ftypes.add(_type.getId())
         return ftypes
