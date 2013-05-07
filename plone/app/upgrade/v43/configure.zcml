@@ -69,7 +69,7 @@
 
         <genericsetup:upgradeStep
             title="Upgrade plonetheme.sunburst"
-            description="Recook plonetheme.sunburst css to use new @group hints"
+            description="Add new reset.css and use new stylesheet layout"
             handler=".betas.upgradeSunburst"
             />
 
