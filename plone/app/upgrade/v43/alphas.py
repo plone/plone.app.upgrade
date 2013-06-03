@@ -175,7 +175,10 @@ def upgradeSyndication(context):
             # just having syndication info object means
             # syndication is enabled
             info = obj.syndication_information
-            settings = IFeedSettings(obj)
+            try:
+                settings = IFeedSettings(obj)
+            except TypeError:
+                continue
             settings.enabled = True
             try:
                 settings.max_items = info.max_items

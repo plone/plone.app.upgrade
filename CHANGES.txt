@@ -4,7 +4,9 @@ Changelog
 1.3.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- handle syndication upgrade when folder is not syndication enabled but
+  has syndication information.
+  [vangheem]
 
 
 1.3.2 (2013-05-30)
