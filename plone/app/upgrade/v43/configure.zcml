@@ -107,9 +107,9 @@
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
+            title="Add Scaling Quality property"
+            description="Adds quality property to imaging_properties."
+            handler=".final.addScalingQualitySetting"
             />
 
     </genericsetup:upgradeSteps>
