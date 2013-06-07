@@ -4,6 +4,9 @@ Changelog
 1.3.3 (unreleased)
 ------------------
 
+- Upgrade broken 'added' content rules.
+  [thomasdesvenain]
+
 - handle syndication upgrade when folder is not syndication enabled but
   has syndication information.
   [vangheem]

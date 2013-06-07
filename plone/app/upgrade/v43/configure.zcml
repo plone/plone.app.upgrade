@@ -112,6 +112,12 @@
             handler=".final.addScalingQualitySetting"
             />
 
+        <genericsetup:upgradeStep
+            title="Fix content rule events"
+            description="Upgrade content rule events which dottend name has changed."
+            handler=".final.upgradeContentRulesNames"
+            />
+
     </genericsetup:upgradeSteps>
 
 

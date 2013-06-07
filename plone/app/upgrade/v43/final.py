@@ -1,6 +1,12 @@
 import logging
 from Products.CMFCore.utils import getToolByName
 
+from ZODB.broken import PersistentBroken
+from zope.component import queryUtility
+from zope.annotation.interfaces import IAnnotations
+from plone.contentrules.engine.assignments import KEY
+from plone.contentrules.engine.interfaces import IRuleStorage
+from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved
 
 logger = logging.getLogger('plone.app.upgrade')
 
@@ -16,3 +22,8 @@ def addScalingQualitySetting(context):
         imaging_properties.manage_addProperty('quality', 88, 'int')
         logger.log(logging.INFO,
                    "Added 'quality' property to imaging_properties.")
+
+def upgradeContentRulesNames(context):
+    storage = queryUtility(IRuleStorage)
+    for key in storage.keys():
+        check_rules_with_dotted_name_moved(storage[key])
