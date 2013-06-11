@@ -4,6 +4,9 @@ Changelog
 1.3.3 (unreleased)
 ------------------
 
+- Add upgrade step to set image scaling quality (p.a.imaging 1.0.8).
+  [khink]
+
 - Upgrade broken 'added' content rules.
   [thomasdesvenain]
 
