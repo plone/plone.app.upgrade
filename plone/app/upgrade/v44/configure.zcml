@@ -7,7 +7,7 @@
     <include file="profiles.zcml" />
 
     <genericsetup:upgradeSteps
-        source="4304"
+        source="4306"
         destination="4400"
         profile="Products.CMFPlone:plone">
 
