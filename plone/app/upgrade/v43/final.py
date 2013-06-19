@@ -20,7 +20,13 @@ def addScalingQualitySetting(context):
         logger.log(logging.INFO,
                    "Added 'quality' property to imaging_properties.")
 
+
 def upgradeContentRulesNames(context):
     storage = queryUtility(IRuleStorage)
     for key in storage.keys():
         check_rules_with_dotted_name_moved(storage[key])
+
+
+def upgradeTinyMCEAgain(context):
+    qi = getToolByName(context, 'portal_quickinstaller')
+    qi.upgradeProduct('Products.TinyMCE')

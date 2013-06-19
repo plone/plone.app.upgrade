@@ -4,7 +4,8 @@ Changelog
 1.3.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Upgrade TinyMCE: Remove space from style to prevent bogus class.
+  [maurits]
 
 
 1.3.3 (2013-06-13)

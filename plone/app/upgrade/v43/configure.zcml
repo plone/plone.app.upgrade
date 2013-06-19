@@ -118,6 +118,11 @@
             handler=".final.upgradeContentRulesNames"
             />
 
+        <genericsetup:upgradeStep
+            title="Upgrade TinyMCE"
+            description="Remove space from style to prevent bogus class"
+            handler=".final.upgradeTinyMCEAgain" />
+
     </genericsetup:upgradeSteps>
 
 
