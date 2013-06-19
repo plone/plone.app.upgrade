@@ -63,7 +63,7 @@
 
         <genericsetup:upgradeStep
             title="Upgrade plone.app.discussion"
-            description="Update tinymce to let integrator add email field"
+            description="Update plone.app.discussion to let integrator add email field"
             handler=".betas.to43beta2"
             />
 
