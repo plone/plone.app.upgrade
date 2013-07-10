@@ -8,7 +8,7 @@
 
     <genericsetup:upgradeSteps
         source="4306"
-        destination="4400"
+        destination="5000"
         profile="Products.CMFPlone:plone">
 
         <genericsetup:upgradeStep
