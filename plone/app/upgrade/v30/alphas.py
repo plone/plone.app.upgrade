@@ -564,11 +564,10 @@ def restorePloneTool(context):
     tool = getToolByName(portal, "plone_utils")
     if tool.meta_type == 'PlonePAS Utilities Tool':
         from Products.CMFPlone.PloneTool import PloneTool
-        from Products.CMFDefault.Portal import CMFSite
 
         # PloneSite has its own security check for manage_delObjects which
         # breaks in the test runner. So we bypass this check.
-        CMFSite.manage_delObjects(portal, ['plone_utils'])
+        super(portal.__class__, portal).manage_delObjects(['plone_utils'])
         portal._setObject(PloneTool.id, PloneTool())
         logger.info("Replaced obsolete PlonePAS version of plone tool "
                     "with the normal one.")

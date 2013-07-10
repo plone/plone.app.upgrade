@@ -48,7 +48,6 @@ from Products.CMFCore.interfaces import IUndoTool
 from Products.CMFCore.interfaces import IURLTool
 from Products.CMFCore.interfaces import IConfigurableWorkflowTool
 from Products.CMFCore.ActionInformation import ActionInformation
-from Products.CMFDefault.Portal import CMFSite
 from Products.CMFDiffTool.interfaces import IDiffTool
 from Products.CMFEditions.interfaces import IArchivistTool
 from Products.CMFEditions.interfaces import IPortalModifierTool
@@ -90,7 +89,6 @@ from plone.app.upgrade.v30.alphas import migrateLocalroleForm
 from plone.app.upgrade.v30.alphas import reorderUserActions
 from plone.app.upgrade.v30.alphas import updatePASPlugins
 from plone.app.upgrade.v30.alphas import updateConfigletTitles
-from plone.app.upgrade.v30.alphas import updateKukitJS
 from plone.app.upgrade.v30.alphas import addCacheForResourceRegistry
 from plone.app.upgrade.v30.alphas import removeTablelessSkin
 from plone.app.upgrade.v30.alphas import addObjectProvidesIndex
@@ -796,7 +794,8 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             self.assertEquals('Plone Utility Tool', tool.meta_type)
 
     def testInstallPloneLanguageTool(self):
-        CMFSite.manage_delObjects(self.portal, ['portal_languages'])
+        super(self.portal.__class__, self.portal).manage_delObjects(
+            ['portal_languages'])
         self.uninstallProduct('PloneLanguageTool')
         qi = getToolByName(self.portal, "portal_quickinstaller")
         # Test it twice
