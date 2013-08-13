@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.4 (unreleased)
+1.3.4 (2013-08-14)
 ------------------
 
 - Replace basic infrastructure for 4.4 series with same for 5.0 series.
