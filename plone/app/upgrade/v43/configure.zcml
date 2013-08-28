@@ -138,4 +138,17 @@
 
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4307"
+        destination="4308"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Remove persistent kss_mimetype import step"
+            description=""
+            handler=".final.removePersistentKSSMimeTypeImportStep"
+            />
+
+    </genericsetup:upgradeSteps>
+
 </configure>

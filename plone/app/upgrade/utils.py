@@ -6,6 +6,8 @@ from types import ListType, TupleType
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import ISetupTool
+from Products.GenericSetup.registry import _export_step_registry
+from Products.GenericSetup.registry import _import_step_registry
 
 _marker = []
 
@@ -144,3 +146,34 @@ def alias_module(name, target):
     setattr(parent, all_parts[-1], target)
     # also make sure sys.modules is updated
     sys.modules[name] = target
+
+
+def unregisterSteps(context, import_steps=None, export_steps=None):
+    # This removes steps that are now registered via ZCML so are
+    # duplicate.  Optionally, you can pass a list of extra
+    # import_steps and/or export_steps to remove.
+    if import_steps is None:
+        import_steps = set()
+    else:
+        import_steps = set(import_steps)
+    if export_steps is None:
+        export_steps = set()
+    else:
+        export_steps = set(export_steps)
+    registry = context.getImportStepRegistry()
+    persistent_steps = registry.listSteps()
+    zcml_steps = _import_step_registry.listSteps()
+    duplicated = set([s for s in persistent_steps if s in zcml_steps])
+    remove = duplicated.union(import_steps)
+    for step in remove:
+        if step in registry._registered:
+            registry.unregisterStep(step)
+    registry = context.getExportStepRegistry()
+    persistent_steps = registry.listSteps()
+    zcml_steps = _export_step_registry.listSteps()
+    duplicated = set([s for s in persistent_steps if s in zcml_steps])
+    remove = duplicated.union(export_steps)
+    for step in remove:
+        if step in registry._registered:
+            registry.unregisterStep(step)
+    context._p_changed = True

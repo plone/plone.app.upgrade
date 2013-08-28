@@ -12,8 +12,6 @@ from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
 from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
-from Products.GenericSetup.registry import _export_step_registry
-from Products.GenericSetup.registry import _import_step_registry
 from Products.MailHost.MailHost import MailHost
 from Products.MailHost.interfaces import IMailHost
 from zExceptions import NotFound
@@ -21,6 +19,7 @@ from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import unregisterSteps
 from Products.CMFCore.Expression import Expression
 
 
@@ -304,28 +303,13 @@ def unregisterOldSteps(context):
         'plone_various',
         'various',
     ]
-    registry = context.getImportStepRegistry()
-    persistent_steps = registry.listSteps()
-    zcml_steps = _import_step_registry.listSteps()
-    duplicated = [s for s in persistent_steps if s in zcml_steps]
-    remove = duplicated + _REMOVE_IMPORT_STEPS
-    for step in remove:
-        if step in registry._registered:
-            registry.unregisterStep(step)
     _REMOVE_EXPORT_STEPS = [
         'caching_policy_mgr',
         'cookieauth',
         'step_registries',
     ]
-    registry = context.getExportStepRegistry()
-    persistent_steps = registry.listSteps()
-    zcml_steps = _export_step_registry.listSteps()
-    duplicated = [s for s in persistent_steps if s in zcml_steps]
-    remove = duplicated + _REMOVE_EXPORT_STEPS
-    for step in remove:
-        if step in registry._registered:
-            registry.unregisterStep(step)
-    context._p_changed = True
+    unregisterSteps(context, import_steps=_REMOVE_IMPORT_STEPS,
+                    export_steps=_REMOVE_EXPORT_STEPS)
 
 
 def cleanUpToolRegistry(context):

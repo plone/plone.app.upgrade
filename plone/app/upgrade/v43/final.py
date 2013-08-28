@@ -5,6 +5,8 @@ from zope.component import queryUtility
 from plone.contentrules.engine.interfaces import IRuleStorage
 from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved
 
+from plone.app.upgrade.utils import unregisterSteps
+
 logger = logging.getLogger('plone.app.upgrade')
 
 
@@ -30,3 +32,7 @@ def upgradeContentRulesNames(context):
 def upgradeTinyMCEAgain(context):
     qi = getToolByName(context, 'portal_quickinstaller')
     qi.upgradeProduct('Products.TinyMCE')
+
+
+def removePersistentKSSMimeTypeImportStep(context):
+    unregisterSteps(context, import_steps=['kss_mimetype'])
