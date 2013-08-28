@@ -4,6 +4,9 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Remove persistent kss_mimetype import step.
+  [maurits]
+
 - Fix name of Plone 5 zcml conditional feature to plone-5.
   [thet]
 
