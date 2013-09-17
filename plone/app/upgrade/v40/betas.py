@@ -35,7 +35,7 @@ def beta1_beta2(context):
 def updateSafeHTMLConfig(context):
     """Update the safe_html transform with the new config params, migrating existing config from Kupu."""
     transform = getToolByName(context, 'portal_transforms').safe_html
-    transform._tr_init(1) # load new config items
+    transform._tr_init(1)  # load new config items
     kupu_tool = getToolByName(context, 'kupu_library_tool', None)
     if kupu_tool is None:
         return
@@ -78,14 +78,14 @@ def updateIconMetadata(context):
         metadata = _catalog.data
         getIconPos = _catalog.schema.get('getIcon', None)
     typesToUpdate = {
-        'Document' : ('document_icon.gif', 'document_icon.png'),
-        'Event' : ('event_icon.gif', 'event_icon.png'),
-        'File' : ('file_icon.gif', 'file_icon.png'),
-        'Folder' : ('folder_icon.gif', 'folder_icon.png'),
-        'Image' : ('image_icon.gif', 'image_icon.png'),
-        'Link' : ('link_icon.gif', 'link_icon.png'),
-        'News Item' : ('newsitem_icon.gif', 'newsitem_icon.png'),
-        'Topic' : ('topic_icon.gif', 'topic_icon.png'),
+        'Document': ('document_icon.gif', 'document_icon.png'),
+        'Event': ('event_icon.gif', 'event_icon.png'),
+        'File': ('file_icon.gif', 'file_icon.png'),
+        'Folder': ('folder_icon.gif', 'folder_icon.png'),
+        'Image': ('image_icon.gif', 'image_icon.png'),
+        'Link': ('link_icon.gif', 'link_icon.png'),
+        'News Item': ('newsitem_icon.gif', 'newsitem_icon.png'),
+        'Topic': ('topic_icon.gif', 'topic_icon.png'),
     }
     ttool = getToolByName(context, 'portal_types')
     empty_icons = []
@@ -211,30 +211,36 @@ def beta4_beta5(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta4-4beta5')
 
+
 def beta5_rc1(context):
     """4.0beta5 -> 4.0rc1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta5-4rc1')
+
 
 def rc1_final(context):
     """4.0rc1 -> 4.0
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4rc1-4final')
 
+
 def four01(context):
     """4.0 -> 4.0.1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0-4.0.1')
+
 
 def four02(context):
     """4.0.1 -> 4.0.2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.1-4.0.2')
 
+
 def four03(context):
     """4.0.2 -> 4.0.3
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4.0.2-4.0.3')
+
 
 def four04(context):
     """4.0.3 -> 4.0.4
