@@ -4,6 +4,10 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Add use_uuid_as_userid site property in Plone 5.
+  Part of PLIP 13419.
+  [maurits]
+
 - Use lowercase for email login in Plone 5.
   Part of PLIP 13419.
   [maurits]

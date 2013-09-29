@@ -3,4 +3,13 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="plone">
 
+  <genericsetup:registerProfile
+      name="to50alpha1"
+      title="Upgrade profile for Plone 4.3.x to Plone 5.0alpha1"
+      description=""
+      directory="profiles/to_alpha1"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

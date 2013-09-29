@@ -2,7 +2,14 @@ import logging
 
 from Products.CMFCore.utils import getToolByName
 
+from plone.app.upgrade.utils import loadMigrationProfile
+
 logger = logging.getLogger('plone.app.upgrade')
+
+
+def to50alpha1(context):
+    """4.3 -> 5.0alpha1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50alpha1')
 
 
 def lowercase_email_login(context):

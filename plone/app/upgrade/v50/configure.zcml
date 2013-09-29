@@ -12,6 +12,12 @@
         profile="Products.CMFPlone:plone">
 
       <genericsetup:upgradeStep
+          title="Run to50alpha1 upgrade profile"
+          description=""
+          handler=".alphas.to50alpha1"
+          />
+
+      <genericsetup:upgradeStep
           title="Use lowercase for email login"
           description="If email is used as login name, lowercase the login names."
           handler=".alphas.lowercase_email_login"
