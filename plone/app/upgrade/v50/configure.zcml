@@ -11,11 +11,11 @@
         destination="5000"
         profile="Products.CMFPlone:plone">
 
-        <genericsetup:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
-            />
+      <genericsetup:upgradeStep
+          title="Use lowercase for email login"
+          description="If email is used as login name, lowercase the login names."
+          handler=".alphas.lowercase_email_login"
+          />
 
     </genericsetup:upgradeSteps>
 
