@@ -4,6 +4,9 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Add undeclared Products.TinyMCE dependency.
+  [timo]
+
 - Add use_uuid_as_userid site property in Plone 5.
   Part of PLIP 13419.
   [maurits]
