@@ -33,6 +33,10 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         self.failUnless(len(ctool.searchResults(SearchableText="welcome")) > 0)
 
     def testUpgradeTinyMCE(self):
+        # skip test in new Plones that don't install tinymce to begin with
+        if 'portal_tinymce' not in self.portal:
+            return
+
         alphas.upgradeTinyMCE(self.portal.portal_setup)
         jstool = getToolByName(self.portal, 'portal_javascripts')
         jsresourceids = jstool.getResourceIds()

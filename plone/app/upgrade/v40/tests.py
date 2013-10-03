@@ -279,6 +279,9 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         # it installs (the profile is marked as noninstallable, so we can't
         # ask the quick installer)
         skins_tool = getToolByName(self.portal, 'portal_skins')
+        if 'tinymce' not in skins_tool:
+            # Skip test in new Plones that don't have tinymce to begin with
+            return
         del skins_tool['tinymce']
         for i in range(2):
             loadMigrationProfile(self.portal, self.profile)
