@@ -2,11 +2,14 @@ from zope.component import getAdapters, queryMultiAdapter
 from zope.contentprovider.interfaces import IContentProvider
 from zope.viewlet.interfaces import IViewlet
 
-from Products.CMFCore.utils import getToolByName
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import getFSVersionTuple
 
 import alphas
+
+PLONE5 = getFSVersionTuple()[0] >= 5
 
 
 class TestMigrations_v4_3alpha1(MigrationTest):
@@ -67,7 +70,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         alphas.upgradePloneAppTheming(self.portal.portal_setup)
 
         registry = getUtility(IRegistry)
-        self.assertRaises(KeyError, registry.forInterface, IThemeSettings)
+        if not PLONE5:
+            self.assertRaises(KeyError, registry.forInterface, IThemeSettings)
 
     def testInstallThemingPreviouslyInstalled(self):
         from plone.app.theming.interfaces import IThemeSettings
