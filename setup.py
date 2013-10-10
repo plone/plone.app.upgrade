@@ -36,7 +36,6 @@ setup(name='plone.app.upgrade',
             'plone.app.redirector',
             'plone.app.viewletmanager',
             'plone.app.theming',
-            'plonetheme.classic',
             'plonetheme.sunburst',
         ]
       ),

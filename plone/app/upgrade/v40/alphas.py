@@ -63,6 +63,14 @@ def threeX_alpha1(context):
     loadMigrationProfile(
         context, 'profile-Products.CMFPlone:dependencies',
         steps=('controlpanel', 'jsregistry'))
+    # Install plonetheme.classic profile
+    # (if, installed, it will be removed in Plone 5)
+    qi = getToolByName(context, 'portal_quickinstaller')
+    if 'plonetheme.classic' in qi:
+        stool = getToolByName(context, 'portal_setup')
+        stool.runAllImportStepsFromProfile(
+            'profile-plonetheme.classic:default'
+        )
 
 
 def restoreTheme(context):
