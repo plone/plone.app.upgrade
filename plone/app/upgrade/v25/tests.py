@@ -94,7 +94,7 @@ class TestMigrations_v2_5_1(MigrationTest):
         cookie_auth = self.portal.acl_users.credentials_cookie_auth
         cookie_auth.manage_changeProperties(login_path='foo')
         setLoginFormInCookieAuth(self.portal)
-        self.assertFalseEqual(cookie_auth.getProperty('login_path'),
+        self.assertEqual(cookie_auth.getProperty('login_path'),
                          'require_login')
 
 class TestMigrations_v2_5_2(MigrationTest):
