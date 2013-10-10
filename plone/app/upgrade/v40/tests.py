@@ -388,22 +388,22 @@ class TestMigrations_v4_0alpha5(MigrationTest):
             obj = portal[id]
             obj._setPortalTypeName('Large Plone Folder')
             obj.reindexObject()
-            self.assertEquals(obj.portal_type, 'Large Plone Folder')
+            self.assertEqual(obj.portal_type, 'Large Plone Folder')
             # Type falls back to meta_type since there's no
             # Large Plone Folder FTI
-            self.assertEquals(obj.Type(), 'ATFolder')
+            self.assertEqual(obj.Type(), 'ATFolder')
             brain, = catalog(getId=id)
-            self.assertEquals(brain.portal_type, 'Large Plone Folder')
-            self.assertEquals(brain.Type, 'ATFolder')
+            self.assertEqual(brain.portal_type, 'Large Plone Folder')
+            self.assertEqual(brain.Type, 'ATFolder')
         # migrate & check again...
         updateLargeFolderType(self.portal)
         for id in ids:
             obj = portal[id]
-            self.assertEquals(obj.portal_type, 'Folder')
-            self.assertEquals(obj.Type(), 'Folder')
+            self.assertEqual(obj.portal_type, 'Folder')
+            self.assertEqual(obj.Type(), 'Folder')
             brain, = catalog(getId=id)
-            self.assertEquals(brain.portal_type, 'Folder')
-            self.assertEquals(brain.Type, 'Folder')
+            self.assertEqual(brain.portal_type, 'Folder')
+            self.assertEqual(brain.Type, 'Folder')
 
     def testAddRecursiveGroupsPlugin(self):
         acl = getToolByName(self.portal, 'acl_users')
@@ -506,7 +506,7 @@ class TestMigrations_v4_0beta2(MigrationTest):
         updateIconMetadata(self.portal)
         # The getIcon column should now be empty
         self.assertEqual(catalog(id='front-page')[0].getIcon, '')
-        self.assertEquals(front.modified(), old_modified)
+        self.assertEqual(front.modified(), old_modified)
 
 
 class TestMigrations_v4_0beta4(MigrationTest):

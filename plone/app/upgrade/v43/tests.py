@@ -23,7 +23,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
 
     def testAddDisplayPublicationDateInBylineProperty(self):
         pprop = getToolByName(self.portal, 'portal_properties')
-        self.assertEquals(
+        self.assertEqual(
             pprop.site_properties.getProperty('displayPublicationDateInByline'),
             False)
 
@@ -107,11 +107,11 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         # Change title of both, shouldn't be reindexed yet
         portal['accidentally-fall'].title = 'fell'
         portal['num-title'].title = '9 green bottles, hanging on the wall'
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
             '10 green bottles, hanging on the wall',
         )
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['accidentally-fall'].id)[0].Title,
             'And if one green bottle should accidentally fall',
         )
@@ -119,11 +119,11 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         # Only the numerical title got reindexed
         portal.portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
         alphas.reindex_sortable_title(portal.portal_setup)
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
             '9 green bottles, hanging on the wall'
         )
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['accidentally-fall'].id)[0].Title,
             'And if one green bottle should accidentally fall',
         )

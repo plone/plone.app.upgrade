@@ -155,34 +155,34 @@ class TestMigrations_v3_0_Actions(MigrationTest):
             self.failUnless(isinstance(reply, Action))
             # Verify all data has been upgraded correctly to the new Action
             data = reply.getInfoData()[0]
-            self.assertEquals(data['category'], 'reply_actions')
-            self.assertEquals(data['title'], 'Reply')
-            self.assertEquals(data['visible'], True)
-            self.assertEquals(data['permissions'], (AccessInactivePortalContent, ))
-            self.assertEquals(data['available'].text, 'context/replyAllowed')
-            self.assertEquals(data['url'].text, 'context/reply')
+            self.assertEqual(data['category'], 'reply_actions')
+            self.assertEqual(data['title'], 'Reply')
+            self.assertEqual(data['visible'], True)
+            self.assertEqual(data['permissions'], (AccessInactivePortalContent, ))
+            self.assertEqual(data['available'].text, 'context/replyAllowed')
+            self.assertEqual(data['url'].text, 'context/reply')
             # Make sure the original action has been removed
             self.assertEqual(len(self.discussion._actions), 0)
 
     def testUpdateActionsI18NDomain(self):
         migrateOldActions(self.portal)
         reply = self.actions.reply_actions.reply
-        self.assertEquals(reply.i18n_domain, '')
+        self.assertEqual(reply.i18n_domain, '')
         # Test it twice
         for i in range(2):
             updateActionsI18NDomain(self.portal)
-            self.assertEquals(reply.i18n_domain, 'plone')
+            self.assertEqual(reply.i18n_domain, 'plone')
 
     def testUpdateActionsI18NDomainNonAscii(self):
         migrateOldActions(self.portal)
         reply = self.actions.reply_actions.reply
         reply.title = 'Foo\xc3'
-        self.assertEquals(reply.i18n_domain, '')
-        self.assertEquals(reply.title, 'Foo\xc3')
+        self.assertEqual(reply.i18n_domain, '')
+        self.assertEqual(reply.title, 'Foo\xc3')
 
         updateActionsI18NDomain(self.portal)
 
-        self.assertEquals(reply.i18n_domain, '')
+        self.assertEqual(reply.i18n_domain, '')
 
     def testHistoryActionID(self):
         # Test it twice
@@ -266,7 +266,7 @@ class TestMigrations_v2_5_x(MigrationTest):
         # Test it twice
         for i in range(2):
             updateFTII18NDomain(self.portal)
-            self.assertEquals(doc.i18n_domain, 'plone')
+            self.assertEqual(doc.i18n_domain, 'plone')
 
     def testUpdateFTII18NDomainNonAscii(self):
         doc = self.types.Document
@@ -275,7 +275,7 @@ class TestMigrations_v2_5_x(MigrationTest):
         # Update FTI's
         updateFTII18NDomain(self.portal)
         # domain should have been updated
-        self.assertEquals(doc.i18n_domain, '')
+        self.assertEqual(doc.i18n_domain, '')
 
     def testAddNewCSSFiles(self):
         cssreg = self.portal.portal_css
@@ -303,7 +303,7 @@ class TestMigrations_v2_5_x(MigrationTest):
             loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
             self.failUnless(self.properties.site_properties.hasProperty('forbidden_contenttypes'))
             self.failUnless(self.properties.site_properties.hasProperty('default_contenttype'))
-            self.assertEquals(self.properties.site_properties.forbidden_contenttypes,
+            self.assertEqual(self.properties.site_properties.forbidden_contenttypes,
                 ('text/structured', 'text/restructured', 'text/x-rst',
                 'text/plain', 'text/plain-pre', 'text/x-python',
                 'text/x-web-markdown', 'text/x-web-intelligent', 'text/x-web-textile')
@@ -344,22 +344,22 @@ class TestMigrations_v2_5_x(MigrationTest):
         for i in range(2):
             convertLegacyPortlets(self.portal)
 
-            self.assertEquals(self.portal.left_slots, [])
-            self.assertEquals(self.portal.right_slots, [])
+            self.assertEqual(self.portal.left_slots, [])
+            self.assertEqual(self.portal.right_slots, [])
 
             lp = left.values()
-            self.assertEquals(2, len(lp))
+            self.assertEqual(2, len(lp))
 
             self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
             self.failUnless(isinstance(lp[1], portlets.news.Assignment))
 
             rp = right.values()
-            self.assertEquals(1, len(rp))
+            self.assertEqual(1, len(rp))
             self.failUnless(isinstance(rp[0], portlets.login.Assignment))
 
             members = self.portal.Members
             portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-            self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
+            self.assertEqual(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
 
     def testLegacyPortletsConvertedNoSlots(self):
         self.setRoles(('Manager',))
@@ -384,20 +384,20 @@ class TestMigrations_v2_5_x(MigrationTest):
 
         convertLegacyPortlets(self.portal)
 
-        self.assertEquals(self.portal.left_slots, [])
+        self.assertEqual(self.portal.left_slots, [])
 
         lp = left.values()
-        self.assertEquals(2, len(lp))
+        self.assertEqual(2, len(lp))
 
         self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
         self.failUnless(isinstance(lp[1], portlets.news.Assignment))
 
         rp = right.values()
-        self.assertEquals(0, len(rp))
+        self.assertEqual(0, len(rp))
 
         members = self.portal.Members
         portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
+        self.assertEqual(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
 
     def testLegacyPortletsConvertedBadSlots(self):
         self.setRoles(('Manager',))
@@ -421,22 +421,22 @@ class TestMigrations_v2_5_x(MigrationTest):
 
         convertLegacyPortlets(self.portal)
 
-        self.assertEquals(self.portal.left_slots, [])
-        self.assertEquals(self.portal.right_slots, [])
+        self.assertEqual(self.portal.left_slots, [])
+        self.assertEqual(self.portal.right_slots, [])
 
         lp = left.values()
-        self.assertEquals(2, len(lp))
+        self.assertEqual(2, len(lp))
 
         self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
         self.failUnless(isinstance(lp[1], portlets.news.Assignment))
 
         rp = right.values()
-        self.assertEquals(1, len(rp))
+        self.assertEqual(1, len(rp))
         self.failUnless(isinstance(rp[0], portlets.login.Assignment))
 
         members = self.portal.Members
         portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
+        self.assertEqual(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
 
     def testLegacyPortletsConvertedNoMembersFolder(self):
         self.setRoles(('Manager',))
@@ -460,17 +460,17 @@ class TestMigrations_v2_5_x(MigrationTest):
 
         convertLegacyPortlets(self.portal)
 
-        self.assertEquals(self.portal.left_slots, [])
-        self.assertEquals(self.portal.right_slots, [])
+        self.assertEqual(self.portal.left_slots, [])
+        self.assertEqual(self.portal.right_slots, [])
 
         lp = left.values()
-        self.assertEquals(2, len(lp))
+        self.assertEqual(2, len(lp))
 
         self.failUnless(isinstance(lp[0], portlets.recent.Assignment))
         self.failUnless(isinstance(lp[1], portlets.news.Assignment))
 
         rp = right.values()
-        self.assertEquals(1, len(rp))
+        self.assertEqual(1, len(rp))
         self.failUnless(isinstance(rp[0], portlets.login.Assignment))
 
     def testRegisterToolsAsUtilities(self):
@@ -586,9 +586,9 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
         # Test it twice
         for i in range(2):
             migrateLocalroleForm(self.portal)
-            self.assertEquals('@@sharing', fti.getMethodAliases()['sharing'])
+            self.assertEqual('@@sharing', fti.getMethodAliases()['sharing'])
             test_action = fti.listActions()[-1]
-            self.assertEquals('string:${object_url}/@@sharing', test_action.getActionExpression())
+            self.assertEqual('string:${object_url}/@@sharing', test_action.getActionExpression())
 
     def testReorderUserActions(self):
         self.actions.user.moveObjectsToTop(['logout', 'undo', 'join'])
@@ -695,17 +695,17 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         for i in range(2):
             loadMigrationProfile(self.portal, self.profile, ('properties', ))
             self.failUnless(self.portal.hasProperty('email_charset'))
-            self.assertEquals(self.portal.getProperty('email_charset'), 'utf-8')
+            self.assertEqual(self.portal.getProperty('email_charset'), 'utf-8')
 
     def testUpdateMemberSecurity(self):
         pprop = getToolByName(self.portal, 'portal_properties')
-        self.assertEquals(
+        self.assertEqual(
                 pprop.site_properties.getProperty('allowAnonymousViewAbout'),
                 False)
 
         pmembership = getToolByName(self.portal, 'portal_membership')
-        self.assertEquals(pmembership.memberareaCreationFlag, False)
-        self.assertEquals(self.portal.getProperty('validate_email'), True)
+        self.assertEqual(pmembership.memberareaCreationFlag, False)
+        self.assertEqual(self.portal.getProperty('validate_email'), True)
 
         app_roles = self.portal.rolesOfPermission(permission='Add portal member')
         app_perms = self.portal.permission_settings(permission='Add portal member')
@@ -743,12 +743,12 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         # test it twice
         for i in range(2):
             updateConfigletTitles(self.portal)
-            self.assertEquals(collection.title, 'Collection')
-            self.assertEquals(language.title, 'Language')
-            self.assertEquals(navigation.title, 'Navigation')
-            self.assertEquals(types.title, 'Types')
-            self.assertEquals(users.title, 'Users and Groups')
-            self.assertEquals(users2.title, 'Users and Groups')
+            self.assertEqual(collection.title, 'Collection')
+            self.assertEqual(language.title, 'Language')
+            self.assertEqual(navigation.title, 'Navigation')
+            self.assertEqual(types.title, 'Types')
+            self.assertEqual(users.title, 'Users and Groups')
+            self.assertEqual(users2.title, 'Users and Groups')
 
     def testAddCacheForResourceRegistry(self):
         ram_cache_id = 'ResourceRegistryCache'
@@ -791,7 +791,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         for i in range(2):
             restorePloneTool(self.portal)
             tool = self.portal.plone_utils
-            self.assertEquals('Plone Utility Tool', tool.meta_type)
+            self.assertEqual('Plone Utility Tool', tool.meta_type)
 
     def testInstallPloneLanguageTool(self):
         super(self.portal.__class__, self.portal).manage_delObjects(
@@ -843,13 +843,13 @@ class TestMigrations_v3_0(MigrationTest):
     def testChangeOrderOfActionProviders(self):
         self.actions.deleteActionProvider('portal_types')
         self.actions.addActionProvider('portal_types')
-        self.assertEquals(
+        self.assertEqual(
             self.actions.listActionProviders(),
             ('portal_workflow', 'portal_actions', 'portal_types'))
         # Test it twice
         for i in range(2):
             changeOrderOfActionProviders(self.portal)
-            self.assertEquals(
+            self.assertEqual(
                 self.actions.listActionProviders(),
                 ('portal_workflow', 'portal_types', 'portal_actions'))
 
@@ -974,8 +974,8 @@ class TestMigrations_v3_0(MigrationTest):
         for i in range(2):
             addContributorToCreationPermissions(self.portal)
             roles = sorted([r['name'] for r in self.portal.rolesOfPermission('Add portal content') if r['selected']])
-            self.assertEquals(['Contributor', 'Manager'], roles)
-            self.assertEquals(False, bool(self.portal.acquiredRolesAreUsedBy('Add portal content')))
+            self.assertEqual(['Contributor', 'Manager'], roles)
+            self.assertEqual(False, bool(self.portal.acquiredRolesAreUsedBy('Add portal content')))
 
     def testAddBeta2VersioningPermissionsToNewRoles(self):
         # This upgrade just uses GS to apply the role changes,
@@ -1031,8 +1031,8 @@ class TestMigrations_v3_0(MigrationTest):
         for i in range(2):
             addEditorToSecondaryEditorPermissions(self.portal)
             roles = sorted([r['name'] for r in self.portal.rolesOfPermission('Manage properties') if r['selected']])
-            self.assertEquals(['Editor', 'Manager'], roles)
-            self.assertEquals(False, bool(self.portal.acquiredRolesAreUsedBy('Manage properties')))
+            self.assertEqual(['Editor', 'Manager'], roles)
+            self.assertEqual(False, bool(self.portal.acquiredRolesAreUsedBy('Manage properties')))
 
     def testUpdateEditActionConditionForLocking(self):
         lockable_types = ['Document', 'Event', 'File', 'Folder',
@@ -1049,7 +1049,7 @@ class TestMigrations_v3_0(MigrationTest):
                 fti = self.types.getTypeInfo(contentType)
                 for action in fti.listActions():
                     if action.getId() == 'edit':
-                        self.assertEquals(action.condition.text,
+                        self.assertEqual(action.condition.text,
                             "not:object/@@plone_lock_info/is_locked_for_current_user|python:True")
 
     def testUpdateEditExistingActionConditionForLocking(self):
@@ -1063,7 +1063,7 @@ class TestMigrations_v3_0(MigrationTest):
             fti = self.types.getTypeInfo('Document')
             for action in fti.listActions():
                 if action.getId() == 'edit':
-                    self.assertEquals(action.condition.text, 'foo')
+                    self.assertEqual(action.condition.text, 'foo')
 
     def testAddOnFormUnloadRegistrationJS(self):
         jsreg = self.portal.portal_javascripts

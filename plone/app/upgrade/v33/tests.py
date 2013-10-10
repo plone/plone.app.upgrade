@@ -16,7 +16,7 @@ class TestMigrations_v3_3(MigrationTest):
     def testRedirectLinksProperty(self):
         del self.properties.site_properties.redirect_links
         self._upgrade()
-        self.assertEquals(True,
+        self.assertEqual(True,
             self.properties.site_properties.getProperty('redirect_links'))
 
     def testLinkDefaultView(self):
@@ -70,11 +70,11 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         ids = 'news', 'events', 'Members'
         for id in ids:
             obj = oldsite[id]
-            self.assertEquals(obj.portal_type, 'Large Plone Folder')
-            self.assertEquals(obj.Type(), 'Large Folder')
+            self.assertEqual(obj.portal_type, 'Large Plone Folder')
+            self.assertEqual(obj.Type(), 'Large Folder')
             brain, = oldsite.portal_catalog(getId=id)   # asserts only one
-            self.assertEquals(brain.portal_type, 'Large Plone Folder')
-            self.assertEquals(brain.Type, 'Large Folder')
+            self.assertEqual(brain.portal_type, 'Large Plone Folder')
+            self.assertEqual(brain.Type, 'Large Folder')
         # now let's migrate...
         oldsite, result = self.migrate()
         self.failIf(oldsite.portal_migration.needUpgrading())
@@ -84,13 +84,13 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
             obj = oldsite[id]
             self.failUnless(IOrderableFolder.providedBy(obj),
                 '%s not orderable?' % id)
-            self.assertEquals(obj._ordering, 'unordered',
+            self.assertEqual(obj._ordering, 'unordered',
                 '%s has no `_ordering`?' % id)
-            self.assertEquals(obj.portal_type, 'Folder')
-            self.assertEquals(obj.Type(), 'Folder')
+            self.assertEqual(obj.portal_type, 'Folder')
+            self.assertEqual(obj.Type(), 'Folder')
             brain, = oldsite.portal_catalog(getId=id)   # asserts only one
-            self.assertEquals(brain.portal_type, 'Folder')
-            self.assertEquals(brain.Type, 'Folder')
+            self.assertEqual(brain.portal_type, 'Folder')
+            self.assertEqual(brain.Type, 'Folder')
 
 
 def test_suite():
