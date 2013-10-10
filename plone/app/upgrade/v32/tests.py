@@ -14,7 +14,7 @@ class TestMigrations_v3_2(MigrationTest):
         self.actions.object_buttons.iterate_checkin.permissions = (
             'Modify portal content',)
         three1_beta1(self.portal)
-        self.failUnlessEqual(
+        self.assertEqual(
             self.actions.object_buttons.iterate_checkin.permissions,
             ('iterate : Check in content',))
 
@@ -22,7 +22,7 @@ class TestMigrations_v3_2(MigrationTest):
         self.qi.installProduct('plone.app.iterate')
         self.actions.object_buttons.manage_delObjects(['iterate_checkin'])
         three1_beta1(self.portal)
-        self.failIf('iterate_checkin' in
+        self.assertFalse('iterate_checkin' in
                     self.actions.object_buttons.objectIds())
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
@@ -32,22 +32,22 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2500)
+        # self.assertTrue(len_diff <= 2500)
 
     def testFullUpgrade(self):
         self.importFile(__file__, 'test-full.zexp')
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2700)
+        # self.assertTrue(len_diff <= 2700)
 
 
 def test_suite():

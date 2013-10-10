@@ -13,11 +13,11 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2700)
+        # self.assertTrue(len_diff <= 2700)
 
 
 class MigrationUnitTests(unittest.TestCase):

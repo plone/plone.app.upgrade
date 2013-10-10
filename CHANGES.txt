@@ -4,6 +4,9 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Replace deprecated test assert statements.
+  [timo]
+
 - Add undeclared Products.TinyMCE dependency.
   [timo]
 

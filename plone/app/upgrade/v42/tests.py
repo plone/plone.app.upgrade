@@ -13,11 +13,11 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2700)
+        # self.assertTrue(len_diff <= 2700)
 
 
 
@@ -28,7 +28,7 @@ class TestMigrations_v4_2beta1(MigrationTest):
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
-        self.failUnless(True)
+        self.assertTrue(True)
 
     def testAddSiteAdminToKeywordRoles(self):
         ptool = self.portal.portal_properties

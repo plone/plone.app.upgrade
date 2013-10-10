@@ -20,10 +20,10 @@ class TestMigrations_v2_5_0(MigrationTest):
     def testRemovePloneCssFromRR(self):
         # Check to ensure that plone.css gets removed from portal_css
         self.css.registerStylesheet('plone.css', media='all')
-        self.failUnless('plone.css' in self.css.getResourceIds())
+        self.assertTrue('plone.css' in self.css.getResourceIds())
         loadMigrationProfile(self.portal, self.profile, ('cssregistry', ))
         # plone.css removcal test
-        self.failIf('plone.css' in self.css.getResourceIds())
+        self.assertFalse('plone.css' in self.css.getResourceIds())
 
     def testAddEventRegistrationJS(self):
         # Make sure event registration is added
@@ -31,14 +31,14 @@ class TestMigrations_v2_5_0(MigrationTest):
         # unregister first
         jsreg.unregisterResource('event-registration.js')
         script_ids = jsreg.getResourceIds()
-        self.failIf('event-registration.js' in script_ids)
+        self.assertFalse('event-registration.js' in script_ids)
         loadMigrationProfile(self.portal, self.profile, ('jsregistry', ))
         # event registration test
         script_ids = jsreg.getResourceIds()
-        self.failUnless('event-registration.js' in script_ids)
+        self.assertTrue('event-registration.js' in script_ids)
         after = jsreg.getResourcePosition('register_function.js')
         position = jsreg.getResourcePosition('event-registration.js')
-        self.failUnless(position < after)
+        self.assertTrue(position < after)
 
     def tesFixObjDeleteAction(self):
         # Prepare delete actions test
@@ -51,9 +51,9 @@ class TestMigrations_v2_5_0(MigrationTest):
                    if x.id in editActions]
         # check that all of our deleted actions are now present
         for a in editActions:
-            self.failUnless(a in actions)
+            self.assertTrue(a in actions)
         # ensure that they are present only once
-        self.failUnlessEqual(len(editActions), len(actions))
+        self.assertEqual(len(editActions), len(actions))
 
     def testFixupPloneLexicon(self):
         # Should update the plone_lexicon pipeline
@@ -62,8 +62,8 @@ class TestMigrations_v2_5_0(MigrationTest):
         # Test it twice
         for i in range(2):
             fixupPloneLexicon(self.portal)
-            self.failUnless(isinstance(lexicon._pipeline[0], Splitter))
-            self.failUnless(isinstance(lexicon._pipeline[1], CaseNormalizer))
+            self.assertTrue(isinstance(lexicon._pipeline[0], Splitter))
+            self.assertTrue(isinstance(lexicon._pipeline[1], CaseNormalizer))
 
 
 class TestMigrations_v2_5_1(MigrationTest):
@@ -80,7 +80,7 @@ class TestMigrations_v2_5_1(MigrationTest):
     def testSetLoginFormInCookieAuth(self):
         setLoginFormInCookieAuth(self.portal)
         cookie_auth = self.portal.acl_users.credentials_cookie_auth
-        self.failUnlessEqual(cookie_auth.getProperty('login_path'),
+        self.assertEqual(cookie_auth.getProperty('login_path'),
                              'require_login')
 
     def testSetLoginFormNoCookieAuth(self):
@@ -94,7 +94,7 @@ class TestMigrations_v2_5_1(MigrationTest):
         cookie_auth = self.portal.acl_users.credentials_cookie_auth
         cookie_auth.manage_changeProperties(login_path='foo')
         setLoginFormInCookieAuth(self.portal)
-        self.failIfEqual(cookie_auth.getProperty('login_path'),
+        self.assertFalseEqual(cookie_auth.getProperty('login_path'),
                          'require_login')
 
 class TestMigrations_v2_5_2(MigrationTest):
@@ -115,10 +115,10 @@ class TestMigrations_v2_5_2(MigrationTest):
         if types_to_delete:
             self.mimetypes.manage_delObjects(types_to_delete)
         # now they're gone:
-        self.failIf(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
+        self.assertFalse(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
         addMissingMimeTypes(self.portal)
         # now they're back:
-        self.failUnless(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
+        self.assertTrue(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
 
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
@@ -128,18 +128,18 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2800)
+        # self.assertTrue(len_diff <= 2800)
 
     def testDCMIStorageUpdated(self):
         self.importFile(__file__, 'test-base.zexp')
         oldsite, result = self.migrate()
 
         dcmi = getattr(oldsite.portal_metadata, 'DCMI', None)
-        self.failIf(dcmi is None)
+        self.assertFalse(dcmi is None)
 
 
 def test_suite():

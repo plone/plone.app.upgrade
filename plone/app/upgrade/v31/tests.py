@@ -29,11 +29,11 @@ class TestMigrations_v3_1(MigrationTest):
         if IPlacefulMarker.providedBy(self.wf):
             noLongerProvides(self.wf, IPlacefulMarker)
         reinstallCMFPlacefulWorkflow(self.portal, [])
-        self.failUnless(IPlacefulMarker.providedBy(self.wf))
+        self.assertTrue(IPlacefulMarker.providedBy(self.wf))
 
     def testReinstallCMFPlacefulWorkflowDoesNotInstall(self):
         reinstallCMFPlacefulWorkflow(self.portal, [])
-        self.failIf(self.qi.isProductInstalled('CMFPlacefulWorkflow'))
+        self.assertFalse(self.qi.isProductInstalled('CMFPlacefulWorkflow'))
 
     def testReinstallCMFPlacefulWorkflowNoTool(self):
         self.portal._delObject('portal_quickinstaller')
@@ -50,8 +50,8 @@ class TestMigrations_v3_1(MigrationTest):
         # Bring things back to normal
         replace_local_role_manager(self.portal)
         plugins = uf.plugins.listPlugins(ILocalRolesPlugin)
-        self.failUnlessEqual(len(plugins), 1)
-        self.failUnlessEqual(plugins[0][0], 'borg_localroles')
+        self.assertEqual(len(plugins), 1)
+        self.assertEqual(plugins[0][0], 'borg_localroles')
 
     def testReplaceLocalRoleManagerTwice(self):
         # first we replace the local role manager with the one from PlonePAS
@@ -65,8 +65,8 @@ class TestMigrations_v3_1(MigrationTest):
         replace_local_role_manager(self.portal)
         replace_local_role_manager(self.portal)
         plugins = uf.plugins.listPlugins(ILocalRolesPlugin)
-        self.failUnlessEqual(len(plugins), 1)
-        self.failUnlessEqual(plugins[0][0], 'borg_localroles')
+        self.assertEqual(len(plugins), 1)
+        self.assertEqual(plugins[0][0], 'borg_localroles')
 
     def testReplaceLocalRoleManagerNoPlugin(self):
         # first we replace the local role manager with the one from PlonePAS
@@ -80,8 +80,8 @@ class TestMigrations_v3_1(MigrationTest):
         # plugin is missing
         replace_local_role_manager(self.portal)
         plugins = uf.plugins.listPlugins(ILocalRolesPlugin)
-        self.failUnlessEqual(len(plugins), 1)
-        self.failUnlessEqual(plugins[0][0], 'borg_localroles')
+        self.assertEqual(len(plugins), 1)
+        self.assertEqual(plugins[0][0], 'borg_localroles')
 
     def testReplaceLocalRoleManagerNoPAS(self):
         uf = self.portal.acl_users
@@ -100,22 +100,22 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2600)
+        # self.assertTrue(len_diff <= 2600)
 
     def testFullUpgrade(self):
         self.importFile(__file__, 'test-full.zexp')
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
+        self.assertFalse(mig.needUpgrading())
 
         diff = self.export()
         len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2700)
+        # self.assertTrue(len_diff <= 2700)
 
 
 def test_suite():
