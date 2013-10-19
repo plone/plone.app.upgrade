@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<componentregistry>
+ <utilities>
+  <utility
+     interface="Products.CMFCore.interfaces.IUndoTool"
+     remove="true"/>
+  <utility
+     interface="plone.app.discussion.interfaces.ICommentingTool"
+     remove="true"/>
+ </utilities>
+</componentregistry>
