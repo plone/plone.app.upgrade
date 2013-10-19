@@ -13,7 +13,9 @@ def to50alpha1(context):
 
     # remove obsolete tools
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    portal.manage_delObjects(['portal_discussion', 'portal_undo'])
+    tools = ['portal_discussion', 'portal_undo']
+    tools = [t for t in tools if t in portal]
+    portal.manage_delObjects(tools)
 
 
 def lowercase_email_login(context):

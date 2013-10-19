@@ -127,9 +127,11 @@ class TestMigrations_v3_0_Actions(MigrationTest):
         self.actions = self.portal.portal_actions
         self.types = self.portal.portal_types
         self.workflow = self.portal.portal_workflow
+        self._migrate_reply_action()
 
+    def _migrate_reply_action(self):
         # Create dummy old ActionInformation
-        self.reply = ActionInformation('reply',
+        reply = ActionInformation('reply',
             title='Reply',
             category='reply_actions',
             condition='context/replyAllowed',
@@ -138,12 +140,15 @@ class TestMigrations_v3_0_Actions(MigrationTest):
             visible=True,
             action='context/reply'
         )
-        self.discussion = self.portal.portal_discussion
-        self.discussion._actions = (self.reply, )
+
+        from OFS.SimpleItem import SimpleItem
+        class DummyTool(SimpleItem):
+            pass
+        dummy = DummyTool()
+        dummy._actions = (reply,)
+        self.portal._setObject('dummy', dummy)
 
     def testMigrateActions(self):
-        self.assertEqual(self.discussion._actions, (self.reply, ))
-
         # Test it twice
         for i in range(2):
             migrateOldActions(self.portal)
@@ -161,7 +166,7 @@ class TestMigrations_v3_0_Actions(MigrationTest):
             self.assertEqual(data['available'].text, 'context/replyAllowed')
             self.assertEqual(data['url'].text, 'context/reply')
             # Make sure the original action has been removed
-            self.assertEqual(len(self.discussion._actions), 0)
+            self.assertEqual(len(self.portal.dummy._actions), 0)
 
     def testUpdateActionsI18NDomain(self):
         migrateOldActions(self.portal)
@@ -208,9 +213,8 @@ class TestMigrations_v3_0_Actions(MigrationTest):
             hidePropertiesAction(self.portal)
             self.assertTrue(ti.getActionObject("object/metadata") is None)
 
-    def beforeTearDown(self):
-        if len(self.discussion._actions) > 0:
-            self.discussion._actions = ()
+    def tearDown(self):
+        self.portal._delObject('dummy')
 
 
 class TestMigrations_v2_5_x(MigrationTest):
@@ -482,6 +486,9 @@ class TestMigrations_v2_5_x(MigrationTest):
                       IPortalTransformsTool, IDiscussionTool, )
         if HAS_ATCT:
             interfaces += (IATCTTool,)
+        if 'portal_discussion' not in self.portal:
+            from OFS.SimpleItem import SimpleItem
+            self.portal._setObject('portal_discussion', SimpleItem())
         for i in interfaces:
             sm.unregisterUtility(provided=i)
         registerToolsAsUtilities(self.portal)
