@@ -53,7 +53,7 @@ except ImportError:
 
 
 try:
-    import Products.CMFActionIconsTool
+    import Products.CMFActionIcons
 except ImportError:
     alias_module('Products.CMFPlone.ActionIconsTool', bbb)
     alias_module('Products.CMFActionIcons.interfaces', bbb)
