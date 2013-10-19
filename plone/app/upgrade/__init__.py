@@ -1,7 +1,6 @@
 import pkg_resources
 import sys
 from zope.interface import implements
-from zope.interface.interface import InterfaceClass
 from Products.CMFQuickInstallerTool.interfaces import INonInstallable
 from plone.app.upgrade.utils import alias_module
 
@@ -44,3 +43,10 @@ except ImportError:
 if 'products.kupu' not in pkg_resources.working_set.by_key:
     import kupu_bbb
     alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
+
+
+try:
+    from Products.CMFPlone import UndoTool
+except ImportError:
+    from plone.app.upgrade import bbb
+    sys.modules['Products.CMFPlone.UndoTool'] = bbb

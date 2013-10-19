@@ -11,6 +11,10 @@ def to50alpha1(context):
     """4.3 -> 5.0alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50alpha1')
 
+    # remove obsolete tools
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    portal.manage_delObjects(['portal_discussion', 'portal_undo'])
+
 
 def lowercase_email_login(context):
     """If email is used as login name, lowercase the login names.

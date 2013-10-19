@@ -44,7 +44,6 @@ from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.interfaces import ISkinsTool
 from Products.CMFCore.interfaces import ISyndicationTool
 from Products.CMFCore.interfaces import ITypesTool
-from Products.CMFCore.interfaces import IUndoTool
 from Products.CMFCore.interfaces import IURLTool
 from Products.CMFCore.interfaces import IConfigurableWorkflowTool
 from Products.CMFCore.ActionInformation import ActionInformation
@@ -477,7 +476,7 @@ class TestMigrations_v2_5_x(MigrationTest):
         sm = getSiteManager(self.portal)
         interfaces = (ISiteRoot, IPloneSiteRoot,
                       IActionIconsTool, ISyndicationTool,
-                      IMetadataTool, IPropertiesTool, IUndoTool, IMailHost,
+                      IMetadataTool, IPropertiesTool, IMailHost,
                       IUniqueIdAnnotationManagement, IUniqueIdGenerator,
                       IDiffTool, IMimetypesRegistryTool,
                       IPortalTransformsTool, IDiscussionTool, )
