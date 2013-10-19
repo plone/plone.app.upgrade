@@ -13,7 +13,7 @@ def to50alpha1(context):
 
     # remove obsolete tools
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    tools = ['portal_discussion', 'portal_undo']
+    tools = ['portal_actionicons', 'portal_discussion', 'portal_undo']
     tools = [t for t in tools if t in portal]
     portal.manage_delObjects(tools)
 

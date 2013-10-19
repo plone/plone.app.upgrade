@@ -49,11 +49,15 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
     def afterSetUp(self):
         self.atool = getToolByName(self.portal, 'portal_actions')
-        self.aitool = getToolByName(self.portal, 'portal_actionicons')
         self.cptool = getToolByName(self.portal, 'portal_controlpanel')
         self.wftool = getToolByName(self.portal, 'portal_workflow')
         self.csstool = getToolByName(self.portal, 'portal_css')
         self.jstool = getToolByName(self.portal, 'portal_javascripts')
+
+        if 'portal_actionicons' not in self.portal:
+            from plone.app.upgrade.bbb import ActionIconsTool
+            self.portal._setObject('portal_actionicons', ActionIconsTool())
+        self.aitool = self.portal.portal_actionicons
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -100,13 +104,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
         self.assertEqual(object_buttons.test_id.icon_expr, '')
         self.assertEqual(object_buttons.test2_id.icon_expr, '')
-        self.assertEqual(
-            self.aitool.getActionIcon('object_buttons', 'test_id'),
-            'test.gif')
         # Test it twice
         for i in range(2):
             migrateActionIcons(self.portal)
-            icons = [ic.getActionId() for ic in self.aitool.listActionIcons()]
+            icons = [ic._action_id for ic in self.aitool.listActionIcons()]
             self.assertFalse('test_id' in icons)
             self.assertFalse('test2_id' in icons)
             self.assertEqual(object_buttons.test_id.icon_expr,
@@ -136,12 +137,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
 
         action = self.cptool.getActionObject('Plone/test_id')
         self.assertEqual(action.getIconExpression(), '')
-        self.assertEqual(self.aitool.getActionIcon('controlpanel', 'test_id'),
-                         'test.gif')
         # Test it twice
         for i in range(2):
             migrateActionIcons(self.portal)
-            icons = [ic.getActionId() for ic in self.aitool.listActionIcons()]
+            icons = [ic._action_id for ic in self.aitool.listActionIcons()]
             self.assertFalse('test_id' in icons)
             self.assertEqual(action.getIconExpression(),
                              'string:$portal_url/test.gif')

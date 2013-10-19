@@ -221,9 +221,13 @@ class TestMigrations_v2_5_x(MigrationTest):
 
     def afterSetUp(self):
         self.profile = 'profile-plone.app.upgrade.v30:2.5.x-3.0a1'
-        self.icons = self.portal.portal_actionicons
         self.types = self.portal.portal_types
         self.properties = self.portal.portal_properties
+
+        for legacy_tool in ('portal_discussion', 'portal_actionicons'):
+            if legacy_tool not in self.portal:
+                from OFS.SimpleItem import SimpleItem
+                self.portal._setObject(legacy_tool, SimpleItem())
 
     def disableSite(self, obj, iface=ISite):
         # We need our own disableSite method as the CMF portal implements
@@ -486,9 +490,6 @@ class TestMigrations_v2_5_x(MigrationTest):
                       IPortalTransformsTool, IDiscussionTool, )
         if HAS_ATCT:
             interfaces += (IATCTTool,)
-        if 'portal_discussion' not in self.portal:
-            from OFS.SimpleItem import SimpleItem
-            self.portal._setObject('portal_discussion', SimpleItem())
         for i in interfaces:
             sm.unregisterUtility(provided=i)
         registerToolsAsUtilities(self.portal)
@@ -632,7 +633,6 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
     def afterSetUp(self):
         self.profile = 'profile-plone.app.upgrade.v30:3.0a2-3.0b1'
         self.actions = self.portal.portal_actions
-        self.icons = self.portal.portal_actionicons
         self.properties = self.portal.portal_properties
         self.cp = self.portal.portal_controlpanel
 
@@ -816,7 +816,6 @@ class TestMigrations_v3_0(MigrationTest):
     def afterSetUp(self):
         self.profile = 'profile-plone.app.upgrade.v30:3.0b1-3.0b2'
         self.actions = self.portal.portal_actions
-        self.icons = self.portal.portal_actionicons
         self.skins = self.portal.portal_skins
         self.types = self.portal.portal_types
         self.workflow = self.portal.portal_workflow
@@ -925,7 +924,6 @@ class TestMigrations_v3_0(MigrationTest):
 
     def testPloneS5(self):
         pt = getToolByName(self.portal, "portal_types")
-        ait = getToolByName(self.portal, "portal_actionicons")
         document = pt.restrictedTraverse('Document')
         document.addAction('s5_presentation',
             name='View as presentation',
@@ -935,23 +933,13 @@ class TestMigrations_v3_0(MigrationTest):
             category='document_actions',
             visible=1,
             )
-        ait.addActionIcon(
-            category='plone',
-            action_id='s5_presentation',
-            icon_expr='fullscreenexpand_icon.gif',
-            title='View as presentation',
-            )
         action_ids = [x.getId() for x in document.listActions()]
         self.assertTrue("s5_presentation" in action_ids)
-        icon_ids = [x.getActionId() for x in ait.listActionIcons()]
-        self.assertTrue("s5_presentation" in icon_ids)
         # Test it twice
         for i in range(2):
             removeS5Actions(self.portal)
             action_ids = [x.getId() for x in document.listActions()]
             self.assertFalse("s5_presentation" in action_ids)
-            icon_ids = [x.getActionId() for x in ait.listActionIcons()]
-            self.assertFalse("s5_presentation" in icon_ids)
 
     def testAddContributorToCreationPermissions(self):
         self.portal._delRoles(['Contributor',])

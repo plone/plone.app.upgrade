@@ -4,6 +4,10 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Remove portal_actionicons, portal_discussion, and portal_undo when
+  upgrading to Plone 5.
+  [davisagli]
+
 - Add condition to the upgrade step to add scaling-quality 4.3-final.
   plone.app.imaging no longer has the imaging_properties (moved to CMFPlone)
   so they are not there in plone5-tests.

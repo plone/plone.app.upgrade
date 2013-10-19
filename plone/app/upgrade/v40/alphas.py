@@ -151,9 +151,9 @@ def migrateActionIcons(context):
     categories = atool.objectIds()
 
     for ic in aitool.listActionIcons():
-        cat = ic.getCategory()
-        ident = ic.getActionId()
-        expr = ic.getExpression()
+        cat = ic._category
+        ident = ic._action_id
+        expr = ic._icon_expr_text
         try:
             expr = str(expr)
         except UnicodeEncodeError:

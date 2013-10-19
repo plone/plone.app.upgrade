@@ -36,14 +36,6 @@ class MigrationTest(PloneTestCase):
                 if action_id in tool.objectIds() and IActionInfo.providedBy(tool._getOb(action_id)):
                     tool._delOb(action_id)
 
-    def removeActionIconFromTool(self, action_id, category='plone'):
-        # Removes an action icon from portal_actionicons
-        tool = getToolByName(self.portal, 'portal_actionicons')
-        try:
-            tool.removeActionIcon(category, action_id)
-        except KeyError:
-            pass # No icon associated
-
     def addResourceToJSTool(self, resource_name):
         # Registers a resource with the javascripts tool
         tool = getToolByName(self.portal, 'portal_javascripts')

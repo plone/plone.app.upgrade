@@ -2,6 +2,9 @@
 <componentregistry>
  <utilities>
   <utility
+     interface="Products.CMFActionIcons.interfaces.IActionIconsTool"
+     remove="true"/>
+  <utility
      interface="Products.CMFCore.interfaces.IUndoTool"
      remove="true"/>
   <utility
