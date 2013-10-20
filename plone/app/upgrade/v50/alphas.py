@@ -17,6 +17,12 @@ def to50alpha1(context):
     tools = [t for t in tools if t in portal]
     portal.manage_delObjects(tools)
 
+    # remove layers from Products.CMFPlone
+    layers_to_remove = ('plone_styles', )
+    skins_tool = getToolByName(context, 'portal_skins')
+    for layer in layers_to_remove:
+        del skins_tool[layer]
+
 
 def lowercase_email_login(context):
     """If email is used as login name, lowercase the login names.
