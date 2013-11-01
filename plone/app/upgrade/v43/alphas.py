@@ -43,7 +43,7 @@ def reindex_sortable_title(context):
         brain = _catalog[rid]
         try:
             obj = brain.getObject()
-        except AttributeError:
+        except (AttributeError, KeyError):
             continue
         if update_metadata:
             obj.reindexObject()
@@ -172,7 +172,7 @@ def upgradeSyndication(context):
     for brain in catalog(portal_type=tuple(folder_types)):
         try:
             obj = brain.getObject()
-        except AttributeError:
+        except (AttributeError, KeyError):
             continue
         if 'syndication_information' in obj.objectIds():
             # just having syndication info object means
