@@ -170,7 +170,10 @@ def upgradeSyndication(context):
         folder_types.add(_type.getId())
     folder_types = folder_types | getDexterityFolderTypes()
     for brain in catalog(portal_type=tuple(folder_types)):
-        obj = brain.getObject()
+        try:
+            obj = brain.getObject()
+        except AttributeError:
+            continue
         if 'syndication_information' in obj.objectIds():
             # just having syndication info object means
             # syndication is enabled
