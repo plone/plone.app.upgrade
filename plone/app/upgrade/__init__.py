@@ -47,6 +47,17 @@ if 'products.kupu' not in pkg_resources.working_set.by_key:
 
 
 try:
+    from Products.CMFPlone import DiscussionTool
+except ImportError:
+    sys.modules['Products.CMFPlone.DiscussionTool'] = bbb
+
+try:
+    from Products.CMFPlone import SyndicationTool
+except ImportError:
+    sys.modules['Products.CMFPlone.SyndicationTool'] = bbb
+
+
+try:
     from Products.CMFPlone import UndoTool
 except ImportError:    
     sys.modules['Products.CMFPlone.UndoTool'] = bbb

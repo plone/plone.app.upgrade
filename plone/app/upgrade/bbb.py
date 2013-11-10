@@ -3,8 +3,9 @@ from Products.CMFCore.utils import registerToolInterface
 from zope.interface import Interface
 
 
-class UndoTool(SimpleItem):
-    pass
+DiscussionTool = SimpleItem
+SyndicationTool = SimpleItem
+UndoTool = SimpleItem
 
 
 class IActionIconsTool(Interface):
