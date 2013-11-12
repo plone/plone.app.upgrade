@@ -8,6 +8,9 @@
      interface="Products.CMFCore.interfaces.IUndoTool"
      remove="true"/>
   <utility
+     interface="Products.CMFPlone.interfaces.IInterfaceTool"
+     remove="true"/>
+  <utility
      interface="plone.app.discussion.interfaces.ICommentingTool"
      remove="true"/>
  </utilities>

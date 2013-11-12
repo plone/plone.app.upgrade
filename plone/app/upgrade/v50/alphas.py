@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
+from Products.CMFCore.utils import getToolByName
+from plone.app.upgrade.utils import loadMigrationProfile
 import logging
 
-from Products.CMFCore.utils import getToolByName
-
-from plone.app.upgrade.utils import loadMigrationProfile
-
 logger = logging.getLogger('plone.app.upgrade')
+
+TOOLS_TO_REMOVE = ['portal_actionicons',
+                   'portal_interface',
+                   'portal_discussion',
+                   'portal_undo']
 
 
 def to50alpha1(context):
@@ -13,8 +17,7 @@ def to50alpha1(context):
 
     # remove obsolete tools
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    tools = ['portal_actionicons', 'portal_discussion', 'portal_undo']
-    tools = [t for t in tools if t in portal]
+    tools = [t for t in TOOLS_TO_REMOVE if t in portal]
     portal.manage_delObjects(tools)
 
 
