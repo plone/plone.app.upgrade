@@ -45,6 +45,10 @@ if 'products.kupu' not in pkg_resources.working_set.by_key:
     import kupu_bbb
     alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
 
+try:
+    from Products.CMFPlone import CalendarTool
+except ImportError:
+    sys.modules['Products.CMFPlone.CalendarTool'] = bbb
 
 try:
     from Products.CMFPlone import DiscussionTool
@@ -60,7 +64,6 @@ try:
     from Products.CMFPlone import SyndicationTool
 except ImportError:
     sys.modules['Products.CMFPlone.SyndicationTool'] = bbb
-
 
 try:
     from Products.CMFPlone import UndoTool

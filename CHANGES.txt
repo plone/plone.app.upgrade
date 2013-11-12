@@ -4,6 +4,9 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Install plone.app.event and remove portal_calendar when upgarding to Plone 5.
+  [davisagli]
+
 - Remove portal_interface when upgrading to Plone 5.
   [ale-rt]
 

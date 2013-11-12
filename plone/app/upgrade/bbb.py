@@ -3,6 +3,7 @@ from Products.CMFCore.utils import registerToolInterface
 from zope.interface import Interface
 
 
+CalendarTool = SimpleItem
 DiscussionTool = SimpleItem
 InterfaceTool = SimpleItem
 SyndicationTool = SimpleItem
