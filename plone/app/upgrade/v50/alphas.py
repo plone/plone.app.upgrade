@@ -24,8 +24,7 @@ def to50alpha1(context):
 
     # migrate first weekday setting
     portal_calendar = getattr(portal, 'portal_calendar', None)
-    setting = portal.portal_registry['plone.app.event.first_weekday']
-    if portal_calendar is not None and setting is None:
+    if portal_calendar is not None:
         first_weekday = getattr(portal.portal_calendar, 'firstweekday', 0)
         portal.portal_registry['plone.app.event.first_weekday'] = first_weekday
 
