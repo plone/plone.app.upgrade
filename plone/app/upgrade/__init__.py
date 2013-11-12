@@ -52,6 +52,11 @@ except ImportError:
     sys.modules['Products.CMFPlone.DiscussionTool'] = bbb
 
 try:
+    from Products.CMFPlone import InterfaceTool
+except ImportError:
+    sys.modules['Products.CMFPlone.InterfaceTool'] = bbb
+
+try:
     from Products.CMFPlone import SyndicationTool
 except ImportError:
     sys.modules['Products.CMFPlone.SyndicationTool'] = bbb

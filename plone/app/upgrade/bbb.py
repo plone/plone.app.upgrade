@@ -4,6 +4,7 @@ from zope.interface import Interface
 
 
 DiscussionTool = SimpleItem
+InterfaceTool = SimpleItem
 SyndicationTool = SimpleItem
 UndoTool = SimpleItem
 
