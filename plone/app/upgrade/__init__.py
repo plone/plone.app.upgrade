@@ -67,7 +67,7 @@ except ImportError:
 
 try:
     from Products.CMFPlone import UndoTool
-except ImportError:    
+except ImportError:
     sys.modules['Products.CMFPlone.UndoTool'] = bbb
 
 
@@ -84,3 +84,9 @@ try:
 except ImportError:
     from Products.ATContentTypes.tool import factory
     alias_module('Products.CMFPlone.FactoryTool', factory)
+
+try:
+    import Products.CMFPlone.MetadataTool
+except ImportError:
+    from Products.ATContentTypes.tool import metadata
+    alias_module('Products.CMFPlone.MetadataTool', metadata)
