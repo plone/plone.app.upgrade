@@ -149,6 +149,12 @@
             handler=".final.removePersistentKSSMimeTypeImportStep"
             />
 
+        <genericsetup:upgradeStep
+            title="Add default Plone password policy"
+            description=""
+            handler=".final.addDefaultPlonePasswordPolicy"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
