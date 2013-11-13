@@ -82,11 +82,24 @@ except ImportError:
 try:
     import Products.CMFPlone.FactoryTool
 except ImportError:
-    from Products.ATContentTypes.tool import factory
-    alias_module('Products.CMFPlone.FactoryTool', factory)
+    try:
+        pkg_resources.get_distribution('Products.ATContentTypes')
+    except:
+        from plone.app.upgrade import atcontentypes_bbb
+        alias_module('Products.CMFPlone.FactoryTool', atcontentypes_bbb)
+    else:
+        from Products.ATContentTypes.tool import factory
+        alias_module('Products.CMFPlone.FactoryTool', factory)
 
 try:
     import Products.CMFPlone.MetadataTool
+    Products.CMFPlone.MetadataTool  # pyflakes
 except ImportError:
-    from Products.ATContentTypes.tool import metadata
-    alias_module('Products.CMFPlone.MetadataTool', metadata)
+    try:
+        pkg_resources.get_distribution('Products.ATContentTypes')
+    except:
+        from plone.app.upgrade import atcontentypes_bbb
+        alias_module('Products.CMFPlone.MetadataTool', atcontentypes_bbb)
+    else:
+        from Products.ATContentTypes.tool import metadata
+        alias_module('Products.CMFPlone.MetadataTool', metadata)
