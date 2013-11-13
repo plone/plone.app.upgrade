@@ -67,7 +67,7 @@ except ImportError:
 
 try:
     from Products.CMFPlone import UndoTool
-except ImportError:    
+except ImportError:
     sys.modules['Products.CMFPlone.UndoTool'] = bbb
 
 
@@ -78,3 +78,28 @@ except ImportError:
     alias_module('Products.CMFActionIcons.interfaces', bbb)
     alias_module('Products.CMFActionIcons.interfaces._tools', bbb)
     alias_module('Products.CMFActionIcons.ActionIconsTool', bbb)
+
+try:
+    import Products.CMFPlone.FactoryTool
+except ImportError:
+    try:
+        pkg_resources.get_distribution('Products.ATContentTypes')
+    except:
+        from plone.app.upgrade import atcontentypes_bbb
+        alias_module('Products.CMFPlone.FactoryTool', atcontentypes_bbb)
+    else:
+        from Products.ATContentTypes.tool import factory
+        alias_module('Products.CMFPlone.FactoryTool', factory)
+
+try:
+    import Products.CMFPlone.MetadataTool
+    Products.CMFPlone.MetadataTool  # pyflakes
+except ImportError:
+    try:
+        pkg_resources.get_distribution('Products.ATContentTypes')
+    except:
+        from plone.app.upgrade import atcontentypes_bbb
+        alias_module('Products.CMFPlone.MetadataTool', atcontentypes_bbb)
+    else:
+        from Products.ATContentTypes.tool import metadata
+        alias_module('Products.CMFPlone.MetadataTool', metadata)
