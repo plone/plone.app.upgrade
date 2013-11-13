@@ -78,3 +78,9 @@ except ImportError:
     alias_module('Products.CMFActionIcons.interfaces', bbb)
     alias_module('Products.CMFActionIcons.interfaces._tools', bbb)
     alias_module('Products.CMFActionIcons.ActionIconsTool', bbb)
+
+try:
+    import Products.CMFPlone.FactoryTool
+except ImportError:
+    from Products.ATContentTypes.tool import factory
+    alias_module('Products.CMFPlone.FactoryTool', factory)
