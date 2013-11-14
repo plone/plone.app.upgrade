@@ -55,7 +55,6 @@ from Products.CMFEditions.interfaces.IRepository import IRepositoryTool
 from Products.CMFEditions.interfaces import IStorageTool
 from Products.CMFFormController.interfaces import IFormControllerTool
 from Products.CMFQuickInstallerTool.interfaces import IQuickInstallerTool
-from Products.CMFPlone.interfaces import IFactoryTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import ITranslationServiceTool
@@ -119,6 +118,11 @@ try:
     HAS_ATCT = True
 except ImportError:
     HAS_ATCT = False
+
+try:
+    from Products.CMFPlone.interfaces import IFactoryTool
+except:
+    from Products.ATContentTypes.interfaces import IFactoryTool
 
 
 class TestMigrations_v3_0_Actions(MigrationTest):
