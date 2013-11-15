@@ -38,3 +38,9 @@ def upgradeTinyMCEAgain(context):
 
 def removePersistentKSSMimeTypeImportStep(context):
     unregisterSteps(context, import_steps=['kss_mimetype'])
+
+
+def addDefaultPlonePasswordPolicy(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    from Products.PlonePAS.Extensions.Install import setupPasswordPolicyPlugin
+    setupPasswordPolicyPlugin(portal)

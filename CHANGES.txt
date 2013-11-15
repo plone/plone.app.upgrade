@@ -47,6 +47,9 @@ Changelog
 - Don't fail on out of date catalog when upgrading syndication for 4.3
   [tomgross]
 
+- Add Default Plone Password Policy to Plone's acl_users.
+  [gbastien]
+
 1.3.4 (2013-08-14)
 ------------------
 
