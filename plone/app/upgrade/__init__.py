@@ -2,8 +2,8 @@ import pkg_resources
 import sys
 from zope.interface import implements
 from Products.CMFQuickInstallerTool.interfaces import INonInstallable
-from plone.app.upgrade import bbb
 from plone.app.upgrade.utils import alias_module
+import bbb
 
 
 class HiddenProducts(object):
