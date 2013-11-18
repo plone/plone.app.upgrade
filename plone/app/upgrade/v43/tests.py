@@ -127,3 +127,23 @@ class TestMigrations_v4_3alpha1(MigrationTest):
             catalog(id=portal['accidentally-fall'].id)[0].Title,
             'And if one green bottle should accidentally fall',
         )
+
+
+class TestMigrations_v4_3final_to4308(MigrationTest):
+
+    def testAddDefaultPlonePasswordPolicy(self):
+        # this add the 'Default Plone Password Policy' to Plone's acl_users
+        portal = self.portal
+        # make sure the 'Default Plone Password Policy' does not exist in acl_users
+        portal.acl_users.manage_delObjects(ids=['password_policy', ])
+        self.assertFalse('password_policy' in portal.acl_users.objectIds())
+        # find the relevant upgrade step and execute it
+        from Products.GenericSetup.upgrade import listUpgradeSteps
+        relevantStep = [step for step in listUpgradeSteps(portal.portal_setup, \
+                                                          'Products.CMFPlone:plone',
+                                                          '4307')[0] if
+                        step['title'] == u'Add default Plone password policy'][0]
+        # execute the step
+        relevantStep['step'].handler(portal)
+        # now it has been added...
+        self.assertTrue('password_policy' in portal.acl_users.objectIds())
