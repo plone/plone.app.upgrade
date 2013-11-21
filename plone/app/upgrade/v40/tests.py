@@ -256,6 +256,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
     def testReplaceReferencebrowser(self):
         self.setRoles(['Manager'])
         skins_tool = getToolByName(self.portal, 'portal_skins')
+        if 'referencebrowser' not in skins_tool:
+            return
         sels = skins_tool._getSelections()
         for skinname, layer in sels.items():
             layers = layer.split(',')

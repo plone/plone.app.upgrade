@@ -66,12 +66,18 @@ def threeX_alpha1(context):
     # Install plonetheme.classic profile
     # (if, installed, it will be removed in Plone 5)
     qi = getToolByName(context, 'portal_quickinstaller')
+    stool = getToolByName(context, 'portal_setup')
     if 'plonetheme.classic' in qi:
-        stool = getToolByName(context, 'portal_setup')
         stool.runAllImportStepsFromProfile(
             'profile-plonetheme.classic:default'
         )
-
+    # Install archetypes.referencebrowserwidget
+    try:
+        stool.runAllImportStepsFromProfile(
+            'profile-archetypes.referencebrowserwidget:default',
+        )
+    except KeyError:
+        pass
 
 def restoreTheme(context):
     skins = getToolByName(context, 'portal_skins')
