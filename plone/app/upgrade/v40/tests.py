@@ -266,7 +266,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             new_layers = ','.join(layers)
             sels[skinname] = new_layers
 
-        loadMigrationProfile(self.portal, self.profile)
+        from .alphas import threeX_alpha1
+        threeX_alpha1(self.portal)
         setupReferencebrowser(self.portal)
 
         sels = skins_tool._getSelections()
