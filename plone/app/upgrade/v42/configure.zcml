@@ -100,7 +100,7 @@
           handler=".betas.to42rc2"
           />
     </genericsetup:upgradeSteps>
-    
+
     <genericsetup:upgradeSteps
         source="4205"
         destination="4206"
@@ -195,5 +195,18 @@
             handler="..utils.null_upgrade_step"
             />
     </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4212"
+        destination="4213"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+    </genericsetup:upgradeSteps>
+
 
 </configure>
