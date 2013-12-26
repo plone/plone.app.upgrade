@@ -4,6 +4,10 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Avoid failure at lexicon upgrade (4.3rc1)
+  when we have an integrity error into the ZCTextIndex.
+  [thomasdesvenain]
+
 - Install plone.app.event and remove portal_calendar when upgarding to Plone 5.
   [davisagli]
 
