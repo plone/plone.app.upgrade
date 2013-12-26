@@ -59,9 +59,11 @@ def upgradeToI18NCaseNormalizer(context):
     catalog = getToolByName(context, 'portal_catalog')
     for index in catalog.Indexes.objectValues():
         if IZCTextIndex.providedBy(index):
+            index_id = index.getId()
             logger.info("Reindex %s index with I18N Case Normalizer",\
-                        index.getId())
-            catalog.reindexIndex(index.getId(),\
+                        index_id)
+            catalog.manage_clearIndex([index_id])
+            catalog.reindexIndex(index_id,\
                                  aq_get(context, 'REQUEST', None))
         pass
 
