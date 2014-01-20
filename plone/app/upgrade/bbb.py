@@ -10,6 +10,10 @@ SyndicationTool = SimpleItem
 UndoTool = SimpleItem
 
 
+class ICalendarTool(Interface):
+    pass
+
+
 class IActionIconsTool(Interface):
     pass
 registerToolInterface('portal_actionicons', IActionIconsTool)

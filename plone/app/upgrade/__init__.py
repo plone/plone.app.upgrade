@@ -46,6 +46,11 @@ if 'products.kupu' not in pkg_resources.working_set.by_key:
     alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
 
 try:
+    from Products.CMFCalendar import interfaces
+except ImportError:
+    sys.modules['Products.CMFCalendar.interfaces'] = bbb
+
+try:
     from Products.CMFPlone import CalendarTool
 except ImportError:
     sys.modules['Products.CMFPlone.CalendarTool'] = bbb
