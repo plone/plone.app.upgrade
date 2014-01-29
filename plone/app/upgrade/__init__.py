@@ -48,7 +48,7 @@ if 'products.kupu' not in pkg_resources.working_set.by_key:
 try:
     from Products.CMFCalendar import interfaces
 except ImportError:
-    sys.modules['Products.CMFCalendar.interfaces'] = bbb
+    alias_module('Products.CMFCalendar.interfaces', bbb)
 
 try:
     from Products.CMFPlone import CalendarTool
