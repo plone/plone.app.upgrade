@@ -8,6 +8,11 @@ DiscussionTool = SimpleItem
 InterfaceTool = SimpleItem
 SyndicationTool = SimpleItem
 UndoTool = SimpleItem
+TinyMCE = SimpleItem
+
+
+class ITinyMCE(Interface):
+    pass
 
 
 class ICalendarTool(Interface):

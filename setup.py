@@ -71,7 +71,6 @@ setup(name='plone.app.upgrade',
         'Products.PlonePAS',
         'Products.PluggableAuthService',
         'Products.PortalTransforms',
-        'Products.TinyMCE',
         'Products.ResourceRegistries',
         'Products.SecureMailHost', # For migration only, when can we remove this?
         'Products.ZCatalog >= 2.13.4',
