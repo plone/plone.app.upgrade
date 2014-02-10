@@ -72,10 +72,12 @@ def threeX_alpha1(context):
             'profile-plonetheme.classic:default'
         )
     # Install Products.TinyMCE if it's available:
-    if 'Products.TinyMCE' in qi:
+    try:
         stool.runAllImportStepsFromProfile(
-            'profile-Products.TinyMCE:default'
+            'profile-Products.TinyMCE:TinyMCE'
         )
+    except KeyError:
+        pass
 
     # Install archetypes.referencebrowserwidget
     try:

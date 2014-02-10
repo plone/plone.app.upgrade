@@ -285,8 +285,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             # Skip test in new Plones that don't have tinymce to begin with
             return
         del skins_tool['tinymce']
+
+        from .alphas import threeX_alpha1
         for i in range(2):
-            loadMigrationProfile(self.portal, self.profile)
+            threeX_alpha1(self.portal)
             self.assertTrue('tinymce' in skins_tool)
             # sleep to avoid a GS log filename collision :-o
             time.sleep(1)
