@@ -2,8 +2,6 @@
 <metadata>
   <version>1</version>
   <dependencies>
-    <dependency>profile-plonetheme.sunburst:default</dependency>
-    <dependency>profile-Products.TinyMCE:TinyMCE</dependency>
     <dependency>profile-plone.app.jquerytools:default</dependency>
     <dependency>profile-plone.app.imaging:default</dependency>
   </dependencies>

@@ -33,7 +33,8 @@ def upgradeContentRulesNames(context):
 
 def upgradeTinyMCEAgain(context):
     qi = getToolByName(context, 'portal_quickinstaller')
-    qi.upgradeProduct('Products.TinyMCE')
+    if 'Products.TinyMCE' in qi:
+        qi.upgradeProduct('Products.TinyMCE')
 
 
 def removePersistentKSSMimeTypeImportStep(context):

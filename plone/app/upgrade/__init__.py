@@ -77,6 +77,13 @@ except ImportError:
 
 
 try:
+    import Products.TinyMCE
+except ImportError:
+    alias_module('Products.TinyMCE.utility', bbb)
+    alias_module('Products.TinyMCE.interfaces.utility', bbb)
+
+
+try:
     import Products.CMFActionIcons
 except ImportError:
     alias_module('Products.CMFPlone.ActionIconsTool', bbb)

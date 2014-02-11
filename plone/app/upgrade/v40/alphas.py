@@ -71,13 +71,15 @@ def threeX_alpha1(context):
         stool.runAllImportStepsFromProfile(
             'profile-plonetheme.classic:default'
         )
-    # Install archetypes.referencebrowserwidget
-    try:
-        stool.runAllImportStepsFromProfile(
-            'profile-archetypes.referencebrowserwidget:default',
-        )
-    except KeyError:
-        pass
+    # Install packages that are needed for Plone 4,
+    # but don't break on Plone 5 where they are gone
+    for profile in ('archetypes.referencebrowserwidget:default',
+            'plonetheme.sunburst:default',
+            'Products.TinyMCE:TinyMCE'):
+        try:
+            stool.runAllImportStepsFromProfile('profile-' + profile)
+        except KeyError:
+            pass
 
 def restoreTheme(context):
     skins = getToolByName(context, 'portal_skins')

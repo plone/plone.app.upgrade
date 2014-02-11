@@ -70,8 +70,12 @@ def upgradeToI18NCaseNormalizer(context):
 def upgradeTinyMCE(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
     """
-    from Products.TinyMCE.upgrades import upgrade_12_to_13
-    upgrade_12_to_13(context)
+    try:
+        from Products.TinyMCE.upgrades import upgrade_12_to_13
+    except ImportError:
+        pass
+    else:
+        upgrade_12_to_13(context)
 
 def upgradePloneAppTheming(context):
     """Re-install plone.app.theming if previously installed
@@ -225,4 +229,5 @@ def removeKSS(context):
 
 def upgradeTinyMCEAgain(context):
     qi = getToolByName(context, 'portal_quickinstaller')
-    qi.upgradeProduct('Products.TinyMCE')
+    if 'Products.TinyMCE' in qi:
+        qi.upgradeProduct('Products.TinyMCE')
