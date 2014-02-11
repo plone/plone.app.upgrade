@@ -25,21 +25,6 @@ class TestMigrations_v2_5_0(MigrationTest):
         # plone.css removcal test
         self.assertFalse('plone.css' in self.css.getResourceIds())
 
-    def testAddEventRegistrationJS(self):
-        # Make sure event registration is added
-        jsreg = self.portal.portal_javascripts
-        # unregister first
-        jsreg.unregisterResource('event-registration.js')
-        script_ids = jsreg.getResourceIds()
-        self.assertFalse('event-registration.js' in script_ids)
-        loadMigrationProfile(self.portal, self.profile, ('jsregistry', ))
-        # event registration test
-        script_ids = jsreg.getResourceIds()
-        self.assertTrue('event-registration.js' in script_ids)
-        after = jsreg.getResourcePosition('register_function.js')
-        position = jsreg.getResourcePosition('event-registration.js')
-        self.assertTrue(position < after)
-
     def tesFixObjDeleteAction(self):
         # Prepare delete actions test
         editActions = ('delete',)
