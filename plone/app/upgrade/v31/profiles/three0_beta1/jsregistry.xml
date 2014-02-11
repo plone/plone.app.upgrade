@@ -6,10 +6,8 @@
  	<javascript cacheable="True" compression="safe" cookable="True"
     enabled="True" expression="" id="jquery-integration.js" inline="False"
     insert-after="jquery.js" />
-  <javascript id="livesearch.js" update="" compression="full" />
   <javascript cacheable="True" compression="safe" cookable="True"
-    enabled="False" expression="" id="fullscreenmode.js" inline="False"
-    insert-after="livesearch.js" />
+    enabled="False" expression="" id="fullscreenmode.js" inline="False" />
   <javascript id="collapsiblesections.js" update="" compression="full" />
   <javascript id="accessibility.js" update="" compression="full" />
   <!-- calendarpopup.js has been deprecated and disabled on new sites,
