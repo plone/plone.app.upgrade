@@ -231,6 +231,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
     def testChangeAuthenticatedResourcesCondition(self):
         # make sure CSS resource is updated
         res = self.csstool.getResource('member.css')
+        if res is None:
+            return
         res.setAuthenticated(False)
         res.setExpression('not: portal/portal_membership/isAnonymousUser')
         # test it twice
