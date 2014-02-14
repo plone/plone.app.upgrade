@@ -8,7 +8,7 @@
     insert-after="jquery.js" />
   <javascript cacheable="True" compression="safe" cookable="True"
     enabled="False" expression="" id="fullscreenmode.js" inline="False" />
-  <javascript id="collapsiblesections.js" update="" compression="full" />
+  <javascript id="collapsiblesections.js" compression="full" />
   <javascript id="accessibility.js" update="" compression="full" />
   <!-- calendarpopup.js has been deprecated and disabled on new sites,
        upgrade leaves it enabled -->

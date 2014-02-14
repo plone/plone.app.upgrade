@@ -293,17 +293,6 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             # sleep to avoid a GS log filename collision :-o
             time.sleep(1)
 
-    def testNewJSIsInstalled(self):
-        installedScriptIds = self.jstool.getResourceIds()
-        expected = [
-            # js resources that are part of plone.app.jquerytools
-            '++resource++plone.app.jquerytools.js',
-            '++resource++plone.app.jquerytools.overlayhelpers.js',
-            # js resource that is new in CMFPlone
-            'popupforms.js']
-        for e in expected:
-            self.assertTrue(e in installedScriptIds, e)
-
     def testReplaceSecureMailHost(self):
         portal = self.portal
         sm = getSiteManager(context=portal)
