@@ -278,6 +278,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             self.assertTrue('referencebrowser' in layers)
 
     def testInstallNewDependencies(self):
+        from plone.app.upgrade.v40.alphas import threeX_alpha1
         self.setRoles(['Manager'])
         # test for running the TinyMCE profile by checking for the skin layer
         # it installs (the profile is marked as noninstallable, so we can't
@@ -288,7 +289,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             return
         del skins_tool['tinymce']
         for i in range(2):
-            loadMigrationProfile(self.portal, self.profile)
+            threeX_alpha1(self.portal)
             self.assertTrue('tinymce' in skins_tool)
             # sleep to avoid a GS log filename collision :-o
             time.sleep(1)

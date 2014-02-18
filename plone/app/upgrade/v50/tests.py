@@ -59,3 +59,15 @@ class PASUpgradeTest(MigrationTest):
 
         self.assertEqual((u'plone.colophon', u'plone.site_actions'),
                          hidden_viewlets)
+
+
+def test_suite():
+    from unittest import TestSuite, makeSuite
+    try:
+        from Products.CMFPlone.factory import _IMREALLYPLONE5
+    except ImportError:
+        return TestSuite()
+    else:
+        suite = TestSuite()
+        suite.addTest(makeSuite(TestUpgrade))
+        return suite
