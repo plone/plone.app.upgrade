@@ -69,5 +69,5 @@ def test_suite():
         return TestSuite()
     else:
         suite = TestSuite()
-        suite.addTest(makeSuite(TestUpgrade))
+        suite.addTest(makeSuite(PASUpgradeTest))
         return suite
