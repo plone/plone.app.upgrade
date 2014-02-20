@@ -4,6 +4,10 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Be sure the improved syndication settings introduced in the 4.3 series
+  are applied on upgrade.
+  [gbastien]
+
 - Avoid failure at lexicon upgrade (4.3rc1)
   when we have an integrity error into the ZCTextIndex.
   [thomasdesvenain]
