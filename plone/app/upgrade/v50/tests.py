@@ -60,8 +60,19 @@ class PASUpgradeTest(MigrationTest):
         self.assertEqual((u'plone.colophon', u'plone.site_actions'),
                          hidden_viewlets)
 
+    def test_migrate_members_default_layout(self):
+        members = self.portal['Members']
+        self.assertIsNotNone(members.get('index_html', None))
+        
+        from plone.app.upgrade.v50.alphas import migrate_members_default_view
+        migrate_members_default_view(self.portal)
+
+        self.assertIsNone(members.get('index_html', None))
+        self.assertEqual(members.getLayout(), '@@member-search')
+
 
 def test_suite():
+    # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
     try:
         from Products.CMFPlone.factory import _IMREALLYPLONE5

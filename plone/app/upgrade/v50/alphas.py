@@ -32,6 +32,8 @@ def to50alpha1(context):
     tools = [t for t in TOOLS_TO_REMOVE if t in portal]
     portal.manage_delObjects(tools)
 
+    migrate_members_default_view(portal)
+
 
 def lowercase_email_login(context):
     """If email is used as login name, lowercase the login names.
@@ -46,3 +48,12 @@ def lowercase_email_login(context):
         # if this would result in non-unique login names.
         pas = getToolByName(context, 'acl_users')
         pas.manage_changeProperties(login_transform='lower')
+
+
+def migrate_members_default_view(portal):
+    members = portal.get('Members')
+    if members is None:
+        return
+    if 'index_html' in members:
+        del members['index_html']
+    members.layout = '@@member-search'
