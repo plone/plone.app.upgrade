@@ -62,6 +62,8 @@ class PASUpgradeTest(MigrationTest):
 
     def test_migrate_members_default_layout(self):
         members = self.portal['Members']
+        from OFS.SimpleItem import SimpleItem
+        members._setOb('index_html', SimpleItem())
         self.assertIsNotNone(members.get('index_html', None))
         
         from plone.app.upgrade.v50.alphas import migrate_members_default_view
