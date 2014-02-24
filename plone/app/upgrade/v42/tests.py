@@ -1,24 +1,5 @@
-import unittest
-from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
-from Products.CMFCore.utils import getToolByName
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
-
-
-class TestFunctionalMigrations(FunctionalUpgradeTestCase):
-
-    def testFullUpgrade(self):
-        # this tests a full upgrade from a Plone 4.0 ZEXP
-        self.importFile(__file__, 'test-full.zexp')
-        oldsite, result = self.migrate()
-
-        mig = oldsite.portal_migration
-        self.assertFalse(mig.needUpgrading())
-
-        diff = self.export()
-        len_diff = len(diff.split('\n'))
-        # self.assertTrue(len_diff <= 2700)
-
 
 
 class TestMigrations_v4_2beta1(MigrationTest):

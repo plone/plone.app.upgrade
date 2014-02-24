@@ -47,20 +47,12 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         mig = oldsite.portal_migration
         self.assertFalse(mig.needUpgrading())
 
-        diff = self.export()
-        len_diff = len(diff.split('\n'))
-        # self.assertTrue(len_diff <= 2500)
-
     def testFullUpgrade(self):
         self.importFile(__file__, 'test-full.zexp')
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
         self.assertFalse(mig.needUpgrading())
-
-        diff = self.export()
-        len_diff = len(diff.split('\n'))
-        # self.assertTrue(len_diff <= 2700)
 
     def testFolderUpgrade(self):
         from plone.folder.interfaces import IOrderableFolder

@@ -6,7 +6,7 @@ from Products.CMFCore.utils import getToolByName
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
-
+from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
 
 import alphas
@@ -73,6 +73,21 @@ class PASUpgradeTest(MigrationTest):
         self.assertEqual(members.getLayout(), '@@member-search')
 
 
+class TestFunctionalMigrations(FunctionalUpgradeTestCase):
+
+    def testFullUpgrade(self):
+        # test upgrade from Plone 4.0 zexp
+        self.importFile(__file__, 'test-full.zexp')
+        oldsite, result = self.migrate()
+
+        mig = oldsite.portal_migration
+        self.assertFalse(mig.needUpgrading())
+
+        # make sure homepage can be rendered
+        homepage_html = oldsite()
+        self.assertTrue('Welcome' in homepage_html)
+
+
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
@@ -83,4 +98,5 @@ def test_suite():
     else:
         suite = TestSuite()
         suite.addTest(makeSuite(PASUpgradeTest))
+        suite.addTest(makeSuite(TestFunctionalMigrations))
         return suite

@@ -131,9 +131,9 @@ class FunctionalUpgradeTestCase(Sandboxed, PloneTestCase, WarningInterceptor):
     def afterSetUp(self):
         self.loginAsPortalOwner()
         setSite(self.portal)
-        stool = self.portal.portal_setup
-        expected_export = stool.runAllExportSteps()
-        self.expected = TarballImportContext(stool, expected_export['tarball'])
+        #stool = self.portal.portal_setup
+        #expected_export = stool.runAllExportSteps()
+        #self.expected = TarballImportContext(stool, expected_export['tarball'])
         setSite(None)
 
     def beforeTearDown(self):

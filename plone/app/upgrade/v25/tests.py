@@ -114,10 +114,6 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         mig = oldsite.portal_migration
         self.assertFalse(mig.needUpgrading())
 
-        diff = self.export()
-        len_diff = len(diff.split('\n'))
-        # self.assertTrue(len_diff <= 2800)
-
     def testDCMIStorageUpdated(self):
         self.importFile(__file__, 'test-base.zexp')
         oldsite, result = self.migrate()
