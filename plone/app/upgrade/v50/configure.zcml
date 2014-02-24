@@ -18,12 +18,6 @@
           />
 
       <gs:upgradeStep
-          title="Clean up toolset registry"
-          description=""
-          handler="..v40.alphas.cleanUpToolRegistry"
-          />
-
-      <gs:upgradeStep
           title="Use lowercase for email login"
           description="If email is used as login name, lowercase the login names."
           handler=".alphas.lowercase_email_login"
