@@ -8,6 +8,7 @@ from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
+from plone.testing.z2 import Browser
 
 import alphas
 import unittest
@@ -89,7 +90,9 @@ class TestFunctionalMigrations(unittest.TestCase):
         self.assertFalse(self.portal.portal_migration.needUpgrading())
 
     def testCanRenderHomepage(self):
-        self.assertTrue('Welcome' in self.portal())
+        browser = Browser(self.layer['app'])
+        browser.open('http://nohost/test')
+        self.assertTrue('Welcome' in browser.contents)
 
     def testBarcelonetaThemeIsInstalled(self):
         # skin is default
