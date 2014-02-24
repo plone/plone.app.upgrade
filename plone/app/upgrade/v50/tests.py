@@ -74,18 +74,34 @@ class PASUpgradeTest(MigrationTest):
 
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
+    """Run an upgrade from a real Plone 4.0 ZEXP dump.
 
-    def testFullUpgrade(self):
+    Then test that various things are set up correctly.
+    """
+
+    def afterSetUp(self):
+        super(TestFunctionalMigrations, self).afterSetUp()
         # test upgrade from Plone 4.0 zexp
         self.importFile(__file__, 'test-full.zexp')
-        oldsite, result = self.migrate()
+        self.portal, result = self.migrate()
 
-        mig = oldsite.portal_migration
-        self.assertFalse(mig.needUpgrading())
+    def testFullyUpgraded(self):
+        self.assertFalse(self.portal.portal_migration.needUpgrading())
 
-        # make sure homepage can be rendered
-        homepage_html = oldsite()
-        self.assertTrue('Welcome' in homepage_html)
+    def testCanRenderHomepage(self):
+        self.assertTrue('Welcome' in self.portal())
+
+    def testBarcelonetaThemeIsInstalled(self):
+        # skin is default
+        self.assertEqual(self.portal.portal_skins.getDefaultSkin(), 'Plone Default')
+        # diazo is enabled
+        registry = self.portal.portal_registry
+        self.assertTrue(registry['plone.app.theming.interfaces.IThemeSettings.enabled'])
+        # rules are active
+        self.assertEqual(
+            registry['plone.app.theming.interfaces.IThemeSettings.rules'],
+            '++theme++barceloneta/rules.xml',
+            )
 
 
 def test_suite():
