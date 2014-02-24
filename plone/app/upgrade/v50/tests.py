@@ -6,10 +6,11 @@ from Products.CMFCore.utils import getToolByName
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
-from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 
 import alphas
+import unittest
 
 
 class PASUpgradeTest(MigrationTest):
@@ -73,17 +74,16 @@ class PASUpgradeTest(MigrationTest):
         self.assertEqual(members.getLayout(), '@@member-search')
 
 
-class TestFunctionalMigrations(FunctionalUpgradeTestCase):
+class TestFunctionalMigrations(unittest.TestCase):
     """Run an upgrade from a real Plone 4.0 ZEXP dump.
 
     Then test that various things are set up correctly.
     """
 
-    def afterSetUp(self):
-        super(TestFunctionalMigrations, self).afterSetUp()
-        # test upgrade from Plone 4.0 zexp
-        self.importFile(__file__, 'test-full.zexp')
-        self.portal, result = self.migrate()
+    layer = REAL_UPGRADE_FUNCTIONAL
+
+    def setUp(self):
+        self.portal = self.layer['app'].test
 
     def testFullyUpgraded(self):
         self.assertFalse(self.portal.portal_migration.needUpgrading())
@@ -100,7 +100,7 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         # rules are active
         self.assertEqual(
             registry['plone.app.theming.interfaces.IThemeSettings.rules'],
-            '++theme++barceloneta/rules.xml',
+            '/++theme++barceloneta/rules.xml',
             )
 
 
