@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
  <javascript id="++resource++plone.js" insert-before="*" />
+ <javascript id="++resource++plone.app.jquery.js" remove="true" />
  <javascript id="jquery-integration.js" remove="true" />
  <javascript id="event-registration.js" remove="true" />
  <javascript id="register_function.js" remove="true" />
