@@ -11,11 +11,11 @@
         destination="5000"
         profile="Products.CMFPlone:plone">
 
-      <gs:upgradeStep
-          title="Run to50alpha1 upgrade profile"
-          description=""
-          handler=".alphas.to50alpha1"
-          />
+       <gs:upgradeStep
+           title="Run to50alpha1 upgrade profile"
+           description=""
+           handler=".alphas.to50alpha1"
+           />
 
       <gs:upgradeStep
           title="Use lowercase for email login"

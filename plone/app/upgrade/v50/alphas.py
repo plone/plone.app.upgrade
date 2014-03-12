@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_parent, aq_base
+from plone.keyring.interfaces import IKeyManager
+from plone.keyring.keyring import Keyring
+from plone.keyring.keymanager import KeyManager
+from zope.component import getUtility
+from zope.component import getSiteManager
+from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
@@ -46,6 +53,16 @@ def to50alpha1(context):
         if not qi.isProductInstalled('plonetheme.barceloneta'):
             qi.installProduct('plonetheme.barceloneta')
 
+    # update the default view of the Members folder
+    migrate_members_default_view(portal)
+
+    # install the Barceloneta theme
+    if portal.portal_skins.getDefaultSkin() == 'Sunburst Theme':
+        if not qi.isProductInstalled('plonetheme.barceloneta'):
+            qi.installProduct('plonetheme.barceloneta')
+
+    upgrade_keyring(context)
+
 
 def lowercase_email_login(context):
     """If email is used as login name, lowercase the login names.
@@ -82,3 +99,26 @@ def migrate_members_default_view(portal):
     if 'index_html' in members:
         del members['index_html']
     members.layout = '@@member-search'
+
+
+def upgrade_keyring(context):
+    logger.info('upgrading keyring')
+    manager = getUtility(IKeyManager)
+
+    manager[u'_system'].fill()
+
+    if u'_anon' not in manager:
+        manager[u'_anon'] = Keyring()
+    manager[u'_anon'].fill()
+
+    if u'_forms' not in manager:
+        manager[u'_forms'] = Keyring()
+    manager[u'_forms'].fill()
+
+    logger.info('add keyring to zope root if not done already')
+    app = aq_parent(getSite())
+    sm = getSiteManager(app)
+
+    if sm.queryUtility(IKeyManager) is None:
+        obj = KeyManager()
+        sm.registerUtility(aq_base(obj), IKeyManager, '')
