@@ -1,6 +1,9 @@
 import time
 
-from zope.component import getSiteManager, queryUtility
+from zope.component import getMultiAdapter
+from zope.component import getSiteManager
+from zope.component import getUtility
+from zope.component import queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
 from Products.CMFCore.ActionInformation import Action
@@ -22,10 +25,16 @@ from plone.app.upgrade.v40.alphas import renameJoinFormFields
 from plone.app.upgrade.v40.alphas import updateLargeFolderType
 from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
 from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
+from plone.app.upgrade.v40.alphas import migrateStaticTextPortlets
 from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
 from plone.app.upgrade.v40.betas import updateIconMetadata
 from plone.app.upgrade.v40.betas import removeLargePloneFolder
 from plone.app.upgrade.tests.base import MigrationTest
+
+from plone.portlet.static import static
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.portlets.interfaces import IPortletAssignmentSettings
+from plone.portlets.interfaces import IPortletManager
 
 
 class FakeSecureMailHost(object):
@@ -330,7 +339,35 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertTrue(isSaneBTreeFolder(folder))
         self.assertEqual(folder.getId(), 'foo')
         self.assertEqual(folder.Title(), 'Foo')
+        
+    def testMigrateStaticTextPortlets(self):
+        class HiddenAssignment(static.Assignment):
+            hide = True            
+        
+        self.setRoles(["Manager"])
+        self.portal.invokeFactory('Folder', id="statictest")
+        folder = self.portal['statictest']
+        
+        manager = getUtility(
+                IPortletManager, name='plone.rightcolumn', 
+                context=folder)
+        assignments = getMultiAdapter(
+                (folder, manager), IPortletAssignmentMapping)
+        hidden_portlet = HiddenAssignment()
+        visible_portlet = static.Assignment()
+        assignments['hidden'] = hidden_portlet
+        assignments['visible'] = visible_portlet
+        
+        migrateStaticTextPortlets(self.portal)
+        
+        self.assertFalse(
+                IPortletAssignmentSettings(hidden_portlet).get(
+                        'visible', True))
+        self.assertTrue(
+                IPortletAssignmentSettings(visible_portlet).get(
+                        'visible', True))
 
+        
 
 class TestMigrations_v4_0alpha2(MigrationTest):
 

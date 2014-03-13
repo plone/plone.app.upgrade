@@ -57,6 +57,11 @@
             handler=".alphas.cleanUpProductRegistry"
             />
 
+        <genericsetup:upgradeStep
+            title="Ensure hidden static text portlets stay hidden."
+            handler=".alphas.migrateStaticTextPortlets"
+            />
+
     </genericsetup:upgradeSteps>
 
     <!-- the source here needs to be kept in sync with the latest 3.x profile

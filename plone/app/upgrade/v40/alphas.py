@@ -1,5 +1,7 @@
 import transaction
 
+from zope.component import queryMultiAdapter
+from zope.component import getUtilitiesFor
 from zope.component import getSiteManager, getUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 from zope.ramcache.ram import RAMCache
@@ -20,6 +22,11 @@ from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
+from plone.portlet.static.static import IStaticPortlet
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.portlets.interfaces import IPortletAssignmentSettings
+from plone.portlets.interfaces import IPortletManager
+
 from Products.CMFCore.Expression import Expression
 
 
@@ -379,6 +386,31 @@ def cleanUpProductRegistry(context):
     # Remove all product entries
     for name in products.keys():
         products._delObject(name)
+        
+
+def migrateStaticTextPortlets(context):
+    """ Missing import step from #9286 Allow to show/hide portlets """
+    def migrate_portlets_for_object(obj, path):
+        portlet_managers = getUtilitiesFor(IPortletManager, context=obj)
+        for portlet_manager_name, portlet_manager in portlet_managers:
+            assignments = queryMultiAdapter(
+                (obj, portlet_manager), IPortletAssignmentMapping, context=obj)
+            if assignments is None:
+                continue
+            for portlet_id, portlet in assignments.items():
+                if IStaticPortlet.providedBy(portlet) and \
+                        getattr(portlet, 'hide', False):
+                    logger.info(
+                            'Found hidden static text portlet %s at %s' % 
+                            (portlet_id, path))
+                    settings = IPortletAssignmentSettings(portlet)
+                    settings['visible'] = False    
+    
+    logger.info('Migrating static text portlets')
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    portal.ZopeFindAndApply(
+            portal, search_sub=True, apply_func=migrate_portlets_for_object)
+    logger.info('Finished migrating static text portlets')
 
 
 def migrateMailHost(context):
