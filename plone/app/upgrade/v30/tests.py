@@ -358,6 +358,9 @@ class TestMigrations_v2_5_x(MigrationTest):
             self.assertEqual(self.portal.left_slots, [])
             self.assertEqual(self.portal.right_slots, [])
 
+            left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
+            right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
+
             lp = left.values()
             self.assertEqual(2, len(lp))
 
@@ -397,6 +400,9 @@ class TestMigrations_v2_5_x(MigrationTest):
 
         self.assertEqual(self.portal.left_slots, [])
 
+        left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
+        right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
+
         lp = left.values()
         self.assertEqual(2, len(lp))
 
@@ -431,6 +437,8 @@ class TestMigrations_v2_5_x(MigrationTest):
         self.portal.Members.right_slots = []
 
         convertLegacyPortlets(self.portal)
+        left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
+        right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
 
         self.assertEqual(self.portal.left_slots, [])
         self.assertEqual(self.portal.right_slots, [])
@@ -470,6 +478,8 @@ class TestMigrations_v2_5_x(MigrationTest):
         self.portal._delObject('Members')
 
         convertLegacyPortlets(self.portal)
+        left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping, context=self.portal)
+        right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping, context=self.portal)
 
         self.assertEqual(self.portal.left_slots, [])
         self.assertEqual(self.portal.right_slots, [])
