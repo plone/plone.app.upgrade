@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.3.5.dev0'
+version = '1.3.7.dev0'
 
 setup(name='plone.app.upgrade',
       version=version,
@@ -36,8 +36,6 @@ setup(name='plone.app.upgrade',
             'plone.app.redirector',
             'plone.app.viewletmanager',
             'plone.app.theming',
-            'plonetheme.classic',
-            'plonetheme.sunburst',
         ]
       ),
       install_requires=[
@@ -58,8 +56,6 @@ setup(name='plone.app.upgrade',
         'Products.CMFPlone',
         'Products.Archetypes',
         'Products.contentmigration',
-        'Products.CMFActionIcons',
-        'Products.CMFCalendar',
         'Products.CMFCore',
         'Products.CMFDefault',
         'Products.CMFDiffTool',
@@ -74,7 +70,6 @@ setup(name='plone.app.upgrade',
         'Products.PlonePAS',
         'Products.PluggableAuthService',
         'Products.PortalTransforms',
-        'Products.TinyMCE',
         'Products.ResourceRegistries',
         'Products.SecureMailHost', # For migration only, when can we remove this?
         'Products.ZCatalog >= 2.13.4',

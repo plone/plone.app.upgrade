@@ -70,7 +70,6 @@ from Products.StandardCacheManagers import RAMCacheManager
 
 from Products.CMFPlone import cmfplone_globals
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
-from Products.CMFPlone.interfaces import IFactoryTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
 from Products.CMFPlone.interfaces import ITranslationServiceTool
@@ -85,6 +84,11 @@ try:
     HAS_ATCT = True
 except ImportError:
     HAS_ATCT = False
+
+try:
+    from Products.CMFPlone.interfaces import IFactoryTool
+except:
+    from Products.ATContentTypes.interfaces import IFactoryTool
 
 
 def three0_alpha1(context):

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<object name="portal_skins" meta_type="Plone Skins Tool">
+ <object name="cmf_legacy" remove="true" />
+ <object name="plone_3rdParty" remove="true" />
+ <object name="plone_deprecated" remove="true" />
+ <object name="tinymce" remove="true" />
+ <object name="referencebrowser" remove="true" />
+ <object name="querywidget" remove="true" />
+ <skin-path name="*">
+  <layer name="cmf_legacy" remove="true"/>
+  <layer name="plone_3rdParty" remove="true"/>
+  <layer name="plone_deprecated" remove="true"/>
+  <layer name="tinymce" remove="true"/>
+  <layer name="referencebrowser" remove="true"/>
+  <layer name="querywidget" remove="true"/>
+ </skin-path>
+</object>

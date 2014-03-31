@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<componentregistry>
+ <utilities>
+  <utility
+     interface="Products.CMFActionIcons.interfaces.IActionIconsTool"
+     remove="true"/>
+  <utility
+     interface="Products.CMFCore.interfaces.IUndoTool"
+     remove="true"/>
+  <utility
+     interface="Products.CMFPlone.interfaces.IInterfaceTool"
+     remove="true"/>
+  <utility
+     interface="plone.app.discussion.interfaces.ICommentingTool"
+     remove="true"/>
+ </utilities>
+</componentregistry>

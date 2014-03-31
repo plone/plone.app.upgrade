@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<object name="portal_css" meta_type="Stylesheets Registry">
+
+ <stylesheet
+     cacheable="True" compression="none" cookable="True" enabled="True"
+     id="++resource++plone.css" insert-before="*"
+     />
+
+ <stylesheet id="reset.css" remove="True" />
+ <stylesheet id="member.css" remove="True" />
+ <stylesheet id="base.css" remove="True" />
+ <stylesheet id="public.css" remove="True" />
+ <stylesheet id="columns.css" remove="True" />
+ <stylesheet id="authoring.css" remove="True" />
+ <stylesheet id="portlets.css" remove="True" />
+ <stylesheet id="controlpanel.css" remove="True" />
+ <stylesheet id="deprecated.css" remove="True" />
+ <stylesheet id="navtree.css" remove="True" />
+ <stylesheet id="invisibles.css" remove="True" />
+ <stylesheet id="forms.css" remove="True" />
+
+ <stylesheet id="print.css" remove="True" />
+ <stylesheet id="mobile.css" remove="True"/>
+
+ <stylesheet id="ploneCustom.css" remove="True" />
+
+ <stylesheet id="RTL.css" remove="True" />
+ <stylesheet id="IEFixes.css" remove="True" />
+ <stylesheet id="++resource++tinymce.stylesheets/tinymce.css" remove="True" />
+</object>

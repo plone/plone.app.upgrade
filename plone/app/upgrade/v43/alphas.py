@@ -43,7 +43,7 @@ def reindex_sortable_title(context):
         brain = _catalog[rid]
         try:
             obj = brain.getObject()
-        except AttributeError:
+        except (AttributeError, KeyError):
             continue
         if update_metadata:
             obj.reindexObject()
@@ -59,17 +59,23 @@ def upgradeToI18NCaseNormalizer(context):
     catalog = getToolByName(context, 'portal_catalog')
     for index in catalog.Indexes.objectValues():
         if IZCTextIndex.providedBy(index):
+            index_id = index.getId()
             logger.info("Reindex %s index with I18N Case Normalizer",\
-                        index.getId())
-            catalog.reindexIndex(index.getId(),\
+                        index_id)
+            catalog.manage_clearIndex([index_id])
+            catalog.reindexIndex(index_id,\
                                  aq_get(context, 'REQUEST', None))
         pass
 
 def upgradeTinyMCE(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
     """
-    from Products.TinyMCE.upgrades import upgrade_12_to_13
-    upgrade_12_to_13(context)
+    try:
+        from Products.TinyMCE.upgrades import upgrade_12_to_13
+    except ImportError:
+        pass
+    else:
+        upgrade_12_to_13(context)
 
 def upgradePloneAppTheming(context):
     """Re-install plone.app.theming if previously installed
@@ -170,7 +176,10 @@ def upgradeSyndication(context):
         folder_types.add(_type.getId())
     folder_types = folder_types | getDexterityFolderTypes()
     for brain in catalog(portal_type=tuple(folder_types)):
-        obj = brain.getObject()
+        try:
+            obj = brain.getObject()
+        except (AttributeError, KeyError):
+            continue
         if 'syndication_information' in obj.objectIds():
             # just having syndication info object means
             # syndication is enabled
@@ -220,4 +229,5 @@ def removeKSS(context):
 
 def upgradeTinyMCEAgain(context):
     qi = getToolByName(context, 'portal_quickinstaller')
-    qi.upgradeProduct('Products.TinyMCE')
+    if 'Products.TinyMCE' in qi:
+        qi.upgradeProduct('Products.TinyMCE')

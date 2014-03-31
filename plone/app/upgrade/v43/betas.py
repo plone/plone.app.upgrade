@@ -12,5 +12,9 @@ def to43rc1(context):
 def upgradeSunburst(context):
     """ Upgrade plonetheme.sunburst to version 1.4
     """
-    from plonetheme.sunburst.setuphandlers import upgrade_step_2_3
-    upgrade_step_2_3(context)
+    try:
+        from plonetheme.sunburst.setuphandlers import upgrade_step_2_3
+    except ImportError:
+        pass
+    else:
+        upgrade_step_2_3(context)

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone">
+
+ <portletmanager
+   name="plone.footerportlets"
+   type="plone.app.portlets.interfaces.IFooter"
+   />
+
+ <assignment
+     manager="plone.footerportlets"
+     category="context"
+     key="/"
+     type="portlets.Classic"
+     name="footer"
+     >
+    <property name="template">footer</property>
+    <property name="macro">portlet</property>
+ </assignment>
+
+ <assignment
+     manager="plone.footerportlets"
+     category="context"
+     key="/"
+     type="portlets.Classic"
+     name="colophon"
+     >
+    <property name="template">colophon</property>
+    <property name="macro">portlet</property>
+ </assignment>
+
+ <assignment
+     manager="plone.footerportlets"
+     category="context"
+     key="/"
+     type="portlets.Actions"
+     name="actions"
+     >
+    <property name="ptitle">site_actions</property>
+    <property name="show_title">False</property>
+    <property name="category">site_actions</property>
+    <property name="show_icons">False</property>
+ </assignment>
+
+</portlets>

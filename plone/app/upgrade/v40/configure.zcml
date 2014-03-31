@@ -132,6 +132,11 @@
             handler=".alphas.migrateFolders"
             />
 
+        <genericsetup:upgradeStep
+            title="Ensure hidden static text portlets stay hidden."
+            handler=".alphas.migrateStaticTextPortlets"
+            />
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps

@@ -16,7 +16,7 @@ class TestMigrations_v3_3(MigrationTest):
     def testRedirectLinksProperty(self):
         del self.properties.site_properties.redirect_links
         self._upgrade()
-        self.assertEquals(True,
+        self.assertEqual(True,
             self.properties.site_properties.getProperty('redirect_links'))
 
     def testLinkDefaultView(self):
@@ -45,22 +45,14 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
-
-        diff = self.export()
-        len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2500)
+        self.assertFalse(mig.needUpgrading())
 
     def testFullUpgrade(self):
         self.importFile(__file__, 'test-full.zexp')
         oldsite, result = self.migrate()
 
         mig = oldsite.portal_migration
-        self.failIf(mig.needUpgrading())
-
-        diff = self.export()
-        len_diff = len(diff.split('\n'))
-        # self.failUnless(len_diff <= 2700)
+        self.assertFalse(mig.needUpgrading())
 
     def testFolderUpgrade(self):
         from plone.folder.interfaces import IOrderableFolder
@@ -70,27 +62,27 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         ids = 'news', 'events', 'Members'
         for id in ids:
             obj = oldsite[id]
-            self.assertEquals(obj.portal_type, 'Large Plone Folder')
-            self.assertEquals(obj.Type(), 'Large Folder')
+            self.assertEqual(obj.portal_type, 'Large Plone Folder')
+            self.assertEqual(obj.Type(), 'Large Folder')
             brain, = oldsite.portal_catalog(getId=id)   # asserts only one
-            self.assertEquals(brain.portal_type, 'Large Plone Folder')
-            self.assertEquals(brain.Type, 'Large Folder')
+            self.assertEqual(brain.portal_type, 'Large Plone Folder')
+            self.assertEqual(brain.Type, 'Large Folder')
         # now let's migrate...
         oldsite, result = self.migrate()
-        self.failIf(oldsite.portal_migration.needUpgrading())
+        self.assertFalse(oldsite.portal_migration.needUpgrading())
         # after migration `/news`, `/events` and `/Members` are based on
         # `plone.(app.)folder`, but still have no ordering set...
         for id in ids:
             obj = oldsite[id]
-            self.failUnless(IOrderableFolder.providedBy(obj),
+            self.assertTrue(IOrderableFolder.providedBy(obj),
                 '%s not orderable?' % id)
-            self.assertEquals(obj._ordering, 'unordered',
+            self.assertEqual(obj._ordering, 'unordered',
                 '%s has no `_ordering`?' % id)
-            self.assertEquals(obj.portal_type, 'Folder')
-            self.assertEquals(obj.Type(), 'Folder')
+            self.assertEqual(obj.portal_type, 'Folder')
+            self.assertEqual(obj.Type(), 'Folder')
             brain, = oldsite.portal_catalog(getId=id)   # asserts only one
-            self.assertEquals(brain.portal_type, 'Folder')
-            self.assertEquals(brain.Type, 'Folder')
+            self.assertEqual(brain.portal_type, 'Folder')
+            self.assertEqual(brain.Type, 'Folder')
 
 
 def test_suite():

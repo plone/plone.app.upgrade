@@ -19,11 +19,11 @@ class TestMigrations_v4_3alpha1(MigrationTest):
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
-        self.failUnless(True)
+        self.assertTrue(True)
 
     def testAddDisplayPublicationDateInBylineProperty(self):
         pprop = getToolByName(self.portal, 'portal_properties')
-        self.assertEquals(
+        self.assertEqual(
             pprop.site_properties.getProperty('displayPublicationDateInByline'),
             False)
 
@@ -33,7 +33,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         ctool.plone_lexicon._pipeline[1] == (Splitter(), CaseNormalizer())
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
         self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'I18NNormalizer')
-        self.failUnless(len(ctool.searchResults(SearchableText="welcome")) > 0)
+        self.assertTrue(len(ctool.searchResults(SearchableText="welcome")) > 0)
 
     def testUpgradeTinyMCE(self):
         # skip test in new Plones that don't install tinymce to begin with
@@ -107,11 +107,11 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         # Change title of both, shouldn't be reindexed yet
         portal['accidentally-fall'].title = 'fell'
         portal['num-title'].title = '9 green bottles, hanging on the wall'
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
             '10 green bottles, hanging on the wall',
         )
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['accidentally-fall'].id)[0].Title,
             'And if one green bottle should accidentally fall',
         )
@@ -119,11 +119,31 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         # Only the numerical title got reindexed
         portal.portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
         alphas.reindex_sortable_title(portal.portal_setup)
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
             '9 green bottles, hanging on the wall'
         )
-        self.assertEquals(
+        self.assertEqual(
             catalog(id=portal['accidentally-fall'].id)[0].Title,
             'And if one green bottle should accidentally fall',
         )
+
+
+class TestMigrations_v4_3final_to4308(MigrationTest):
+
+    def testAddDefaultPlonePasswordPolicy(self):
+        # this add the 'Default Plone Password Policy' to Plone's acl_users
+        portal = self.portal
+        # make sure the 'Default Plone Password Policy' does not exist in acl_users
+        portal.acl_users.manage_delObjects(ids=['password_policy', ])
+        self.assertFalse('password_policy' in portal.acl_users.objectIds())
+        # find the relevant upgrade step and execute it
+        from Products.GenericSetup.upgrade import listUpgradeSteps
+        relevantStep = [step for step in listUpgradeSteps(portal.portal_setup, \
+                                                          'Products.CMFPlone:plone',
+                                                          '4307')[0] if
+                        step['title'] == u'Add default Plone password policy'][0]
+        # execute the step
+        relevantStep['step'].handler(portal)
+        # now it has been added...
+        self.assertTrue('password_policy' in portal.acl_users.objectIds())

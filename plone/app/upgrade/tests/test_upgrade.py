@@ -29,7 +29,7 @@ class TestUpgrade(MigrationTest):
 
         self.setup.setLastVersionForProfile(_DEFAULT_PROFILE, '2.5')
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
-        self.failUnless(len(upgrades) > 0)
+        self.assertTrue(len(upgrades) > 0)
 
         request = self.portal.REQUEST
         request.form['profile_id'] = _DEFAULT_PROFILE

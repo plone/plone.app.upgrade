@@ -118,7 +118,7 @@ def removeS5Actions(context):
 
     iconsTool = queryUtility(IActionIconsTool)
     if iconsTool is not None:
-        ids = [x.getActionId() for x in iconsTool.listActionIcons()]
+        ids = [x._action_id for x in iconsTool.listActionIcons()]
         if 's5_presentation' in ids:
             iconsTool.removeActionIcon('plone','s5_presentation')
             logger.info("Removed 's5_presentation' icon from actionicons tool.")
