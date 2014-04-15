@@ -3,7 +3,11 @@ Changelog
 
 1.3.7 (unreleased)
 ------------------
-  
+
+- Added upgrade step for plone.app.querystring which adds new operations and
+  fields
+  [ichim-david]
+
 - #12286 Need (Plone 4.0 upgrade) migration step for hidden static text
   portlets
   [anthonygerrard]
