@@ -1,16 +1,15 @@
-from zope.component import getUtility
-from zope.component import getSiteManager
-from zope.component import getMultiAdapter
-from plone.portlets.interfaces import IPortletManager
 from Products.CMFCore.utils import getToolByName
-from plone.portlets.interfaces import IPortletAssignmentMapping
-from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-
 from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.v50 import alphas
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
+from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.portlets.interfaces import IPortletManager
 from plone.testing.z2 import Browser
+from zope.component import getMultiAdapter
+from zope.component import getSiteManager
+from zope.component import getUtility
 
-import alphas
 import unittest
 
 
@@ -47,8 +46,10 @@ class PASUpgradeTest(MigrationTest):
         registrations = [r.name for r in sm.registeredUtilities()
                          if IPortletManager == r.provided]
         self.assertTrue('plone.footerportlets' in registrations)
-        manager = getUtility(IPortletManager, name='plone.footerportlets', context=self.portal)
-        mapping = getMultiAdapter((self.portal, manager), IPortletAssignmentMapping)
+        manager = getUtility(
+            IPortletManager, name='plone.footerportlets', context=self.portal)
+        mapping = getMultiAdapter(
+            (self.portal, manager), IPortletAssignmentMapping)
         self.assertEqual(['footer', 'actions', 'colophon'], mapping.keys())
 
     def test_footer_viewlets_hidden(self):
@@ -67,7 +68,7 @@ class PASUpgradeTest(MigrationTest):
         from OFS.SimpleItem import SimpleItem
         members._setOb('index_html', SimpleItem())
         self.assertIsNotNone(members.get('index_html', None))
-        
+
         from plone.app.upgrade.v50.alphas import migrate_members_default_view
         migrate_members_default_view(self.portal)
 
@@ -96,22 +97,24 @@ class TestFunctionalMigrations(unittest.TestCase):
 
     def testBarcelonetaThemeIsInstalled(self):
         # skin is default
-        self.assertEqual(self.portal.portal_skins.getDefaultSkin(), 'Plone Default')
+        self.assertEqual(
+            self.portal.portal_skins.getDefaultSkin(), 'Plone Default')
         # diazo is enabled
         registry = self.portal.portal_registry
-        self.assertTrue(registry['plone.app.theming.interfaces.IThemeSettings.enabled'])
+        self.assertTrue(
+            registry['plone.app.theming.interfaces.IThemeSettings.enabled'])
         # rules are active
         self.assertEqual(
             registry['plone.app.theming.interfaces.IThemeSettings.rules'],
             '/++theme++barceloneta/rules.xml',
-            )
+        )
 
 
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
     try:
-        from Products.CMFPlone.factory import _IMREALLYPLONE5
+        from Products.CMFPlone.factory import _IMREALLYPLONE5  # nopep8
     except ImportError:
         return TestSuite()
     else:

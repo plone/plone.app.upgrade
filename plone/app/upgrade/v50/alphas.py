@@ -53,14 +53,6 @@ def to50alpha1(context):
         if not qi.isProductInstalled('plonetheme.barceloneta'):
             qi.installProduct('plonetheme.barceloneta')
 
-    # update the default view of the Members folder
-    migrate_members_default_view(portal)
-
-    # install the Barceloneta theme
-    if portal.portal_skins.getDefaultSkin() == 'Sunburst Theme':
-        if not qi.isProductInstalled('plonetheme.barceloneta'):
-            qi.installProduct('plonetheme.barceloneta')
-
     upgrade_keyring(context)
 
 
