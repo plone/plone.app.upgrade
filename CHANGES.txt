@@ -3,7 +3,11 @@ Changelog
 
 1.3.7 (unreleased)
 ------------------
-  
+
+- Plone 5 upgrade: Respect previous installed plone.app.event when migrating
+  first_weekday setting.
+  [thet]
+
 - #12286 Need (Plone 4.0 upgrade) migration step for hidden static text
   portlets
   [anthonygerrard]

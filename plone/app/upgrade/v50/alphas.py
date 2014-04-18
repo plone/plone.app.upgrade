@@ -39,12 +39,6 @@ def to50alpha1(context):
     if not qi.isProductInstalled('plone.app.event'):
         qi.installProduct('plone.app.event')
 
-    # migrate first weekday setting
-    portal_calendar = getattr(portal, 'portal_calendar', None)
-    if portal_calendar is not None:
-        first_weekday = getattr(portal.portal_calendar, 'firstweekday', 0)
-        portal.portal_registry['plone.app.event.first_weekday'] = first_weekday
-
     # update the default view of the Members folder
     migrate_members_default_view(portal)
 
@@ -82,6 +76,17 @@ def migrate_registry_settings(portal):
     registry['plone.enable_livesearch'] = site_props.enable_livesearch
     registry['plone.types_not_searched'] = tuple(
         t for t in site_props.types_not_searched if t in portal_types)
+
+    # Migrate first weekday setting
+    # First, look, if plone.app.event < 2.0 was already installed.
+    first_weekday = registry.get('plone.app.event.first_weekday', None)
+    if first_weekday is None:
+        # Try to get the value from portal_calendar, if available.
+        portal_calendar = getattr(portal, 'portal_calendar', None)
+        first_weekday = getattr(portal_calendar, 'firstweekday', None)
+    if first_weekday is not None:
+        # Set it. Otherwise, let plone.app.event install routine set it.
+        registry['plone.first_weekday'] = first_weekday
 
 
 def migrate_members_default_view(portal):
