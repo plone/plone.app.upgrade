@@ -25,4 +25,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5000"
+        destination="5001"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
