@@ -45,3 +45,7 @@ def addDefaultPlonePasswordPolicy(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     from Products.PlonePAS.Extensions.Install import setupPasswordPolicyPlugin
     setupPasswordPolicyPlugin(portal)
+
+def addShowInactiveCriteria(context):
+    qi = getToolByName(context, 'portal_quickinstaller')
+    qi.upgradeProduct('plone.app.querystring')
