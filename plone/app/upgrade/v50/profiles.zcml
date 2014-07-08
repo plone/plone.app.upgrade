@@ -16,7 +16,7 @@
       name="to50002"
       title="Upgrade profile for Plone 5001 to Plone 5002"
       description=""
-      directory="profiles/to5002"
+      directory="profiles/to50alpha3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />

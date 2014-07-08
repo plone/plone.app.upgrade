@@ -44,9 +44,9 @@
         profile="Products.CMFPlone:plone">
 
        <gs:upgradeStep
-           title="Run to5002 upgrade profile"
+           title="Run to50alpha3 upgrade profile"
            description=""
-           handler=".alphas.to5002"
+           handler=".alphas.to50alpha3"
            />
 
     </gs:upgradeSteps>
