@@ -38,4 +38,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5001"
+        destination="5002"
+        profile="Products.CMFPlone:plone">
+
+       <gs:upgradeStep
+           title="Run to5002 upgrade profile"
+           description=""
+           handler=".alphas.to5002"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>
