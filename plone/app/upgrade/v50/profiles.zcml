@@ -12,4 +12,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to50alpha3"
+      title="Upgrade profile for Plone 5001 to Plone 5.0alpha3"
+      description=""
+      directory="profiles/to50alpha3"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

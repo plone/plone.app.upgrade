@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<permissions>
+  <permission>
+  <permission name="Mail forgotten password" acquire="True">
+      <role name="Manager"/> 
+  </permission>
+</permissions>

@@ -20,6 +20,10 @@ TOOLS_TO_REMOVE = ['portal_actionicons',
                    'portal_undo']
 
 
+def to50alpha3(context):
+    """5001 -> 5.0alpha3"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50alpha3')
+
 def to50alpha1(context):
     """4.3 -> 5.0alpha1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50alpha1')
