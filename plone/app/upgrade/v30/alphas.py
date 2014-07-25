@@ -88,7 +88,12 @@ except ImportError:
 try:
     from Products.CMFPlone.interfaces import IFactoryTool
 except:
-    from Products.ATContentTypes.interfaces import IFactoryTool
+    try:
+        from Products.ATContentTypes.interfaces import IFactoryTool
+    except:
+        # Plone 5 neither provides an IFactoryTool nor ships with ATCT
+        from zope.interface import Interface
+        IFactoryTool = Interface
 
 
 def three0_alpha1(context):
