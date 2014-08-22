@@ -2,6 +2,6 @@
 <permissions>
   <permission>
   <permission name="Mail forgotten password" acquire="True">
-      <role name="Manager"/> 
+      <role name="Manager"/>
   </permission>
 </permissions>

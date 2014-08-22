@@ -4,5 +4,5 @@
  <!-- These are now implemented using JS -->
  <stylesheet id="textLarge.css" remove="True" />
  <stylesheet id="textSmall.css" remove="True" />
- 
+
 </object>

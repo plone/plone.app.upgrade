@@ -339,17 +339,17 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertTrue(isSaneBTreeFolder(folder))
         self.assertEqual(folder.getId(), 'foo')
         self.assertEqual(folder.Title(), 'Foo')
-        
+
     def testMigrateStaticTextPortlets(self):
         class HiddenAssignment(static.Assignment):
-            hide = True            
-        
+            hide = True
+
         self.setRoles(["Manager"])
         self.portal.invokeFactory('Folder', id="statictest")
         folder = self.portal['statictest']
-        
+
         manager = getUtility(
-                IPortletManager, name='plone.rightcolumn', 
+                IPortletManager, name='plone.rightcolumn',
                 context=folder)
         assignments = getMultiAdapter(
                 (folder, manager), IPortletAssignmentMapping)
@@ -357,9 +357,9 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         visible_portlet = static.Assignment()
         assignments['hidden'] = hidden_portlet
         assignments['visible'] = visible_portlet
-        
+
         migrateStaticTextPortlets(self.portal)
-        
+
         self.assertFalse(
                 IPortletAssignmentSettings(hidden_portlet).get(
                         'visible', True))
@@ -367,7 +367,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
                 IPortletAssignmentSettings(visible_portlet).get(
                         'visible', True))
 
-        
+
 
 class TestMigrations_v4_0alpha2(MigrationTest):
 

@@ -4,7 +4,7 @@ Changelog
 1.3.7 (unreleased)
 ------------------
 
-- Add upgrade-profile for vs5002 and update rolemap.xml to include 
+- Add upgrade-profile for vs5002 and update rolemap.xml to include
   "Mail forgotten password"-permission also to Managers.
   [ida]
 

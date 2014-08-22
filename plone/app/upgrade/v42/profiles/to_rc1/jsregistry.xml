@@ -2,7 +2,7 @@
 <object name="portal_javascripts">
 
     <javascript id="jquery.js" remove="True" />
-    
+
     <javascript cacheable="True" compression="none" cookable="True"
         enabled="True" inline="False" expression="" insert-before="*"
         id="++resource++plone.app.jquery.js" />

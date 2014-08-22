@@ -100,7 +100,7 @@
           handler=".betas.to42rc2"
           />
     </genericsetup:upgradeSteps>
-    
+
     <genericsetup:upgradeSteps
         source="4205"
         destination="4206"

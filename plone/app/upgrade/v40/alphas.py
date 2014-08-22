@@ -386,7 +386,7 @@ def cleanUpProductRegistry(context):
     # Remove all product entries
     for name in products.keys():
         products._delObject(name)
-        
+
 
 def migrateStaticTextPortlets(context):
     """ Missing import step from #9286 Allow to show/hide portlets """
@@ -401,11 +401,11 @@ def migrateStaticTextPortlets(context):
                 if IStaticPortlet.providedBy(portlet) and \
                         getattr(portlet, 'hide', False):
                     logger.info(
-                            'Found hidden static text portlet %s at %s' % 
+                            'Found hidden static text portlet %s at %s' %
                             (portlet_id, path))
                     settings = IPortletAssignmentSettings(portlet)
-                    settings['visible'] = False    
-    
+                    settings['visible'] = False
+
     logger.info('Migrating static text portlets')
     portal = getToolByName(context, 'portal_url').getPortalObject()
     portal.ZopeFindAndApply(
