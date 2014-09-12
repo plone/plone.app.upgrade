@@ -3,7 +3,4 @@
  <records interface="plone.app.discussion.interfaces.IDiscussionSettings">
    <value key="anonymous_email_enabled">False</value>
  </records>
- <records interface="plone.app.content.interfaces.ISiteContentSettings">
- </records>
-
 </registry>

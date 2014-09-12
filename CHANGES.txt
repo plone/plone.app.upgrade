@@ -4,6 +4,10 @@ Changelog
 1.3.5 (unreleased)
 ------------------
 
+- Install registry settings to change inline disposition header for blob
+  downloading
+  [djay]
+
 - Install plone.app.event and remove portal_calendar when upgarding to Plone 5.
   [davisagli]
 
