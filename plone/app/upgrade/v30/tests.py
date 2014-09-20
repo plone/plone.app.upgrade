@@ -288,21 +288,6 @@ class TestMigrations_v2_5_x(MigrationTest):
         # domain should have been updated
         self.assertEqual(doc.i18n_domain, '')
 
-    def testAddNewCSSFiles(self):
-        cssreg = self.portal.portal_css
-        added_ids = ['navtree.css', 'invisibles.css', 'forms.css']
-        for id in added_ids:
-            cssreg.unregisterResource(id)
-        stylesheet_ids = cssreg.getResourceIds()
-        for id in added_ids:
-            self.assertFalse(id in stylesheet_ids)
-        # Test it twice
-        for i in range(2):
-            loadMigrationProfile(self.portal, self.profile, ('cssregistry', ))
-            stylesheet_ids = cssreg.getResourceIds()
-            for id in added_ids:
-                self.assertTrue(id in stylesheet_ids)
-
     def testAddDefaultAndForbiddenContentTypesProperties(self):
         # Should add the forbidden_contenttypes and default_contenttype property
         self.removeSiteProperty('forbidden_contenttypes')
@@ -563,16 +548,6 @@ class TestMigrations_v3_0_alpha1(MigrationTest):
             loadMigrationProfile(self.portal, self.profile, ('componentregistry', ))
             self.assertFalse(sm.queryUtility(IRedirectionStorage) is None)
 
-    def testUpdateRtlCSSexpression(self):
-        cssreg = self.portal.portal_css
-        rtl = cssreg.getResource('RTL.css')
-        rtl.setExpression('string:foo')
-        # Test it twice
-        for i in range(2):
-            loadMigrationProfile(self.portal, self.profile, ('cssregistry', ))
-            expr = rtl.getExpression()
-            self.assertEqual(expr, "python:portal.restrictedTraverse('@@plone_portal_state').is_rtl()")
-
     def testAddReaderEditorRoles(self):
         self.portal._delRoles(['Reader', 'Editor'])
         # Test it twice
@@ -662,39 +637,6 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
             for prop in PROPERTIES:
                 self.assertTrue(sheet.hasProperty(prop))
-
-    def testAddVariousJavaScripts(self):
-        jsreg = self.portal.portal_javascripts
-        jsreg.registerScript("folder_contents_hideAddItems.js")
-        self.assertTrue('folder_contents_hideAddItems.js' in jsreg.getResourceIds())
-        RESOURCES = ('form_tabbing.js', 'input-label.js', 'toc.js',
-                     'webstats.js')
-        for r in RESOURCES:
-            jsreg.unregisterResource(r)
-        script_ids = jsreg.getResourceIds()
-        for r in RESOURCES:
-            self.assertFalse(r in script_ids)
-        # Test it twice
-        for i in range(2):
-            loadMigrationProfile(self.portal, self.profile, ('jsregistry', ))
-            script_ids = jsreg.getResourceIds()
-            # Removed script
-            self.assertFalse('folder_contents_hideAddItems.js' in script_ids)
-            for r in RESOURCES:
-                self.assertTrue(r in script_ids)
-            # form_tabbing tests
-            if 'collapsiblesections.js' in script_ids:
-                posSE = jsreg.getResourcePosition('form_tabbing.js')
-                posHST = jsreg.getResourcePosition('collapsiblesections.js')
-                self.assertEqual((posSE - 1), posHST)
-            # webstats tests
-            if 'webstats.js' in script_ids:
-                pos1 = jsreg.getResourcePosition('toc.js')
-                pos2 = jsreg.getResourcePosition('webstats.js')
-                self.assertEqual((pos2 - 1), pos1)
-            # check if enabled
-            res = jsreg.getResource('webstats.js')
-            self.assertEqual(res.getEnabled(), True)
 
     def testInstallContentrulesAndLanguageUtilities(self):
         sm = getSiteManager()
@@ -841,23 +783,6 @@ class TestMigrations_v3_0(MigrationTest):
         for i in range(2):
             loadMigrationProfile(self.portal, self.profile, ('actions', ))
             self.assertTrue('contentrules' in self.portal.portal_actions.object.objectIds())
-
-    def testAddNewBeta2CSSFiles(self):
-        cssreg = self.portal.portal_css
-        added_ids = ['controlpanel.css']
-        for id in added_ids:
-            cssreg.unregisterResource(id)
-        stylesheet_ids = cssreg.getResourceIds()
-        for id in added_ids:
-            self.assertFalse('controlpanel.css' in stylesheet_ids)
-        # Test it twice
-        for i in range(2):
-            loadMigrationProfile(self.portal,
-                    'profile-plone.app.upgrade.v30:3.0b1-3.0b2',
-                    steps=["cssregistry"])
-            stylesheet_ids = cssreg.getResourceIds()
-            for id in added_ids:
-                self.assertTrue(id in stylesheet_ids)
 
     def testChangeOrderOfActionProviders(self):
         self.actions.deleteActionProvider('portal_types')

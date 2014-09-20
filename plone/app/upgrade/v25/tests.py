@@ -17,14 +17,6 @@ class TestMigrations_v2_5_0(MigrationTest):
         self.actions = self.portal.portal_actions
         self.css = self.portal.portal_css
 
-    def testRemovePloneCssFromRR(self):
-        # Check to ensure that plone.css gets removed from portal_css
-        self.css.registerStylesheet('plone.css', media='all')
-        self.assertTrue('plone.css' in self.css.getResourceIds())
-        loadMigrationProfile(self.portal, self.profile, ('cssregistry', ))
-        # plone.css removcal test
-        self.assertFalse('plone.css' in self.css.getResourceIds())
-
     def tesFixObjDeleteAction(self):
         # Prepare delete actions test
         editActions = ('delete',)
