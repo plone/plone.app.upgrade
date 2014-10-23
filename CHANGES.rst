@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.7 (unreleased)
+1.3.7 (2014-10-22)
 ------------------
 
 - Add upgrade-profile for vs5002 and update rolemap.xml to include
