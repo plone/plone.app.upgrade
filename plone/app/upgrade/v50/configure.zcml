@@ -44,39 +44,39 @@
         profile="Products.CMFPlone:plone">
 
        <gs:upgradeStep
-           title="Run to50beta1 upgrade profile"
+           title="Run to50alpha3 upgrade profile"
            description=""
-           handler=".betas.to50beta1"
+           handler=".alphas.to50alpha3"
            />
 
        <gs:upgradeStep
            title="Upgrade editing control panel settings"
            description=""
-           handler=".betas.upgrade_editing_controlpanel_settings"
+           handler=".alphas.upgrade_editing_controlpanel_settings"
            />
 
        <gs:upgradeStep
            title="Upgrade maintenance control panel settings"
            description=""
-           handler=".betas.upgrade_maintenance_controlpanel_settings"
+           handler=".alphas.upgrade_maintenance_controlpanel_settings"
            />
 
        <gs:upgradeStep
            title="Upgrade navigation control panel settings"
            description=""
-           handler=".betas.upgrade_navigation_controlpanel_settings"
+           handler=".alphas.upgrade_navigation_controlpanel_settings"
            />
 
        <gs:upgradeStep
            title="Upgrade search control panel settings"
            description=""
-           handler=".betas.upgrade_search_controlpanel_settings"
+           handler=".alphas.upgrade_search_controlpanel_settings"
            />
 
        <gs:upgradeStep
            title="Upgrade site control panel settings"
            description=""
-           handler=".betas.upgrade_site_controlpanel_settings"
+           handler=".alphas.upgrade_site_controlpanel_settings"
            />
 
     </gs:upgradeSteps>
