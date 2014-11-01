@@ -1,10 +1,12 @@
 Changelog
 =========
 
-1.3.8 (unreleased)
+1.3.8 (2014-11-01)
 ------------------
 
-- Nothing changed yet.
+- Add upgrade steps for editing, maintenance, navigation, search,
+  and site control panels.
+  [tisto]
 
 
 1.3.7 (2014-10-22)
