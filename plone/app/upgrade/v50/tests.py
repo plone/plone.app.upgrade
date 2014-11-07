@@ -122,7 +122,7 @@ class TestFunctionalMigrations(unittest.TestCase):
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
-    if PLONE_5:
+    if not PLONE_5:
         return TestSuite()
     else:
         suite = TestSuite()
