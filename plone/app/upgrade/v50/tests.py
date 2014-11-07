@@ -1,6 +1,5 @@
 from Products.CMFCore.utils import getToolByName
 from plone.app.upgrade.tests.base import MigrationTest
-from plone.app.upgrade.v50 import alphas
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 from plone.portlets.interfaces import IPortletAssignmentMapping
@@ -11,6 +10,16 @@ from zope.component import getSiteManager
 from zope.component import getUtility
 
 import unittest
+
+try:
+    from Products.CMFPlone.factory import _IMREALLYPLONE5  # nopep8
+except ImportError:
+    PLONE_5 = False
+else:
+    PLONE_5 = True
+
+if PLONE_5:
+    from plone.app.upgrade.v50 import alphas
 
 
 class PASUpgradeTest(MigrationTest):
@@ -113,9 +122,7 @@ class TestFunctionalMigrations(unittest.TestCase):
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
-    try:
-        from Products.CMFPlone.factory import _IMREALLYPLONE5  # nopep8
-    except ImportError:
+    if PLONE_5:
         return TestSuite()
     else:
         suite = TestSuite()
