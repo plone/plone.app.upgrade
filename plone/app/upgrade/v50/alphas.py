@@ -22,9 +22,6 @@ from zope.component.hooks import getSite
 
 logger = logging.getLogger('plone.app.upgrade')
 
-
-logger = logging.getLogger('plone.app.upgrade')
-
 TOOLS_TO_REMOVE = ['portal_actionicons',
                    'portal_calendar',
                    'portal_interface',
@@ -170,7 +167,8 @@ def upgrade_editing_controlpanel_settings(context):
         settings.enable_link_integrity_checks = \
             site_properties.enable_link_integrity_checks
         settings.ext_editor = site_properties.ext_editor
-        #settings.available_editors = site_properties.available_editors
+        # settings.available_editors = site_properties.available_editors
+
         # Kupu will not be available as editor in Plone 5. Therefore we just
         # ignore the setting.
         if site_properties.default_editor != 'Kupu':

@@ -4,7 +4,8 @@ Changelog
 1.3.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add upgrade steps for markup control panel.
+  [thet]
 
 
 1.3.8 (2014-11-01)

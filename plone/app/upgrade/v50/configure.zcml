@@ -81,4 +81,18 @@
 
     </gs:upgradeSteps>
 
+
+    <gs:upgradeSteps
+        source="5003"
+        destination="5004"
+        profile="Products.CMFPlone:plone">
+
+       <gs:upgradeStep
+           title="Upgrade markup control panel settings"
+           description=""
+           handler=".betas.upgrade_markup_controlpanel_settings"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>
