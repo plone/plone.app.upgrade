@@ -99,6 +99,12 @@
            handler=".betas.upgrade_mail_controlpanel_settings"
            />
 
+       <gs:upgradeStep
+           title="Upgrade security control panel settings"
+           description=""
+           handler=".betas.upgrade_security_controlpanel_settings"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
