@@ -9,18 +9,13 @@ from os.path import join
 import transaction
 from zope.site.hooks import setSite
 
-from Testing.ZopeTestCase.sandbox import Sandboxed
-from Products.PloneTestCase.layer import PloneSiteLayer
-from Products.PloneTestCase.ptc import PloneTestCase
-from Products.PloneTestCase.ptc import setupPloneSite
+from plone.app.testing.bbb import PloneTestCase
 
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.tests.base.testcase import WarningInterceptor
 from Products.GenericSetup.context import TarballImportContext
-
-setupPloneSite()
 
 
 class MigrationTest(PloneTestCase):
@@ -111,21 +106,10 @@ class MigrationTest(PloneTestCase):
             skins.addSkinSelection(skin, ','.join(path))
 
 
-class FunctionalUpgradeLayer(PloneSiteLayer):
 
-    @classmethod
-    def setUp(cls):
-        pass
-
-    @classmethod
-    def tearDown(cls):
-        pass
-
-
-class FunctionalUpgradeTestCase(Sandboxed, PloneTestCase, WarningInterceptor):
+class FunctionalUpgradeTestCase(PloneTestCase, WarningInterceptor):
 
     _setup_fixture = 0
-    layer = FunctionalUpgradeLayer
     site_id = 'test'
 
     def afterSetUp(self):
