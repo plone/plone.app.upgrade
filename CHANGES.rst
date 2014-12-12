@@ -4,6 +4,8 @@ Changelog
 1.3.9 (unreleased)
 ------------------
 
+- Add upgrade step for mail control panel. Refs PLIP 10359.
+  [jcerjak, khink]
 - Add upgrade steps for markup control panel.
   [thet]
 
