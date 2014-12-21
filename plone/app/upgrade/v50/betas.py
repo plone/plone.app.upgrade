@@ -119,8 +119,11 @@ def upgrade_security_controlpanel_settings(context):
         settings = False
     if settings:
         settings.enable_self_reg = _get_enable_self_reg()
-        settings.enable_user_pwd_choice = portal.getProperty(
-            'validate_email', True)
+        validate_email = portal.getProperty('validate_email', True)
+        if validate_email:
+            settings.enable_user_pwd_choice = False
+        else:
+            settings.enable_user_pwd_choice = True
         pmembership = getToolByName(portal, 'portal_membership')
         settings.enable_user_folders = pmembership.getMemberareaCreationFlag()
         settings.allow_anon_views_about = site_properties.getProperty(
