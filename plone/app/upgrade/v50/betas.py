@@ -3,9 +3,15 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component.hooks import getSite
+
+
+def to50beta1(context):
+    """5.0alpha3 -> 5.0beta1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta1')
 
 
 def upgrade_mail_controlpanel_settings(context):
