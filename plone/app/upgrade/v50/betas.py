@@ -26,7 +26,6 @@ def upgrade_mail_controlpanel_settings(context):
     except KeyError:
         return
     portal = getSite()
-    portal_properties = getToolByName(context, "portal_properties")
 
     smtp_host = getattr(portal.MailHost, 'smtp_host', '')
     mail_settings.smtp_host = unicode(smtp_host)
@@ -40,10 +39,10 @@ def upgrade_mail_controlpanel_settings(context):
     smtp_pass = portal.MailHost.get('smtp_pass')
     mail_settings.smtp_pass = smtp_pass
 
-    email_from_address = portal_properties.get('email_from_address')
+    email_from_address = portal.get('email_from_address')
     mail_settings.email_from_address = email_from_address
 
-    email_from_name = portal_properties.get('email_from_name')
+    email_from_name = portal.get('email_from_name')
     mail_settings.email_from_name = email_from_name
 
 
