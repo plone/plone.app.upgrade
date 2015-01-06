@@ -4,6 +4,12 @@ Changelog
 2.0 (unreleased)
 ------------------
 
+- Add upgrade step for the security control panel.
+  [jcerjak]
+
+- Add upgrade step for mail control panel. Refs PLIP 10359.
+  [jcerjak, khink]
+
 - Add upgrade steps for markup control panel.
   [thet]
 

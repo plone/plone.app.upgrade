@@ -88,9 +88,27 @@
         profile="Products.CMFPlone:plone">
 
        <gs:upgradeStep
+           title="Run to50beta1 upgrade profile"
+           description=""
+           handler=".betas.to50beta1"
+           />
+
+       <gs:upgradeStep
            title="Upgrade markup control panel settings"
            description=""
            handler=".betas.upgrade_markup_controlpanel_settings"
+           />
+
+       <gs:upgradeStep
+           title="Upgrade mail control panel settings"
+           description="Take portal properties and put them in IMailSettings registry"
+           handler=".betas.upgrade_mail_controlpanel_settings"
+           />
+
+       <gs:upgradeStep
+           title="Upgrade security control panel settings"
+           description=""
+           handler=".betas.upgrade_security_controlpanel_settings"
            />
 
     </gs:upgradeSteps>
