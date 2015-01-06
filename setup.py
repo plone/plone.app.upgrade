@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.3.9.dev0'
+version = '2.0.dev0'
 
 setup(name='plone.app.upgrade',
       version=version,
@@ -10,10 +10,12 @@ setup(name='plone.app.upgrade',
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",
+          "Framework :: Plone :: 5.0",
           "Framework :: Zope2",
           "License :: OSI Approved :: GNU General Public License (GPL)",
           "Operating System :: OS Independent",
           "Programming Language :: Python",
+          "Programming Language :: Python :: 2.7",
         ],
       keywords='Plone upgrade migration',
       author='Plone Foundation',
@@ -28,13 +30,13 @@ setup(name='plone.app.upgrade',
         test=[
             'Products.CMFPlacefulWorkflow',
             'Products.CMFQuickInstallerTool',
-            'Products.PloneTestCase',
             'plone.contentrules',
             'plone.app.i18n',
             'plone.app.iterate',
             'plone.app.openid',
             'plone.app.redirector',
             'plone.app.viewletmanager',
+            'plone.app.testing',
             'plone.app.theming',
         ]
       ),
