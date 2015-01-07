@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0 (unreleased)
+1.3.9 (unreleased)
 ------------------
 
 - Add upgrade step for the security control panel.
@@ -13,11 +13,6 @@ Changelog
 - Add upgrade steps for markup control panel.
   [thet]
 
-- Ported tests to plone.app.testing
-  [tomgross]
-
-- Removed all tests for migrations older than 4.3 -> 5.0
-  [tomgross]
 
 1.3.8 (2014-11-01)
 ------------------
