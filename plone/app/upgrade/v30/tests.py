@@ -88,6 +88,7 @@ from plone.app.upgrade.v30.alphas import migrateLocalroleForm
 from plone.app.upgrade.v30.alphas import reorderUserActions
 from plone.app.upgrade.v30.alphas import updatePASPlugins
 from plone.app.upgrade.v30.alphas import updateConfigletTitles
+from plone.app.upgrade.v30.alphas import updateMemberSecurity
 from plone.app.upgrade.v30.alphas import addCacheForResourceRegistry
 from plone.app.upgrade.v30.alphas import removeTablelessSkin
 from plone.app.upgrade.v30.alphas import addObjectProvidesIndex
@@ -661,6 +662,12 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             self.assertEqual(self.portal.getProperty('email_charset'), 'utf-8')
 
     def testUpdateMemberSecurity(self):
+        # validate_email was removed in Plone 5, so we need to add it
+        # manually here
+        self.portal.manage_addProperty('validate_email', False, 'boolean')
+
+        updateMemberSecurity(self.portal)
+
         pprop = getToolByName(self.portal, 'portal_properties')
         self.assertEqual(
                 pprop.site_properties.getProperty('allowAnonymousViewAbout'),
