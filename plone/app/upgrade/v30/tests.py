@@ -662,16 +662,20 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             self.assertEqual(self.portal.getProperty('email_charset'), 'utf-8')
 
     def testUpdateMemberSecurity(self):
-        # validate_email was removed in Plone 5, so we need to add it
-        # manually here
+        # These properties were removed in Plone 5, so we add them
+        # manually here and check if they are properly updated by the
+        # updateMemberSecurity upgrade step
+        pprop = getToolByName(self.portal, 'portal_properties')
         self.portal.manage_addProperty('validate_email', False, 'boolean')
+        pprop.site_properties.manage_addProperty(
+            'allowAnonymousViewAbout', True, 'boolean')
 
         updateMemberSecurity(self.portal)
 
-        pprop = getToolByName(self.portal, 'portal_properties')
         self.assertEqual(
-                pprop.site_properties.getProperty('allowAnonymousViewAbout'),
-                False)
+            pprop.site_properties.getProperty('allowAnonymousViewAbout'),
+            False
+        )
 
         pmembership = getToolByName(self.portal, 'portal_membership')
         self.assertEqual(pmembership.memberareaCreationFlag, False)
