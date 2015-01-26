@@ -4,6 +4,10 @@ Changelog
 1.3.9 (unreleased)
 ------------------
 
+- Update tests after removal of ``allowAnonymousViewAbout`` and
+  ``validate_email`` properties in CMFPlone.
+  [jcerjak]
+
 - Add upgrade step for the security control panel.
   [jcerjak]
 
