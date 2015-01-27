@@ -11,9 +11,17 @@ from Products.GenericSetup.registry import _import_step_registry
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from ZODB.POSException import ConflictError
 
+import pkg_resources
+
 _marker = []
 
 logger = logging.getLogger('plone.app.upgrade')
+
+plone_version = pkg_resources.get_distribution("Products.CMFPlone").version
+
+
+def version_match(target):
+    return target <= plone_version < (target + 'zzzzzzz')
 
 
 def null_upgrade_step(tool):

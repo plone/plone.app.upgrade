@@ -30,6 +30,7 @@ from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
 from plone.app.upgrade.v40.betas import updateIconMetadata
 from plone.app.upgrade.v40.betas import removeLargePloneFolder
 from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import version_match
 
 from plone.portlet.static import static
 from plone.portlets.interfaces import IPortletAssignmentMapping
@@ -662,5 +663,7 @@ class TestMigrations_v4_0_5(MigrationTest):
 
 
 def test_suite():
-    from unittest import defaultTestLoader
-    return defaultTestLoader.loadTestsFromName(__name__)
+    import unittest
+    if not version_match('4.0'):
+        return unittest.TestSuite()
+    return unittest.defaultTestLoader.loadTestsFromName(__name__)

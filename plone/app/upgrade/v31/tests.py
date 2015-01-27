@@ -5,6 +5,7 @@ from Products.PlonePAS.interfaces.plugins import ILocalRolesPlugin
 
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import version_match
 
 from plone.app.upgrade.v31.betas import reinstallCMFPlacefulWorkflow
 
@@ -113,6 +114,8 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
+    if not version_match('3.1'):
+        return suite
     suite.addTest(makeSuite(TestMigrations_v3_1))
     suite.addTest(makeSuite(TestFunctionalMigrations))
     return suite

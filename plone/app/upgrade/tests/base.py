@@ -10,9 +10,9 @@ import transaction
 from zope.site.hooks import setSite
 
 from Testing.ZopeTestCase.sandbox import Sandboxed
+from Products.PloneTestCase.PloneTestCase import PloneTestCase
 from Products.PloneTestCase.layer import PloneSiteLayer
-from Products.PloneTestCase.ptc import PloneTestCase
-from Products.PloneTestCase.ptc import setupPloneSite
+from Products.PloneTestCase.setup import setupPloneSite
 
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
@@ -20,8 +20,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.tests.base.testcase import WarningInterceptor
 from Products.GenericSetup.context import TarballImportContext
 
-setupPloneSite()
+from Products.Five import zcml
 
+setupPloneSite(products=["plone.app.folder"])
 
 class MigrationTest(PloneTestCase):
 

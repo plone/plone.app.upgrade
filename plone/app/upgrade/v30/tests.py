@@ -74,6 +74,7 @@ from Products.ResourceRegistries.interfaces import IJSRegistry
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import version_match
 
 from plone.app.upgrade.v30.alphas import enableZope3Site
 from plone.app.upgrade.v30.alphas import migrateOldActions
@@ -1100,6 +1101,8 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
+    if not version_match('3.0'):
+        return suite
     suite.addTest(makeSuite(TestMigrations_v2_5_x))
     suite.addTest(makeSuite(TestMigrations_v3_0_Actions))
     suite.addTest(makeSuite(TestMigrations_v3_0_alpha1))
