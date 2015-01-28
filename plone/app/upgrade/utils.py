@@ -21,7 +21,13 @@ plone_version = pkg_resources.get_distribution("Products.CMFPlone").version
 
 
 def version_match(target):
-    return target <= plone_version < (target + 'zzzzzzz')
+    """ Given, our versioning scheme is always major.minorANYTHING, where major
+    and minor are single-digit numbers, we can compare versions as follows.
+    pkg_resources.parse_version is not compatible with our versioning scheme
+    (like '5.0b1') and also not compatible with the semver.org proposal
+    (requires '5.0-beta1').
+    """
+    return (target[0], target[1]) == (plone_version[0], plone_version[1])
 
 
 def null_upgrade_step(tool):
