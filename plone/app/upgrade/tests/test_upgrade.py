@@ -25,7 +25,7 @@ class TestUpgrade(MigrationTest):
         last = self.setup.getLastVersionForProfile(_DEFAULT_PROFILE)
         self.assertEqual(last, current)
 
-    @mock.patch('plone.app.upgrades.utils.plone_version', '5.0b1')
+    @mock.patch('plone.app.upgrade.utils.plone_version', '5.0b1')
     def testVersionMatch(self):
         self.assertFalse(version_match('2.5'))
         self.assertFalse(version_match('3.1b1'))

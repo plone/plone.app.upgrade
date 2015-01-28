@@ -27,7 +27,8 @@ def version_match(target):
     (like '5.0b1') and also not compatible with the semver.org proposal
     (requires '5.0-beta1').
     """
-    return (target[0], target[1]) == (plone_version[0], plone_version[1])
+    # MAJOR.MINOR
+    return (target[0], target[2]) == (plone_version[0], plone_version[2])
 
 
 def null_upgrade_step(tool):
