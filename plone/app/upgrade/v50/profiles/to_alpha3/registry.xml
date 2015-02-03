@@ -108,7 +108,7 @@
     <field type="plone.registry.field.ASCII">
       <title>URL of less.js</title>
     </field>
-    <value>++plone++static/components/less/dist/less-1.7.4.js</value>
+    <value>++plone++static/components/less/dist/less.js</value>
   </record>
   <record name="plone.resources.less-modify">
     <field type="plone.registry.field.ASCII">
@@ -120,7 +120,7 @@
 
   <records prefix="plone.resources/less"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">++plone++static/components/less/dist/less-1.7.4.js</value>
+      <value key="js">++plone++static/components/less/dist/less.js</value>
   </records>
 
   <record name="plone.resources.less-variables">
@@ -137,6 +137,10 @@
   <records prefix="plone.resources/mockup-patterns-base"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++plone++static/components/mockup-core/js/pattern.js</value>
+  </records>
+  <records prefix="plone.resources/mockup-parser"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/mockup-core/js/parser.js</value>
   </records>
 
   <records prefix="plone.resources/jquery"
@@ -629,6 +633,11 @@
       <value key="js">++resource++mockupjs/i18n.js</value>
   </records>
 
+  <records prefix="plone.resources/translate"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockupjs/i18n-wrapper.js</value>
+  </records>
+
 
  <!-- Patterns -->
 
@@ -642,7 +651,7 @@
 
   <records prefix="plone.resources/mockup-patterns-select2"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">++resource++mockup/select2/patterns.js</value>
+      <value key="js">++resource++mockup/select2/pattern.js</value>
       <value key="css">
         <element>++resource++mockup/select2/pattern.select2.less</element>
       </value>
@@ -666,6 +675,11 @@
       <value key="js">++resource++mockup/backdrop/pattern.js</value>
   </records>
 
+  <records prefix="plone.resources/mockup-patterns-cookietrigger"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/cookietrigger/pattern.js</value>
+  </records>
+
   <records prefix="plone.resources/mockup-patterns-sortable"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++resource++mockup/sortable/pattern.js</value>
@@ -679,6 +693,11 @@
   <records prefix="plone.resources/mockup-patterns-formunloadalert"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++resource++mockup/formunloadalert/pattern.js</value>
+  </records>
+
+  <records prefix="plone.resources/mockup-patterns-inlinevalidation"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/inlinevalidation/pattern.js</value>
   </records>
 
   <records prefix="plone.resources/mockup-patterns-modal"
@@ -726,6 +745,9 @@
   <records prefix="plone.resources/mockup-patterns-select2"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++resource++mockup/select2/pattern.js</value>
+      <value key="css">
+        <element>++resource++mockup/select2/pattern.select2.less</element>
+      </value>
   </records>
 
   <records prefix="plone.resources/mockup-patterns-structure"
@@ -749,6 +771,11 @@
   <records prefix="plone.resources/mockup-patterns-tablesorter"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++resource++mockup/tablesorter/pattern.js</value>
+  </records>
+
+  <records prefix="plone.resources/mockup-patterns-textareamimetypeselector"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/textareamimetypeselector/pattern.js</value>
   </records>
 
   <records prefix="plone.resources/mockup-patterns-tinymce"
@@ -816,6 +843,36 @@
   <records prefix="plone.resources/rjs"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++plone++static/components/r.js/dist/r.js</value>
+  </records>
+
+ <!-- patternslib dependencies -->
+  <records prefix="plone.resources/pat-compat"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/compat</value>
+  </records>
+  <records prefix="plone.resources/pat-jquery-ext"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/jquery-ext</value>
+  </records>
+  <records prefix="plone.resources/pat-logger"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/logger</value>
+  </records>
+  <records prefix="plone.resources/pat-parser"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/parser</value>
+  </records>
+  <records prefix="plone.resources/pat-registry"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/registry</value>
+  </records>
+  <records prefix="plone.resources/pat-utils"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/utils</value>
+  </records>
+  <records prefix="plone.resources/logging"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/logging/src/logging</value>
   </records>
 
   <!-- legacy js -->
