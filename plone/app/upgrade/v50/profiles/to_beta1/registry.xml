@@ -8,4 +8,10 @@
            prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.ISiteSchema"
            prefix="plone" />
+
+  <records prefix="plone.resources/mockup-patterns-contentloader"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/contentloader/pattern.js</value>
+  </records>
+
 </registry>
