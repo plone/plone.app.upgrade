@@ -870,10 +870,6 @@
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++plone++static/components/patternslib/src/core/parser</value>
   </records>
-  <records prefix="plone.resources/pat-registry"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">++plone++static/components/patternslib/src/core/registry</value>
-  </records>
   <records prefix="plone.resources/pat-utils"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++plone++static/components/patternslib/src/core/utils</value>
