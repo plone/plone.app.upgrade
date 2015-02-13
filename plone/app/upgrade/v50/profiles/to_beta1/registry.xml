@@ -68,6 +68,14 @@
       <value key="deps">jquery</value>
   </records>
 
+  <records prefix="plone.resources/mockup-patterns-markspeciallinks"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/markspeciallinks/pattern.js</value>
+      <value key="css">
+        <element>++resource++mockup/markspeciallinks/pattern.markspeciallinks.less</element>
+      </value>
+  </records>
+
    <!-- patternslib dependencies -->
   <records prefix="plone.resources/pat-compat"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
