@@ -858,36 +858,9 @@
 
 
   <!-- legacy js -->
-
-
-  <records prefix="plone.resources/plone_javascript_variables"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">plone_javascript_variables.js</value>
-  </records>
-
-  <records prefix="plone.resources/cookie_functions"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">cookie_functions.js</value>
-  </records>
   <records prefix="plone.resources/jquery-highlightsearchterms"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">jquery.highlightsearchterms.js</value>
-  </records>
-  <records prefix="plone.resources/inline-validation"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">inline_validation.js</value>
-  </records>
-  <records prefix="plone.resources/kss-bbb"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">kss-bbb.js</value>
-  </records>
-  <records prefix="plone.resources/table_sorter"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">table_sorter.js</value>
-  </records>
-  <records prefix="plone.resources/unlockOnFormUnload"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">unlockOnFormUnload.js</value>
   </records>
 
   <!-- disabled -->
@@ -978,12 +951,7 @@
   <records prefix="plone.bundles/plone-legacy"
             interface='Products.CMFPlone.interfaces.IBundleRegistry'>
     <value key="resources" purge="false">
-      <element>plone_javascript_variables</element>
-      <element>unlockOnFormUnload</element>
-      <element>table_sorter</element>
-      <element>inline-validation</element>
       <element>jquery-highlightsearchterms</element>
-      <element>cookie_functions</element>
     </value>
     <value key="depends">plone</value>
     <value key="jscompilation">++plone++static/plone-legacy-compiled.js</value>
