@@ -663,12 +663,18 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
 
     def testUpdateMemberSecurity(self):
         # These properties were removed in Plone 5, so we add them
-        # manually here and check if they are properly updated by the
+        # manually here if needed and check if they are properly updated by the
         # updateMemberSecurity upgrade step
         pprop = getToolByName(self.portal, 'portal_properties')
-        self.portal.manage_addProperty('validate_email', False, 'boolean')
-        pprop.site_properties.manage_addProperty(
-            'allowAnonymousViewAbout', True, 'boolean')
+        try:
+            self.portal.manage_addProperty('validate_email', False, 'boolean')
+        except:  # property is already there
+            pass
+        try:
+            pprop.site_properties.manage_addProperty(
+                'allowAnonymousViewAbout', True, 'boolean')
+        except:  # property is already there
+            pass
 
         updateMemberSecurity(self.portal)
 
