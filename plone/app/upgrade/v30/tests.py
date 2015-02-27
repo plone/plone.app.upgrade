@@ -13,6 +13,7 @@ from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import ILocalPortletAssignmentManager
 from plone.portlets.constants import CONTEXT_CATEGORY as CONTEXT_PORTLETS
 
+from zExceptions import BadRequest
 from zope.location.interfaces import ISite
 from zope.component import getGlobalSiteManager
 from zope.component import getSiteManager
@@ -668,12 +669,12 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         pprop = getToolByName(self.portal, 'portal_properties')
         try:
             self.portal.manage_addProperty('validate_email', False, 'boolean')
-        except:  # property is already there
+        except BadRequest:  # property is already there
             pass
         try:
             pprop.site_properties.manage_addProperty(
                 'allowAnonymousViewAbout', True, 'boolean')
-        except:  # property is already there
+        except BadRequest:  # property is already there
             pass
 
         updateMemberSecurity(self.portal)
