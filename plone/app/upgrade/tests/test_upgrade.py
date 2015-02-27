@@ -1,7 +1,8 @@
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFCore.utils import getToolByName
-
+from plone.app.upgrade.utils import version_match
 from plone.app.upgrade.tests.base import MigrationTest
+import mock
 
 
 class TestUpgrade(MigrationTest):
@@ -23,6 +24,16 @@ class TestUpgrade(MigrationTest):
         current = tuple(current.split('.'))
         last = self.setup.getLastVersionForProfile(_DEFAULT_PROFILE)
         self.assertEqual(last, current)
+
+    @mock.patch('plone.app.upgrade.utils.plone_version', '5.0b1')
+    def testVersionMatch(self):
+        self.assertFalse(version_match('2.5'))
+        self.assertFalse(version_match('3.1b1'))
+        self.assertFalse(version_match('5.2.b1'))
+        self.assertTrue(version_match('5.0a3.dev0'))
+        self.assertTrue(version_match('5.0b1.dev0'))
+        self.assertTrue(version_match('5.0b3'))
+        self.assertTrue(version_match('5.0'))
 
     def testDoUpgrades(self):
         self.setRoles(['Manager'])

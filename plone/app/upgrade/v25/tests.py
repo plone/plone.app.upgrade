@@ -4,6 +4,7 @@ from Products.CMFPlone.UnicodeSplitter import CaseNormalizer
 from plone.app.upgrade.tests.base import FunctionalUpgradeTestCase
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import version_match
 
 from plone.app.upgrade.v25 import fixupPloneLexicon
 from plone.app.upgrade.v25 import setLoginFormInCookieAuth
@@ -117,6 +118,8 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
+    if not version_match('2.5'):
+        return suite
     suite.addTest(makeSuite(TestMigrations_v2_5_0))
     suite.addTest(makeSuite(TestMigrations_v2_5_1))
     suite.addTest(makeSuite(TestMigrations_v2_5_2))

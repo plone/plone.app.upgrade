@@ -26,6 +26,7 @@ setup(name='plone.app.upgrade',
       zip_safe=False,
       extras_require=dict(
         test=[
+            'mock',
             'Products.CMFPlacefulWorkflow',
             'Products.CMFQuickInstallerTool',
             'Products.PloneTestCase',

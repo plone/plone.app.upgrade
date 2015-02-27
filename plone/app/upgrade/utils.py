@@ -11,9 +11,24 @@ from Products.GenericSetup.registry import _import_step_registry
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from ZODB.POSException import ConflictError
 
+import pkg_resources
+
 _marker = []
 
 logger = logging.getLogger('plone.app.upgrade')
+
+plone_version = pkg_resources.get_distribution("Products.CMFPlone").version
+
+
+def version_match(target):
+    """ Given, our versioning scheme is always major.minorANYTHING, where major
+    and minor are single-digit numbers, we can compare versions as follows.
+    pkg_resources.parse_version is not compatible with our versioning scheme
+    (like '5.0b1') and also not compatible with the semver.org proposal
+    (requires '5.0-beta1').
+    """
+    # MAJOR.MINOR
+    return (target[0], target[2]) == (plone_version[0], plone_version[2])
 
 
 def null_upgrade_step(tool):

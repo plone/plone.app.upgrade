@@ -8,6 +8,10 @@ Changelog
   ``validate_email`` properties in CMFPlone.
   [jcerjak]
 
+- Do not run tests not suited for the current Plone version 
+  (implemented for 4.0 and below)
+  [jensens]
+
 - Add upgrade step for the security control panel.
   [jcerjak]
 
