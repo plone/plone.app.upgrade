@@ -115,3 +115,9 @@ except ImportError:
     else:
         from Products.ATContentTypes.tool import metadata
         alias_module('Products.CMFPlone.MetadataTool', metadata)
+
+try:
+    from Products.PloneLanguageTool import interfaces
+except ImportError:
+    alias_module('Products.PloneLanguageTool.interfaces', bbb)
+    alias_module('Products.PloneLanguageTool.LanguageTool', bbb)
