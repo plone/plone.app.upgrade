@@ -4,6 +4,10 @@ Changelog
 1.3.9 (unreleased)
 ------------------
 
+- Update tests after removal of ``allowAnonymousViewAbout`` and
+  ``validate_email`` properties in CMFPlone.
+  [jcerjak]
+
 - Do not run tests not suited for the current Plone version 
   (implemented for 4.0 and below)
   [jensens]

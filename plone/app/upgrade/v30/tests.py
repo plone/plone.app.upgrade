@@ -13,6 +13,7 @@ from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import ILocalPortletAssignmentManager
 from plone.portlets.constants import CONTEXT_CATEGORY as CONTEXT_PORTLETS
 
+from zExceptions import BadRequest
 from zope.location.interfaces import ISite
 from zope.component import getGlobalSiteManager
 from zope.component import getSiteManager
@@ -88,6 +89,7 @@ from plone.app.upgrade.v30.alphas import migrateLocalroleForm
 from plone.app.upgrade.v30.alphas import reorderUserActions
 from plone.app.upgrade.v30.alphas import updatePASPlugins
 from plone.app.upgrade.v30.alphas import updateConfigletTitles
+from plone.app.upgrade.v30.alphas import updateMemberSecurity
 from plone.app.upgrade.v30.alphas import addCacheForResourceRegistry
 from plone.app.upgrade.v30.alphas import removeTablelessSkin
 from plone.app.upgrade.v30.alphas import addObjectProvidesIndex
@@ -661,10 +663,26 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
             self.assertEqual(self.portal.getProperty('email_charset'), 'utf-8')
 
     def testUpdateMemberSecurity(self):
+        # These properties were removed in Plone 5, so we add them
+        # manually here if needed and check if they are properly updated by the
+        # updateMemberSecurity upgrade step
         pprop = getToolByName(self.portal, 'portal_properties')
+        try:
+            self.portal.manage_addProperty('validate_email', False, 'boolean')
+        except BadRequest:  # property is already there
+            pass
+        try:
+            pprop.site_properties.manage_addProperty(
+                'allowAnonymousViewAbout', True, 'boolean')
+        except BadRequest:  # property is already there
+            pass
+
+        updateMemberSecurity(self.portal)
+
         self.assertEqual(
-                pprop.site_properties.getProperty('allowAnonymousViewAbout'),
-                False)
+            pprop.site_properties.getProperty('allowAnonymousViewAbout'),
+            False
+        )
 
         pmembership = getToolByName(self.portal, 'portal_membership')
         self.assertEqual(pmembership.memberareaCreationFlag, False)

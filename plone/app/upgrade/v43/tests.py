@@ -33,7 +33,6 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         ctool.plone_lexicon._pipeline[1] == (Splitter(), CaseNormalizer())
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
         self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'I18NNormalizer')
-        self.assertTrue(len(ctool.searchResults(SearchableText="welcome")) > 0)
 
     def testUpgradeTinyMCE(self):
         # skip test in new Plones that don't install tinymce to begin with
