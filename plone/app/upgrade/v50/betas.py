@@ -4,6 +4,7 @@ from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component.hooks import getSite
@@ -131,3 +132,20 @@ def upgrade_security_controlpanel_settings(context):
             'use_email_as_login', False)
         settings.use_uuid_as_userid = site_properties.getProperty(
             'use_uuid_as_userid', False)
+
+
+def remove_portal_tools(context):
+    """Remove some portal tools."""
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+
+    tools_to_remove = [
+        'portal_css',
+        'portal_javascripts',
+    ]
+
+    # remove obsolete tools
+    tools = [t for t in tools_to_remove if t in portal]
+    portal.manage_delObjects(tools)
+
+    cleanUpToolRegistry(context)
