@@ -149,7 +149,7 @@ def upgrade_editing_controlpanel_settings(context):
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is excecuted for old migration steps as well
+    # XXX: Somehow this code is executed for old migration steps as well
     # ( < Plone 4 ) and breaks because there is no registry. Looking up the
     # registry interfaces with 'check=False' will not work, because it will
     # return a settings object and then fail when we try to access the
@@ -185,7 +185,7 @@ def upgrade_maintenance_controlpanel_settings(context):
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is excecuted for old migration steps as well
+    # XXX: Somehow this code is executed for old migration steps as well
     # ( < Plone 4 ) and breaks because there is no registry. Looking up the
     # registry interfaces with 'check=False' will not work, because it will
     # return a settings object and then fail when we try to access the
@@ -212,7 +212,7 @@ def upgrade_navigation_controlpanel_settings(context):
     types_tool = getToolByName(context, "portal_types")
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is excecuted for old migration steps as well
+    # XXX: Somehow this code is executed for old migration steps as well
     # ( < Plone 4 ) and breaks because there is no registry. Looking up the
     # registry interfaces with 'check=False' will not work, because it will
     # return a settings object and then fail when we try to access the
@@ -254,7 +254,7 @@ def upgrade_search_controlpanel_settings(context):
     types_tool = getToolByName(context, "portal_types")
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is excecuted for old migration steps as well
+    # XXX: Somehow this code is executed for old migration steps as well
     # ( < Plone 4 ) and breaks because there is no registry. Looking up the
     # registry interfaces with 'check=False' will not work, because it will
     # return a settings object and then fail when we try to access the
@@ -285,7 +285,7 @@ def upgrade_site_controlpanel_settings(context):
     portal = getSite()
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is excecuted for old migration steps as well
+    # XXX: Somehow this code is executed for old migration steps as well
     # ( < Plone 4 ) and breaks because there is no registry. Looking up the
     # registry interfaces with 'check=False' will not work, because it will
     # return a settings object and then fail when we try to access the
