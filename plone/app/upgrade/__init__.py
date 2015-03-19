@@ -120,4 +120,4 @@ try:
     from Products.PloneLanguageTool import interfaces
 except ImportError:
     alias_module('Products.PloneLanguageTool.interfaces', bbb)
-    alias_module('Products.PloneLanguageTool.LanguageTool', bbb)
+    alias_module('Products.PloneLanguageTool', bbb)
