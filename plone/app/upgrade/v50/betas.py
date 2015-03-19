@@ -52,30 +52,31 @@ def upgrade_portal_language(context):
                 default_lang = site_properties.getProperty('default_language')
 
     lang_settings.default_language = default_lang
+    if hasattr(portal, 'portal_languages'):
+        portal_languages = getSite().portal_languages
+        lang_settings.available_languages = portal_languages.supported_langs
 
-    portal_languages = getToolByName(context, "portal_languages")
-    lang_settings.available_languages = portal_languages.supported_langs
+        lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes
+        lang_settings.display_flags = portal_languages.display_flags
 
-    lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes
-    lang_settings.display_flags = portal_languages.display_flags
+        lang_settings.use_path_negotiation = portal_languages.use_path_negotiation
+        lang_settings.use_content_negotiation = portal_languages.use_content_negotiation
+        lang_settings.use_cookie_negotiation = portal_languages.use_cookie_negotiation
+        lang_settings.set_cookie_always = portal_languages.set_cookie_everywhere
+        lang_settings.authenticated_users_only = portal_languages.authenticated_users_only
+        lang_settings.use_request_negotiation = portal_languages.use_request_negotiation
+        lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation
+        lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation
+        lang_settings.always_show_selector = portal_languages.always_show_selector
+        # portal_languages.force_language_urls = 1
+        # portal_languages.allow_content_language_fallback = 0
+        # start_neutral = 0
 
-    lang_settings.use_path_negotiation = portal_languages.use_path_negotiation
-    lang_settings.use_content_negotiation = portal_languages.use_content_negotiation
-    lang_settings.use_cookie_negotiation = portal_languages.use_cookie_negotiation
-    lang_settings.set_cookie_always =  portal_languages.set_cookie_everywhere
-    lang_settings.authenticated_users_only = portal_languages.authenticated_users_only
-    lang_settings.use_request_negotiation = portal_languages.use_request_negotiation
-    lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation
-    lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation
-    # portal_languages.force_language_urls = 1
-    # portal_languages.allow_content_language_fallback = 0
-    # start_neutral = 0
+        # Used by functional tests.
+        # always_show_selector = 0
 
-    # Used by functional tests.
-    # always_show_selector = 0
-
-    # Remove the old tool
-    portal.manage_delObjects('portal_languages')
+        # Remove the old tool
+        portal.manage_delObjects('portal_languages')
 
     # TODO: Remove portal skin
     # <object name="LanguageTool" meta_type="Filesystem Directory View"
