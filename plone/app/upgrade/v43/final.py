@@ -47,11 +47,11 @@ def addDefaultPlonePasswordPolicy(context):
     from Products.PlonePAS.Extensions.Install import setupPasswordPolicyPlugin
     setupPasswordPolicyPlugin(portal)
 
+
 def addShowInactiveCriteria(context):
     qi = getToolByName(context, 'portal_quickinstaller')
     qi.upgradeProduct('plone.app.querystring')
 
-def to433(context):
-    """4.3.2 -> 4.3.3
-    """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to433')
+
+def improveSyndication(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to435')
