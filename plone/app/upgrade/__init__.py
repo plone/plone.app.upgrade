@@ -4,6 +4,7 @@ from zope.interface import implements
 from Products.CMFQuickInstallerTool.interfaces import INonInstallable
 from plone.app.upgrade.utils import alias_module
 import bbb
+import bbbd
 
 
 class HiddenProducts(object):
@@ -115,3 +116,10 @@ except ImportError:
     else:
         from Products.ATContentTypes.tool import metadata
         alias_module('Products.CMFPlone.MetadataTool', metadata)
+
+try:
+    from Products.PloneLanguageTool import interfaces
+except ImportError:
+    alias_module('Products.PloneLanguageTool.interfaces', bbb)
+    alias_module('Products.PloneLanguageTool', bbbd)
+    __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool = __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool.LanguageTool
