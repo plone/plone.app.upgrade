@@ -5,6 +5,7 @@ from zope.component import queryUtility
 from plone.contentrules.engine.interfaces import IRuleStorage
 from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved
 
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -46,6 +47,11 @@ def addDefaultPlonePasswordPolicy(context):
     from Products.PlonePAS.Extensions.Install import setupPasswordPolicyPlugin
     setupPasswordPolicyPlugin(portal)
 
+
 def addShowInactiveCriteria(context):
     qi = getToolByName(context, 'portal_quickinstaller')
     qi.upgradeProduct('plone.app.querystring')
+
+
+def improveSyndication(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to435')
