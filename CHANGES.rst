@@ -1,8 +1,16 @@
 Changelog
 =========
 
-1.3.9 (unreleased)
+1.3.9 (2015-03-26)
 ------------------
+
+=======
+- LanguageTool/plone.app.multilingual migration
+  [bloodbare]
+
+- Update tests after removal of ``allowAnonymousViewAbout`` and
+  ``validate_email`` properties in CMFPlone.
+  [jcerjak]
 
 - Do not run tests not suited for the current Plone version 
   (implemented for 4.0 and below)
