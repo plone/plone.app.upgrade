@@ -123,3 +123,11 @@ except ImportError:
     alias_module('Products.PloneLanguageTool.interfaces', bbb)
     alias_module('Products.PloneLanguageTool', bbbd)
     __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool = __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool.LanguageTool
+
+
+# To solve the __iro__ problem because CMFPlacefulWorkflow interfaces changed on 1.6.1
+try:
+    from Products.CMFPlacefulWorkflow.interfaces import portal_placeful_workflow
+except:
+    from Products.CMFPlacefulWorkflow import interfaces
+    alias_module('Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
