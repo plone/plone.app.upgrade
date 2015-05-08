@@ -23,12 +23,5 @@
       <key_type type="plone.registry.field.TextLine" />
       <value_type type="plone.registry.field.TextLine" />
     </field>
-    <value>
-      <element key="relatedItems">json:{"vocabularyUrl": "%(portal_url)s/@@getVocabulary?name=plone.app.vocabularies.Catalog"}</element>
-      <element key="rel_upload_path">@@fileUpload</element>
-      <element key="folder_url">%(document_base_url)s</element>
-      <element key="linkAttribute">UID</element>
-      <element key="prependToScalePart">/@@images/image/</element>
-    </value>
   </record>
 </registry>

@@ -77,16 +77,6 @@
   <records interface="Products.CMFPlone.interfaces.ITinyMCESchema"
            prefix="plone">
     <value key="content_css">++plone++static/components/tinymce/skins/lightgray/content.min.css</value>
-    <value key="prependToScalePart">/@@images/image/</value>
-    <value key="toolbar_anchor">True</value>
-    <value key="toolbar_unlink">True</value>
-    <value key="toolbar_link">True</value>
-    <value key="toolbar_tablecontrols">True</value>
-    <value key="toolbar_indent">True</value>
-    <value key="toolbar_outdent">True</value>
-    <value key="toolbar_definitionlist">True</value>
-    <value key="toolbar_numlist">True</value>
-    <value key="toolbar_bullist">True</value>
   </records>
   <record name="plone.resources.development">
     <field type="plone.registry.field.Bool">
