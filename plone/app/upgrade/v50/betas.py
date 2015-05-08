@@ -197,7 +197,11 @@ def to50beta2(context):
     registry = getUtility(IRegistry)
     settings = registry.forInterface(IImagingSchema, prefix="plone")
 
-    iprops = portal.portal_properties.imaging_properties
+    try:
+        iprops = portal.portal_properties.imaging_properties
 
-    settings.allowed_sizes = [s.decode('utf8') for s in iprops.getProperty('allowed_sizes')]  # noqa
-    settings.quality = iprops.getProperty('quality')
+        settings.allowed_sizes = [s.decode('utf8') for s in iprops.getProperty('allowed_sizes')]  # noqa
+        settings.quality = iprops.getProperty('quality')
+    except AttributeError:
+        # will only be there if from older plone instance
+        pass
