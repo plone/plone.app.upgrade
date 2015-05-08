@@ -9,6 +9,7 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 
 
 def to50beta1(context):
@@ -46,7 +47,7 @@ def upgrade_portal_language(context):
         portal_languages = getSite().portal_languages
         lang_settings.available_languages = portal_languages.supported_langs
 
-        lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes
+        lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes  # noqa
         lang_settings.display_flags = portal_languages.display_flags
 
         lang_settings.use_path_negotiation = portal_languages.use_path_negotiation
@@ -57,7 +58,7 @@ def upgrade_portal_language(context):
         lang_settings.authenticated_users_only = portal_languages.authenticated_users_only
         lang_settings.use_request_negotiation = portal_languages.use_request_negotiation
         lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation
-        lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation
+        lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation  # noqa
         if hasattr(portal_languages, 'always_show_selector'):
             lang_settings.always_show_selector = portal_languages.always_show_selector
 
@@ -67,7 +68,6 @@ def upgrade_portal_language(context):
     # TODO: Remove portal skin
     # <object name="LanguageTool" meta_type="Filesystem Directory View"
     # directory="Products.PloneLanguageTool:skins/LanguageTool"/>
-
 
 
 def upgrade_mail_controlpanel_settings(context):
@@ -187,3 +187,21 @@ def upgrade_security_controlpanel_settings(context):
             'use_email_as_login', False)
         settings.use_uuid_as_userid = site_properties.getProperty(
             'use_uuid_as_userid', False)
+
+
+def to50beta2(context):
+    """5.0alpha3 -> 5.0beta1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta2')
+    portal = getSite()
+
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(IImagingSchema, prefix="plone")
+
+    try:
+        iprops = portal.portal_properties.imaging_properties
+
+        settings.allowed_sizes = [s.decode('utf8') for s in iprops.getProperty('allowed_sizes')]  # noqa
+        settings.quality = iprops.getProperty('quality')
+    except AttributeError:
+        # will only be there if from older plone instance
+        pass
