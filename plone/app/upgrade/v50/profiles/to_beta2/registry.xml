@@ -4,4 +4,10 @@
            prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.IImagingSchema"
            prefix="plone" />
+  <records prefix="plone.resources/tinymce-default-styles"
+          interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="css">
+      <element>++plone++static/tinymce-styles.css</element>
+    </value>
+  </records>
 </registry>
