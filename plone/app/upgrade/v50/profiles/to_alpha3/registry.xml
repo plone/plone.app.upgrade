@@ -14,6 +14,8 @@
            prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.IDateAndTimeSchema"
            prefix="plone" />
+  <records interface="Products.CMFPlone.interfaces.ISocialMediaSchema"
+           prefix="plone" />
   <record interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings" field="resourceBundlesForThemes">
     <value purge="false">
       <element key="(default)">
@@ -952,6 +954,7 @@
     </field>
     <value>
       <element key="pickadate">{"selectYears": 200}</element>
+      <element key="modal">{"actionOptions": {"displayInModal": false}}</element>
     </value>
   </record>
 
