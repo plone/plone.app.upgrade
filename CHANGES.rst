@@ -4,7 +4,16 @@ Changelog
 1.3.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Plone 4.3: Enable NewsML feed syndication
+  [tcurvelo]
+
+- Plone 5: Migrate imagine control panel settings to the configuration
+  registry
+  [vangheem]
+
+- Plone 5: Solve CMFPlacefulWorkflow __iro__ problem because
+  of moving their paths when upgrading
+  [bloodbare]
 
 
 1.3.9 (2015-03-26)
