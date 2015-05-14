@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<registry>
+  <records prefix="plone.resources/plone-patterns-portletmanager"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="js">++resource++manage-portlets.js</value>
+  </records>
+</registry>

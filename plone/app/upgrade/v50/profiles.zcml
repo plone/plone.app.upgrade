@@ -32,9 +32,18 @@
 
   <genericsetup:registerProfile
       name="to50beta2"
-      title="Upgrade profile for Plone 5004 to Plone 5.0beta1"
+      title="Upgrade profile for Plone 5004 to Plone 5.0b2"
       description=""
       directory="profiles/to_beta2"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
+      name="to50beta3"
+      title="Upgrade profile for Plone 5005 to Plone 5.0b3"
+      description=""
+      directory="profiles/to_beta3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />

@@ -205,3 +205,8 @@ def to50beta2(context):
     except AttributeError:
         # will only be there if from older plone instance
         pass
+
+
+def to50beta3(context):
+    """5.0beta2 -> 5.0beta3"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta3')

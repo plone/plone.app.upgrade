@@ -4,7 +4,8 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Plone 5: upgrade manage portlets js
+  [vangheem]
 
 
 1.3.10 (2015-05-13)
