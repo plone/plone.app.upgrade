@@ -124,7 +124,7 @@
         profile="Products.CMFPlone:plone">
 
        <gs:upgradeStep
-           title="Run to50beta1 upgrade profile"
+           title="Run to50beta2 upgrade profile"
            description=""
            handler=".betas.to50beta2"
            />

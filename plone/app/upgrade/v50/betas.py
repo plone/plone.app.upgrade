@@ -190,7 +190,7 @@ def upgrade_security_controlpanel_settings(context):
 
 
 def to50beta2(context):
-    """5.0alpha3 -> 5.0beta1"""
+    """5.0beta1 -> 5.0beta2"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta2')
     portal = getSite()
 
