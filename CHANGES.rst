@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.10 (unreleased)
+1.3.10 (2015-05-13)
 -------------------
 
 - Plone 4.3: Enable NewsML feed syndication
