@@ -3,7 +3,6 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="plone">
 
-    <include package="plone.app.jquery" />
     <include file="profiles.zcml" />
 
     <genericsetup:upgradeSteps

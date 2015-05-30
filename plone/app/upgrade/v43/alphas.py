@@ -104,8 +104,7 @@ def upgradePloneAppTheming(context):
 def upgradePloneAppJQuery(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
     """
-    from plone.app.jquery.upgrades import upgrade_2_to_3
-    upgrade_2_to_3(context)
+    pass
 
 def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
