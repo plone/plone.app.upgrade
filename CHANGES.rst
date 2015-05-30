@@ -4,6 +4,12 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- remove plone.app.jquery dependency
+  [vangheem]
+
+- Add jquerytools removal upgrade
+  [vangheem]
+
 - Plone 5: upgrade manage portlets js
   [vangheem]
 
