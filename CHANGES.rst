@@ -7,6 +7,8 @@ Changelog
 - Plone 5: upgrade manage portlets js
   [vangheem]
 
+- Remove hard dependency on CMFDefault
+  [tomgross]
 
 1.3.10 (2015-05-13)
 -------------------
