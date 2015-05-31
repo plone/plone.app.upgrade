@@ -4,6 +4,7 @@ from AccessControl.Permission import Permission
 
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import installOrReinstallProduct
+from plone.app.upgrade.utils import isPlone5
 from Products.CMFCore.utils import getToolByName
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -50,6 +51,8 @@ def to42beta2(context):
 def to42rc1(context):
     """4.2b2 -> 4.2rc1
     """
+    if not isPlone5():
+        loadMigrationProfile(context, 'profile-plone.app.jquery:default')   
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42rc1')
 
 
@@ -81,5 +84,3 @@ def to42rc2(context):
     """4.2rc1 -> 4.2rc2
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42rc2')
-
-

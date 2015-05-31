@@ -22,6 +22,7 @@ from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
+from plone.app.upgrade.utils import isPlone5
 from plone.portlet.static.static import IStaticPortlet
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletAssignmentSettings
@@ -66,6 +67,8 @@ def rememberTheme(context):
 def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
+    if not isPlone5():
+        loadMigrationProfile(context, 'profile-plone.app.jquerytools:default')
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
     loadMigrationProfile(
         context, 'profile-Products.CMFPlone:dependencies',
