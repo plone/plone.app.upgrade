@@ -277,11 +277,3 @@ def updateIconsInBrains(context, typesToUpdate=None):
         i += 1
     pghandler.finish()
     logger.info('Updated `getIcon` metadata.')
-
-
-def isPlone5():
-    try:
-        from Products.CMFPlone import __version__
-        return __version__[0] == '5'
-    except:
-        return False

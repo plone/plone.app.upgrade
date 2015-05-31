@@ -4,7 +4,6 @@ from Acquisition import aq_get
 from Products.CMFCore.utils import getToolByName
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import isPlone5
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from Products.ZCTextIndex.interfaces import IZCTextIndex
 
@@ -105,9 +104,11 @@ def upgradePloneAppTheming(context):
 def upgradePloneAppJQuery(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
     """
-    if not isPlone5():
+    try:
         from plone.app.jquery.upgrades import upgrade_2_to_3
         upgrade_2_to_3(context)
+    except ImportError:
+        pass
 
 def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
