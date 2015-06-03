@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- add step for updated dropzone resource location
+  [vangheem]
+
 - remove plone.app.jquery dependency
   [vangheem]
 

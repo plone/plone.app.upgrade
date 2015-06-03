@@ -20,4 +20,11 @@
       </value>
       <value key="deps">jquery</value>
   </records>
+  <records prefix="plone.resources/dropzone"
+           interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/dropzone/dist/dropzone-amd-module.js</value>
+      <value key="css">
+        <element>++plone++static/components/dropzone/dist/dropzone.css</element>
+      </value>
+  </records>
 </registry>
