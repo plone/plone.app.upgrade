@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- upgrades for plone 5 tinymce configuration and social tags config
+  [vangheem]
+
 - add step for updated dropzone resource location
   [vangheem]
 

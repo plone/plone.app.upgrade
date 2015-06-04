@@ -2,6 +2,8 @@
 <registry>
   <records interface="Products.CMFPlone.interfaces.ITinyMCESchema"
            prefix="plone" />
+  <records interface="Products.CMFPlone.interfaces.ISocialMediaSchema"
+           prefix="plone" />
   <records prefix="plone.resources/plone-patterns-portletmanager"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
     <value key="js">++resource++manage-portlets.js</value>
