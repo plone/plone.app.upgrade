@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- add social media control panel upgrade
+  [vangheem]
+
 - upgrades for plone 5 tinymce configuration and social tags config
   [vangheem]
 
