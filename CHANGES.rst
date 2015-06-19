@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- add Products.CMFPlacefulWorkflow as dep as __init__ requires this
+  [maartenkling]
+
 - add social media control panel upgrade
   [vangheem]
 
