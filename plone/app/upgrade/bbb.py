@@ -8,7 +8,6 @@ CalendarTool = SimpleItem
 DiscussionTool = SimpleItem
 InterfaceTool = SimpleItem
 SyndicationTool = SimpleItem
-SyndicationInfo = SimpleItem
 UndoTool = SimpleItem
 TinyMCE = SimpleItem
 
