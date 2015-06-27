@@ -118,6 +118,19 @@ except ImportError:
         alias_module('Products.CMFPlone.MetadataTool', metadata)
 
 try:
+    import Products.CMFDefault.MetadataTool
+    Products.CMFDefault.MetadataTool  # pyflakes
+except ImportError:
+    from Products.ATContentTypes.tool import metadata
+    sys.modules['Products.CMFDefault.MetadataTool'] = metadata
+
+try:
+    import Products.CMFDefault.SyndicationInfo
+    Products.CMFDefault.SyndicationInfo  # pyflakes
+except ImportError:
+    sys.modules['Products.CMFDefault.SyndicationInfo'] = bbb
+
+try:
     from Products.PloneLanguageTool import interfaces
 except ImportError:
     alias_module('Products.PloneLanguageTool.interfaces', bbb)
