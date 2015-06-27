@@ -8,6 +8,7 @@ CalendarTool = SimpleItem
 DiscussionTool = SimpleItem
 InterfaceTool = SimpleItem
 SyndicationTool = SimpleItem
+SyndicationInfo = SimpleItem
 UndoTool = SimpleItem
 TinyMCE = SimpleItem
 
@@ -64,3 +65,8 @@ class ActionIconsTool(SimpleItem):
         icons.remove(icon)
         del self._lookup[(category, action_id)]
         self._icons = tuple(icons)
+
+# BBB from CMFDefault
+class SyndicationInformation(SimpleItem):
+        id='syndication_information'
+        meta_type='SyndicationInformation'
