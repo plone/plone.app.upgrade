@@ -98,9 +98,6 @@ def migrate_registry_settings(portal):
         # Try to get the value from portal_calendar, if available.
         portal_calendar = getattr(portal, 'portal_calendar', None)
         first_weekday = getattr(portal_calendar, 'firstweekday', None)
-    if first_weekday is not None:
-        # Set it. Otherwise, let plone.app.event install routine set it.
-        registry['plone.first_weekday'] = first_weekday
 
 
 def migrate_members_default_view(portal):
@@ -138,6 +135,14 @@ def upgrade_keyring(context):
 def to50alhpa3(context):
     """5.0alpha2 - > 5.0alpha3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50alpha3')
+
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    registry = portal.portal_registry
+    # At alpha3 we have the registry entry so we can migrate here
+    first_weekday = registry.get('plone.app.event.first_weekday', None)
+    if first_weekday is not None:
+        # Set it. Otherwise, let plone.app.event install routine set it.
+        registry['plone.first_weekday'] = first_weekday
 
 
 def upgrade_editing_controlpanel_settings(context):
