@@ -31,4 +31,8 @@
         <element>++plone++static/components/dropzone/dist/dropzone.css</element>
       </value>
   </records>
+  <records prefix="plone.resources/mockup-patterns-accessibility" remove="True"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+  </records>
+
 </registry>

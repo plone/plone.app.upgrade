@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- uninstall mockup-pattern-accessibility pattern registration
+  [vangheem]
+
 - add Products.CMFPlacefulWorkflow as dep as __init__ requires this
   [maartenkling]
 
