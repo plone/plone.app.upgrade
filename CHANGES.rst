@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- remove CMFFormController dependency
+  [vangheem]
+
 - uninstall mockup-pattern-accessibility pattern registration
   [vangheem]
 
@@ -31,6 +34,12 @@ Changelog
 - Remove hard dependency on CMFDefault
   [tomgross]
 
+- Update the category configlet of all the configlets in order to provide a way
+  to categorize properly each configlet [sneridagh]
+
+- Updated links for the renamed 'Types' control panel [sneridagh]
+
+
 1.3.10 (2015-05-13)
 -------------------
 
@@ -56,7 +65,7 @@ Changelog
   ``validate_email`` properties in CMFPlone.
   [jcerjak]
 
-- Do not run tests not suited for the current Plone version 
+- Do not run tests not suited for the current Plone version
   (implemented for 4.0 and below)
   [jensens]
 

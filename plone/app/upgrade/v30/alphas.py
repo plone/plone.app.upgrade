@@ -50,7 +50,12 @@ from Products.CMFEditions.interfaces import IPortalModifierTool
 from Products.CMFEditions.interfaces import IPurgePolicyTool
 from Products.CMFEditions.interfaces.IRepository import IRepositoryTool
 from Products.CMFEditions.interfaces import IStorageTool
-from Products.CMFFormController.interfaces import IFormControllerTool
+try:
+    from Products.CMFFormController.interfaces import IFormControllerTool
+except ImportError:
+    from zope.interface import Interface
+    class IFormControllerTool(Interface):
+        pass
 from Products.CMFQuickInstallerTool.interfaces import IQuickInstallerTool
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import IUniqueIdGenerator

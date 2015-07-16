@@ -54,7 +54,11 @@ from Products.CMFEditions.interfaces import IPortalModifierTool
 from Products.CMFEditions.interfaces import IPurgePolicyTool
 from Products.CMFEditions.interfaces.IRepository import IRepositoryTool
 from Products.CMFEditions.interfaces import IStorageTool
-from Products.CMFFormController.interfaces import IFormControllerTool
+try:
+    from Products.CMFFormController.interfaces import IFormControllerTool
+    HAS_CMFFORM = True
+except ImportError:
+    HAS_CMFFORM = False
 from Products.CMFQuickInstallerTool.interfaces import IQuickInstallerTool
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import IPloneTool
@@ -509,7 +513,7 @@ class TestMigrations_v2_5_x(MigrationTest):
         sm = getSiteManager(self.portal)
         interfaces = (ILanguageTool, IArchivistTool, IPortalModifierTool,
                       IPurgePolicyTool, IRepositoryTool, IStorageTool,
-                      IFormControllerTool, IReferenceCatalog, IUIDCatalog,
+                      IReferenceCatalog, IUIDCatalog,
                       ICalendarTool, IActionsTool, ICatalogTool,
                       IContentTypeRegistry, ISkinsTool, ITypesTool, IURLTool,
                       IConfigurableWorkflowTool, IPloneTool, ICSSRegistry,
@@ -519,6 +523,8 @@ class TestMigrations_v2_5_x(MigrationTest):
                       IRegistrationTool, ITranslationServiceTool,
                       ISetupTool, IQuickInstallerTool,
                      )
+        if HAS_CMFFORM:
+            interfaces = tuple(list(interfaces) + [IFormControllerTool])
         for i in interfaces:
             sm.unregisterUtility(provided=i)
         registerToolsAsUtilities(self.portal)

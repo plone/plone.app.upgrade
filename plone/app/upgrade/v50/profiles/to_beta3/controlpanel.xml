@@ -2,23 +2,101 @@
 <object name="portal_controlpanel" meta_type="Plone Control Panel Tool"
   i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <configlet title="Social Media" action_id="socialmedia" appId="Plone"
-    category="Plone" condition_expr=""
+    category="plone-general" condition_expr=""
     url_expr="string:${portal_url}/@@social-controlpanel" visible="True"
     i18n:attributes="title">
   <permission>Plone Site Setup: Site</permission>
  </configlet>
  <configlet title="Resource Registries" action_id="resourceregistries" appId="Plone"
-    category="Plone" condition_expr=""
+    category="plone-advanced" condition_expr=""
     icon_expr=""
     url_expr="string:${portal_url}/@@resourceregistry-controlpanel" visible="True"
     i18n:attributes="title">
   <permission>Plone Site Setup: Site</permission>
  </configlet>
  <configlet title="TinyMCE" action_id="tinymce" appId="Plone"
-    category="Plone" condition_expr=""
+    category="plone-content" condition_expr=""
     icon_expr="string:$portal_url/tinymce.png"
     url_expr="string:${portal_url}/@@tinymce-controlpanel" visible="True"
     i18n:attributes="title">
   <permission>Plone Site Setup: TinyMCE</permission>
  </configlet>
+
+ <configlet title="Content Rules" action_id="ContentRules" appId="Plone"
+    category="plone-content">
+ </configlet>
+ <configlet title="Date and Time" action_id="DateAndTime" appId="DateAndTime"
+    category="plone-general">
+ </configlet>
+ <configlet title="Editing" action_id="EditingSettings" appId="Plone"
+    category="plone-content">
+ </configlet>
+ <configlet title="HTML Filtering" action_id="FilterSettings" appId="FilterSettings"
+    category="plone-security">
+ </configlet>
+ <configlet title="Image Handling" action_id="ImagingSettings" appId="ImagingSettings"
+    category="plone-content">
+ </configlet>
+ <configlet title="Language" action_id="LanguageSettings" appId="Plone"
+    category="plone-general">
+ </configlet>
+ <configlet title="Mail" action_id="MailHost" appId="MailHost"
+    category="plone-general">
+ </configlet>
+ <configlet title="Maintenance" action_id="Maintenance" appId="Plone"
+    category="plone-advanced">
+ </configlet>
+ <configlet title="Markup" action_id="MarkupSettings" appId="MarkupSettings"
+    category="plone-security">
+ </configlet>
+ <configlet title="Navigation" action_id="NavigationSettings" appId="Plone"
+    category="plone-general">
+ </configlet>
+ <configlet title="Site" action_id="PloneReconfig" appId="Plone"
+    category="plone-general">
+ </configlet>
+ <configlet title="Themes" action_id="PortalSkin" appId="PortalSkin"
+    category="plone-general">
+ </configlet>
+ <configlet title="Add-ons" action_id="QuickInstaller" appId="QuickInstaller"
+    category="plone-general">
+ </configlet>
+ <configlet title="Search" action_id="SearchSettings" appId="Plone"
+    category="plone-general">
+ </configlet>
+ <configlet title="Security" action_id="SecuritySettings" appId="SecuritySettings"
+    category="plone-security">
+ </configlet>
+ <configlet title="Content Settings" action_id="TypesSettings" appId="TypesSettings"
+    category="plone-content"
+    url_expr="string:${portal_url}/@@content-controlpanel">
+ </configlet>
+ <configlet title="Users and Groups" action_id="UsersGroups" appId="UsersGroups"
+    category="plone-users">
+ </configlet>
+ <configlet title="Zope Management Interface" action_id="ZMI" appId="ZMI"
+    category="plone-advanced">
+ </configlet>
+ <configlet title="Dexterity Content Types" action_id="dexterity-types" appId="Plone"
+    category="plone-content">
+ </configlet>
+ <configlet title="Discussion" action_id="discussion" appId="plone.app.discussion"
+    category="plone-content">
+ </configlet>
+ <configlet title="Errors" action_id="errorLog" appId="ErrorLog"
+    category="plone-security">
+ </configlet>
+ <configlet title="Caching" action_id="plone.app.caching" appId="plone.app.caching"
+    category="plone-general">
+ </configlet>
+ <configlet title="Configuration Registry" action_id="plone.app.registry" appId="plone.app.registry"
+    category="plone-advanced">
+ </configlet>
+ <configlet title="Theming" action_id="plone.app.theming" appId="plone.app.theming"
+    category="plone-general">
+ </configlet>
+ <configlet title="Syndication" action_id="syndication" appId="Plone"
+    category="plone-general">
+ </configlet>
+
 </object>
