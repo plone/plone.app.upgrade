@@ -34,6 +34,8 @@ Changelog
 - Update the category configlet of all the configlets in order to provide a way
   to categorize properly each configlet [sneridagh]
 
+- Updated links for the renamed 'Types' control panel [sneridagh]
+
 
 1.3.10 (2015-05-13)
 -------------------

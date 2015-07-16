@@ -67,8 +67,9 @@
  <configlet title="Security" action_id="SecuritySettings" appId="SecuritySettings"
     category="plone-security">
  </configlet>
- <configlet title="Types" action_id="TypesSettings" appId="TypesSettings"
-    category="plone-content">
+ <configlet title="Content Settings" action_id="TypesSettings" appId="TypesSettings"
+    category="plone-content"
+    url_expr="string:${portal_url}/@@content-controlpanel">
  </configlet>
  <configlet title="Users and Groups" action_id="UsersGroups" appId="UsersGroups"
     category="plone-users">
