@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- remove CMFFormController dependency
+  [vangheem]
+
 - uninstall mockup-pattern-accessibility pattern registration
   [vangheem]
 
