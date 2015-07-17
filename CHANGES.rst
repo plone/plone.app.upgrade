@@ -4,6 +4,9 @@ Changelog
 1.3.11 (unreleased)
 -------------------
 
+- upgrade plone buttons to not have so many things open in modals
+  [vangheem]
+
 - uninstall mockup-pattern-accessibility pattern registration
   [vangheem]
 
