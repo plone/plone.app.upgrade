@@ -210,3 +210,4 @@ def to50beta2(context):
 def to50beta3(context):
     """5.0beta2 -> 5.0beta3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta3')
+    loadMigrationProfile(context, 'profile-plone.app.querystring:upgrade_to_8')
