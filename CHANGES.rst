@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.11 (unreleased)
+1.3.11 (2015-07-20)
 -------------------
 
 - upgrade plone buttons to not have so many things open in modals
