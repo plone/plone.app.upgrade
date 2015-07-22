@@ -248,11 +248,9 @@ def to50beta3(context):
     loadMigrationProfile(context, 'profile-plone.app.querystring:upgrade_to_8')
     portal = getSite()
     cp_tool = getToolByName(portal, 'portal_controlpanel')
-    group_ids = [x.get('id') for x in cp_tool.getGroups()]
-    for group_id in group_ids:
-        for configlet in cp_tool.listActions():
-            if configlet.id in cp_mapping.keys():
-                configlet.category = cp_mapping[configlet.id]
+    for configlet in cp_tool.listActions():
+        if configlet.id in cp_mapping:
+            configlet.category = cp_mapping[configlet.id]
 
     configlets = cp_tool.listActions()
     configlet = [
