@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.12 (unreleased)
+1.3.12 (2015-07-23)
 -------------------
 
 - Fix for 5.0b2 -> 5.0b3 upgrade step that removed permissions from most of
