@@ -4,7 +4,10 @@ Changelog
 1.3.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix for 5.0b2 -> 5.0b3 upgrade step that removed permissions from most of
+  the control panel configlets. This fixes:
+  https://github.com/plone/Products.CMFPlone/issues/745
+  [sneridagh, timo]
 
 
 1.3.11 (2015-07-20)

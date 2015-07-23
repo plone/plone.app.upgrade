@@ -206,8 +206,56 @@ def to50beta2(context):
         # will only be there if from older plone instance
         pass
 
+# configlet id -> category
+cp_mapping = {
+    # General
+    'DateAndTime': 'plone-general',
+    'LanguageSettings': 'plone-general',
+    'NavigationSettings': 'plone-general',
+    'PloneReconfig': 'plone-general',  # Site
+    'QuickInstaller': 'plone-general',  # Add-ons
+    'SearchSettings': 'plone-general',
+    'plone.app.discussion': 'plone-general',  # Discussion
+    'tinymce': 'plone-general',
+    'plone.app.theming': 'plone-general',
+    'socialmedia': 'plone-general',
+    'syndication': 'plone-general',
+    # Content
+    'ContentRules': 'plone-content',
+    'EditingSettings': 'plone-content',
+    'ImageSettings': 'plone-content',
+    'MarkupSettings': 'plone-content',
+    'TypesSettings': 'plone-content',
+    'dexterity-types': 'plone-content',
+    # Users
+    'UsersGroups': 'plone-users',
+    # Security
+    'FilterSettings': 'plone-security',
+    'SecuritySettings': 'plone-security',
+    'errorLog': 'plone-security',
+    # Advanced
+    'Maintenance': 'plone-advanced',
+    'ZMI': 'plone-advanced',
+    'plone.app.caching': 'plone-advanced',
+    'plone.app.registry': 'plone-advanced',
+    'resourceregistries': 'plone-advanced',
+}
+
 
 def to50beta3(context):
     """5.0beta2 -> 5.0beta3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta3')
     loadMigrationProfile(context, 'profile-plone.app.querystring:upgrade_to_8')
+    portal = getSite()
+    cp_tool = getToolByName(portal, 'portal_controlpanel')
+    for configlet in cp_tool.listActions():
+        if configlet.id in cp_mapping:
+            configlet.category = cp_mapping[configlet.id]
+
+    configlets = cp_tool.listActions()
+    configlet = [
+        x for x in configlets
+        if x.id == 'TypesSettings'
+    ][0]
+    configlet.title = "Content Settings"
+    configlet.url_expr = "string:${portal_url}/@@content-controlpanel"
