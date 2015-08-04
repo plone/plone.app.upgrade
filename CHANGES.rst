@@ -4,7 +4,8 @@ Changelog
 1.3.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Turn @@tinymce-controlpanel ``content_css`` field into a list
+  [ebrehault]
 
 
 1.3.11 (2015-07-20)
