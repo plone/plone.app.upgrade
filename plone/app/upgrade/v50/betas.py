@@ -259,3 +259,8 @@ def to50beta3(context):
     ][0]
     configlet.title = "Content Settings"
     configlet.url_expr = "string:${portal_url}/@@content-controlpanel"
+
+
+def to50beta4(context):
+    """5.0beta3 -> 5.0beta4"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta4')
