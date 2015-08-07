@@ -1,8 +1,10 @@
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v43.alphas import upgradeToI18NCaseNormalizer
 
+
 def to43beta2(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43beta2')
+
 
 def to43rc1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v43:to43rc1')
@@ -13,8 +15,9 @@ def upgradeSunburst(context):
     """ Upgrade plonetheme.sunburst to version 1.4
     """
     try:
-        from plonetheme.sunburst.setuphandlers import upgrade_step_2_3
+        # Is the package still there?  Not on Plone 5.
+        import plonetheme.sunburst
+        plonetheme.sunburst  # pyflakes
     except ImportError:
-        pass
-    else:
-        upgrade_step_2_3(context)
+        return
+    context.upgradeProfile('plonetheme.sunburst:default', dest='3')
