@@ -4,6 +4,7 @@ from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ILanguageSchema
+from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -265,6 +266,8 @@ def to50beta3(context):
 def to50beta4(context):
     """5.0beta3 -> 5.0beta4"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta4')
+    portal = getSite()
+    migrate_linkintegrity_relations(portal)
 
 
 def upgrade_querystring(context):
