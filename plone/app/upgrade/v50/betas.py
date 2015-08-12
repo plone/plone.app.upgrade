@@ -258,7 +258,8 @@ def to50beta3(context):
         if x.id == 'TypesSettings'
     ][0]
     configlet.title = "Content Settings"
-    configlet.url_expr = "string:${portal_url}/@@content-controlpanel"
+    configlet.setActionExpression(
+        "string:${portal_url}/@@content-controlpanel")
 
 
 def to50beta4(context):
