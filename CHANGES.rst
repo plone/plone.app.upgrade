@@ -4,6 +4,9 @@ Changelog
 1.3.13 (unreleased)
 -------------------
 
+- Unregister removed collection.css.
+  [pbauer]
+
 - 5.0 beta: do not set ``url_expr`` on configlet.  This must be done
   with ``setActionExpression``.
   Fixes https://github.com/plone/Products.CMFPlone/issues/814

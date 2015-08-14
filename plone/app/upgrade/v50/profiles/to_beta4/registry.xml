@@ -10,5 +10,9 @@
             interface='Products.CMFPlone.interfaces.IResourceRegistry'
             remove="True">
   </records>
+  <records prefix="plone.resources/resource-collection-css"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'
+            remove="True">
+  </records>
 
 </registry>
