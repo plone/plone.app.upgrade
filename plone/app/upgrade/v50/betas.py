@@ -268,4 +268,5 @@ def to50beta4(context):
 
 
 def upgrade_querystring(context):
-    context.upgradeProfile('plone.app.querystring:default', dest='9')
+    # Latest profile version at time of writing is 10 (unreleased).
+    context.upgradeProfile('plone.app.querystring:default')
