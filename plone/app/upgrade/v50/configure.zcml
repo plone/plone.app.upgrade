@@ -153,6 +153,12 @@
            handler=".betas.to50beta4"
            />
 
+       <gs:upgradeStep
+           title="Run to50beta4 upgrade profile"
+           description=""
+           handler=".betas.upgrade_querystring"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
