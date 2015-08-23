@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.13 (unreleased)
+1.3.13 (2015-08-23)
 -------------------
 
 - Unregister removed collection.css.
