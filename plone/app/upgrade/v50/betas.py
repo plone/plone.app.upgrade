@@ -277,3 +277,8 @@ def to50beta4(context):
 def upgrade_querystring(context):
     # Latest profile version at time of writing is 10 (unreleased).
     context.upgradeProfile('plone.app.querystring:default')
+
+
+def to50rc1(context):
+    """5.0beta4 -> 5.0rc1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc1')

@@ -56,4 +56,14 @@
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <genericsetup:registerProfile
+      name="to50rc1"
+      title="Upgrade profile for Plone 5007 to Plone 5.0rc1"
+      description=""
+      directory="profiles/to_rc1"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

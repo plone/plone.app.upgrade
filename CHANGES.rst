@@ -4,7 +4,8 @@ Changelog
 1.3.14 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Remove plone_forms skins folder for 5.0 rc1
+  [esteele]
 
 
 1.3.13 (2015-08-23)
