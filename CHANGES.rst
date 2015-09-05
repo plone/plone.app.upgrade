@@ -4,6 +4,9 @@ Changelog
 1.3.14 (unreleased)
 -------------------
 
+- Remove no-longer-used properties from portal_properties
+  [esteele]
+
 - Remove plone_forms skins folder for 5.0 rc1
   [esteele]
 
