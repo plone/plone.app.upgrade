@@ -4,6 +4,9 @@ Changelog
 1.3.14 (unreleased)
 -------------------
 
+- Connect Users & Groups control panel settings to their registry entries.
+  [esteele]
+
 - Remove plone_forms skins folder for 5.0 rc1
   [esteele]
 
