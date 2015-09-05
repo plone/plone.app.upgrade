@@ -316,3 +316,45 @@ def to50rc1(context):
     migrate_linkintegrity_relations(portal)
 
     upgrade_usergroups_controlpanel_settings(context)
+
+    portal = getSite()
+    # Migrate settings from portal_properties to the configuration registry
+    pprop = getToolByName(portal, 'portal_properties')
+    site_properties = pprop['site_properties']
+
+    # These have been migrated in previous upgrade steps. Safe to remove.
+    properties_to_remove = ['allowAnonymousViewAbout',
+                            'available_editors',
+                            'default_contenttype',
+                            'default_editor',
+                            'disable_folder_sections',
+                            'disable_nonfolderish_sections',
+                            'enable_inline_editing',
+                            'enable_link_integrity_checks',
+                            'enable_livesearch',
+                            'enable_sitemap',
+                            'exposeDCMetaTags',
+                            'ext_editor',
+                            'forbidden_contenttypes',
+                            'lock_on_ttw_edit',
+                            'many_groups',
+                            'many_users',
+                            'number_of_days_to_keep',
+                            'search_collapse_options',
+                            'search_enable_batch_size',
+                            'search_enable_description_search',
+                            'search_review_state_for_anon',
+                            'search_enable_sort_on',
+                            'search_enable_title_search',
+                            'types_not_searched',
+                            'use_email_as_login',
+                            'use_folder_contents',
+                            'use_uuid_as_userid',
+                            'user_registration_fields',
+                            'visible_ids',
+                            'webstats_js']
+    for p in properties_to_remove:
+        if site_properties.hasProperty(p):
+            site_properties._delProperty(p)
+
+    import pdb; pdb.set_trace( )
