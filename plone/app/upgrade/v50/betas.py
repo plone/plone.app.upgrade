@@ -266,12 +266,6 @@ def to50beta3(context):
 def to50beta4(context):
     """5.0beta3 -> 5.0beta4"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50beta4')
-    portal = getSite()
-    # install plone.app.linkintegrity and its dependencies
-    qi = getToolByName(portal, 'portal_quickinstaller')
-    if not qi.isProductInstalled('plone.app.linkintegrity'):
-        qi.installProduct('plone.app.linkintegrity')
-    migrate_linkintegrity_relations(portal)
 
 
 def upgrade_querystring(context):
@@ -282,3 +276,9 @@ def upgrade_querystring(context):
 def to50rc1(context):
     """5.0beta4 -> 5.0rc1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc1')
+    portal = getSite()
+    # install plone.app.linkintegrity and its dependencies
+    qi = getToolByName(portal, 'portal_quickinstaller')
+    if not qi.isProductInstalled('plone.app.linkintegrity'):
+        qi.installProduct('plone.app.linkintegrity')
+    migrate_linkintegrity_relations(portal)

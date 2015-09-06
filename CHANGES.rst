@@ -7,6 +7,9 @@ Changelog
 - Remove plone_forms skins folder for 5.0 rc1
   [esteele]
 
+- Install plone.app.linkintegrity and migrate linkintegrity-relations.
+  [pbauer]
+
 
 1.3.13 (2015-08-23)
 -------------------
