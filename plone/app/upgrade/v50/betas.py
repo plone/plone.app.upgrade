@@ -358,6 +358,7 @@ def to50rc1(context):
     properties_to_remove = ['allowAnonymousViewAbout',
                             'available_editors',
                             'default_contenttype',
+                            'default_language',
                             'default_editor',
                             'disable_folder_sections',
                             'disable_nonfolderish_sections',
