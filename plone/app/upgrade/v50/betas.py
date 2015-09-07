@@ -323,9 +323,11 @@ def to50rc1(context):
     pprop = getToolByName(portal, 'portal_properties')
     site_properties = pprop['site_properties']
 
-    registry = getUtility(IRegistry)
-    settings = registry.forInterface(ISiteSchema, prefix='plone')
-    settings.icon_visiblity = site_properties.icon_visiblity
+    if site_properties.hasProperty('icon_visibility'):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix='plone')
+        value = site_properties.getProperty('icon_visibility', 'false')
+        settings.icon_visiblity = value
 
     # These have been migrated in previous upgrade steps. Safe to remove.
     properties_to_remove = ['allowAnonymousViewAbout',
