@@ -22,6 +22,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         self.assertTrue(True)
 
     def testAddDisplayPublicationDateInBylineProperty(self):
+        if PLONE5:
+            return
         pprop = getToolByName(self.portal, 'portal_properties')
         self.assertEqual(
             pprop.site_properties.getProperty('displayPublicationDateInByline'),

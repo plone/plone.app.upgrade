@@ -86,8 +86,11 @@ def migrate_registry_settings(portal):
     registry['plone.site_title'] = portal.title.decode('utf8')
     registry['plone.webstats_js'] = site_props.webstats_js.decode('utf8')
     registry['plone.enable_sitemap'] = site_props.enable_sitemap
-    registry['plone.exposeDCMetaTags'] = site_props.exposeDCMetaTags
-    registry['plone.enable_livesearch'] = site_props.enable_livesearch
+
+    if site_props.hasProperty('exposeDCMetaTags'):
+        registry['plone.exposeDCMetaTags'] = site_props.exposeDCMetaTags
+    if site_props.hasProperty('enable_livesearch'):
+        registry['plone.enable_livesearch'] = site_props.enable_livesearch
     registry['plone.types_not_searched'] = tuple(
         t for t in site_props.types_not_searched if t in portal_types)
 
@@ -168,10 +171,13 @@ def upgrade_editing_controlpanel_settings(context):
         settings = False
     if settings:
         # migrate the old site properties to the new registry
-        settings.visible_ids = site_properties.visible_ids
-        settings.enable_link_integrity_checks = \
-            site_properties.enable_link_integrity_checks
-        settings.ext_editor = site_properties.ext_editor
+        if site_properties.hasProperty('visible_ids'):
+            settings.visible_ids = site_properties.visible_ids
+        if site_properties.hasProperty('enable_link_integrity_checks'):
+            settings.enable_link_integrity_checks = \
+                site_properties.enable_link_integrity_checks
+        if site_properties.hasProperty('ext_editor'):
+            settings.ext_editor = site_properties.ext_editor
         # settings.available_editors = site_properties.available_editors
 
         # Kupu will not be available as editor in Plone 5. Therefore we just
@@ -272,7 +278,8 @@ def upgrade_search_controlpanel_settings(context):
     except KeyError:
         settings = False
 
-    settings.enable_livesearch = site_properties.enable_livesearch
+    if site_properties.hasProperty('enable_livesearch'):
+        settings.enable_livesearch = site_properties.enable_livesearch
     settings.types_not_searched = tuple([
         t for t in types_tool.listContentTypes()
         if t not in site_properties.types_not_searched and
@@ -305,4 +312,6 @@ def upgrade_site_controlpanel_settings(context):
     settings.site_title = unicode(portal.title)
     settings.webstats_js = unicode(site_properties.webstats_js)
     settings.enable_sitemap = site_properties.enable_sitemap
-    settings.exposeDCMetaTags = site_properties.exposeDCMetaTags
+    if site_properties.hasProperty('exposeDCMetaTags'):
+        settings.exposeDCMetaTags = site_properties.exposeDCMetaTags
+    

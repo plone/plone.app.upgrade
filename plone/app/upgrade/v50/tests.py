@@ -1,9 +1,11 @@
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ISecuritySchema
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletManager
+from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
@@ -42,8 +44,10 @@ class PASUpgradeTest(MigrationTest):
 
         # If email as login is enabled, we want to use lowercase login
         # names, even when that login name is not an email address.
-        ptool = getToolByName(self.portal, 'portal_properties')
-        ptool.site_properties.manage_changeProperties(use_email_as_login=True)
+        registry = getUtility(IRegistry)
+        security_settings = registry.forInterface(ISecuritySchema,
+                                                  prefix="plone")
+        security_settings.use_email_as_login = True
 
         # Second call.
         alphas.lowercase_email_login(self.portal)
