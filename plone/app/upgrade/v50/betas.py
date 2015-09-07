@@ -372,6 +372,7 @@ def to50rc1(context):
                             'enable_link_integrity_checks',
                             'enable_livesearch',
                             'enable_sitemap',
+                            'enable_wf_state_filtering',
                             'exposeDCMetaTags',
                             'ext_editor',
                             'forbidden_contenttypes',
