@@ -36,8 +36,7 @@ def upgrade_portal_language(context):
 
     # Merge default language options to registry
     portal = getUtility(ISiteRoot)
-    if portal.hasProperty('default_language'):
-        default_lang = portal.getProperty('default_language')
+    default_lang = portal.getProperty('default_language', 'en')
 
     portal_properties = getToolByName(context, "portal_properties", None)
     if portal_properties is not None:
