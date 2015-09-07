@@ -389,4 +389,3 @@ def to50rc1(context):
         if site_properties.hasProperty(p):
             site_properties._delProperty(p)
 
-    import pdb; pdb.set_trace( )
