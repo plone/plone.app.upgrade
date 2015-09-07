@@ -3,7 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
-from Products.CMFPlone.interfaces import ISiteSettingsSchema
+from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces import IUserGroupsSettingsSchema
 from Products.CMFPlone.interfaces import ILanguageSchema
 from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
@@ -356,7 +356,7 @@ def to50rc1(context):
     site_properties = pprop['site_properties']
 
     registry = getUtility(IRegistry)
-    settings = registry.forInterface(ISiteSettingsSchema, prefix='plone')
+    settings = registry.forInterface(ISiteSchema, prefix='plone')
     settings.icon_visiblity = site_properties.icon_visiblity
 
     # These have been migrated in previous upgrade steps. Safe to remove.
