@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.14 (unreleased)
+1.3.14 (2015-09-08)
 -------------------
 
 - Remove no-longer-used properties from portal_properties
