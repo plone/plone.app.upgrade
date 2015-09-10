@@ -4,7 +4,8 @@ Changelog
 1.3.15 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Remove site properties that have been migrated to the registry.
+  [esteele]
 
 
 1.3.14 (2015-09-08)

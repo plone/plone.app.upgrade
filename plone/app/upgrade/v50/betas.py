@@ -348,8 +348,6 @@ def to50rc1(context):
     upgrade_usergroups_controlpanel_settings(context)
     migrate_displayPublicationDateInByline(context)
 
-
-    portal = getSite()
     # Migrate settings from portal_properties to the configuration registry
     pprop = getToolByName(portal, 'portal_properties')
     site_properties = pprop['site_properties']
@@ -403,3 +401,12 @@ def to50rc2(context):
     """5.0rc1 -> 5.0rc2"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc2')
     portal = getSite()
+
+    site_properties_to_remove = ['email_from_address',
+                                 'email_from_name',
+                                 'enable_permalink']
+
+    for p in site_properties_to_remove:
+        if portal.hasProperty(p):
+            portal._delProperty(p)
+
