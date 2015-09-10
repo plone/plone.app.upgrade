@@ -398,3 +398,8 @@ def to50rc1(context):
         if site_properties.hasProperty(p):
             site_properties._delProperty(p)
 
+
+def to50rc2(context):
+    """5.0rc1 -> 5.0rc2"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc2')
+    portal = getSite()
