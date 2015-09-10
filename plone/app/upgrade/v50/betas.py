@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
+from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces import IUserGroupsSettingsSchema
 from Products.CMFPlone.interfaces import ILanguageSchema
@@ -410,3 +411,13 @@ def to50rc2(context):
         if portal.hasProperty(p):
             portal._delProperty(p)
 
+    # Migrate settings from portal_properties to the configuration registry
+    pprop = getToolByName(portal, 'portal_properties')
+    site_properties = pprop['site_properties']
+
+    if site_properties.hasProperty('search_results_description_length'):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISearchSchema, prefix='plone')
+        value = site_properties.getProperty(
+            'search_results_description_length', 160)
+        settings.search_results_description_length = value
