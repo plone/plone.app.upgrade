@@ -414,10 +414,27 @@ def to50rc2(context):
     # Migrate settings from portal_properties to the configuration registry
     pprop = getToolByName(portal, 'portal_properties')
     site_properties = pprop['site_properties']
+    registry = getUtility(IRegistry)
 
     if site_properties.hasProperty('search_results_description_length'):
-        registry = getUtility(IRegistry)
         settings = registry.forInterface(ISearchSchema, prefix='plone')
         value = site_properties.getProperty(
             'search_results_description_length', 160)
         settings.search_results_description_length = value
+
+    properties_to_migrate = ['auth_cookie_length',
+                             'verify_login_name',
+                             'external_login_url',
+                             'external_logout_url',
+                             'external_login_iframe']
+    for p in properties_to_migrate:
+        if site_properties.hasProperty(p):
+            value = site_properties.getProperty(p)
+            registry['plone.%s' % p] = value
+            site_properties._delProperty(p)
+
+    if site_properties.hasProperty('allow_external_login_sites'):
+        value = site_properties.get('allow_external_login_sites')
+        if value is not None:
+            registry['plone.allow_external_login_sites'] = tuple(value)
+        site_properties._delProperty('allow_external_login_sites')
