@@ -4,6 +4,10 @@ Changelog
 1.3.15 (unreleased)
 -------------------
 
+- Fix migration of types_not_searched to registry.
+  Fixes https://github.com/plone/plone.app.contenttypes/issues/268
+  [pbauer]
+
 - Remove site properties that have been migrated to the registry.
   [esteele]
 

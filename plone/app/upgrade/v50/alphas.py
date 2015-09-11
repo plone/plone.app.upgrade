@@ -282,7 +282,7 @@ def upgrade_search_controlpanel_settings(context):
         settings.enable_livesearch = site_properties.enable_livesearch
     settings.types_not_searched = tuple([
         t for t in types_tool.listContentTypes()
-        if t not in site_properties.types_not_searched and
+        if t in site_properties.types_not_searched and
         t not in BAD_TYPES
     ])
 
@@ -314,4 +314,3 @@ def upgrade_site_controlpanel_settings(context):
     settings.enable_sitemap = site_properties.enable_sitemap
     if site_properties.hasProperty('exposeDCMetaTags'):
         settings.exposeDCMetaTags = site_properties.exposeDCMetaTags
-    
