@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-
+import logging
+
+from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import ILanguageSchema
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
-from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISearchSchema
+from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces import IUserGroupsSettingsSchema
-from Products.CMFPlone.interfaces import ILanguageSchema
+from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component.hooks import getSite
-from Products.CMFCore.interfaces import ISiteRoot
-from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
+
+
+logger = logging.getLogger('plone.app.upgrade')
 
 
 def to50beta1(context):
@@ -459,5 +464,8 @@ def to50rc3(context):
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
-            registry['plone.%s' % p] = value
-            site_properties._delProperty(p)
+            try:
+                registry['plone.%s' % p] = value
+                site_properties._delProperty(p)
+            except KeyError:
+                logger.warn('could not upgrade %s property' % p)
