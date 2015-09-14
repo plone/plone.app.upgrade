@@ -445,8 +445,19 @@ def to50rc3(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc3')
     portal = getSite()
 
+    pprop = getToolByName(portal, 'portal_properties')
+    site_properties = pprop['site_properties']
+    registry = getUtility(IRegistry)
+
     site_properties_to_remove = ['invalid_ids']
 
     for p in site_properties_to_remove:
         if portal.hasProperty(p):
             portal._delProperty(p)
+
+    properties_to_migrate = ['external_links_open_new_window']
+    for p in properties_to_migrate:
+        if site_properties.hasProperty(p):
+            value = site_properties.getProperty(p)
+            registry['plone.%s' % p] = value
+            site_properties._delProperty(p)
