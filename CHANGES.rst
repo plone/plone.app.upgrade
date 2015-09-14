@@ -4,7 +4,8 @@ Changelog
 1.3.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Remove unused invalid_ids portal property
+  [esteele]
 
 
 1.3.15 (2015-09-11)

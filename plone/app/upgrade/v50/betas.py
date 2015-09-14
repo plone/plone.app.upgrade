@@ -444,3 +444,9 @@ def to50rc3(context):
     """5.0rc2 -> 5.0rc3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc3')
     portal = getSite()
+
+    site_properties_to_remove = ['invalid_ids']
+
+    for p in site_properties_to_remove:
+        if portal.hasProperty(p):
+            portal._delProperty(p)
