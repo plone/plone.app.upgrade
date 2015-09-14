@@ -438,3 +438,9 @@ def to50rc2(context):
         if value is not None:
             registry['plone.allow_external_login_sites'] = tuple(value)
         site_properties._delProperty('allow_external_login_sites')
+
+
+def to50rc3(context):
+    """5.0rc2 -> 5.0rc3"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc3')
+    portal = getSite()

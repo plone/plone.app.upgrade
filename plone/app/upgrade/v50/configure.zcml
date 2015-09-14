@@ -187,5 +187,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5009"
+        destination="5010"
+        profile="Products.CMFPlone:plone">
+
+       <gs:upgradeStep
+           title="Run to50rc3 upgrade profile"
+           description=""
+           handler=".betas.to50rc3"
+           />
+
+    </gs:upgradeSteps>
 
 </configure>
