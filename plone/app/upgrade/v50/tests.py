@@ -1,5 +1,4 @@
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ISecuritySchema
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
@@ -45,6 +44,7 @@ class PASUpgradeTest(MigrationTest):
         # If email as login is enabled, we want to use lowercase login
         # names, even when that login name is not an email address.
         registry = getUtility(IRegistry)
+        from Products.CMFPlone.interfaces import ISecuritySchema
         security_settings = registry.forInterface(ISecuritySchema,
                                                   prefix="plone")
         security_settings.use_email_as_login = True
