@@ -13,7 +13,8 @@ from zope.component import getUtility
 import unittest
 
 try:
-    from Products.CMFPlone.factory import _IMREALLYPLONE5  # nopep8
+    from Products.CMFPlone.factory import _IMREALLYPLONE5
+    _IMREALLYPLONE5  # pyflakes
 except ImportError:
     PLONE_5 = False
 else:
