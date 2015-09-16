@@ -476,3 +476,8 @@ def to50rc3(context):
                 site_properties._delProperty(p)
             except KeyError:
                 logger.warn('could not upgrade %s property' % p)
+
+    if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
+        value = site_properties.getProperty('typesLinkToFolderContentsInFC')
+        registry['plone.types_link_to_folder_contents'] = tuple(value)
+        site_properties._delProperty('typesLinkToFolderContentsInFC')
