@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <registry>
-    <records prefix="plone.resources/resource-plone-app-discussion-stylesheets"
+  <records interface="Products.CMFPlone.interfaces.ISiteSchema"
+           prefix="plone" />
+  <records interface="Products.CMFPlone.interfaces.ILinkSchema"
+           prefix="plone" />
+  <records prefix="plone.resources/resource-plone-app-discussion-stylesheets"
         interface='Products.CMFPlone.interfaces.IResourceRegistry'
         remove="True">
-    </records>
+  </records>
 </registry>
