@@ -467,6 +467,10 @@ def to50rc3(context):
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
+            if value == 'true':
+                value = True
+            elif value == 'false':
+                value = False
             try:
                 registry['plone.%s' % p] = value
                 site_properties._delProperty(p)
