@@ -461,6 +461,7 @@ def to50rc3(context):
             portal._delProperty(p)
 
     properties_to_migrate = ['external_links_open_new_window',
+							 'mark_special_links',
                              'calendar_starting_year',
                              'calendar_future_years_available']
     for p in properties_to_migrate:
