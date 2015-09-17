@@ -470,8 +470,8 @@ def upgrade_navigation_controlpanel_settings_2(context):
     ).decode('utf8')
     navigation_properties._delProperty('sortAttribute')
 
-    desc = navigation_properties.getProperty('sortOrder') == 'desc'
-    settings.sort_tabs_reversed = desc
+    order = navigation_properties.getProperty('sortOrder', None)
+    settings.sort_tabs_reversed = order in ['descending', 'reverse']
     navigation_properties._delProperty('sortOrder')
 
     settings.root = navigation_properties.getProperty('root').decode('utf8')
