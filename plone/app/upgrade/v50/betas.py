@@ -471,11 +471,14 @@ def upgrade_navigation_controlpanel_settings_2(context):
     navigation_properties._delProperty('sortAttribute')
 
     order = navigation_properties.getProperty('sortOrder', None)
-    settings.sort_tabs_reversed = order in ['descending', 'reverse']
-    navigation_properties._delProperty('sortOrder')
+    if order is not None:
+        settings.sort_tabs_reversed = order in ['descending', 'reverse']
+        navigation_properties._delProperty('sortOrder')
 
-    settings.root = navigation_properties.getProperty('root').decode('utf8')
-    navigation_properties._delProperty('root')
+    root = navigation_properties.getProperty('root', None)
+    if root is not None:
+        settings.root = root.decode('utf8')
+        navigation_properties._delProperty('root')
 
 
 def to50rc3(context):
