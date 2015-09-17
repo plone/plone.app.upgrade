@@ -4,6 +4,10 @@ Changelog
 1.3.16 (unreleased)
 -------------------
 
+- Portal properties calendar_starting_year and calendar_future_years_available
+  were moved to registry.
+  [pbauer]
+
 - Remove unused invalid_ids portal property
   [esteele]
 

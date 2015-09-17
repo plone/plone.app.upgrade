@@ -460,7 +460,9 @@ def to50rc3(context):
         if portal.hasProperty(p):
             portal._delProperty(p)
 
-    properties_to_migrate = ['external_links_open_new_window']
+    properties_to_migrate = ['external_links_open_new_window',
+                             'calendar_starting_year',
+                             'calendar_future_years_available']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
