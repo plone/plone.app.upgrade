@@ -5,9 +5,4 @@
    <element value="Large Plone Folder" remove="True"/>
   </property>
  </object>
- <object name="site_properties" meta_type="Plone Property Sheet">
-  <property name="typesLinkToFolderContentsInFC" purge="False">
-   <element value="Large Plone Folder" remove="True"/>
-  </property>
- </object>
 </object>
