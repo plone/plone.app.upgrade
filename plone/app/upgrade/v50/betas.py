@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-import logging
-
+from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguageSchema
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
+from Products.CMFPlone.interfaces import INavigationSchema
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces import IUserGroupsSettingsSchema
 from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
-from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component.hooks import getSite
+import logging
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -445,6 +445,28 @@ def to50rc2(context):
         site_properties._delProperty('allow_external_login_sites')
 
 
+def upgrade_navigation_controlpanel_settings_2(context):
+    """Copy navigation control panel settings from portal properties into the
+       new registry.
+       only missing values not migrated before
+    """
+    # get the old site properties
+    portal_properties = getToolByName(context, "portal_properties")
+    navigation_properties = portal_properties.navtree_properties
+    # get the new registry
+    registry = getUtility(IRegistry)
+    try:
+        settings = registry.forInterface(
+            INavigationSchema,
+            prefix='plone',
+        )
+    except KeyError:
+        return
+
+    settings.root = navigation_properties.getProperty('root')
+    navigation_properties._delProperty('root')
+
+
 def to50rc3(context):
     """5.0rc2 -> 5.0rc3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc3')
@@ -482,3 +504,7 @@ def to50rc3(context):
         value = site_properties.getProperty('typesLinkToFolderContentsInFC')
         registry['plone.types_link_to_folder_contents'] = tuple(value)
         site_properties._delProperty('typesLinkToFolderContentsInFC')
+
+    # migrate navtree properties
+    upgrade_navigation_controlpanel_settings_2(context)
+
