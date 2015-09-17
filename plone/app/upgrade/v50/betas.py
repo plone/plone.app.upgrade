@@ -463,7 +463,18 @@ def upgrade_navigation_controlpanel_settings_2(context):
     except KeyError:
         return
 
-    settings.root = navigation_properties.getProperty('root')
+    navigation_properties._delProperty('idsNotToList')
+
+    settings.sort_tabs_on = navigation_properties.getProperty(
+        'sortAttribute'
+    ).decode('utf8')
+    navigation_properties._delProperty('sortAttribute')
+
+    desc = navigation_properties.getProperty('sortOrder') == 'desc'
+    settings.sort_tabs_reversed = desc
+    navigation_properties._delProperty('sortOrder')
+
+    settings.root = navigation_properties.getProperty('root').decode('utf8')
     navigation_properties._delProperty('root')
 
 
@@ -507,4 +518,3 @@ def to50rc3(context):
 
     # migrate navtree properties
     upgrade_navigation_controlpanel_settings_2(context)
-
