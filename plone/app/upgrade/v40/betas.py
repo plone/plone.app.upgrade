@@ -91,6 +91,14 @@ def beta3_beta4(context):
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4beta3-4beta4')
 
+    pprop = getToolByName(context, 'portal_properties')
+    site_properties = pprop.site_properties
+    if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
+        value = site_properties.getProperty('typesLinkToFolderContentsInFC')
+        if 'Large Plone Folder' in value:
+            value.remove('Large Plone Folder')
+        site_properties.setProperty('typesLinkToFolderContentsInFC', value)
+
 
 def removeLargePloneFolder(context):
     """Complete removal of Large Plone Folder
