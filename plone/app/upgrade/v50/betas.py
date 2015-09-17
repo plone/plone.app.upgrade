@@ -513,8 +513,10 @@ def to50rc3(context):
 
     if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
         value = site_properties.getProperty('typesLinkToFolderContentsInFC')
-        registry['plone.types_link_to_folder_contents'] = list(value)
+        value = [unicode(a) for a in value]
+        registry['plone.types_link_to_folder_contents'] = value
         site_properties._delProperty('typesLinkToFolderContentsInFC')
 
     # migrate navtree properties
     upgrade_navigation_controlpanel_settings_2(context)
+
