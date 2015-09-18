@@ -4,7 +4,19 @@ Changelog
 1.3.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Cleanup uninstalled products.  Remove uninstalled products from QI
+  and mark their installed profile version as unknown.
+  [maurits]
+
+- If non installable profiles (really: hidden profiles) have been
+  installed in GS, mark their products as installed in the QI.  This
+  does not work when also that *product* is marked as non installable,
+  because in normal operation (outside of plone.app.upgrade) this does
+  not happen either.
+  [maurits]
+
+- Unmark installed profiles that are no longer available.
+  [maurits]
 
 
 1.3.16 (2015-09-20)
