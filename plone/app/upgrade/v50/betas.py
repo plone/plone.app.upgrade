@@ -497,17 +497,18 @@ def to50rc3(context):
             portal._delProperty(p)
 
     properties_to_migrate = ['external_links_open_new_window',
-							 'mark_special_links',
+                             'mark_special_links',
                              'calendar_starting_year',
                              'calendar_future_years_available',
-							 'redirect_links']
+                             'redirect_links']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
-            if value.lower() == 'true':
-                value = True
-            elif value.lower() == 'false':
-                value = False
+            if isinstance(value, basestring):
+                if value.lower() == 'true':
+                    value = True
+                elif value.lower() == 'false':
+                    value = False
             try:
                 registry['plone.%s' % p] = value
                 site_properties._delProperty(p)
