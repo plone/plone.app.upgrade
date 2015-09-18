@@ -491,7 +491,8 @@ def upgrade_navigation_controlpanel_settings_2(context):
                             'currentFolderOnlyInNavtree',
                             'includeTop',
                             'topLevel',
-                            'bottomLevel']
+                            'bottomLevel',
+                            'showAllParents']
 
     for p in properties_to_remove:
         if navigation_properties.hasProperty(p):
