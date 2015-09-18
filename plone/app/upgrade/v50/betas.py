@@ -490,7 +490,8 @@ def to50rc3(context):
     site_properties = pprop['site_properties']
     registry = getUtility(IRegistry)
 
-    site_properties_to_remove = ['invalid_ids']
+    site_properties_to_remove = ['invalid_ids', 
+                                 'currentFolderOnlyInNavtree']
 
     for p in site_properties_to_remove:
         if portal.hasProperty(p):
@@ -500,8 +501,7 @@ def to50rc3(context):
                              'mark_special_links',
                              'calendar_starting_year',
                              'calendar_future_years_available',
-                             'redirect_links',
-                             '']
+                             'redirect_links']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
