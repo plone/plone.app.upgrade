@@ -500,7 +500,8 @@ def to50rc3(context):
                              'mark_special_links',
                              'calendar_starting_year',
                              'calendar_future_years_available',
-                             'redirect_links']
+                             'redirect_links',
+                             '']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
@@ -514,6 +515,11 @@ def to50rc3(context):
                 site_properties._delProperty(p)
             except KeyError:
                 logger.warn('could not upgrade %s property' % p)
+
+    if site_properties.hasProperty('sitemapDepth'):
+        value = site_properties.getProperty('sitemapDepth')
+        registry['plone.sitemap_depth'] = value
+        site_properties._delProperty('sitemapDepth')
 
     if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
         value = site_properties.getProperty('typesLinkToFolderContentsInFC')
