@@ -497,8 +497,6 @@ def to50rc3(context):
     site_properties_to_remove = ['invalid_ids']
 
     for p in site_properties_to_remove:
-        if portal.hasProperty(p):
-            portal._delProperty(p)
         if site_properties.hasProperty(p):
             site_properties._delProperty(p)
 
@@ -531,11 +529,19 @@ def to50rc3(context):
         registry['plone.sitemap_depth'] = value
         site_properties._delProperty('sitemapDepth')
 
-    if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
-        value = site_properties.getProperty('typesLinkToFolderContentsInFC')
-        value = [safe_unicode(a) for a in value]
-        registry['plone.types_link_to_folder_contents'] = value
-        site_properties._delProperty('typesLinkToFolderContentsInFC')
+    def _migrate_list(original_id, new_id=None):
+        if new_id is None:
+            new_id = original_id
+        if site_properties.hasProperty(original_id):
+            value = site_properties.getProperty(original_id)
+            value = [safe_unicode(a) for a in value]
+            registry['plone.%s' % new_id] = value
+            site_properties._delProperty(original_id)
+
+    _migrate_list('typesLinkToFolderContentsInFC',
+                  'types_use_view_action_in_listings')
+    _migrate_list('default_page')
+
 
     # migrate navtree properties
     upgrade_navigation_controlpanel_settings_2(context)
