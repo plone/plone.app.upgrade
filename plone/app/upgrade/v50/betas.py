@@ -482,6 +482,21 @@ def upgrade_navigation_controlpanel_settings_2(context):
         settings.root = root.decode('utf8')
         navigation_properties._delProperty('root')
 
+    if navigation_properties.hasProperty('sitemapDepth'):
+        value = navigation_properties.getProperty('sitemapDepth')
+        registry['plone.sitemap_depth'] = value
+        navigation_properties._delProperty('sitemapDepth')
+
+    properties_to_remove = ['idsNotToList',
+                            'currentFolderOnlyInNavtree',
+                            'includeTop',
+                            'topLevel',
+                            'bottomLevel']
+
+    for p in properties_to_remove:
+        if navigation_properties.hasProperty(p):
+            navigation_properties._delProperty(p)
+
 
 def to50rc3(context):
     """5.0rc2 -> 5.0rc3"""
@@ -492,8 +507,6 @@ def to50rc3(context):
     site_properties = pprop['site_properties']
     registry = getUtility(IRegistry)
 
-    site_properties_to_remove = ['invalid_ids',
-                                 'currentFolderOnlyInNavtree']
     site_properties_to_remove = ['invalid_ids']
 
     for p in site_properties_to_remove:
