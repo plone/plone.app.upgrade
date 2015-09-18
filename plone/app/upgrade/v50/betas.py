@@ -494,10 +494,13 @@ def to50rc3(context):
 
     site_properties_to_remove = ['invalid_ids',
                                  'currentFolderOnlyInNavtree']
+    site_properties_to_remove = ['invalid_ids']
 
     for p in site_properties_to_remove:
         if portal.hasProperty(p):
             portal._delProperty(p)
+        if site_properties.hasProperty(p):
+            site_properties._delProperty(p)
 
     properties_to_migrate = ['external_links_open_new_window',
                              'mark_special_links',
