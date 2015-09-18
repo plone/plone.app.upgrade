@@ -533,7 +533,7 @@ def to50rc3(context):
 
     if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
         value = site_properties.getProperty('typesLinkToFolderContentsInFC')
-        value = [unicode(a) for a in value]
+        value = [safe_unicode(a) for a in value]
         registry['plone.types_link_to_folder_contents'] = value
         site_properties._delProperty('typesLinkToFolderContentsInFC')
 
