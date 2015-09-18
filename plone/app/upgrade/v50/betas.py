@@ -13,6 +13,7 @@ from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces import IUserGroupsSettingsSchema
 from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
 import logging
@@ -463,12 +464,13 @@ def upgrade_navigation_controlpanel_settings_2(context):
     except KeyError:
         return
 
-    navigation_properties._delProperty('idsNotToList')
+    if navigation_properties.hasProperty('idsNotToList'):
+        navigation_properties._delProperty('idsNotToList')
 
-    settings.sort_tabs_on = navigation_properties.getProperty(
-        'sortAttribute'
-    ).decode('utf8')
-    navigation_properties._delProperty('sortAttribute')
+    if navigation_properties.hasProperty('sortAttribute'):
+        settings.sort_tabs_on = navigation_properties.getProperty(
+            'sortAttribute').decode('utf8')
+        navigation_properties._delProperty('sortAttribute')
 
     order = navigation_properties.getProperty('sortOrder', None)
     if order is not None:
@@ -501,8 +503,7 @@ def to50rc3(context):
                              'mark_special_links',
                              'calendar_starting_year',
                              'calendar_future_years_available',
-                             'redirect_links',
-                             'default_page_types']
+                             'redirect_links']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
@@ -516,6 +517,11 @@ def to50rc3(context):
                 site_properties._delProperty(p)
             except KeyError:
                 logger.warn('could not upgrade %s property' % p)
+
+    if site_properties.hasProperty('default_page_types'):
+        value = site_properties.getProperty('default_page_types')
+        registry['plone.default_page_types'] = [safe_unicode(i) for i in value]
+        site_properties._delProperty('default_page_types')
 
     if site_properties.hasProperty('sitemapDepth'):
         value = site_properties.getProperty('sitemapDepth')
