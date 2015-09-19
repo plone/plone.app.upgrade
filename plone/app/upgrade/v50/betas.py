@@ -508,8 +508,9 @@ def to50rc3(context):
     site_properties = pprop['site_properties']
     registry = getUtility(IRegistry)
 
-    if hasattr(portal, 'email_charset'):
+    if portal.hasProperty('email_charset'):
         registry['plone.email_charset'] = portal.email_charset
+        portal._delProperty('email_charset')
 
     site_properties_to_remove = ['invalid_ids', 'ellipsis']
 
@@ -521,7 +522,9 @@ def to50rc3(context):
                              'mark_special_links',
                              'calendar_starting_year',
                              'calendar_future_years_available',
-                             'redirect_links']
+                             'redirect_links',
+                             'enable_checkout_workflow'
+                             ]
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
@@ -535,6 +538,13 @@ def to50rc3(context):
                 site_properties._delProperty(p)
             except KeyError:
                 logger.warn('could not upgrade %s property' % p)
+
+    if site_properties.hasProperty('checkout_workflow_policy'):
+        value = site_properties.getProperty('checkout_workflow_policy')
+        from plone.app.iterate.interfaces import IIterateSchema
+        settings = registry.forInterface(IIterateSchema)
+        settings.checkout_workflow_policy = safe_unicode(value)
+        site_properties._delProperty('checkout_workflow_policy')
 
     if site_properties.hasProperty('default_page_types'):
         value = site_properties.getProperty('default_page_types')
