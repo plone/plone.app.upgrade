@@ -523,7 +523,8 @@ def to50rc3(context):
                              'calendar_starting_year',
                              'calendar_future_years_available',
                              'redirect_links',
-                             'enable_checkout_workflow'
+                             'enable_checkout_workflow',
+                             'default_charset'
                              ]
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
@@ -550,11 +551,6 @@ def to50rc3(context):
         value = site_properties.getProperty('default_page_types')
         registry['plone.default_page_types'] = [safe_unicode(i) for i in value]
         site_properties._delProperty('default_page_types')
-
-    if site_properties.hasProperty('default_charset'):
-        value = site_properties.getProperty('default_charset')
-        registry['plone.default_charset'] = safe_unicode(value)
-        site_properties._delProperty('default_charset')
 
     if site_properties.hasProperty('sitemapDepth'):
         value = site_properties.getProperty('sitemapDepth')
