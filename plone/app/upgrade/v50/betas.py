@@ -538,6 +538,11 @@ def to50rc3(context):
         registry['plone.default_page_types'] = [safe_unicode(i) for i in value]
         site_properties._delProperty('default_page_types')
 
+    if site_properties.hasProperty('default_charset'):
+        value = site_properties.getProperty('default_charset')
+        registry['plone.default_charset'] = safe_unicode(value)
+        site_properties._delProperty('default_charset')
+
     if site_properties.hasProperty('sitemapDepth'):
         value = site_properties.getProperty('sitemapDepth')
         registry['plone.sitemap_depth'] = value
