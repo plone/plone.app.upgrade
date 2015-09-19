@@ -8,6 +8,8 @@
            prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.ITypesSchema"
            prefix="plone" />
+  <records interface="plone.app.iterate.interfaces.IIterateSchema"
+           prefix="plone" />
   <records prefix="plone.resources/resource-plone-app-discussion-stylesheets"
         interface='Products.CMFPlone.interfaces.IResourceRegistry'
         remove="True">
