@@ -7,7 +7,11 @@ from plone.contentrules.engine.assignments import check_rules_with_dotted_name_m
 
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
+from plone.app.upgrade.v43.alphas import upgradeTinyMCEAgain
 
+# We had our own version of this, but it was just a copy.  We keep a
+# reference here to avoid breakage if someone imports it.
+upgradeTinyMCEAgain  # Pyflakes
 logger = logging.getLogger('plone.app.upgrade')
 
 
@@ -30,12 +34,6 @@ def upgradeContentRulesNames(context):
     storage = queryUtility(IRuleStorage)
     for key in storage.keys():
         check_rules_with_dotted_name_moved(storage[key])
-
-
-def upgradeTinyMCEAgain(context):
-    qi = getToolByName(context, 'portal_quickinstaller')
-    if 'Products.TinyMCE' in qi:
-        qi.upgradeProduct('Products.TinyMCE')
 
 
 def removePersistentKSSMimeTypeImportStep(context):

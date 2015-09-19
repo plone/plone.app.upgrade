@@ -4,6 +4,13 @@ Changelog
 1.3.16 (unreleased)
 -------------------
 
+- Plone 4.3: upgrade TinyMCE correctly.  Update sunburst theme profile
+  version when applying its upgrade step.  Update CMFEditions.  Update
+  plone.app.jquery.
+  This fixes
+  https://github.com/plone/Products.CMFPlone/issues/812
+  [maurits]
+
 - Portal properties calendar_starting_year and calendar_future_years_available
   were moved to registry.
   [pbauer]
