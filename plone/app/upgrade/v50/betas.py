@@ -564,8 +564,7 @@ def to50rc3(context):
                   'types_use_view_action_in_listings')
     _migrate_list('default_page')
     _migrate_list('parentMetaTypesNotToQuery', 'parent_types_not_to_query')
-
+    _migrate_list('allowRolesToAddKeywords', 'roles_allowed_to_add_keywords')
 
     # migrate navtree properties
     upgrade_navigation_controlpanel_settings_2(context)
-
