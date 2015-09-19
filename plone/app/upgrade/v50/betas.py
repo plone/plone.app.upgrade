@@ -508,6 +508,9 @@ def to50rc3(context):
     site_properties = pprop['site_properties']
     registry = getUtility(IRegistry)
 
+    if hasattr(portal, 'email_charset'):
+        registry['plone.email_charset'] = portal.email_charset
+
     site_properties_to_remove = ['invalid_ids', 'ellipsis']
 
     for p in site_properties_to_remove:
