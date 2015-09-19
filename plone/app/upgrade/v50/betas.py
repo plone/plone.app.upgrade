@@ -560,6 +560,7 @@ def to50rc3(context):
     _migrate_list('typesLinkToFolderContentsInFC',
                   'types_use_view_action_in_listings')
     _migrate_list('default_page')
+    _migrate_list('parentMetaTypesNotToQuery', 'parent_types_not_to_query')
 
 
     # migrate navtree properties
