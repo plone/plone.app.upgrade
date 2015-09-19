@@ -508,7 +508,7 @@ def to50rc3(context):
     site_properties = pprop['site_properties']
     registry = getUtility(IRegistry)
 
-    site_properties_to_remove = ['invalid_ids']
+    site_properties_to_remove = ['invalid_ids', 'ellipsis']
 
     for p in site_properties_to_remove:
         if site_properties.hasProperty(p):
