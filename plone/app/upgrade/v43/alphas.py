@@ -69,13 +69,17 @@ def upgradeToI18NCaseNormalizer(context):
 
 def upgradeTinyMCE(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
+
+    This is profile version 4.
     """
     try:
-        from Products.TinyMCE.upgrades import upgrade_12_to_13
+        # Is the package still there?  Not on Plone 5.
+        import Products.TinyMCE.upgrades
+        Products.TinyMCE.upgrades  # pyflakes
     except ImportError:
-        pass
-    else:
-        upgrade_12_to_13(context)
+        return
+    context.upgradeProfile('Products.TinyMCE:TinyMCE', dest='4')
+
 
 def upgradePloneAppTheming(context):
     """Re-install plone.app.theming if previously installed
@@ -101,14 +105,18 @@ def upgradePloneAppTheming(context):
     portal_setup = getToolByName(context, 'portal_setup')
     return portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
 
+
 def upgradePloneAppJQuery(context):
-    """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
+    """ Upgrade plone.app.jquery to profile version 3.
     """
     try:
-        from plone.app.jquery.upgrades import upgrade_2_to_3
-        upgrade_2_to_3(context)
+        # Is the package still there?  Not on Plone 5.
+        import plone.app.jquery
+        plone.app.jquery  # pyflakes
     except ImportError:
-        pass
+        return
+    context.upgradeProfile('plone.app.jquery:default', dest='3')
+
 
 def to43alpha1(context):
     """4.2 -> 4.3alpha1"""
@@ -116,9 +124,7 @@ def to43alpha1(context):
     reindex_sortable_title(context)
     upgradeTinyMCE(context)
     upgradePloneAppTheming(context)
-    # XXX only for plone.app.jquery 1.7
-    # we're on 1.4 right now
-    # upgradePloneAppJQuery(context)
+    upgradePloneAppJQuery(context)
 
 
 def upgradeSyndication(context):
@@ -231,6 +237,10 @@ def removeKSS(context):
 
 
 def upgradeTinyMCEAgain(context):
-    qi = getToolByName(context, 'portal_quickinstaller')
-    if 'Products.TinyMCE' in qi:
-        qi.upgradeProduct('Products.TinyMCE')
+    try:
+        # Is the package still there?  Not on Plone 5.
+        import Products.TinyMCE.upgrades
+        Products.TinyMCE.upgrades  # pyflakes
+    except ImportError:
+        return
+    context.upgradeProfile('Products.TinyMCE:TinyMCE')
