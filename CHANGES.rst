@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.16 (unreleased)
+1.3.16 (2015-09-20)
 -------------------
 
 - Plone 4.3: upgrade TinyMCE correctly.  Update sunburst theme profile
