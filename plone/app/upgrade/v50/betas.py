@@ -512,7 +512,7 @@ def to50rc3(context):
         registry['plone.email_charset'] = portal.email_charset
         portal._delProperty('email_charset')
 
-    site_properties_to_remove = ['invalid_ids', 'ellipsis']
+    site_properties_to_remove = ['invalid_ids', 'ellipsis', 'default_charset']
 
     for p in site_properties_to_remove:
         if site_properties.hasProperty(p):
@@ -523,9 +523,7 @@ def to50rc3(context):
                              'calendar_starting_year',
                              'calendar_future_years_available',
                              'redirect_links',
-                             'enable_checkout_workflow',
-                             'default_charset'
-                             ]
+                             'enable_checkout_workflow']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
