@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
+import betas
 
 
 class TestMigrations_v4_2beta1(MigrationTest):
@@ -18,5 +20,6 @@ class TestMigrations_v4_2beta1(MigrationTest):
             return
         site_props.allowRolesToAddKeywords = ('Manager', 'Reviewer')
         loadMigrationProfile(self.portal, self.profile)
+        betas.to42beta1(self.portal.portal_setup)
         roles = site_props.allowRolesToAddKeywords
         self.assertEqual(roles, ('Manager', 'Reviewer', 'Site Administrator'))
