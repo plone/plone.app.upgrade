@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
-import logging
-
+from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ILanguageSchema
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
+from Products.CMFPlone.interfaces import INavigationSchema
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces import IUserGroupsSettingsSchema
 from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
-from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
+import logging
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -445,6 +446,59 @@ def to50rc2(context):
         site_properties._delProperty('allow_external_login_sites')
 
 
+def upgrade_navigation_controlpanel_settings_2(context):
+    """Copy navigation control panel settings from portal properties into the
+       new registry.
+       only missing values not migrated before
+    """
+    # get the old site properties
+    portal_properties = getToolByName(context, "portal_properties")
+    navigation_properties = portal_properties.navtree_properties
+    # get the new registry
+    registry = getUtility(IRegistry)
+    try:
+        settings = registry.forInterface(
+            INavigationSchema,
+            prefix='plone',
+        )
+    except KeyError:
+        return
+
+    if navigation_properties.hasProperty('idsNotToList'):
+        navigation_properties._delProperty('idsNotToList')
+
+    if navigation_properties.hasProperty('sortAttribute'):
+        settings.sort_tabs_on = navigation_properties.getProperty(
+            'sortAttribute').decode('utf8')
+        navigation_properties._delProperty('sortAttribute')
+
+    order = navigation_properties.getProperty('sortOrder', None)
+    if order is not None:
+        settings.sort_tabs_reversed = order in ['descending', 'reverse']
+        navigation_properties._delProperty('sortOrder')
+
+    root = navigation_properties.getProperty('root', None)
+    if root is not None:
+        settings.root = root.decode('utf8')
+        navigation_properties._delProperty('root')
+
+    if navigation_properties.hasProperty('sitemapDepth'):
+        value = navigation_properties.getProperty('sitemapDepth')
+        registry['plone.sitemap_depth'] = value
+        navigation_properties._delProperty('sitemapDepth')
+
+    properties_to_remove = ['idsNotToList',
+                            'currentFolderOnlyInNavtree',
+                            'includeTop',
+                            'topLevel',
+                            'bottomLevel',
+                            'showAllParents']
+
+    for p in properties_to_remove:
+        if navigation_properties.hasProperty(p):
+            navigation_properties._delProperty(p)
+
+
 def to50rc3(context):
     """5.0rc2 -> 5.0rc3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc3')
@@ -454,20 +508,67 @@ def to50rc3(context):
     site_properties = pprop['site_properties']
     registry = getUtility(IRegistry)
 
-    site_properties_to_remove = ['invalid_ids']
+    if portal.hasProperty('email_charset'):
+        registry['plone.email_charset'] = portal.email_charset
+        portal._delProperty('email_charset')
+
+    site_properties_to_remove = ['invalid_ids', 'ellipsis', 'default_charset']
 
     for p in site_properties_to_remove:
-        if portal.hasProperty(p):
-            portal._delProperty(p)
+        if site_properties.hasProperty(p):
+            site_properties._delProperty(p)
 
     properties_to_migrate = ['external_links_open_new_window',
+                             'mark_special_links',
                              'calendar_starting_year',
-                             'calendar_future_years_available']
+                             'calendar_future_years_available',
+                             'redirect_links',
+                             'enable_checkout_workflow']
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
+            if isinstance(value, basestring):
+                if value.lower() == 'true':
+                    value = True
+                elif value.lower() == 'false':
+                    value = False
             try:
                 registry['plone.%s' % p] = value
                 site_properties._delProperty(p)
             except KeyError:
                 logger.warn('could not upgrade %s property' % p)
+
+    if site_properties.hasProperty('checkout_workflow_policy'):
+        value = site_properties.getProperty('checkout_workflow_policy')
+        from plone.app.iterate.interfaces import IIterateSchema
+        settings = registry.forInterface(IIterateSchema)
+        settings.checkout_workflow_policy = safe_unicode(value)
+        site_properties._delProperty('checkout_workflow_policy')
+
+    if site_properties.hasProperty('default_page_types'):
+        value = site_properties.getProperty('default_page_types')
+        registry['plone.default_page_types'] = [safe_unicode(i) for i in value]
+        site_properties._delProperty('default_page_types')
+
+    if site_properties.hasProperty('sitemapDepth'):
+        value = site_properties.getProperty('sitemapDepth')
+        registry['plone.sitemap_depth'] = value
+        site_properties._delProperty('sitemapDepth')
+
+    def _migrate_list(original_id, new_id=None):
+        if new_id is None:
+            new_id = original_id
+        if site_properties.hasProperty(original_id):
+            value = site_properties.getProperty(original_id)
+            value = [safe_unicode(a) for a in value]
+            registry['plone.%s' % new_id] = value
+            site_properties._delProperty(original_id)
+
+    _migrate_list('typesLinkToFolderContentsInFC',
+                  'types_use_view_action_in_listings')
+    _migrate_list('default_page')
+    _migrate_list('parentMetaTypesNotToQuery', 'parent_types_not_to_query')
+    _migrate_list('allowRolesToAddKeywords', 'roles_allowed_to_add_keywords')
+
+    # migrate navtree properties
+    upgrade_navigation_controlpanel_settings_2(context)

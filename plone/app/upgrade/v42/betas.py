@@ -34,6 +34,14 @@ def to42beta1(context):
     """4.2a2 -> 4.2b1
     """
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to42beta1')
+    pprop = getToolByName(context, 'portal_properties')
+    site_properties = pprop.site_properties
+    if site_properties.hasProperty('allowRolesToAddKeywords'):
+        value = site_properties.getProperty('allowRolesToAddKeywords')
+        if 'Site Administrator' not in value:
+            value = list(value)
+            value.append('Site Administrator')
+            site_properties.allowRolesToAddKeywords = tuple(value)
 
 
 def to42beta1_owner_tuples(context):

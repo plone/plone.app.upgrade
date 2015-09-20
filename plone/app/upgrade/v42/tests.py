@@ -14,6 +14,8 @@ class TestMigrations_v4_2beta1(MigrationTest):
     def testAddSiteAdminToKeywordRoles(self):
         ptool = self.portal.portal_properties
         site_props = ptool.site_properties
+        if not site_props.hasProperty('allowRolesToAddKeywords'):
+            return
         site_props.allowRolesToAddKeywords = ('Manager', 'Reviewer')
         loadMigrationProfile(self.portal, self.profile)
         roles = site_props.allowRolesToAddKeywords

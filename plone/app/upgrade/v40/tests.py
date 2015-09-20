@@ -554,6 +554,8 @@ class TestMigrations_v4_0beta4(MigrationTest):
         # re-create pre-migration settings
         ptool = self.portal.portal_properties
         nav_props = ptool.navtree_properties
+        if not nav_props.hasProperty('parentMetaTypesNotToQuery'):
+            return
         l = list(nav_props.parentMetaTypesNotToQuery)
         nav_props.parentMetaTypesNotToQuery = l + ['Large Plone Folder']
         site_props = ptool.site_properties
