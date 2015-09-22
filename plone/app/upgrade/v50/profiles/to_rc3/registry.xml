@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <registry>
+  <records interface="Products.CMFPlone.interfaces.IFilterSchema"
+           prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.ILinkSchema"
            prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.INavigationSchema"
@@ -9,6 +11,8 @@
   <records interface="Products.CMFPlone.interfaces.ISiteSchema"
            prefix="plone" />
   <records interface="Products.CMFPlone.interfaces.ITypesSchema"
+           prefix="plone" />
+  <records interface="Products.CMFPlone.interfaces.IUserGroupsSettingsSchema"
            prefix="plone" />
   <records interface="plone.app.iterate.interfaces.IIterateSettings"
            prefix="plone" />

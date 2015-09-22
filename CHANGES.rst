@@ -4,7 +4,7 @@ Changelog
 1.3.17 (unreleased)
 -------------------
 
-- Fix missing plone.email_charset when upgrading from 5.0rc2 -> 5.0rc3.
+- Fix issues with missing registry-entries when upgrading 5.0rc2 -> 5.0rc3.
   [pbauer]
 
 
