@@ -4,7 +4,8 @@ Changelog
 1.3.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix missing plone.email_charset when upgrading from 5.0rc2 -> 5.0rc3.
+  [pbauer]
 
 
 1.3.16 (2015-09-20)
