@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.17 (unreleased)
+1.3.17 (2015-09-22)
 -------------------
 
 - Fix issues with missing registry-entries when upgrading 5.0rc2 -> 5.0rc3.
