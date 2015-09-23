@@ -4,7 +4,8 @@ Changelog
 1.3.18 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix incorrect interate import.
+  [alecm]
 
 
 1.3.17 (2015-09-22)
