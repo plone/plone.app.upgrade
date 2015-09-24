@@ -4,6 +4,9 @@ Changelog
 1.3.18 (unreleased)
 -------------------
 
+- Fix migration of typesUseViewActionInListings to registry.
+  [pbauer]
+
 - Fix incorrect interate import.
   [alecm]
 

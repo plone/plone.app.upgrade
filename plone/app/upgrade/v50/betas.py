@@ -564,7 +564,7 @@ def to50rc3(context):
             registry['plone.%s' % new_id] = value
             site_properties._delProperty(original_id)
 
-    _migrate_list('typesLinkToFolderContentsInFC',
+    _migrate_list('typesUseViewActionInListings',
                   'types_use_view_action_in_listings')
     _migrate_list('default_page')
     _migrate_list('parentMetaTypesNotToQuery', 'parent_types_not_to_query')
