@@ -4,6 +4,9 @@ Changelog
 1.3.18 (unreleased)
 -------------------
 
+- Add migration for ILinkSchema
+  [vangheem]
+
 - Add migration for TinyMCE settings
   [vangheem]
 

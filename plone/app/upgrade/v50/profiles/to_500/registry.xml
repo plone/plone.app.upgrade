@@ -2,4 +2,6 @@
 <registry>
   <records interface="Products.CMFPlone.interfaces.ITinyMCESchema"
            prefix="plone" />
+  <records interface="Products.CMFPlone.interfaces.ILinkSchema"
+           prefix="plone" />
 </registry>
