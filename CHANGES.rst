@@ -4,6 +4,9 @@ Changelog
 1.3.18 (unreleased)
 -------------------
 
+- Add migration for TinyMCE settings
+  [vangheem]
+
 - Fix migration of typesUseViewActionInListings to registry.
   [pbauer]
 

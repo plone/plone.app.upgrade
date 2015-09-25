@@ -200,4 +200,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5010"
+        destination="5011"
+        profile="Products.CMFPlone:plone">
+
+       <gs:upgradeStep
+           title="Run to500 upgrade profile"
+           description=""
+           handler=".final.to500"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>
