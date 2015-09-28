@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.18 (unreleased)
+1.3.18 (2015-09-27)
 -------------------
 
 - Add migration for ILinkSchema
