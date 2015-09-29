@@ -1,11 +1,16 @@
 from zope.component import getAdapters, queryMultiAdapter
+from zope.component import getSiteManager
 from zope.contentprovider.interfaces import IContentProvider
+from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
 
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getFSVersionTuple
+from Products.GenericSetup import profile_registry
+from Products.GenericSetup.interfaces import EXTENSION
 
 import alphas
 
@@ -148,3 +153,125 @@ class TestMigrations_v4_3final_to4308(MigrationTest):
         relevantStep['step'].handler(portal)
         # now it has been added...
         self.assertTrue('password_policy' in portal.acl_users.objectIds())
+
+
+class TestQIandGS(MigrationTest):
+
+    def testUnmarkUnavailableProfiles(self):
+        from plone.app.upgrade.v43.final import unmarkUnavailableProfiles
+        setup = getToolByName(self.portal, 'portal_setup')
+        profile_id = 'dummyxyz:default'
+        # Pretend that this profile was installed at some point.
+        setup.setLastVersionForProfile(profile_id, '1.0')
+        self.assertTrue(profile_id in setup._profile_upgrade_versions)
+        # The profile is not known to portal_setup: it is not
+        # registered in zcml.  So our cleanup function gets rid of it.
+        unmarkUnavailableProfiles(setup)
+        self.assertFalse(profile_id in setup._profile_upgrade_versions)
+
+    def testMarkProductsInstalledForUninstallableProfiles(self):
+        from plone.app.upgrade.v43.final import \
+            markProductsInstalledForUninstallableProfiles
+
+        # Register a profile.
+        product_id = 'my.test.package'
+        profile_id = '{0}:default'.format(product_id)
+        profile_registry.registerProfile(
+            'default', 'title', 'description', '/my/path',
+            product=product_id, profile_type=EXTENSION)
+
+        # Hide the profile.
+        class HiddenProfiles(object):
+            implements(INonInstallable)
+
+            def getNonInstallableProfiles(self):
+                return [profile_id]
+
+        sm = getSiteManager()
+        sm.registerUtility(factory=HiddenProfiles, name='my.test.package')
+
+        # Check that nothing is installed at first.
+        setup = getToolByName(self.portal, 'portal_setup')
+        self.assertEqual(
+            setup.getLastVersionForProfile(profile_id), 'unknown')
+        qi = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertFalse(qi.isProductInstalled(product_id))
+
+        # Call our upgrade function.  This should have no effect,
+        # because the profile is not installed.
+        markProductsInstalledForUninstallableProfiles(setup)
+        self.assertEqual(
+            setup.getLastVersionForProfile(profile_id), 'unknown')
+        self.assertFalse(qi.isProductInstalled(product_id))
+
+        # Now fake that the profile is installed and try again.
+        setup.setLastVersionForProfile(profile_id, '1.0')
+        markProductsInstalledForUninstallableProfiles(setup)
+        self.assertEqual(
+            setup.getLastVersionForProfile(profile_id), ('1', '0'))
+        self.assertTrue(qi.isProductInstalled(product_id))
+
+        # Cleanup test.
+        profile_registry.unregisterProfile('default', product_id)
+
+    def testCleanupUninstalledProducts(self):
+        from plone.app.upgrade.v43.final import cleanupUninstalledProducts
+        qi = getToolByName(self.portal, 'portal_quickinstaller')
+        setup = getToolByName(self.portal, 'portal_setup')
+        # Register three profiles.  I wanted to take 'new' as product
+        # id, but there is already a python module 'new', so that goes
+        # wrong.
+        profile_registry.registerProfile(
+            'default', '', '', '/my/path',
+            product='newproduct', profile_type=EXTENSION)
+        profile_registry.registerProfile(
+            'default', '', '', '/my/path',
+            product='installed', profile_type=EXTENSION)
+        profile_registry.registerProfile(
+            'default', '', '', '/my/path',
+            product='uninstalled', profile_type=EXTENSION)
+        # Mark as installed.
+        setup.setLastVersionForProfile('newproduct:default', '1')
+        setup.setLastVersionForProfile('installed:default', '1')
+        setup.setLastVersionForProfile('uninstalled:default', '1')
+        # Notify of installation of three products.
+        qi.notifyInstalled('newproduct', status='new')
+        qi.notifyInstalled('installed', status='installed')
+        qi.notifyInstalled('uninstalled', status='uninstalled')
+        # The status differs, so QI does not think all are actually
+        # installed.
+        self.assertFalse(qi.isProductInstalled('newproduct'))
+        self.assertTrue(qi.isProductInstalled('installed'))
+        self.assertFalse(qi.isProductInstalled('uninstalled'))
+        # But all three have an object in the QI.
+        self.assertTrue('newproduct' in qi)
+        self.assertTrue('installed' in qi)
+        self.assertTrue('uninstalled' in qi)
+        # And all three have a version in GS.
+        self.assertEqual(
+            setup.getLastVersionForProfile('newproduct:default'), ('1',))
+        self.assertEqual(
+            setup.getLastVersionForProfile('installed:default'), ('1',))
+        self.assertEqual(
+            setup.getLastVersionForProfile('uninstalled:default'), ('1',))
+        # Call our cleanup function.
+        cleanupUninstalledProducts(setup)
+        # Same results for isProductInstalled.
+        self.assertFalse(qi.isProductInstalled('newproduct'))
+        self.assertTrue(qi.isProductInstalled('installed'))
+        self.assertFalse(qi.isProductInstalled('uninstalled'))
+        # The two not installed items are removed.
+        self.assertFalse('newproduct' in qi)
+        self.assertTrue('installed' in qi)
+        self.assertFalse('uninstalled' in qi)
+        # Those twee are unknown in GS.
+        self.assertEqual(
+            setup.getLastVersionForProfile('newproduct:default'), 'unknown')
+        self.assertEqual(
+            setup.getLastVersionForProfile('installed:default'), ('1',))
+        self.assertEqual(
+            setup.getLastVersionForProfile('uninstalled:default'), 'unknown')
+        # Cleanup test.
+        profile_registry.unregisterProfile('default', 'newproduct')
+        profile_registry.unregisterProfile('default', 'installed')
+        profile_registry.unregisterProfile('default', 'uninstalled')

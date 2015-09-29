@@ -198,6 +198,24 @@
            handler=".betas.to50rc3"
            />
 
+       <gs:upgradeStep
+           title="Unmark installed profiles that are no longer available."
+           description="This removes no longer interesting info."
+           handler="plone.app.upgrade.v43.final.unmarkUnavailableProfiles"
+           />
+
+       <gs:upgradeStep
+           title="Mark products as installed for installed uninstallable profiles"
+           description="The profiles were meant to be hidden, not uninstallable."
+           handler="plone.app.upgrade.v43.final.markProductsInstalledForUninstallableProfiles"
+           />
+
+       <gs:upgradeStep
+           title="Cleanup uninstalled products"
+           description="Remove uninstalled products from QI and mark their profiles as unknown."
+           handler="plone.app.upgrade.v43.final.cleanupUninstalledProducts"
+           />
+
     </gs:upgradeSteps>
 
     <gs:upgradeSteps
