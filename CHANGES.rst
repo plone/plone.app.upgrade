@@ -4,6 +4,9 @@ Changelog
 1.3.19 (unreleased)
 -------------------
 
+- Cleanup the skins tool.
+  [maurits]
+
 - Cleanup uninstalled products.  Remove uninstalled products from QI
   and mark their installed profile version as unknown.
   [maurits]

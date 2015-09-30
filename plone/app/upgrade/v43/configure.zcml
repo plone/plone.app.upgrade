@@ -219,6 +219,11 @@
            handler="plone.app.upgrade.v43.final.cleanupUninstalledProducts"
            />
 
+        <genericsetup:upgradeStep
+            title="Cleanup the skins tool."
+            handler="plone.app.upgrade.v40.alphas.cleanUpSkinsTool"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>
