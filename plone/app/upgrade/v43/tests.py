@@ -145,14 +145,114 @@ class TestMigrations_v4_3final_to4308(MigrationTest):
         self.assertFalse('password_policy' in portal.acl_users.objectIds())
         # find the relevant upgrade step and execute it
         from Products.GenericSetup.upgrade import listUpgradeSteps
-        relevantStep = [step for step in listUpgradeSteps(portal.portal_setup, \
-                                                          'Products.CMFPlone:plone',
-                                                          '4307')[0] if
-                        step['title'] == u'Add default Plone password policy'][0]
+        relevantStep = [step for step in listUpgradeSteps(
+            portal.portal_setup, 'Products.CMFPlone:plone', '4307')[0] if
+            step['title'] == u'Add default Plone password policy'][0]
         # execute the step
         relevantStep['step'].handler(portal)
         # now it has been added...
         self.assertTrue('password_policy' in portal.acl_users.objectIds())
+
+
+class TestFakeKupuMigration(MigrationTest):
+
+    def afterSetUp(self):
+        from plone.app.upgrade.kupu_bbb import PloneKupuLibraryTool
+        portal = self.portal
+        self.csstool = getToolByName(portal, 'portal_css')
+        self.jstool = getToolByName(portal, 'portal_javascripts')
+        self.control_panel = getToolByName(portal, 'portal_controlpanel')
+        pprops = getToolByName(portal, 'portal_properties')
+        self.site_properties = pprops.site_properties
+        bad_expr = ('python:portal.kupu_library_tool.isKupuEnabled'
+                    '(REQUEST=request)')
+        allowed_expr = 'python:"kupu_library_tool" not in portal'
+        # Setup a fake kupu with resources and settings
+        self.kupu_id = 'kupu_library_tool'
+        portal._setObject(self.kupu_id, PloneKupuLibraryTool(id=self.kupu_id))
+        self.csstool.registerStylesheet('somekupu.css', expression=bad_expr)
+        self.csstool.registerStylesheet('nokupu.css', expression=allowed_expr)
+        self.jstool.registerScript('somekupu.js', expression=bad_expr)
+        self.jstool.registerScript('nokupu.js', expression=allowed_expr)
+        self.control_panel.registerConfiglet('kupu', 'kupu', '')
+        if self.site_properties.hasProperty('available_editors'):
+            self.site_properties._updateProperty(
+                'available_editors', ('TinyMCE', 'Kupu', ''))
+        else:
+            self.site_properties._setProperty(
+                'available_editors', ('TinyMCE', 'Kupu', ''))
+        if self.site_properties.hasProperty('default_editor'):
+            self.site_properties._updateProperty('default_editor', 'Kupu')
+        else:
+            self.site_properties._setProperty('default_editor', 'Kupu')
+        self.member_data = getToolByName(portal, 'portal_memberdata')
+        if self.member_data.hasProperty('wysiwyg_editor'):
+            self.member_data._updateProperty('wysiwyg_editor', 'Kupu')
+        else:
+            self.member_data._setProperty('wysiwyg_editor', 'Kupu')
+
+    def testBeforeRemoveFakeKupu(self):
+        # Test that our test setup has worked.
+        self.assertTrue(self.kupu_id in self.portal)
+        self.assertTrue(self.csstool.getResource('somekupu.css') is not None)
+        self.assertTrue(self.csstool.getResource('nokupu.css') is not None)
+        self.assertTrue(self.jstool.getResource('somekupu.js') is not None)
+        self.assertTrue(self.jstool.getResource('nokupu.js') is not None)
+        self.assertTrue(
+            self.control_panel.getActionObject('Plone/kupu') is not None)
+        self.assertTrue(
+            'Kupu' in self.site_properties.getProperty('available_editors'))
+        self.assertEqual(
+            self.site_properties.getProperty('default_editor'), 'Kupu')
+        self.assertEqual(
+            self.member_data.getProperty('wysiwyg_editor'), 'Kupu')
+
+    def testRemoveFakeKupu(self):
+        from plone.app.upgrade.v43.final import removeFakeKupu
+        # Call the upgrade
+        setup = getToolByName(self.portal, 'portal_setup')
+        removeFakeKupu(setup)
+        # Test that the tool is gone
+        self.assertTrue(self.kupu_id not in self.portal)
+        # Assert that the bad resources are gone and the allowed ones
+        # are still there.
+        self.assertTrue(self.csstool.getResource('somekupu.css') is None)
+        self.assertTrue(self.csstool.getResource('nokupu.css') is not None)
+        self.assertTrue(self.jstool.getResource('somekupu.js') is None)
+        self.assertTrue(self.jstool.getResource('nokupu.js') is not None)
+        self.assertTrue(
+            self.control_panel.getActionObject('Plone/kupu') is None)
+        self.assertTrue(
+            'Kupu' not in
+            self.site_properties.getProperty('available_editors'))
+        self.assertNotEqual(
+            self.site_properties.getProperty('default_editor'), 'Kupu')
+        self.assertNotEqual(
+            self.member_data.getProperty('wysiwyg_editor'), 'Kupu')
+
+    def testNoRemoveFakeKupu(self):
+        # Test that we do nothing when the tool is there and is not an
+        # instance of the fake class
+        from OFS.SimpleItem import SimpleItem
+        self.portal._delObject(self.kupu_id)
+        self.portal._setObject(self.kupu_id, SimpleItem(id=self.kupu_id))
+        from plone.app.upgrade.v43.final import removeFakeKupu
+        # Call the upgrade
+        setup = getToolByName(self.portal, 'portal_setup')
+        removeFakeKupu(setup)
+        self.assertTrue(self.kupu_id in self.portal)
+        self.assertTrue(self.csstool.getResource('somekupu.css') is not None)
+        self.assertTrue(self.csstool.getResource('nokupu.css') is not None)
+        self.assertTrue(self.jstool.getResource('somekupu.js') is not None)
+        self.assertTrue(self.jstool.getResource('nokupu.js') is not None)
+        self.assertTrue(
+            self.control_panel.getActionObject('Plone/kupu') is not None)
+        self.assertTrue(
+            'Kupu' in self.site_properties.getProperty('available_editors'))
+        self.assertEqual(
+            self.site_properties.getProperty('default_editor'), 'Kupu')
+        self.assertEqual(
+            self.member_data.getProperty('wysiwyg_editor'), 'Kupu')
 
 
 class TestQIandGS(MigrationTest):

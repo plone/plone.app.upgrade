@@ -224,6 +224,11 @@
             handler="plone.app.upgrade.v40.alphas.cleanUpSkinsTool"
             />
 
+        <genericsetup:upgradeStep
+            title="Remove fake kupu tool and related settings and resources."
+            handler="plone.app.upgrade.v43.final.removeFakeKupu"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

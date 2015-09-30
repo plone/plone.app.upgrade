@@ -25,3 +25,6 @@ class PloneKupuLibraryTool(SimpleItem.SimpleItem):
                 a = []
             res.append((t, a))
         return res
+
+    def isKupuEnabled(self, *args, **kwargs):
+        return False
