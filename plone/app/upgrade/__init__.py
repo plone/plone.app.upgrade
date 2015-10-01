@@ -140,7 +140,12 @@ except ImportError:
 
 # To solve the __iro__ problem because CMFPlacefulWorkflow interfaces changed on 1.6.1
 try:
+    pkg_resources.get_distribution('Products.CMFPlacefulWorkflow')
     from Products.CMFPlacefulWorkflow.interfaces import portal_placeful_workflow
+except pkg_resources.DistributionNotFound:
+    # No package in this environment requires CMFPlacefulWorkflow,
+    # so no patching necessary
+    pass
 except:
     from Products.CMFPlacefulWorkflow import interfaces
     alias_module('Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
