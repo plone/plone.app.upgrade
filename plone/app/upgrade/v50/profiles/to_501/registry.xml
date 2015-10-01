@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<registry>
+  <records interface="Products.CMFPlone.interfaces.ITinyMCESchema"
+           prefix="plone" />
+  <records prefix="plone.resources/pat-base"
+           interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/base.js</value>
+  </records>
+</registry>
