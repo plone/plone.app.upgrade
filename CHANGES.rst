@@ -4,6 +4,9 @@ Changelog
 1.3.19 (unreleased)
 -------------------
 
+- Remove fake kupu tool and related settings and resources.
+  [maurits]
+
 - Cleanup the skins tool.
   [maurits]
 

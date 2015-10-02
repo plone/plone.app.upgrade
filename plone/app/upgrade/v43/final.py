@@ -1,6 +1,5 @@
 import logging
 from Products.CMFCore.utils import getToolByName
-from Products.GenericSetup import EXTENSION
 
 from zope.component import getAllUtilitiesRegisteredFor
 from zope.component import queryUtility
@@ -256,3 +255,89 @@ def cleanupUninstalledProducts(context):
             continue
         del prof_versions[profile_id]
         setup._profile_upgrade_versions = prof_versions
+
+
+def removeFakeKupu(context):
+    """Remove fake kupu tool and related settings and resources.
+
+    plone.app.upgrade has a fake kupu tool class that is used when the
+    Products.kupu package is not available.  This is a minimal working
+    tool, so stuff does not break before we have had a chance to clean
+    it up.
+
+    This fake kupu tool may be left behind, even when you have cleanly
+    uninstalled kupu beforehand.
+
+    So we remove the fake tool and remove related settings and
+    resources.
+
+    When Products.kupu is available as package, we do nothing: someone
+    may actually still use kupu and it may actually still work.
+    """
+    kupu_id = 'kupu_library_tool'
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    if kupu_id not in portal:
+        return
+    from plone.app.upgrade.kupu_bbb import PloneKupuLibraryTool
+    kupu_tool = portal[kupu_id]
+    if not isinstance(kupu_tool, PloneKupuLibraryTool):
+        # The real kupu is available.  Keep it.
+        return
+    portal._delObject(kupu_id)
+    logger.info('Removed fake %s', kupu_id)
+    # Some other stuff may be there when kupu was not cleanly
+    # uninstalled.
+    # Remove resources that want kupu enabled.
+    bad_expr = 'python:portal.kupu_library_tool.isKupuEnabled'
+    tool_ids = ('portal_css', 'portal_javascripts', 'portal_kss')
+    for tool_id in tool_ids:
+        tool = getToolByName(portal, tool_id, None)
+        if tool is None:
+            continue
+        resources = tool.getResourcesDict()
+        for resource_id, resource in resources.items():
+            expression = resource.getExpression()
+            if expression.startswith(bad_expr):
+                tool.unregisterResource(resource_id)
+                logger.info('Removed %s from %s.', resource_id, tool_id)
+            elif kupu_id in expression:
+                # We are tempted to remove this, but who knows if the
+                # expression is something like this:
+                # "'kupu_library_tool' not in portal"
+                logger.warn('%s in %s has %s in expression. You probably '
+                            'want to change the expression or remove the '
+                            'resource.', resource_id, tool_id, kupu_id)
+    # Remove control panel.
+    control_panel = getToolByName(portal, 'portal_controlpanel', None)
+    if control_panel is not None:
+        # Note that this does nothing when the configlet is not there.
+        control_panel.unregisterConfiglet('kupu')
+        logger.info('Removed kupu control panel configlet.')
+    # Remove editor from site_properties.
+    pprops = getToolByName(portal, 'portal_properties', None)
+    available_editors = []
+    if pprops is not None:
+        site_properties = getattr(pprops, 'site_properties', None)
+        if site_properties is not None:
+            available_editors = list(
+                site_properties.getProperty('available_editors', []))
+            if 'Kupu' in available_editors:
+                available_editors.remove('Kupu')
+                site_properties._updateProperty(
+                    'available_editors', tuple(available_editors))
+                logger.info('Removed Kupu from available_editors.')
+            if site_properties.getProperty('default_editor') == 'Kupu':
+                if 'TinyMCE' in available_editors:
+                    site_properties._updateProperty('default_editor',
+                                                    'TinyMCE')
+                    logger.info('Changed default editor to TinyMCE.')
+                else:
+                    site_properties._updateProperty('default_editor', '')
+                    logger.info('Changed default editor to basic.')
+    # Remove from portal_memberdata.  Note that you can use
+    # collective.setdefaulteditor if you want more options, like
+    # updating the chosen editor for all existing members.
+    member_data = getToolByName(context, 'portal_memberdata')
+    if member_data.getProperty('wysiwyg_editor') == 'Kupu':
+        member_data._updateProperty('wysiwyg_editor', '')
+        logger.info('Changed new member wysiwyg_editor to site default.')
