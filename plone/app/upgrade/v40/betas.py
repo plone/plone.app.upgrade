@@ -96,14 +96,18 @@ def beta3_beta4(context):
     if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
         value = site_properties.getProperty('typesLinkToFolderContentsInFC')
         if 'Large Plone Folder' in value:
+            value = list(value)
             value.remove('Large Plone Folder')
+            value = tuple(value)
             site_properties.typesLinkToFolderContentsInFC = value
 
     navtree_properties = pprop.navtree_properties
     if navtree_properties.hasProperty('parentMetaTypesNotToQuery'):
         value = navtree_properties.getProperty('parentMetaTypesNotToQuery')
         if 'Large Plone Folder' in value:
+            value = list(value)
             value.remove('Large Plone Folder')
+            value = tuple(value)
             navtree_properties.parentMetaTypesNotToQuery = value
 
 

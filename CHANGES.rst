@@ -4,6 +4,9 @@ Changelog
 1.3.19 (unreleased)
 -------------------
 
+- Fixed removal of Large Plone Folder when migrating from Plone 3.
+  [maurits]
+
 - Remove fake kupu tool and related settings and resources.
   [maurits]
 
