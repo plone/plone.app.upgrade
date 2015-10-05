@@ -2,7 +2,7 @@
 <registry>
   <records prefix="plone.resources/mockup-patterns-base"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">++plone++mockup/base/pattern.js</value>
+      <value key="js">++resource++mockup/base/pattern.js</value>
   </records>
   <records prefix="plone.resources/pat-base"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
@@ -17,4 +17,5 @@
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++plone++static/components/patternslib/src/core/mockup-parser.js</value>
   </records>
+
 </registry>
