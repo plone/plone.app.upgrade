@@ -264,6 +264,12 @@
            handler="plone.app.upgrade.v43.final.removeFakeKupu"
            />
 
+        <gs:upgradeStep
+           title="Run to501 upgrade profile"
+           description=""
+           handler=".final.to501"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
