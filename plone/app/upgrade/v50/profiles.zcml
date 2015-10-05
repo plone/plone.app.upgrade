@@ -92,4 +92,14 @@
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <genericsetup:registerProfile
+      name="to501"
+      title="Upgrade profile for Plone 5.0 to Plone 5.0.1"
+      description=""
+      directory="profiles/to_501"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

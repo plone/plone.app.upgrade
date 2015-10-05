@@ -34,3 +34,8 @@ def to500(context):
     # Here we do it again correctly.
     _migrate_list('typesUseViewActionInListings',
                   'types_use_view_action_in_listings')
+
+
+def to501(context):
+    """5.0 -> 5.0.1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to501')

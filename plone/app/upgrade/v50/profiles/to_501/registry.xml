@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<registry>
+  <records prefix="plone.resources/mockup-patterns-base"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++mockup/base/pattern.js</value>
+  </records>
+  <records prefix="plone.resources/pat-base"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/base.js</value>
+  </records>
+  <records prefix="plone.resources/underscore"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/underscore/underscore.js</value>
+      <value key="export">window._</value>
+  </records>
+  <records prefix="plone.resources/pat-mockup-parser"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/patternslib/src/core/mockup-parser.js</value>
+  </records>
+</registry>
