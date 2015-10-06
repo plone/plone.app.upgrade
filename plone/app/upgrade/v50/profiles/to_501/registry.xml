@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <registry>
+  <records interface="Products.CMFPlone.interfaces.ITinyMCESchema" prefix="plone" />
   <records prefix="plone.resources/mockup-patterns-base"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
       <value key="js">++resource++mockup/base/pattern.js</value>
