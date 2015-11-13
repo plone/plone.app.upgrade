@@ -41,7 +41,7 @@ def to501(context):
     """5.0 -> 5.0.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to501')
 
-    def fix_get_icon(context): 
+    def reindex_getIcon(context): 
         """
         get_icon redefined: now boolean: 
         true if dexterity item is image or has image field (named 'image') e.g. leadimage 
@@ -52,8 +52,8 @@ def to501(context):
         cnt=0
         iface = "plone.dexterity.interfaces.IDexterityContent"
         for brain in search(object_provides=iface):
-            brain._unrestrictedGetObject().reindexObject()
+            brain._unrestrictedGetObject().reindexObject(idxs=['getIcon'])
             cnt += 1
-        logger.info('Updated `getIcon` for %s dexterity items' % str(cnt))
+        logger.info('Reindexed `getIcon` for %s dexterity items' % str(cnt))
     
-    fix_get_icon(context)
+    reindex_getIcon(context)
