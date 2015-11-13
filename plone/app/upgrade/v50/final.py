@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.dexterity.interfaces import IDexterityContent
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
@@ -39,3 +40,20 @@ def to500(context):
 def to501(context):
     """5.0 -> 5.0.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to501')
+
+    def reindex_getIcon(context): 
+        """
+        get_icon redefined: now boolean: 
+        true if dexterity item is image or has image field (named 'image') e.g. leadimage 
+        see https://github.com/plone/Products.CMFPlone/issues/1226
+        """ 
+        catalog = getToolByName(context, 'portal_catalog')
+        search = catalog.unrestrictedSearchResults
+        cnt=0
+        iface = "plone.dexterity.interfaces.IDexterityContent"
+        for brain in search(object_provides=iface):
+            brain._unrestrictedGetObject().reindexObject(idxs=['getIcon'])
+            cnt += 1
+        logger.info('Reindexed `getIcon` for %s dexterity items' % str(cnt))
+    
+    reindex_getIcon(context)

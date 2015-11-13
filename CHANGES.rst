@@ -6,6 +6,9 @@ Changelog
 
 New:
 
+- extended step to501 with reindexing getIcon (#1226)
+  [fgrcon]
+
 - Removed fake kupu tool and related settings and resources.
   [maurits]
 
