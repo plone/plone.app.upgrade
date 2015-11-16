@@ -6,6 +6,10 @@ Changelog
 
 New:
 
+- reapply profile for site-controlpanel
+  plone/Products.CMFPlone#124
+  [fgrcon]
+  
 - extended step to501 with reindexing getIcon (#1226)
   [fgrcon]
 
