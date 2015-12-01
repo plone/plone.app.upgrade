@@ -13,6 +13,9 @@ New:
 - extended step to501 with reindexing getIcon (#1226)
   [fgrcon]
 
+- Reindex getIcon for all content types.
+  [Gagaro]
+
 - Removed fake kupu tool and related settings and resources.
   [maurits]
 

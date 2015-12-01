@@ -50,10 +50,9 @@ def to501(context):
         catalog = getToolByName(context, 'portal_catalog')
         search = catalog.unrestrictedSearchResults
         cnt=0
-        iface = "plone.dexterity.interfaces.IDexterityContent"
-        for brain in search(object_provides=iface):
+        for brain in search():
             brain._unrestrictedGetObject().reindexObject(idxs=['getIcon'])
             cnt += 1
-        logger.info('Reindexed `getIcon` for %s dexterity items' % str(cnt))
+        logger.info('Reindexed `getIcon` for %s items' % str(cnt))
     
     reindex_getIcon(context)
