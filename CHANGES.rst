@@ -10,11 +10,9 @@ New:
   plone/Products.CMFPlone#124
   [fgrcon]
   
-- extended step to501 with reindexing getIcon (#1226)
-  [fgrcon]
-
-- Reindex getIcon for all content types.
-  [Gagaro]
+- extended step to501 to recreate metadata for getIcon, see 
+  plone/Products.CMFPlone#1226, #58, #60, #61
+  [fgrcon, gagaro, jensens]
 
 - Removed fake kupu tool and related settings and resources.
   [maurits]
