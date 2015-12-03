@@ -57,20 +57,27 @@ def to501(context):
         # get the more hidden, inner (real) catalog implementation
         catalog = zcatalog._catalog
         try:
+            # Get the getIcon index value and
             # check if there is a getIcon at all, this may not exist in some
             # customizations, who knows, but always exists in default Plone
-            catalog.names.index('getIcon')
+            metadata_index = catalog.names.index('getIcon')
         except ValueError:
             logger.info('`getIcon` not in metadata, skip upgrade step')
             return
+
+
         cnt = 0
         # search whole catalog
         for brain in zcatalog.unrestrictedSearchResults():
-            # create and apply metadata
-            catalog.data[brain.getRID()] = catalog.recordify(
-                # wake up object
-                brain._unrestrictedGetObject()
-            )
+            # First get the new value
+            obj = brain._unrestrictedGetObject()
+            new_value = bool(getattr(obj.aq_base, 'image', False))
+
+            # We can now update the record with the new getIcon value
+            record = list(catalog.data[brain.getRID()])
+            record[metadata_index] = new_value
+            catalog.data[brain.getRID()] = tuple(record)
+
             cnt += 1  # we are curious
         # done
         logger.info('Reindexed `getIcon` for %s items' % str(cnt))
