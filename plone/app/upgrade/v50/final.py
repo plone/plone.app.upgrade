@@ -41,19 +41,38 @@ def to501(context):
     """5.0 -> 5.0.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to501')
 
-    def reindex_getIcon(context): 
+    def refresh_getIcon_catalog_metadata(context):
         """
-        get_icon redefined: now boolean: 
-        true if dexterity item is image or has image field (named 'image') e.g. leadimage 
+        get_icon redefined: now boolean:
+        needs to update metadata
+        true if item is type image or has image field (named 'image')
+        e.g. leadimage
         see https://github.com/plone/Products.CMFPlone/issues/1226
-        """ 
-        catalog = getToolByName(context, 'portal_catalog')
-        search = catalog.unrestrictedSearchResults
-        cnt=0
-        iface = "plone.dexterity.interfaces.IDexterityContent"
-        for brain in search(object_provides=iface):
-            brain._unrestrictedGetObject().reindexObject(idxs=['getIcon'])
-            cnt += 1
-        logger.info('Reindexed `getIcon` for %s dexterity items' % str(cnt))
-    
-    reindex_getIcon(context)
+        """
+        # Attention, this relies heavily on catalog internals.
+
+        # get the more visible zcatalog
+        zcatalog = getToolByName(context, 'portal_catalog')
+
+        # get the more hidden, inner (real) catalog implementation
+        catalog = zcatalog._catalog
+        try:
+            # check if there is a getIcon at all, this may not exist in some
+            # customizations, who knows, but always exists in default Plone
+            catalog.names.index('getIcon')
+        except ValueError:
+            logger.info('`getIcon` not in metadata, skip upgrade step')
+            return
+        cnt = 0
+        # search whole catalog
+        for brain in zcatalog.unrestrictedSearchResults():
+            # create and apply metadata
+            catalog.data[brain.getRID()] = catalog.recordify(
+                # wake up object
+                brain._unrestrictedGetObject()
+            )
+            cnt += 1  # we are curious
+        # done
+        logger.info('Reindexed `getIcon` for %s items' % str(cnt))
+
+    refresh_getIcon_catalog_metadata(context)
