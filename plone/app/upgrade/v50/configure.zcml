@@ -270,4 +270,18 @@
            handler=".final.to501"
            />
     </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5012"
+        destination="5013"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to502 upgrade profile."
+           description=""
+           handler=".final.to502"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.dexterity.interfaces import IDexterityContent
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
@@ -65,7 +64,6 @@ def to501(context):
             logger.info('`getIcon` not in metadata, skip upgrade step')
             return
 
-
         cnt = 0
         # search whole catalog
         for brain in zcatalog.unrestrictedSearchResults():
@@ -83,3 +81,12 @@ def to501(context):
         logger.info('Reindexed `getIcon` for %s items' % str(cnt))
 
     refresh_getIcon_catalog_metadata(context)
+
+
+def to502(context):
+    """5.0.1 -> 5.0.2"""
+
+    # When migrating from Plone 4.3 to 5.0 the profile-version of
+    # plone.app.querystring is 13 at this point but the upgrade-step
+    # upgrade_to_5 has not been run. Let's run it.
+    loadMigrationProfile(context, 'profile-plone.app.querystring:upgrade_to_5')
