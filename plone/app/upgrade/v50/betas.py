@@ -59,17 +59,17 @@ def upgrade_portal_language(context):
         lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes  # noqa
         lang_settings.display_flags = portal_languages.display_flags
 
-        lang_settings.use_path_negotiation = portal_languages.use_path_negotiation
-        lang_settings.use_content_negotiation = portal_languages.use_content_negotiation
-        lang_settings.use_cookie_negotiation = portal_languages.use_cookie_negotiation
+        lang_settings.use_path_negotiation = portal_languages.use_path_negotiation  # noqa
+        lang_settings.use_content_negotiation = portal_languages.use_content_negotiation  # noqa
+        lang_settings.use_cookie_negotiation = portal_languages.use_cookie_negotiation  # noqa
         if hasattr(portal_languages, 'set_cookie_everywhere'):
-            lang_settings.set_cookie_always = portal_languages.set_cookie_everywhere
-        lang_settings.authenticated_users_only = portal_languages.authenticated_users_only
-        lang_settings.use_request_negotiation = portal_languages.use_request_negotiation
-        lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation
+            lang_settings.set_cookie_always = portal_languages.set_cookie_everywhere  # noqa
+        lang_settings.authenticated_users_only = portal_languages.authenticated_users_only  # noqa
+        lang_settings.use_request_negotiation = portal_languages.use_request_negotiation  # noqa
+        lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation  # noqa
         lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation  # noqa
         if hasattr(portal_languages, 'always_show_selector'):
-            lang_settings.always_show_selector = portal_languages.always_show_selector
+            lang_settings.always_show_selector = portal_languages.always_show_selector  # noqa
 
         # Remove the old tool
         portal.manage_delObjects('portal_languages')

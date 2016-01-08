@@ -4,7 +4,8 @@ Changelog
 1.3.20 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Run missing upgrade-step of plone.app.querystring when upgrading to 5.0.2.
+  [pbauer]
 
 
 1.3.19 (2015-12-17)
@@ -15,8 +16,8 @@ New:
 - reapply profile for site-controlpanel
   plone/Products.CMFPlone#124
   [fgrcon]
-  
-- extended step to501 to recreate metadata for getIcon, see 
+
+- extended step to501 to recreate metadata for getIcon, see
   plone/Products.CMFPlone#1226, #58, #60, #61
   [fgrcon, gagaro, jensens]
 
