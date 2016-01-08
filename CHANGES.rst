@@ -1,8 +1,10 @@
 Changelog
 =========
 
-1.3.20 (unreleased)
+1.3.20 (2016-01-08)
 -------------------
+
+Fixes:
 
 - Run missing upgrade-step of plone.app.querystring when upgrading to 5.0.2.
   [pbauer]
