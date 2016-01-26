@@ -49,8 +49,9 @@ def addDefaultPlonePasswordPolicy(context):
 
 
 def addShowInactiveCriteria(context):
-    qi = getToolByName(context, 'portal_quickinstaller')
-    qi.upgradeProduct('plone.app.querystring')
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is not None:
+        qi.upgradeProduct('plone.app.querystring')
 
 
 def improveSyndication(context):
@@ -164,7 +165,9 @@ def markProductsInstalledForUninstallableProfiles(context):
     """
     from Products.CMFPlone.interfaces import INonInstallable
     setup = context
-    qi = getToolByName(context, 'portal_quickinstaller')
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is None:
+        return
     # Get list of profiles that are marked as not installable.
     profile_ids = []
     utils = getAllUtilitiesRegisteredFor(INonInstallable)
@@ -221,7 +224,9 @@ def cleanupUninstalledProducts(context):
     GS too.
     """
     setup = context
-    qi = getToolByName(context, 'portal_quickinstaller')
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is None:
+        return
     for prod in qi.objectValues():
         if prod.isInstalled():
             continue

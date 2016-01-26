@@ -67,7 +67,7 @@ def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     try:
-        import plone.app.jquerytools
+        import plone.app.jquerytools  # noqa
         loadMigrationProfile(context, 'profile-plone.app.jquerytools:default')
     except ImportError:
         pass
@@ -77,12 +77,23 @@ def threeX_alpha1(context):
         steps=('controlpanel', 'jsregistry'))
     # Install plonetheme.classic profile
     # (if, installed, it will be removed in Plone 5)
-    qi = getToolByName(context, 'portal_quickinstaller')
+    qi = getToolByName(context, 'portal_quickinstaller', None)
     stool = getToolByName(context, 'portal_setup')
-    if 'plonetheme.classic' in qi:
-        stool.runAllImportStepsFromProfile(
-            'profile-plonetheme.classic:default'
-        )
+    if qi is not None:
+        if 'plonetheme.classic' in qi:
+            stool.runAllImportStepsFromProfile(
+                'profile-plonetheme.classic:default'
+            )
+    else:
+        # Plone 5.1 and higher.
+        from Products.CMFPlone.utils import get_installer
+        qi = get_installer(context)
+        # It needs to be reinstalled.  Probably this actually does nothing on
+        # Plone 5, which is fine, but we will try it anyway.
+        if qi.is_product_installed('plonetheme.classic'):
+            stool.runAllImportStepsFromProfile(
+                'profile-plonetheme.classic:default'
+                )
     # Install packages that are needed for Plone 4,
     # but don't break on Plone 5 where they are gone
     for profile in ('archetypes.referencebrowserwidget:default',
@@ -555,8 +566,8 @@ def cleanUpClassicThemeResources(context):
     product is uninstalled. These registrations now live in
     Products.CMFPlone.
     """
-    qi = getToolByName(context, 'portal_quickinstaller')
-    if 'plonetheme.classic' in qi:
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is not None and 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
         classictheme.resources_css = []  # empty the list of installed resources
 

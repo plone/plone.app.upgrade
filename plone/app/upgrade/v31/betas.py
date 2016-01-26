@@ -29,14 +29,20 @@ def three0_beta1(portal):
 
 
 def addBrowserLayer(portal, out):
-    qi = getToolByName(portal, "portal_quickinstaller")
+    qi = getToolByName(portal, "portal_quickinstaller", None)
+    if qi is None:
+        # Newer Plone without qi.
+        return
     if not qi.isProductInstalled("plone.browserlayer"):
         qi.installProduct("plone.browserlayer", locked=True)
         out.append("Installed plone.browserlayer")
 
 
 def addCollectionAndStaticPortlets(portal, out):
-    qi = getToolByName(portal, "portal_quickinstaller")
+    qi = getToolByName(portal, "portal_quickinstaller", None)
+    if qi is None:
+        # Newer Plone without qi.
+        return
     if not qi.isProductInstalled("plone.portlet.static"):
         qi.installProduct("plone.portlet.static", locked=True)
         out.append("Installed plone.portlet.static")
