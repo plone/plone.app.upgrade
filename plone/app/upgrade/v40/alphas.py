@@ -385,12 +385,14 @@ def cleanUpSkinsTool(context):
 
 
 def cleanUpProductRegistry(context):
-    control = getattr(context, 'Control_Panel')
-    products = control.Products
+    control = getattr(context, 'Control_Panel', None)
+    if control:
+        products = control.Products
 
-    # Remove all product entries
-    for name in products.keys():
-        products._delObject(name)
+        # Remove all product entries
+        for name in products.keys():
+            products._delObject(name)
+    # else: pass  # Zope 4 doesn't have the Control_Panel anymore
 
 
 def migrateStaticTextPortlets(context):

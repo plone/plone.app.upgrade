@@ -10,7 +10,9 @@ New:
 
 Fixes:
 
-- *add item here*
+- Fix ``cleanUpProductRegistry`` to not break when ``Control_Panel`` cannot be found.
+  Fixes test failures with Zope 4.
+  [thet]
 
 
 1.3.20 (2016-01-08)
