@@ -84,15 +84,18 @@ def migrate_registry_settings(portal):
     registry = portal.portal_registry
     portal_types = portal.portal_types
     registry['plone.site_title'] = portal.title.decode('utf8')
-    registry['plone.webstats_js'] = site_props.webstats_js.decode('utf8')
-    registry['plone.enable_sitemap'] = site_props.enable_sitemap
+    if site_props.hasProperty('webstats_js'):
+        registry['plone.webstats_js'] = site_props.webstats_js.decode('utf8')
+    if site_props.hasProperty('enable_sitemap'):
+        registry['plone.enable_sitemap'] = site_props.enable_sitemap
 
     if site_props.hasProperty('exposeDCMetaTags'):
         registry['plone.exposeDCMetaTags'] = site_props.exposeDCMetaTags
     if site_props.hasProperty('enable_livesearch'):
         registry['plone.enable_livesearch'] = site_props.enable_livesearch
-    registry['plone.types_not_searched'] = tuple(
-        t for t in site_props.types_not_searched if t in portal_types)
+    if site_props.hasProperty('types_not_searched'):
+        registry['plone.types_not_searched'] = tuple(
+            t for t in site_props.types_not_searched if t in portal_types)
 
     # Migrate first weekday setting
     # First, look, if plone.app.event < 2.0 was already installed.
