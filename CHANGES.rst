@@ -10,6 +10,9 @@ New:
 
 Fixes:
 
+- Use `unsetLastVersionForProfile` from GenericSetup 1.8.1 and
+  higher.  [maurits]
+
 - Fix ``cleanUpProductRegistry`` to not break when ``Control_Panel`` cannot be found.
   Fixes test failures with Zope 4.
   [thet]

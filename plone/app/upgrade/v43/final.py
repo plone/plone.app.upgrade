@@ -4,7 +4,8 @@ from Products.CMFCore.utils import getToolByName
 from zope.component import getAllUtilitiesRegisteredFor
 from zope.component import queryUtility
 from plone.contentrules.engine.interfaces import IRuleStorage
-from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved
+from plone.contentrules.engine.assignments import \
+    check_rules_with_dotted_name_moved
 
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
@@ -61,24 +62,12 @@ def unmarkUnavailableProfiles(context):
     """
     setup = context
     available = [profile['id'] for profile in setup.listProfileInfo()]
-    # XXX We want to use unsetLastVersionForProfile,
-    # but that requires a merge and release of this
-    # GenericSetup pull request:
-    # https://github.com/zopefoundation/Products.GenericSetup/pull/18
-    # portal_setup.unsetLastVersionForProfile(profile_id)
-    # Instead we must copy and set the
-    # (non-persistent) profile upgrade versions.
-    prof_versions = setup._profile_upgrade_versions.copy()
-    to_remove = [profile_id for profile_id in prof_versions
-                 if profile_id not in available]
-    if not to_remove:
-        return
-    for profile_id in to_remove:
+    for profile_id in setup._profile_upgrade_versions.copy():
+        if profile_id in available:
+            continue
         logger.info('Setting installed version of profile %s as unknown.',
                     profile_id)
-        del prof_versions[profile_id]
-    # save the new dictionary
-    setup._profile_upgrade_versions = prof_versions
+        setup.unsetLastVersionForProfile(profile_id)
 
 
 def markProductsInstalledForUninstallableProfiles(context):
@@ -243,18 +232,7 @@ def cleanupUninstalledProducts(context):
             continue
         # Mark profile as uninstalled/unknown.
         profile_id = profile['id']
-        # XXX We want to use unsetLastVersionForProfile,
-        # but that requires a merge and release of this
-        # GenericSetup pull request:
-        # https://github.com/zopefoundation/Products.GenericSetup/pull/18
-        # portal_setup.unsetLastVersionForProfile(profile_id)
-        # Instead we must copy and set the
-        # (non-persistent) profile upgrade versions.
-        prof_versions = setup._profile_upgrade_versions.copy()
-        if profile_id not in prof_versions:
-            continue
-        del prof_versions[profile_id]
-        setup._profile_upgrade_versions = prof_versions
+        setup.unsetLastVersionForProfile(profile_id)
 
 
 def removeFakeKupu(context):
