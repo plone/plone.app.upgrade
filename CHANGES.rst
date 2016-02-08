@@ -6,7 +6,8 @@ Changelog
 
 New:
 
-- *add item here*
+- Hidden the v50 module from the installable products, just like our
+  other modules.  [maurits]
 
 Fixes:
 
