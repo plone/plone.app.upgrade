@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<registry>
+  <records prefix="plone.bundles/plone-logged-in"
+           interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="last_compilation">2015-02-16 00:00:00</value>
+    <value key="stub_js_modules" purge="False">
+      <element>mockup-patterns-moment</element>
+      <element>moment</element>
+    </value>
+  </records>
+  <records prefix="plone.bundles/plone"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="last_compilation">2015-02-16 00:00:00</value>
+  </records>
+</registry>
