@@ -90,3 +90,8 @@ def to502(context):
     # plone.app.querystring is 13 at this point but the upgrade-step
     # upgrade_to_5 has not been run. Let's run it.
     loadMigrationProfile(context, 'profile-plone.app.querystring:upgrade_to_5')
+
+
+def to503(context):
+    """5.0.2 -> 5.0.3"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to503')

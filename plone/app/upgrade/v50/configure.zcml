@@ -284,4 +284,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5013"
+        destination="5014"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to503 upgrade profile."
+           description=""
+           handler=".final.to503"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>
