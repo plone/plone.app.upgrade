@@ -89,6 +89,33 @@ class PASUpgradeTest(MigrationTest):
         self.assertIsNone(members.get('index_html', None))
         self.assertEqual(members.getLayout(), '@@member-search')
 
+    def test_migrate_less_variabl_typo(self):
+        from plone.app.upgrade.v50.final import \
+            _fix_typo_in_toolbar_less_variable
+        from plone.registry.interfaces import IRegistry
+        registry = getUtility(IRegistry)
+        from Products.ResourceRegistries.interfaces.settings import \
+            IResourceRegistriesSettings
+        rreg = registry.forInterface(
+            IResourceRegistriesSettings,
+            prefix='plone'
+        )
+
+        # set to a defined state
+        rreg.lessvariables['plone-toolbar-font-secundary'] = "Foo"
+        if 'plone-toolbar-font-secondary' in rreg.lessvariables:
+            del rreg.lessvariables['plone-toolbar-font-secondary']
+
+        # start testing
+        _fix_typo_in_toolbar_less_variable(self.portal)
+        self.assertEqual(
+            rreg.lessvariables['plone-toolbar-font-secondary'],
+            'Foo',
+        )
+        self.assertTrue(
+            'plone-toolbar-font-secundary' not in rreg.lessvariables
+        )
+
 
 class TestFunctionalMigrations(unittest.TestCase):
     """Run an upgrade from a real Plone 4.0 ZEXP dump.
