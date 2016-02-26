@@ -7,7 +7,7 @@ Changelog
 New:
 
 - Registry upgrades for Plone 5.0.3
-  [vangheem]
+  [vangheem, jensens]
 
 - Hidden the v50 module from the installable products, just like our
   other modules.  [maurits]
