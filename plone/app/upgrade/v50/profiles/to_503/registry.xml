@@ -12,4 +12,8 @@
             interface='Products.CMFPlone.interfaces.IBundleRegistry'>
     <value key="last_compilation">2015-02-16 00:00:00</value>
   </records>
+  <records prefix="plone.lessvariables"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="plone-left-toolbar-level-two">180px</value>
+  </records>
 </registry>
