@@ -111,8 +111,9 @@ def _fix_typo_in_toolbar_less_variable(context):
             '"plone-toolbar-font-secondary", but latter already exists. '
             'Migration to fix the typo is not executed.'
         )
-        rreg.lessvariables['plone-toolbar-font-secondary'] = value
-        del rreg.lessvariables['plone-toolbar-font-secundary']
+        return
+    rreg.lessvariables['plone-toolbar-font-secondary'] = value
+    del rreg.lessvariables['plone-toolbar-font-secundary']
 
 
 def to503(context):
