@@ -3,8 +3,6 @@ from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
-from Products.ResourceRegistries.interfaces.settings import \
-    IResourceRegistriesSettings
 from zope.component import getUtility
 from zope.component.hooks import getSite
 
@@ -97,23 +95,21 @@ def to502(context):
 
 def _fix_typo_in_toolbar_less_variable(context):
     registry = getUtility(IRegistry)
-    rreg = registry.forInterface(
-        IResourceRegistriesSettings,
-        prefix='plone'
-    )
     _marker = list()
-    value = rreg.lessvariables.get('plone-toolbar-font-secundary', _marker)
+
+    plv = 'plone.lessvariables'
+    value = registry[plv].get('plone-toolbar-font-secundary', _marker)
     if (value == _marker):
         return
-    if 'plone-toolbar-font-secondary' in rreg.lessvariables:
+    if 'plone-toolbar-font-secondary' in registry[plv]:
         logger.warn(
             'Try to migrate registry value "plone-toolbar-font-secundary" to '
             '"plone-toolbar-font-secondary", but latter already exists. '
             'Migration to fix the typo is not executed.'
         )
         return
-    rreg.lessvariables['plone-toolbar-font-secondary'] = value
-    del rreg.lessvariables['plone-toolbar-font-secundary']
+    registry[plv]['plone-toolbar-font-secondary'] = value
+    del registry[plv]['plone-toolbar-font-secundary']
 
 
 def to503(context):

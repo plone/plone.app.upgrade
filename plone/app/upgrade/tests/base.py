@@ -1,50 +1,54 @@
+# -*- coding: utf-8 -*-
+from os.path import abspath
+from os.path import dirname
+from os.path import join
+from plone.app.testing.bbb import PloneTestCase
+from Products.CMFCore.interfaces import IActionCategory
+from Products.CMFCore.interfaces import IActionInfo
+from Products.CMFCore.tests.base.testcase import WarningInterceptor
+from Products.CMFCore.utils import getToolByName
+from Products.GenericSetup.context import TarballImportContext
+from zope.site.hooks import setSite
+
+import transaction
+
 #
 # Base TestCase for upgrades
 #
 
-from os.path import abspath
-from os.path import dirname
-from os.path import join
-
-import transaction
-from zope.site.hooks import setSite
-
-from Testing.ZopeTestCase.sandbox import Sandboxed
-from plone.app.testing.bbb import PloneTestCase
-
-from Products.CMFCore.interfaces import IActionCategory
-from Products.CMFCore.interfaces import IActionInfo
-from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.tests.base.testcase import WarningInterceptor
-from Products.GenericSetup.context import TarballImportContext
-
-from Products.Five import zcml
-
-
 
 class MigrationTest(PloneTestCase):
 
-    def removeActionFromTool(self, action_id, category=None, action_provider='portal_actions'):
+    def removeActionFromTool(
+        self,
+        action_id,
+        category=None,
+        action_provider='portal_actions'
+    ):
         # Removes an action from portal_actions
         tool = getToolByName(self.portal, action_provider)
         if category is None:
-            if action_id in tool.objectIds() and IActionInfo.providedBy(tool._getOb(action_id)):
+            if action_id in tool.objectIds() and \
+               IActionInfo.providedBy(tool._getOb(action_id)):
                 tool._delOb(action_id)
-        else:
-            if category in tool.objectIds() and IActionCategory.providedBy(tool._getOb(category)):
-                if action_id in tool.objectIds() and IActionInfo.providedBy(tool._getOb(action_id)):
-                    tool._delOb(action_id)
+        elif (
+            category in tool.objectIds() and
+            IActionCategory.providedBy(tool._getOb(category)) and
+            action_id in tool.objectIds() and
+            IActionInfo.providedBy(tool._getOb(action_id))
+        ):
+            tool._delOb(action_id)
 
     def addResourceToJSTool(self, resource_name):
         # Registers a resource with the javascripts tool
         tool = getToolByName(self.portal, 'portal_javascripts')
-        if not resource_name in tool.getResourceIds():
+        if resource_name not in tool.getResourceIds():
             tool.registerScript(resource_name)
 
     def addResourceToCSSTool(self, resource_name):
         # Registers a resource with the css tool
         tool = getToolByName(self.portal, 'portal_css')
-        if not resource_name in tool.getResourceIds():
+        if resource_name not in tool.getResourceIds():
             tool.registerStylesheet(resource_name)
 
     def removeSiteProperty(self, property_id):
@@ -108,7 +112,6 @@ class MigrationTest(PloneTestCase):
         if layer in path:
             path.remove(layer)
             skins.addSkinSelection(skin, ','.join(path))
-
 
 
 class FunctionalUpgradeTestCase(PloneTestCase, WarningInterceptor):

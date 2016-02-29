@@ -1,19 +1,28 @@
 <?xml version="1.0"?>
 <registry>
-  <records prefix="plone.bundles/plone-logged-in"
-           interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+  <records
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      prefix="plone.bundles/plone-logged-in">
     <value key="last_compilation">2015-02-16 00:00:00</value>
-    <value key="stub_js_modules" purge="False">
+    <value
+        key="stub_js_modules"
+        purge="False">
       <element>mockup-patterns-moment</element>
       <element>moment</element>
     </value>
   </records>
-  <records prefix="plone.bundles/plone"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+  <records
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      prefix="plone.bundles/plone">
     <value key="last_compilation">2015-02-16 00:00:00</value>
   </records>
-  <records prefix="plone.lessvariables"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
-    <value key="plone-toolbar-submenu-width">180px</value>
+  <records
+      interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
+      prefix="plone">
+    <value
+        key="lessvariables"
+        purge="False">
+      <element key="plone-toolbar-submenu-width">180px</element>
+    </value>
   </records>
 </registry>

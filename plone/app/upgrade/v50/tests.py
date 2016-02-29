@@ -1,4 +1,5 @@
-from Products.CMFCore.utils import getToolByName
+# -*- coding: utf-8 -*-
+from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
@@ -6,6 +7,7 @@ from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletManager
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
+from Products.CMFCore.utils import getToolByName
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
 from zope.component import getUtility
@@ -89,33 +91,6 @@ class PASUpgradeTest(MigrationTest):
         self.assertIsNone(members.get('index_html', None))
         self.assertEqual(members.getLayout(), '@@member-search')
 
-    def test_migrate_less_variabl_typo(self):
-        from plone.app.upgrade.v50.final import \
-            _fix_typo_in_toolbar_less_variable
-        from plone.registry.interfaces import IRegistry
-        registry = getUtility(IRegistry)
-        from Products.ResourceRegistries.interfaces.settings import \
-            IResourceRegistriesSettings
-        rreg = registry.forInterface(
-            IResourceRegistriesSettings,
-            prefix='plone'
-        )
-
-        # set to a defined state
-        rreg.lessvariables['plone-toolbar-font-secundary'] = "Foo"
-        if 'plone-toolbar-font-secondary' in rreg.lessvariables:
-            del rreg.lessvariables['plone-toolbar-font-secondary']
-
-        # start testing
-        _fix_typo_in_toolbar_less_variable(self.portal)
-        self.assertEqual(
-            rreg.lessvariables['plone-toolbar-font-secondary'],
-            'Foo',
-        )
-        self.assertTrue(
-            'plone-toolbar-font-secundary' not in rreg.lessvariables
-        )
-
 
 class TestFunctionalMigrations(unittest.TestCase):
     """Run an upgrade from a real Plone 4.0 ZEXP dump.
@@ -151,6 +126,35 @@ class TestFunctionalMigrations(unittest.TestCase):
         )
 
 
+class UpgradeRegistry502to503Test(unittest.TestCase):
+    """test registry changes
+    """
+
+    layer = PLONE_INTEGRATION_TESTING
+
+    def test_migrate_less_variable_typo(self):
+        from plone.app.upgrade.v50.final import \
+            _fix_typo_in_toolbar_less_variable
+        from plone.registry.interfaces import IRegistry
+        registry = getUtility(IRegistry)
+
+        # set to a defined state
+        plv = 'plone.lessvariables'
+        registry[plv]['plone-toolbar-font-secundary'] = "Foo"
+        if 'plone-toolbar-font-secondary' in registry[plv]:
+            del registry[plv]['plone-toolbar-font-secondary']
+
+        # start testing
+        _fix_typo_in_toolbar_less_variable(self)
+        self.assertEqual(
+            registry[plv]['plone-toolbar-font-secondary'],
+            'Foo',
+        )
+        self.assertTrue(
+            'plone-toolbar-font-secundary' not in registry[plv]
+        )
+
+
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
@@ -160,4 +164,5 @@ def test_suite():
         suite = TestSuite()
         suite.addTest(makeSuite(PASUpgradeTest))
         suite.addTest(makeSuite(TestFunctionalMigrations))
+        suite.addTest(makeSuite(UpgradeRegistry502to503Test))
         return suite
