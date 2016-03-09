@@ -6,8 +6,7 @@ Changelog
 
 New:
 
-- Registry upgrades (less variables).
-  [jensens]
+- *add item here*
 
 Fixes:
 

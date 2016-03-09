@@ -5,7 +5,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
-
 import logging
 
 
@@ -93,26 +92,6 @@ def to502(context):
     loadMigrationProfile(context, 'profile-plone.app.querystring:upgrade_to_5')
 
 
-def _fix_typo_in_toolbar_less_variable(context):
-    registry = getUtility(IRegistry)
-    _marker = list()
-
-    plv = 'plone.lessvariables'
-    value = registry[plv].get('plone-toolbar-font-secundary', _marker)
-    if (value == _marker):
-        return
-    if 'plone-toolbar-font-secondary' in registry[plv]:
-        logger.warn(
-            'Try to migrate registry value "plone-toolbar-font-secundary" to '
-            '"plone-toolbar-font-secondary", but latter already exists. '
-            'Migration to fix the typo is not executed.'
-        )
-        return
-    registry[plv]['plone-toolbar-font-secondary'] = value
-    del registry[plv]['plone-toolbar-font-secundary']
-
-
 def to503(context):
     """5.0.2 -> 5.0.3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to503')
-    _fix_typo_in_toolbar_less_variable(context)
