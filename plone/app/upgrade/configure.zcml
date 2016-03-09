@@ -14,6 +14,7 @@
     <include package=".v42" />
     <include package=".v43" />
     <include package=".v50" zcml:condition="have plone-5" />
+    <include package=".v51" zcml:condition="have plone-51" />
 
     <utility
         factory=".HiddenProducts"

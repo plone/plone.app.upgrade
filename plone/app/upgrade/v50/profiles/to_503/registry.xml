@@ -16,13 +16,4 @@
       prefix="plone.bundles/plone">
     <value key="last_compilation">2015-02-16 00:00:00</value>
   </records>
-  <records
-      interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
-      prefix="plone">
-    <value
-        key="lessvariables"
-        purge="False">
-      <element key="plone-toolbar-submenu-width">180px</element>
-    </value>
-  </records>
 </registry>

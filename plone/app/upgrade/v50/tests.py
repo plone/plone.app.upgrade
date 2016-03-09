@@ -126,35 +126,6 @@ class TestFunctionalMigrations(unittest.TestCase):
         )
 
 
-class UpgradeRegistry502to503Test(unittest.TestCase):
-    """test registry changes
-    """
-
-    layer = PLONE_INTEGRATION_TESTING
-
-    def test_migrate_less_variable_typo(self):
-        from plone.app.upgrade.v50.final import \
-            _fix_typo_in_toolbar_less_variable
-        from plone.registry.interfaces import IRegistry
-        registry = getUtility(IRegistry)
-
-        # set to a defined state
-        plv = 'plone.lessvariables'
-        registry[plv]['plone-toolbar-font-secundary'] = "Foo"
-        if 'plone-toolbar-font-secondary' in registry[plv]:
-            del registry[plv]['plone-toolbar-font-secondary']
-
-        # start testing
-        _fix_typo_in_toolbar_less_variable(self)
-        self.assertEqual(
-            registry[plv]['plone-toolbar-font-secondary'],
-            'Foo',
-        )
-        self.assertTrue(
-            'plone-toolbar-font-secundary' not in registry[plv]
-        )
-
-
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
@@ -164,5 +135,4 @@ def test_suite():
         suite = TestSuite()
         suite.addTest(makeSuite(PASUpgradeTest))
         suite.addTest(makeSuite(TestFunctionalMigrations))
-        suite.addTest(makeSuite(UpgradeRegistry502to503Test))
         return suite
