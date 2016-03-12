@@ -160,16 +160,18 @@ def migrateOldActions(context):
     # We don't need to operate on the providers that are still valid and
     # should ignore the control panel as well
     providers = [obj for obj in portal.objectValues()
-                     if hasattr(obj, '_actions') and
-                     obj.getId() not in special_providers]
+                 if hasattr(obj, '_actions') and
+                 obj.getId() not in special_providers]
     non_empty_providers = [p for p in providers if len(p._actions) > 0]
     for provider in non_empty_providers:
         for action in provider._actions:
             category = action.category
             # check if the category already exists, otherwise create it
-            new_category = getattr(aq_base(portal.portal_actions), category, None)
+            new_category = getattr(
+                aq_base(portal.portal_actions), category, None)
             if new_category is None:
-                portal.portal_actions._setObject(category, ActionCategory(id=category))
+                portal.portal_actions._setObject(
+                    category, ActionCategory(id=category))
                 new_category = portal.portal_actions[category]
 
             # Special handling for Expressions
@@ -181,12 +183,12 @@ def migrateOldActions(context):
                 available_expr = action.condition.text
 
             new_action = Action(action.id,
-                title=action.title,
-                description=action.description,
-                url_expr=url_expr,
-                available_expr=available_expr,
-                permissions=action.permissions,
-                visible = action.visible)
+                                title=action.title,
+                                description=action.description,
+                                url_expr=url_expr,
+                                available_expr=available_expr,
+                                permissions=action.permissions,
+                                visible=action.visible)
 
             # Only add an action if there isn't one with that name already
             if getattr(aq_base(new_category), action.id, None) is None:
@@ -230,7 +232,7 @@ def updateFTII18NDomain(context):
 def addPortletManagers(context):
     """Add new portlets managers."""
     loadMigrationProfile(context, 'profile-Products.CMFPlone:plone',
-            steps=['portlets'])
+                         steps=['portlets'])
 
 
 def convertLegacyPortlets(context):
@@ -252,10 +254,13 @@ def convertLegacyPortlets(context):
     if members is not None:
         membersRightSlots = getattr(aq_base(members), 'right_slots', None)
         if membersRightSlots == []:
-            rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn', context=portal)
-            portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
+            rightColumn = getUtility(
+                IPortletManager, name=u'plone.rightcolumn', context=portal)
+            portletAssignments = getMultiAdapter(
+                (members, rightColumn,), ILocalPortletAssignmentManager)
             portletAssignments.setBlacklistStatus(CONTEXT_PORTLETS, True)
-            logger.info('Blacklisted contextual portlets in the Members folder')
+            logger.info(
+                'Blacklisted contextual portlets in the Members folder')
 
 
 def installProduct(product, portal, out=None, hidden=False):
@@ -277,7 +282,7 @@ registration = (('mimetypes_registry', IMimetypesRegistryTool),
                 ('portal_diff', IDiffTool),
                 ('portal_uidannotation', IUniqueIdAnnotationManagement),
                 ('portal_uidgenerator', IUniqueIdGenerator),
-               )
+                )
 if HAS_ATCT:
     registration += (('portal_atct', IATCTTool),)
 
@@ -292,7 +297,8 @@ invalid_regs = (ILanguageTool, IArchivistTool, IPortalModifierTool,
                 ICachingPolicyManager, IRegistrationTool, IArchetypeTool,
                 ITranslationServiceTool, IQuickInstallerTool,
                 ISetupTool,
-               )
+                )
+
 
 def registerToolsAsUtilities(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -329,8 +335,10 @@ def addReaderAndEditorRoles(context):
     if 'Editor' not in portal.acl_users.portal_role_manager.listRoleIds():
         portal.acl_users.portal_role_manager.addRole('Editor')
 
-    viewRoles = [r['name'] for r in portal.rolesOfPermission('View') if r['selected']]
-    modifyRoles = [r['name'] for r in portal.rolesOfPermission('Modify portal content') if r['selected']]
+    viewRoles = [r['name']
+                 for r in portal.rolesOfPermission('View') if r['selected']]
+    modifyRoles = [r['name'] for r in portal.rolesOfPermission(
+        'Modify portal content') if r['selected']]
 
     if 'Reader' not in viewRoles:
         viewRoles.append('Reader')
@@ -348,20 +356,23 @@ def migrateLocalroleForm(context):
     if portal_types is not None:
         for fti in portal_types.objectValues():
             if not hasattr(fti, '_aliases'):
-                fti._aliases={}
+                fti._aliases = {}
 
             aliases = fti.getMethodAliases()
             new_aliases = aliases.copy()
             for k, v in aliases.items():
                 if 'folder_localrole_form' in v:
-                    new_aliases[k] = v.replace('folder_localrole_form', '@@sharing')
+                    new_aliases[k] = v.replace(
+                        'folder_localrole_form', '@@sharing')
             fti.setMethodAliases(new_aliases)
 
             for a in fti.listActions():
                 expr = a.getActionExpression()
                 if 'folder_localrole_form' in expr:
-                    a.setActionExpression(expr.replace('folder_localrole_form', '@@sharing'))
-    logger.info('Ensured references to folder_localrole_form point to @@sharing now')
+                    a.setActionExpression(expr.replace(
+                        'folder_localrole_form', '@@sharing'))
+    logger.info(
+        'Ensured references to folder_localrole_form point to @@sharing now')
 
 
 def reorderUserActions(context):
@@ -369,7 +380,8 @@ def reorderUserActions(context):
     if portal_actions is not None:
         user_category = getattr(portal_actions, 'user', None)
         if user_category is not None:
-            new_actions = ['login', 'join', 'mystuff', 'preferences', 'undo', 'logout']
+            new_actions = ['login', 'join', 'mystuff',
+                           'preferences', 'undo', 'logout']
             new_actions.reverse()
             for action in new_actions:
                 if action in user_category.objectIds():
@@ -379,8 +391,10 @@ def reorderUserActions(context):
 def updateMemberSecurity(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     pprop = getToolByName(portal, 'portal_properties')
-    portal.manage_permission('Add portal member', roles=['Manager','Owner'], acquire=0)
-    pprop.site_properties.manage_changeProperties(allowAnonymousViewAbout=False)
+    portal.manage_permission('Add portal member', roles=[
+                             'Manager', 'Owner'], acquire=0)
+    pprop.site_properties.manage_changeProperties(
+        allowAnonymousViewAbout=False)
 
     portal.manage_changeProperties(validate_email=True)
 
@@ -397,7 +411,7 @@ def updatePASPlugins(context):
     activatePluginInterfaces(portal, 'mutable_properties')
     activatePluginInterfaces(portal, 'source_users')
     activatePluginInterfaces(portal, 'credentials_cookie_auth',
-            disable=['ICredentialsResetPlugin', 'ICredentialsUpdatePlugin'])
+                             disable=['ICredentialsResetPlugin', 'ICredentialsUpdatePlugin'])
     if not portal.acl_users.objectIds(['Plone Session Plugin']):
         from plone.session.plugins.session import manage_addSessionPlugin
         manage_addSessionPlugin(portal.acl_users, 'session')
@@ -456,10 +470,12 @@ def addCacheForResourceRegistry(context):
         RAMCacheManager.manage_addRAMCacheManager(portal, ram_cache_id)
         cache = getattr(portal, ram_cache_id)
         settings = cache.getSettings()
-        settings['max_age'] = 24*3600 # keep for up to 24 hours
+        settings['max_age'] = 24 * 3600  # keep for up to 24 hours
         settings['request_vars'] = ('URL',)
-        cache.manage_editProps('Cache for saved ResourceRegistry files', settings)
-        logger.info('Created RAMCache %s for ResourceRegistry output' % ram_cache_id)
+        cache.manage_editProps(
+            'Cache for saved ResourceRegistry files', settings)
+        logger.info('Created RAMCache %s for ResourceRegistry output' %
+                    ram_cache_id)
     reg = getToolByName(portal, 'portal_css', None)
     if reg is not None and getattr(aq_base(reg), 'ZCacheable_setManagerId', None) is not None:
         reg.ZCacheable_setManagerId(ram_cache_id)
@@ -477,8 +493,8 @@ def removeTablelessSkin(context):
     if 'Plone Tableless' in st.getSkinSelections():
         st.manage_skinLayers(['Plone Tableless'], del_skin=True)
         logger.info("Removed the Plone Tableless skin")
-    if st.default_skin=='Plone Tableless':
-        st.default_skin='Plone Default'
+    if st.default_skin == 'Plone Tableless':
+        st.default_skin = 'Plone Default'
         logger.info("Changed the default skin to 'Plone Default'")
 
 
@@ -496,7 +512,7 @@ def removeMyStuffAction(context):
     actions = getToolByName(context, 'portal_actions')
     if getattr(actions, 'user', None) is None:
         return
-    category=actions.user
+    category = actions.user
     if 'mystuff' in category.objectIds():
         category.manage_delObjects(ids=['mystuff'])
         logger.info("Removed the mystuff user action")
@@ -510,11 +526,11 @@ def addMissingWorkflows(context):
     if wft is None:
         return
 
-    new_workflow_ids = [ 'intranet_workflow', 'intranet_folder_workflow',
+    new_workflow_ids = ['intranet_workflow', 'intranet_folder_workflow',
                         'one_state_workflow', 'simple_publication_workflow']
     encoding = 'utf-8'
     path_prefix = os.path.join(package_home(cmfplone_globals), 'profiles',
-            'default', 'workflows')
+                               'default', 'workflows')
 
     for wf_id in new_workflow_ids:
         if wf_id in wft.objectIds():
@@ -522,44 +538,19 @@ def addMissingWorkflows(context):
             continue
 
         path = os.path.join(path_prefix, wf_id, 'definition.xml')
-        body = open(path,'r').read()
+        body = open(path, 'r').read()
 
         wft._setObject(wf_id, DCWorkflowDefinition(wf_id))
         wf = wft[wf_id]
         wfdc = WorkflowDefinitionConfigurator(wf)
 
-        ( workflow_id
-        , title
-        , state_variable
-        , initial_state
-        , states
-        , transitions
-        , variables
-        , worklists
-        , permissions
-        , scripts
-        , description
-        , manager_bypass
-        , creation_guard
-        ) = wfdc.parseWorkflowXML(body, encoding)
+        (workflow_id, title, state_variable, initial_state, states, transitions, variables, worklists, permissions, scripts, description, manager_bypass, creation_guard
+         ) = wfdc.parseWorkflowXML(body, encoding)
 
-        _initDCWorkflow( wf
-                       , title
-                       , description
-                       , manager_bypass
-                       , creation_guard
-                       , state_variable
-                       , initial_state
-                       , states
-                       , transitions
-                       , variables
-                       , worklists
-                       , permissions
-                       , scripts
-                       , portal     # not sure what to pass here
-                                    # the site or the wft?
-                                    # (does it matter at all?)
-                      )
+        _initDCWorkflow(wf, title, description, manager_bypass, creation_guard, state_variable, initial_state, states, transitions, variables, worklists, permissions, scripts, portal     # not sure what to pass here
+                        # the site or the wft?
+                        # (does it matter at all?)
+                        )
         logger.info("Added workflow %s" % wf_id)
 
 
@@ -580,4 +571,3 @@ def restorePloneTool(context):
 def updateImportStepsFromBaseProfile(context):
     """Updates the available import steps for existing sites."""
     context.setBaselineContext("profile-%s" % _DEFAULT_PROFILE)
-

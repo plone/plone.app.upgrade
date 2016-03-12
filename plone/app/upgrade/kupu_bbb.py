@@ -12,7 +12,7 @@ class PloneKupuLibraryTool(SimpleItem.SimpleItem):
 
     def get_stripped_combinations(self):
         stripped = [(tags, attrs) for (tags, attrs) in
-            self.getHtmlExclusions() if tags and attrs]
+                    self.getHtmlExclusions() if tags and attrs]
         return stripped
 
     def getHtmlExclusions(self):

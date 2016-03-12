@@ -86,12 +86,13 @@ def threeX_alpha1(context):
     # Install packages that are needed for Plone 4,
     # but don't break on Plone 5 where they are gone
     for profile in ('archetypes.referencebrowserwidget:default',
-            'plonetheme.sunburst:default',
-            'Products.TinyMCE:TinyMCE'):
+                    'plonetheme.sunburst:default',
+                    'Products.TinyMCE:TinyMCE'):
         try:
             stool.runAllImportStepsFromProfile('profile-' + profile)
         except KeyError:
             pass
+
 
 def restoreTheme(context):
     skins = getToolByName(context, 'portal_skins')
@@ -101,22 +102,25 @@ def restoreTheme(context):
     if old_default_skin == 'Plone Default':
         v_storage = getUtility(IViewletSettingsStorage)
         uncustomized_layers = ('custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
-                              'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
-                              'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
-                              'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
-                              'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
-                              'plone_images,plone_content,plone_login,plone_deprecated,'
-                              'plone_3rdParty,cmf_legacy')
+                               'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
+                               'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
+                               'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
+                               'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
+                               'plone_images,plone_content,plone_login,plone_deprecated,'
+                               'plone_3rdParty,cmf_legacy')
         if skins.selections.get('Plone Default') == uncustomized_layers:
             # if the old theme's layers hadn't been mucked with, we can just
             # use Plone Classic Theme
             old_default_skin = 'Plone Classic Theme'
         else:
             # otherwise, copy Plone Default to a new theme
-            skins.selections['Old Plone 3 Custom Theme'] = skins.selections.get('Plone Default')
+            skins.selections['Old Plone 3 Custom Theme'] = skins.selections.get(
+                'Plone Default')
             # copy the viewlet order
-            v_storage._order['Old Plone 3 Custom Theme'] = dict(v_storage._order.get('Plone Default', {}))
-            v_storage._hidden['Old Plone 3 Custom Theme'] = dict(v_storage._hidden.get('Plone Default', {}))
+            v_storage._order['Old Plone 3 Custom Theme'] = dict(
+                v_storage._order.get('Plone Default', {}))
+            v_storage._hidden['Old Plone 3 Custom Theme'] = dict(
+                v_storage._hidden.get('Plone Default', {}))
 
             old_default_skin = 'Old Plone 3 Custom Theme'
 
@@ -188,7 +192,7 @@ def migrateActionIcons(context):
         prefix = ''
 
         if (cat not in _KNOWN_ACTION_ICONS.keys() or
-            ident not in _KNOWN_ACTION_ICONS[cat]):
+                ident not in _KNOWN_ACTION_ICONS[cat]):
             continue
 
         prefix = ''
@@ -208,7 +212,7 @@ def migrateActionIcons(context):
         elif cat == 'controlpanel':
             # control panel tool
             action_infos = [a for a in cptool.listActions()
-                              if a.getId() == ident]
+                            if a.getId() == ident]
             if len(action_infos):
                 if not action_infos[0].getIconExpression():
                     action_infos[0].setIconExpression('%s%s' % (prefix, expr))
@@ -238,10 +242,10 @@ def changeWorkflowActorVariableExpression(context):
         actor_var = wf.variables._getOb('actor', None)
         if actor_var is None:
             continue
-        actor_var.setProperties(description = actor_var.description,
-                                default_expr = 'user/getId',
-                                for_status = 1,
-                                update_always = 1)
+        actor_var.setProperties(description=actor_var.description,
+                                default_expr='user/getId',
+                                for_status=1,
+                                update_always=1)
     logger.info('Updated workflow actor variable expression.')
 
 
@@ -253,8 +257,8 @@ def changeAuthenticatedResourcesCondition(context):
     resources = {
         'portal_css': ('member.css', ),
         'portal_javascripts': ('dropdown.js', 'table_sorter.js',
-            'calendar_formfield.js', 'calendarpopup.js', 'formUnload.js',
-            'formsubmithelpers.js', 'unlockOnFormUnload.js')}
+                               'calendar_formfield.js', 'calendarpopup.js', 'formUnload.js',
+                               'formsubmithelpers.js', 'unlockOnFormUnload.js')}
     ANON = ('not: portal/portal_membership/isAnonymousUser',
             'not:portal/portal_membership/isAnonymousUser', )
     for tool_id, resource_ids in resources.items():
@@ -408,15 +412,15 @@ def migrateStaticTextPortlets(context):
                 if IStaticPortlet.providedBy(portlet) and \
                         getattr(portlet, 'hide', False):
                     logger.info(
-                            'Found hidden static text portlet %s at %s' %
-                            (portlet_id, path))
+                        'Found hidden static text portlet %s at %s' %
+                        (portlet_id, path))
                     settings = IPortletAssignmentSettings(portlet)
                     settings['visible'] = False
 
     logger.info('Migrating static text portlets')
     portal = getToolByName(context, 'portal_url').getPortalObject()
     portal.ZopeFindAndApply(
-            portal, search_sub=True, apply_func=migrate_portlets_for_object)
+        portal, search_sub=True, apply_func=migrate_portlets_for_object)
     logger.info('Finished migrating static text portlets')
 
 
@@ -487,18 +491,21 @@ def renameJoinFormFields(context):
     sprop = getToolByName(context, 'portal_properties').site_properties
     if sprop.hasProperty('join_form_fields'):
         oldValue = list(sprop.getProperty('join_form_fields'))
-        # The 'groups' field no longer belongs in the user-facing registration form
+        # The 'groups' field no longer belongs in the user-facing registration
+        # form
         if 'groups' in oldValue:
             oldValue.remove('groups')
         if not sprop.hasProperty('user_registration_fields'):
-            sprop.manage_addProperty('user_registration_fields', oldValue, 'lines')
+            sprop.manage_addProperty(
+                'user_registration_fields', oldValue, 'lines')
         sprop.manage_delProperties(['join_form_fields'])
 
 
 def alpha2_alpha3(context):
     """4.0alpha2 -> 4.0alpha3
     """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha2-4alpha3')
+    loadMigrationProfile(
+        context, 'profile-plone.app.upgrade.v40:4alpha2-4alpha3')
 
 
 def updateLargeFolderType(context):
@@ -533,10 +540,12 @@ def addRecursiveGroupsPlugin(context):
         for p, id in existingPlugins:
             if IRecursiveGroupsPlugin.providedBy(p):
                 plugins.deactivatePlugin(IGroupsPlugin, id)
-                logger.warn('Found an existing Recursive Groups plugin, %s, in acl_users, deactivating.' % id)
+                logger.warn(
+                    'Found an existing Recursive Groups plugin, %s, in acl_users, deactivating.' % id)
 
     if not 'recursive_groups' in acl:
-        addRecursiveGroupsPlugin(acl, 'recursive_groups', "Recursive Groups Plugin")
+        addRecursiveGroupsPlugin(
+            acl, 'recursive_groups', "Recursive Groups Plugin")
 
 
 def cleanUpClassicThemeResources(context):
@@ -570,4 +579,5 @@ def migrateTypeIcons(context):
 def alpha4_alpha5(context):
     """4.0alpha4 -> 4.0alpha5
     """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:4alpha4-4alpha5')
+    loadMigrationProfile(
+        context, 'profile-plone.app.upgrade.v40:4alpha4-4alpha5')

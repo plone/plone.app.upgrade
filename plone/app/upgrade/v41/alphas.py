@@ -25,11 +25,12 @@ HAS_KUPU = 'products.kupu' in pkg_resources.working_set.by_key
 def to41alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41alpha1')
 
+
 def add_siteadmin_role(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
 
     # add the role to the site
-    immediate_roles = list( getattr(portal, '__ac_roles__', []) )
+    immediate_roles = list(getattr(portal, '__ac_roles__', []))
     if 'Site Administrator' not in immediate_roles:
         immediate_roles.append('Site Administrator')
         immediate_roles.sort()
@@ -39,7 +40,8 @@ def add_siteadmin_role(context):
     uf = getToolByName(context, 'acl_users')
     gtool = getToolByName(context, 'portal_groups')
     if not uf.searchGroups(id='Site Administrators'):
-        gtool.addGroup('Site Administrators', title='Site Administrators', roles=['Site Administrator'])
+        gtool.addGroup('Site Administrators', title='Site Administrators', roles=[
+                       'Site Administrator'])
 
     # update rolemap:
     # add Site Administrator role to permissions that have the Manager role,
@@ -68,16 +70,16 @@ def add_siteadmin_role(context):
         'WebDAV Lock items',
         'WebDAV Unlock items',
         'WebDAV access',
-        ])
+    ])
     if HAS_KUPU:
         extra_permissions.update([
-        'Kupu: Manage libraries',
-        'Kupu: Query libraries',
+            'Kupu: Manage libraries',
+            'Kupu: Query libraries',
         ])
     exclude_permissions = set([
         'Manage portal',
         'View management screens',
-        ])
+    ])
     for permission_info in permissions:
         if permission_info['name'] in exclude_permissions:
             continue
@@ -92,7 +94,7 @@ def add_siteadmin_role(context):
                                      roles,
                                      permission_info['acquire'])
     for permission_id in extra_permissions:
-        portal.manage_permission(permission_id, ['Site Administrator',], True)
+        portal.manage_permission(permission_id, ['Site Administrator', ], True)
 
     # update workflows:
     # add Site Administrator role where Manager already is;
@@ -107,11 +109,14 @@ def add_siteadmin_role(context):
                 if 'Manager' in roles:
                     new_roles = list(roles)
                     new_roles.append('Site Administrator')
-                    state.setPermission(permission_id, isinstance(roles, list), new_roles)
+                    state.setPermission(
+                        permission_id, isinstance(roles, list), new_roles)
+
 
 def update_role_mappings(context):
     wtool = getToolByName(context, 'portal_workflow')
     wtool.updateRoleMappings()
+
 
 def update_controlpanel_permissions(context):
     cptool = getToolByName(context, 'portal_controlpanel')
@@ -138,6 +143,7 @@ def update_controlpanel_permissions(context):
     for action in cptool._actions:
         if action.id in new_permissions:
             action.permissions = (new_permissions[action.id], )
+
 
 def install_outputfilters(context):
     qi = getToolByName(context, 'portal_quickinstaller')

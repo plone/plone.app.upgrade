@@ -8,7 +8,8 @@ from plone.app.upgrade.utils import loadMigrationProfile
 def final_two51(context):
     """2.5-final -> 2.5.1
     """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v25:2.5final-2.5.1')
+    loadMigrationProfile(
+        context, 'profile-plone.app.upgrade.v25:2.5final-2.5.1')
 
     # Required for #5569 (is_folderish needs reindexing) and #5231 (all text
     # indices need to be reindexed so they are split properly)
@@ -27,7 +28,7 @@ def fixupPloneLexicon(context):
             pipeline = list(lexicon._pipeline)
             if len(pipeline) >= 2:
                 if (not isinstance(pipeline[0], Splitter) or
-                    not isinstance(pipeline[1], CaseNormalizer)):
+                        not isinstance(pipeline[1], CaseNormalizer)):
                     pipeline[0] = Splitter()
                     pipeline[1] = CaseNormalizer()
                     lexicon._pipeline = tuple(pipeline)
@@ -70,7 +71,7 @@ def addMissingMimeTypes(context):
     mtr = getToolByName(context, 'mimetypes_registry', None)
     if mtr is not None:
         mtr.manage_addMimeType('text/x-web-markdown',
-            ['text/x-web-markdown'], ['markdown'], 'text.png')
+                               ['text/x-web-markdown'], ['markdown'], 'text.png')
         mtr.manage_addMimeType('text/x-web-textile',
-            ['text/x-web-textile'], ['textile'], 'text.png')
+                               ['text/x-web-textile'], ['textile'], 'text.png')
         logger.info("Added `text/x-web-markdown` and `text/x-web-textile`.")

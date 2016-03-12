@@ -46,6 +46,7 @@ def changeOrderOfActionProviders(context):
         portal_actions.addActionProvider('portal_actions')
         logger.info('Changed the order of action providers.')
 
+
 def cleanupOldActions(context):
     portal_actions = getToolByName(context, 'portal_actions', None)
     if portal_actions is not None:
@@ -82,6 +83,7 @@ def cleanupOldActions(context):
                 portal_actions._delObject('global')
                 logger.info('Removed global action category.')
 
+
 def cleanDefaultCharset(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     charset = portal.getProperty('default_charset', None)
@@ -100,10 +102,11 @@ def addAutoGroupToPAS(context):
     if not portal.acl_users.objectIds(['Automatic Group Plugin']):
         from Products.PlonePAS.plugins.autogroup import manage_addAutoGroup
         manage_addAutoGroup(portal.acl_users, 'auto_group',
-                'Automatic Group Provider',
-                'AuthenticatedUsers', "Logged-in users (Virtual Group)")
+                            'Automatic Group Provider',
+                            'AuthenticatedUsers', "Logged-in users (Virtual Group)")
         activatePluginInterfaces(portal, "auto_group", sout)
         logger.info("Added automatic group PAS plugin")
+
 
 def removeS5Actions(context):
     portalTypes = getToolByName(context, 'portal_types', None)
@@ -114,14 +117,17 @@ def removeS5Actions(context):
             if 's5_presentation' in ids:
                 index = ids.index('s5_presentation')
                 document.deleteActions([index])
-                logger.info("Removed 's5_presentation' action from actions tool.")
+                logger.info(
+                    "Removed 's5_presentation' action from actions tool.")
 
     iconsTool = queryUtility(IActionIconsTool)
     if iconsTool is not None:
         ids = [x._action_id for x in iconsTool.listActionIcons()]
         if 's5_presentation' in ids:
-            iconsTool.removeActionIcon('plone','s5_presentation')
-            logger.info("Removed 's5_presentation' icon from actionicons tool.")
+            iconsTool.removeActionIcon('plone', 's5_presentation')
+            logger.info(
+                "Removed 's5_presentation' icon from actionicons tool.")
+
 
 def addContributorToCreationPermissions(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -131,14 +137,17 @@ def addContributorToCreationPermissions(context):
         portal.acl_users.portal_role_manager.addRole('Contributor')
 
     for p in ['Add portal content', 'Add portal folders', 'ATContentTypes: Add Document',
-                'ATContentTypes: Add Event',
-                'ATContentTypes: Add File', 'ATContentTypes: Add Folder',
-                'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
-                'ATContentTypes: Add News Item', ]:
-        roles = [r['name'] for r in portal.rolesOfPermission(p) if r['selected']]
+              'ATContentTypes: Add Event',
+              'ATContentTypes: Add File', 'ATContentTypes: Add Folder',
+              'ATContentTypes: Add Image', 'ATContentTypes: Add Link',
+              'ATContentTypes: Add News Item', ]:
+        roles = [r['name']
+                 for r in portal.rolesOfPermission(p) if r['selected']]
         if 'Contributor' not in roles:
             roles.append('Contributor')
-            portal.manage_permission(p, roles, bool(portal.acquiredRolesAreUsedBy(p)))
+            portal.manage_permission(p, roles, bool(
+                portal.acquiredRolesAreUsedBy(p)))
+
 
 def removeSharingAction(context):
     portal_types = getToolByName(context, 'portal_types', None)
@@ -150,13 +159,17 @@ def removeSharingAction(context):
 
         logger.info('Removed explicit references to sharing action')
 
+
 def addEditorToSecondaryEditorPermissions(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     for p in ['Manage properties', 'Modify view template', 'Request review']:
-        roles = [r['name'] for r in portal.rolesOfPermission(p) if r['selected']]
+        roles = [r['name']
+                 for r in portal.rolesOfPermission(p) if r['selected']]
         if 'Editor' not in roles:
             roles.append('Editor')
-            portal.manage_permission(p, roles, bool(portal.acquiredRolesAreUsedBy(p)))
+            portal.manage_permission(p, roles, bool(
+                portal.acquiredRolesAreUsedBy(p)))
+
 
 def updateEditActionConditionForLocking(context):
     """
@@ -173,7 +186,9 @@ def updateEditActionConditionForLocking(context):
             if fti:
                 for action in fti.listActions():
                     if action.getId() == 'edit' and not action.condition:
-                        action.condition = Expression("not:object/@@plone_lock_info/is_locked_for_current_user|python:True")
+                        action.condition = Expression(
+                            "not:object/@@plone_lock_info/is_locked_for_current_user|python:True")
+
 
 def addOnFormUnloadJS(context):
     """
@@ -186,11 +201,12 @@ def addOnFormUnloadJS(context):
         # Failsafe: first make sure the stylesheet doesn't exist in the list
         if script not in script_ids:
             jsreg.registerScript(script,
-                                 enabled = True,
-                                 cookable = True)
+                                 enabled=True,
+                                 cookable=True)
             # put it at the bottom of the stack
             jsreg.moveResourceToBottom(script)
             logger.info("Added " + script + " to portal_javascripts")
+
 
 def updateTopicTitle(context):
     """Update the title of the topic type."""
@@ -210,15 +226,16 @@ def cleanupActionProviders(context):
             at.deleteActionProvider(provider)
             logger.info("%s is no longer an action provider" % provider)
 
+
 def hidePropertiesAction(context):
     tt = getToolByName(context, 'portal_types', None)
     if not IActionProvider.providedBy(tt):
         return
     for ti in tt.listTypeInfo():
         actions = ti.listActions()
-        index=[i for i in range(len(actions) )
-                if actions[i].category=="object" and
-                   actions[i].id=="metadata"]
+        index = [i for i in range(len(actions))
+                 if actions[i].category == "object" and
+                 actions[i].id == "metadata"]
         if index:
             ti.deleteActions(index)
             logger.info("Removed properties action from type %s" % ti.id)

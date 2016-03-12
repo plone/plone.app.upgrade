@@ -269,7 +269,8 @@ def updateIconsInBrains(context, typesToUpdate=None):
             # SearchableText
             brain_path = brain.getPath()
             try:
-                catalog.catalog_object(obj, brain_path, ['id'], True, pghandler)
+                catalog.catalog_object(
+                    obj, brain_path, ['id'], True, pghandler)
             except ConflictError:
                 raise
             except Exception:

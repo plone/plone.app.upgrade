@@ -1,2 +1,1 @@
 from .LanguageTool import LanguageTool
-

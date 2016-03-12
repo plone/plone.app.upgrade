@@ -9,6 +9,7 @@ MetadataTool = SimpleItem
 class FactoryTool(SimpleItem):
     ''' Compatibility code for portal_factory
     '''
+
     def __nonzero__(self):
         ''' Always evealuate to False
         '''

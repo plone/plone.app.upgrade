@@ -16,7 +16,7 @@ from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
 def optimize_rangeindex_floor_ceiling(index):
     # respect the new ceiling and floor values
     logger.info('Optimizing range index `%s` to respect floor and ceiling '
-        'dates' % index.getId())
+                'dates' % index.getId())
     ceiling_value = index.ceiling_value
     floor_value = index.floor_value
 
@@ -97,7 +97,8 @@ def fix_uuids_topic_criteria(context):
     search = catalog.unrestrictedSearchResults
     for brain in search(Type='Collection'):
         obj = brain.getObject()
-        crits = [x for x in obj.contentValues() if x.getId().startswith('crit__')]
+        crits = [x for x in obj.contentValues(
+        ) if x.getId().startswith('crit__')]
         for crit in crits:
             if getattr(crit, '_plone.uuid', None) is None:
                 notify(ObjectCreatedEvent(crit))
@@ -132,6 +133,7 @@ def to41rc3(context):
 def to41rc4(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41rc4')
     fix_uuids_topic_criteria(context)
+
 
 def to41final(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v41:to41final')

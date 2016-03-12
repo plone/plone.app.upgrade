@@ -59,7 +59,7 @@ class TestMigrations_v2_5_1(MigrationTest):
         setLoginFormInCookieAuth(self.portal)
         cookie_auth = self.portal.acl_users.credentials_cookie_auth
         self.assertEqual(cookie_auth.getProperty('login_path'),
-                             'require_login')
+                         'require_login')
 
     def testSetLoginFormNoCookieAuth(self):
         # Shouldn't error
@@ -72,7 +72,9 @@ class TestMigrations_v2_5_1(MigrationTest):
         cookie_auth = self.portal.acl_users.credentials_cookie_auth
         cookie_auth.manage_changeProperties(login_path='foo')
         setLoginFormInCookieAuth(self.portal)
-        self.assertTrue(cookie_auth.getProperty('login_path') != 'require_login')
+        self.assertTrue(cookie_auth.getProperty(
+            'login_path') != 'require_login')
+
 
 class TestMigrations_v2_5_2(MigrationTest):
 
@@ -92,10 +94,12 @@ class TestMigrations_v2_5_2(MigrationTest):
         if types_to_delete:
             self.mimetypes.manage_delObjects(types_to_delete)
         # now they're gone:
-        self.assertFalse(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
+        self.assertFalse(set(self.mimetypes.list_mimetypes()
+                             ).issuperset(set(missing_types)))
         addMissingMimeTypes(self.portal)
         # now they're back:
-        self.assertTrue(set(self.mimetypes.list_mimetypes()).issuperset(set(missing_types)))
+        self.assertTrue(set(self.mimetypes.list_mimetypes()
+                            ).issuperset(set(missing_types)))
 
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):

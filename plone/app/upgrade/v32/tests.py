@@ -3,6 +3,7 @@ from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import version_match
 from plone.app.upgrade.v32.betas import three1_beta1
 
+
 class TestMigrations_v3_2(MigrationTest):
 
     def afterSetUp(self):
@@ -24,7 +25,8 @@ class TestMigrations_v3_2(MigrationTest):
         self.actions.object_buttons.manage_delObjects(['iterate_checkin'])
         three1_beta1(self.portal)
         self.assertFalse('iterate_checkin' in
-                    self.actions.object_buttons.objectIds())
+                         self.actions.object_buttons.objectIds())
+
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 

@@ -6,7 +6,8 @@ from plone.app.upgrade.utils import loadMigrationProfile
 
 
 def final_three01(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v30:3.0final-3.0.1')
+    loadMigrationProfile(
+        context, 'profile-plone.app.upgrade.v30:3.0final-3.0.1')
 
 
 def three01_three02(context):

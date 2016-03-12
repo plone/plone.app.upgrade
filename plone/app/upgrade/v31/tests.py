@@ -94,6 +94,7 @@ class TestMigrations_v3_1(MigrationTest):
         # Delete the user folder
         replace_local_role_manager(self.portal)
 
+
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 
     def testBaseUpgrade(self):

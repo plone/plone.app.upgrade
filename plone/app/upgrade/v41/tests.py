@@ -10,8 +10,8 @@ class MigrationUnitTests(unittest.TestCase):
         catalog = ZCatalog('catalog')
         catalog.lexicon = PLexicon('lexicon')
         catalog.addIndex('test',
-            ZCTextIndex('test', index_factory=OkapiIndex,
-                        caller=catalog, lexicon_id='lexicon'))
+                         ZCTextIndex('test', index_factory=OkapiIndex,
+                                     caller=catalog, lexicon_id='lexicon'))
         catalog.Indexes['test'].index._totaldoclen = -1000
 
         from plone.app.upgrade.v41.final import fixOkapiIndexes

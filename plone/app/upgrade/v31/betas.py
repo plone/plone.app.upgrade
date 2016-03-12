@@ -15,7 +15,8 @@ def three0_beta1(portal):
     """
     out = []
 
-    loadMigrationProfile(portal, 'profile-plone.app.upgrade.v31:3.0.6-3.1beta1')
+    loadMigrationProfile(
+        portal, 'profile-plone.app.upgrade.v31:3.0.6-3.1beta1')
 
     addBrowserLayer(portal, out)
     addCollectionAndStaticPortlets(portal, out)
@@ -28,14 +29,14 @@ def three0_beta1(portal):
 
 
 def addBrowserLayer(portal, out):
-    qi=getToolByName(portal, "portal_quickinstaller")
+    qi = getToolByName(portal, "portal_quickinstaller")
     if not qi.isProductInstalled("plone.browserlayer"):
         qi.installProduct("plone.browserlayer", locked=True)
         out.append("Installed plone.browserlayer")
 
 
 def addCollectionAndStaticPortlets(portal, out):
-    qi=getToolByName(portal, "portal_quickinstaller")
+    qi = getToolByName(portal, "portal_quickinstaller")
     if not qi.isProductInstalled("plone.portlet.static"):
         qi.installProduct("plone.portlet.static", locked=True)
         out.append("Installed plone.portlet.static")
@@ -51,31 +52,32 @@ def migratePortletTypeRegistrations(portal, out):
         elif type(portletType.for_) is not list:
             portletType.for_ = [portletType.for_]
 
-    out.append("Upgraded portlet types to support multiple " + \
-      "portlet manager interfaces.")
+    out.append("Upgraded portlet types to support multiple " +
+               "portlet manager interfaces.")
 
 
 def removeDoubleGenericSetupSteps(portal, out):
     """Remove all GenericSetup steps that are registered both using
     zcml and in the persistent registry from the persistent registry.
     """
-    st=getToolByName(portal, "portal_setup")
-    view=ImportStepsView(st, None)
-    steps=[step["id"] for step in view.doubleSteps()]
+    st = getToolByName(portal, "portal_setup")
+    view = ImportStepsView(st, None)
+    steps = [step["id"] for step in view.doubleSteps()]
     if steps:
         for step in steps:
             st._import_registry.unregisterStep(step)
-        st._p_changed=True
+        st._p_changed = True
         out.append("Removed doubly registered GenericSetup import steps: %s" %
-                " ".join(steps))
+                   " ".join(steps))
 
-    view=ExportStepsView(st, None)
-    steps=[step["id"] for step in view.doubleSteps()]
+    view = ExportStepsView(st, None)
+    steps = [step["id"] for step in view.doubleSteps()]
     if steps:
         for step in steps:
             st._export_registry.unregisterStep(step)
         out.append("Removed doubly registered GenericSetup export steps: %s" %
-                " ".join(steps))
+                   " ".join(steps))
+
 
 def reinstallCMFPlacefulWorkflow(portal, out):
     qi = getToolByName(portal, 'portal_quickinstaller', None)
