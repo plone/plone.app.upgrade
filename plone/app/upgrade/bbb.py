@@ -66,6 +66,8 @@ class ActionIconsTool(SimpleItem):
         self._icons = tuple(icons)
 
 # BBB from CMFDefault
+
+
 class SyndicationInformation(SimpleItem):
-        id='syndication_information'
-        meta_type='SyndicationInformation'
+    id = 'syndication_information'
+    meta_type = 'SyndicationInformation'

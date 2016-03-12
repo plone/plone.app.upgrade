@@ -60,12 +60,13 @@ def upgradeToI18NCaseNormalizer(context):
     for index in catalog.Indexes.objectValues():
         if IZCTextIndex.providedBy(index):
             index_id = index.getId()
-            logger.info("Reindex %s index with I18N Case Normalizer",\
+            logger.info("Reindex %s index with I18N Case Normalizer",
                         index_id)
             catalog.manage_clearIndex([index_id])
-            catalog.reindexIndex(index_id,\
+            catalog.reindexIndex(index_id,
                                  aq_get(context, 'REQUEST', None))
         pass
+
 
 def upgradeTinyMCE(context):
     """ Upgrade TinyMCE WYSIWYG Editor to jQuery based version 1.3
@@ -146,7 +147,7 @@ def upgradeSyndication(context):
 
         portal_types = getToolByName(portal, 'portal_types')
         types = [fti for fti in portal_types.listTypeInfo() if
-                    IDexterityFTI.providedBy(fti)]
+                 IDexterityFTI.providedBy(fti)]
 
         ftypes = set([])
         for _type in types:

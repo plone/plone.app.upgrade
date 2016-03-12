@@ -1,15 +1,19 @@
 from persistent import Persistent
 from Products.Five import BrowserView
 
+
 class UpgradeProcessError(Exception):
     """Two-stage upgrade required."""
+
 
 class GroupUserFolder(Persistent):
     """Dummy GRUF for the purpose of raising our exception
        when its iterator is called by the ZPublisher validation hook
     """
+
     def __iter__(self):
         raise UpgradeProcessError
+
 
 class UpgradeProcessErrorView(BrowserView):
 

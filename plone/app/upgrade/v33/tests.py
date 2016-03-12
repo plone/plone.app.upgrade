@@ -19,7 +19,7 @@ class TestMigrations_v3_3(MigrationTest):
         del self.properties.site_properties.redirect_links
         self._upgrade()
         self.assertEqual(True,
-            self.properties.site_properties.getProperty('redirect_links'))
+                         self.properties.site_properties.getProperty('redirect_links'))
 
     def testLinkDefaultView(self):
         self.types.Link.default_view = 'link_view'
@@ -39,6 +39,7 @@ class TestMigrations_v3_3(MigrationTest):
         self.assertEqual(self.types.Link.default_view, 'foobar')
         self.assertEqual(self.types.Link.immediate_view, 'foobar')
         self.assertEqual(self.types.Link.view_methods, ('foobar',))
+
 
 class TestFunctionalMigrations(FunctionalUpgradeTestCase):
 
@@ -77,9 +78,9 @@ class TestFunctionalMigrations(FunctionalUpgradeTestCase):
         for id in ids:
             obj = oldsite[id]
             self.assertTrue(IOrderableFolder.providedBy(obj),
-                '%s not orderable?' % id)
+                            '%s not orderable?' % id)
             self.assertEqual(obj._ordering, 'unordered',
-                '%s has no `_ordering`?' % id)
+                             '%s has no `_ordering`?' % id)
             self.assertEqual(obj.portal_type, 'Folder')
             self.assertEqual(obj.Type(), 'Folder')
             brain, = oldsite.portal_catalog(getId=id)   # asserts only one

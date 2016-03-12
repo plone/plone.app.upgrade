@@ -45,9 +45,9 @@ class FakeSecureMailHost(object):
     title = 'Fake MailHost'
     smtp_host = 'smtp.example.com'
     smtp_port = 587
-    smtp_userid='me'
-    smtp_pass='secret'
-    smtp_notls=False
+    smtp_userid = 'me'
+    smtp_pass = 'secret'
+    smtp_notls = False
 
     def manage_fixupOwnershipAfterAdd(self):
         pass
@@ -82,29 +82,29 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             action_id='test_id',
             icon_expr='test.gif',
             title='Test my icon',
-            )
+        )
         self.aitool.addActionIcon(
             category='object_buttons',
             action_id='test2_id',
             icon_expr='python:context.getIcon()',
             title='Test my second icon',
-            )
+        )
         test_action = Action('test_id',
-            title='Test me',
-            description='',
-            url_expr='',
-            icon_expr='',
-            available_expr='',
-            permissions=('View', ),
-            visible = True)
+                             title='Test me',
+                             description='',
+                             url_expr='',
+                             icon_expr='',
+                             available_expr='',
+                             permissions=('View', ),
+                             visible=True)
         test2_action = Action('test2_id',
-            title='Test me too',
-            description='',
-            url_expr='',
-            icon_expr='',
-            available_expr='',
-            permissions=('View', ),
-            visible = True)
+                              title='Test me too',
+                              description='',
+                              url_expr='',
+                              icon_expr='',
+                              available_expr='',
+                              permissions=('View', ),
+                              visible=True)
 
         object_buttons = self.atool.object_buttons
         if getattr(object_buttons, 'test_id', None) is None:
@@ -132,7 +132,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             action_id='test_id',
             icon_expr='test.gif',
             title='Test my icon',
-            )
+        )
 
         self.cptool.registerConfiglet(
             id='test_id',
@@ -143,7 +143,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
             visible=True,
             appId='',
             icon_expr='',
-            )
+        )
 
         action = self.cptool.getActionObject('Plone/test_id')
         self.assertEqual(action.getIconExpression(), '')
@@ -178,7 +178,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
                          "string:${portal_url}/document_icon.gif")
         self.assertTrue(hasattr(tt.Document, 'icon_expr_object'))
 
-        #Don't upgrade if there is already an icon_expr.
+        # Don't upgrade if there is already an icon_expr.
         tt.Document.icon_expr = "string:${portal_url}/document_icon.png"
         tt.Document.content_icon = 'document_icon.gif'
         migrateTypeIcons(self.portal)
@@ -190,7 +190,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         tt.Document.icon_expr = "string:${portal_url}/document_icon.gif"
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.icon_expr,
-            "string:${portal_url}/document_icon.png")
+                         "string:${portal_url}/document_icon.png")
 
     def testAddRAMCache(self):
         # Test it twice
@@ -323,7 +323,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertEqual(new_mh.smtp_port, 587)
         self.assertEqual(new_mh.smtp_uid, 'me')
         self.assertEqual(new_mh.smtp_pwd, 'secret')
-        #Force TLS is always false, because SMH has no equivalent option
+        # Force TLS is always false, because SMH has no equivalent option
         self.assertEqual(new_mh.force_tls, False)
 
     def testFolderMigration(self):
@@ -350,10 +350,10 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         folder = self.portal['statictest']
 
         manager = getUtility(
-                IPortletManager, name='plone.rightcolumn',
-                context=folder)
+            IPortletManager, name='plone.rightcolumn',
+            context=folder)
         assignments = getMultiAdapter(
-                (folder, manager), IPortletAssignmentMapping)
+            (folder, manager), IPortletAssignmentMapping)
         hidden_portlet = HiddenAssignment()
         visible_portlet = static.Assignment()
         assignments['hidden'] = hidden_portlet
@@ -362,12 +362,11 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         migrateStaticTextPortlets(self.portal)
 
         self.assertFalse(
-                IPortletAssignmentSettings(hidden_portlet).get(
-                        'visible', True))
+            IPortletAssignmentSettings(hidden_portlet).get(
+                'visible', True))
         self.assertTrue(
-                IPortletAssignmentSettings(visible_portlet).get(
-                        'visible', True))
-
+            IPortletAssignmentSettings(visible_portlet).get(
+                'visible', True))
 
 
 class TestMigrations_v4_0alpha2(MigrationTest):
@@ -399,7 +398,7 @@ class TestMigrations_v4_0alpha3(MigrationTest):
         self.portal.portal_actions.user.join.url_expr = 'foo'
         loadMigrationProfile(self.portal, self.profile, ('actions', ))
         self.assertEqual(self.portal.portal_actions.user.join.url_expr,
-            'string:${globals_view/navigationRootUrl}/@@register')
+                         'string:${globals_view/navigationRootUrl}/@@register')
 
 
 class TestMigrations_v4_0alpha5(MigrationTest):
@@ -454,7 +453,7 @@ class TestMigrations_v4_0alpha5(MigrationTest):
         qi = getToolByName(portal, 'portal_quickinstaller')
         qi.installProduct('plonetheme.classic')
         classictheme = qi['plonetheme.classic']
-        classictheme.resources_css = ['something'] # add a random resource
+        classictheme.resources_css = ['something']  # add a random resource
         cleanUpClassicThemeResources(portal)
         self.assertEqual(classictheme.resources_css, [])
 
@@ -464,11 +463,11 @@ class TestMigrations_v4_0alpha5(MigrationTest):
         catalog.delIndex('getObjPositionInParent')
         catalog.addIndex('getObjPositionInParent', 'FieldIndex')
         self.assertFalse(isinstance(catalog.Indexes['getObjPositionInParent'],
-            GopipIndex))
+                                    GopipIndex))
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue('getObjPositionInParent' in catalog.indexes())
         self.assertTrue(isinstance(catalog.Indexes['getObjPositionInParent'],
-            GopipIndex))
+                                   GopipIndex))
 
     def testGetEventTypeIndex(self):
         catalog = self.portal.portal_catalog
@@ -574,16 +573,16 @@ class TestMigrations_v4_0beta4(MigrationTest):
             removeLargePloneFolder(self.portal)
             self.assertFalse('Large Plone Folder' in self.portal.portal_types)
             self.assertFalse('Large Plone Folder' in
-                        temp_folder_fti.allowed_content_types)
+                             temp_folder_fti.allowed_content_types)
             self.assertTrue('Folder' in temp_folder_fti.allowed_content_types)
             self.assertFalse('Large Plone Folder' in ftool.getFactoryTypes())
             self.assertTrue('Folder' in ftool.getFactoryTypes())
             self.assertFalse('Large Plone Folder' in
-                        nav_props.parentMetaTypesNotToQuery)
+                             nav_props.parentMetaTypesNotToQuery)
             self.assertTrue('TempFolder' in
                             nav_props.parentMetaTypesNotToQuery)
             self.assertFalse('Large Plone Folder' in
-                        site_props.typesLinkToFolderContentsInFC)
+                             site_props.typesLinkToFolderContentsInFC)
             self.assertTrue('Folder' in
                             site_props.typesLinkToFolderContentsInFC)
             # sleep to avoid a GS log filename collision :-o
@@ -609,6 +608,7 @@ class TestMigrations_v4_0rc1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue(True)
 
+
 class TestMigrations_v4_0(MigrationTest):
 
     profile = 'profile-plone.app.upgrade.v40:4rc1-4final'
@@ -617,6 +617,7 @@ class TestMigrations_v4_0(MigrationTest):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue(True)
+
 
 class TestMigrations_v4_0_1(MigrationTest):
 
@@ -627,6 +628,7 @@ class TestMigrations_v4_0_1(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue(True)
 
+
 class TestMigrations_v4_0_2(MigrationTest):
 
     profile = 'profile-plone.app.upgrade.v40:4.0.1-4.0.2'
@@ -635,6 +637,7 @@ class TestMigrations_v4_0_2(MigrationTest):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue(True)
+
 
 class TestMigrations_v4_0_3(MigrationTest):
 
@@ -645,6 +648,7 @@ class TestMigrations_v4_0_3(MigrationTest):
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue(True)
 
+
 class TestMigrations_v4_0_4(MigrationTest):
 
     profile = 'profile-plone.app.upgrade.v40:4.0.3-4.0.4'
@@ -653,6 +657,7 @@ class TestMigrations_v4_0_4(MigrationTest):
         # This tests the whole upgrade profile can be loaded
         loadMigrationProfile(self.portal, self.profile)
         self.assertTrue(True)
+
 
 class TestMigrations_v4_0_5(MigrationTest):
 

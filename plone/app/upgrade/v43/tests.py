@@ -31,7 +31,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
             return
         pprop = getToolByName(self.portal, 'portal_properties')
         self.assertEqual(
-            pprop.site_properties.getProperty('displayPublicationDateInByline'),
+            pprop.site_properties.getProperty(
+                'displayPublicationDateInByline'),
             False)
 
     def testUpgradeToI18NCaseNormalizer(self):
@@ -39,7 +40,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         ctool = self.portal.portal_catalog
         ctool.plone_lexicon._pipeline[1] == (Splitter(), CaseNormalizer())
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
-        self.assertEqual(ctool.plone_lexicon._pipeline[1].__class__.__name__, 'I18NNormalizer')
+        self.assertEqual(ctool.plone_lexicon._pipeline[
+                         1].__class__.__name__, 'I18NNormalizer')
 
     def testUpgradeTinyMCE(self):
         # skip test in new Plones that don't install tinymce to begin with
@@ -63,9 +65,9 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         request = self.app.REQUEST
         plone_view = queryMultiAdapter((self.portal, request), name="plone")
         manager = queryMultiAdapter(
-                    (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
+            (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
         viewlets = getAdapters(
-                (manager.context, manager.request, manager.__parent__, manager), IViewlet)
+            (manager.context, manager.request, manager.__parent__, manager), IViewlet)
         self.assertFalse(u'tinymce.configuration' in dict(viewlets))
 
     def testInstallThemingNotPreviouslyInstalled(self):
@@ -84,7 +86,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         from plone.registry.interfaces import IRegistry
         from zope.component import getUtility
 
-        self.portal.portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+        self.portal.portal_setup.runAllImportStepsFromProfile(
+            'profile-plone.app.theming:default')
         alphas.upgradePloneAppTheming(self.portal.portal_setup)
 
         registry = getUtility(IRegistry)
@@ -123,7 +126,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         )
 
         # Only the numerical title got reindexed
-        portal.portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+        portal.portal_setup.runAllImportStepsFromProfile(
+            'profile-plone.app.theming:default')
         alphas.reindex_sortable_title(portal.portal_setup)
         self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
@@ -140,7 +144,8 @@ class TestMigrations_v4_3final_to4308(MigrationTest):
     def testAddDefaultPlonePasswordPolicy(self):
         # this add the 'Default Plone Password Policy' to Plone's acl_users
         portal = self.portal
-        # make sure the 'Default Plone Password Policy' does not exist in acl_users
+        # make sure the 'Default Plone Password Policy' does not exist in
+        # acl_users
         portal.acl_users.manage_delObjects(ids=['password_policy', ])
         self.assertFalse('password_policy' in portal.acl_users.objectIds())
         # find the relevant upgrade step and execute it

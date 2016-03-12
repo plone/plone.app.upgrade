@@ -24,7 +24,7 @@ class HiddenProducts(object):
             'plone.app.upgrade.v43',
             'plone.app.upgrade.v50',
             'plone.app.upgrade.v51',
-            ]
+        ]
 
 # Make sure folks upgrading from Plone 2.1 see a helpful message telling them
 # how to do a two-stage upgrade, instead of a GroupUserFolder error.
@@ -137,10 +137,12 @@ try:
 except ImportError:
     alias_module('Products.PloneLanguageTool.interfaces', bbb)
     alias_module('Products.PloneLanguageTool', bbbd)
-    __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool = __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool.LanguageTool
+    __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool = __import__(
+        'Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool.LanguageTool
 
 
-# To solve the __iro__ problem because CMFPlacefulWorkflow interfaces changed on 1.6.1
+# To solve the __iro__ problem because CMFPlacefulWorkflow interfaces
+# changed on 1.6.1
 try:
     pkg_resources.get_distribution('Products.CMFPlacefulWorkflow')
     from Products.CMFPlacefulWorkflow.interfaces import portal_placeful_workflow
@@ -150,4 +152,5 @@ except pkg_resources.DistributionNotFound:
     pass
 except:
     from Products.CMFPlacefulWorkflow import interfaces
-    alias_module('Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
+    alias_module(
+        'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
