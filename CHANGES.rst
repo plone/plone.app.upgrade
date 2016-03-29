@@ -1,17 +1,13 @@
 Changelog
 =========
 
-1.3.22 (unreleased)
+1.3.22 (2016-03-29)
 -------------------
 
 New:
 
-- Registry upgrades (less variables).
+- Registry upgrades for Plone 5.1 (less variables).
   [jensens]
-
-Fixes:
-
-- *add item here*
 
 
 1.3.21 (2016-02-24)
