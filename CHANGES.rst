@@ -6,21 +6,28 @@ Changelog
 
 Incompatibilities:
 
+- *aYdd item here*
+
+
+New:
+
 - *add item here*
+
+
+Fixes:
+
+- Add missing barceloneta less variable needed by plone.app.theming.
+  [jensens]
+
+
+1.3.23 (2016-03-31)
+-------------------
 
 New:
 
 - Add actions controlpanel when migrating to 5.1a1.
   [esteele]
 
-
-Fixes:
-
-- *add item here*
-
-
-1.3.23 (2016-03-31)
--------------------
 
 Fixes:
 
