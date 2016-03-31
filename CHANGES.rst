@@ -4,19 +4,13 @@ Changelog
 1.3.24 (unreleased)
 -------------------
 
-Incompatibilities:
-
-- *add item here*
-
 New:
 
 - Add actions controlpanel when migrating to 5.1a1.
   [esteele]
 
-
-Fixes:
-
-- *add item here*
+- Add null upgrade step for 5.0.3 to 5.0.4
+  [esteele]
 
 
 1.3.23 (2016-03-31)
