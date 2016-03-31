@@ -9,4 +9,13 @@
       <element key="plone-toolbar-submenu-width">180px</element>
     </value>
   </records>
+  <records
+      interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
+      prefix="plone">
+    <value
+        key="lessvariables"
+        purge="False">
+      <element key="barcelonetaPath">\"{site_url}/++theme++barceloneta/\"</element>
+    </value>
+  </records>
 </registry>

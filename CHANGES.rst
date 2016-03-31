@@ -26,6 +26,10 @@ Fixes:
 
 - Update 5.0a1 upgrade step to allow upgrades from Plone 5.0.3.
   [esteele]
+New 
+
+- Fix: Add missing barceloneta less variable needed by plone.app.theming.
+  [jensens]
 
 
 1.3.22 (2016-03-29)
