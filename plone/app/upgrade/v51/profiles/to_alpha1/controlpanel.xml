@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel" meta_type="Plone Control Panel Tool"
+  i18n:domain="plone" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <configlet title="Actions" action_id="ActionSettings" appId="Plone"
+    category="plone-general" condition_expr=""
+    url_expr="string:${portal_url}/@@actions-controlpanel" visible="True"
+    i18n:attributes="title">
+  <permission>Manage portal</permission>
+ </configlet>
+</object>

@@ -10,7 +10,9 @@ Incompatibilities:
 
 New:
 
-- *add item here*
+- Add actions controlpanel when migrating to 5.1a1.
+  [esteele]
+
 
 Fixes:
 
