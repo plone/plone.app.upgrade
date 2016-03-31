@@ -4,7 +4,10 @@ Changelog
 1.3.23 (unreleased)
 -------------------
 
-- Nothing changed yet.
+Fixes:
+
+- Update 5.0a1 upgrade step to allow upgrades from Plone 5.0.3.
+  [esteele]
 
 
 1.3.22 (2016-03-29)
