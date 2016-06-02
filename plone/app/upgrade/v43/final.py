@@ -324,3 +324,18 @@ def removeFakeKupu(context):
     if member_data.getProperty('wysiwyg_editor') == 'Kupu':
         member_data._updateProperty('wysiwyg_editor', '')
         logger.info('Changed new member wysiwyg_editor to site default.')
+
+
+def addSortOnProperty(context):
+    """Add sort_on field to search controlpanel.
+    
+    The default value of this field is relevance.
+    """
+    site_properties = getToolByName(context, 'portal_properties').site_properties
+    if not site_properties.hasProperty('sort_on'):
+        if 'sort_on' in site_properties.__dict__:
+            # fix bug if 4.3.1 pending has been tested
+            del site_properties.sort_on
+        site_properties.manage_addProperty('sort_on', 'relevance', 'string')
+        logger.log(logging.INFO,
+                   "Added 'sort_on' property to site_properties.")

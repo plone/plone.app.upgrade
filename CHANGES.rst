@@ -10,6 +10,9 @@ Breaking changes:
 
 New features:
 
+- Add sort_on field to search controlpanel.
+  [rodfersou]
+
 - Support sites without ``portal_quickinstaller``.
   We use ``get_installer`` in Plone 5.1 migrations.
   In earlier version we will keep using the ``portal_quickinstaller``,

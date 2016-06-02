@@ -51,6 +51,12 @@ Add new Mockup 2.4.0 relateditems resource url.
            handler=".betas.to51beta1"
            />
 
+      <gs:upgradeStep
+           title="Add default search options"
+           description="Add sort_on field to search controlpanel."
+           handler=".betas.addSortOnProperty"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
