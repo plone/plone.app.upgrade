@@ -19,4 +19,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5101"
+        destination="5102"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to51alpha2 upgrade profile."
+           description=""
+           handler=".alphas.to51alpha2"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>

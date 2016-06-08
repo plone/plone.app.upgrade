@@ -32,3 +32,8 @@ def to51alpha1(context):
     """5.0.4 -> 5.1a1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51alpha1')
     _fix_typo_in_toolbar_less_variable(context)
+
+
+def to51alpha2(context):
+    """5.0.4 -> 5.1a1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51alpha2')

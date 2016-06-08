@@ -10,7 +10,11 @@ Incompatibilities:
 
 New:
 
-- *add item here*
+- Adds controlpanel setting to enable navigation root bound keyword vocabularies.
+  [jensens]
+
+- Update to 5.1a2 upgrade step to allow upgrades from Plone 5.1a1.
+  [jensens]
 
 Fixes:
 
