@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<registry>
+  <records
+      interface="Products.CMFPlone.interfaces.controlpanel.IEditingSchema"
+      prefix="plone">
+    <value
+        key="subjects_of_navigation_root"
+        purge="False">
+      False
+    </value>
+  </records>
+</registry>
