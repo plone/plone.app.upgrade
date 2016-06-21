@@ -1,12 +1,8 @@
 Changelog
 =========
 
-1.3.25 (unreleased)
+1.3.25 (2016-06-21)
 -------------------
-
-Incompatibilities:
-
-- *add item here*
 
 New:
 
@@ -15,10 +11,6 @@ New:
 
 - Update to 5.1a2 upgrade step to allow upgrades from Plone 5.1a1.
   [jensens]
-
-Fixes:
-
-- *add item here*
 
 
 1.3.24 (2016-03-31)
