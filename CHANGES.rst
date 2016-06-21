@@ -10,6 +10,12 @@ Incompatibilities:
 
 New:
 
+- Update ``last_compilation`` to deliver new bundles.
+  [thet]
+
+- Add missing ``jquery.browser`` dependency which is needed by patternslib.
+  [thet]
+
 - Adds controlpanel setting to enable navigation root bound keyword vocabularies.
   [jensens]
 

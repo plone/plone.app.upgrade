@@ -9,4 +9,19 @@
       False
     </value>
   </records>
+
+  <!-- Add missing ``jquery.browser`` dependency which is needed by patternslib -->
+  <records prefix="plone.resources/jquery.browser" interface="Products.CMFPlone.interfaces.IResourceRegistry">
+      <value key="js">++plone++static/components/jquery.browser/dist/jquery.browser.js</value>
+      <value key="deps">jquery</value>
+  </records>
+
+  <!-- Update ``last_compilation`` to deliver new bundles -->
+  <records prefix="plone.bundles/plone" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
+    <value key="last_compilation">2016-06-21 00:00:00</value>
+  </records>
+  <records prefix="plone.bundles/plone-logged-in" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
+    <value key="last_compilation">2016-06-21 00:00:00</value>
+  </records>
+
 </registry>
