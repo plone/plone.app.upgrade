@@ -9,6 +9,9 @@ Incompatibilities:
 - *add item here*
 
 New:
+  
+- Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
+  [thet]
 
 - Update ``last_compilation`` to deliver new bundles.
   [thet]
