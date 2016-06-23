@@ -26,7 +26,12 @@
 
       <gs:upgradeStep
            title="Run to51alpha2 upgrade profile."
-           description=""
+           description="
+Limit tags/keywords to the current navigation root,
+Add missing ``jquery.browser`` dependency which is needed by patternslib,
+Update ``last_compilation`` to deliver new bundles,
+Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
+           "
            handler=".alphas.to51alpha2"
            />
 
