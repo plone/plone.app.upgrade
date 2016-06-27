@@ -107,4 +107,19 @@ was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5105"
+        destination="5106"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to51beta3 upgrade profile."
+            description="
+Add image scaling options to image handling control panel.
+            "
+            import_profile="plone.app.upgrade.v51:to51beta3"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- Add image scaling options to image handling controlpanel. -->
+  <records interface="Products.CMFPlone.interfaces.IImagingSchema"
+           prefix="plone" />
+
+</registry>
