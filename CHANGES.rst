@@ -14,14 +14,6 @@ New features:
 
 Bug fixes:
 
-- *add item here*
-
-
-1.3.25 (2016-06-21)
--------------------
-
-New:
-  
 - Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
   [thet]
 
@@ -30,6 +22,12 @@ New:
 
 - Add missing ``jquery.browser`` dependency which is needed by patternslib.
   [thet]
+
+
+1.3.25 (2016-06-21)
+-------------------
+
+New:
 
 - Adds controlpanel setting to enable navigation root bound keyword vocabularies.
   [jensens]
