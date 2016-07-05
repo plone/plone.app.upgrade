@@ -1,15 +1,15 @@
 import pkg_resources
 import sys
-from zope.interface import implements
+from zope.interface import implementer
 from Products.CMFQuickInstallerTool.interfaces import INonInstallable
 from plone.app.upgrade.utils import alias_module
 import bbb
 import bbbd
 
 
+@implementer(INonInstallable)
 class HiddenProducts(object):
     """This hides the upgrade profiles from the quick installer tool."""
-    implements(INonInstallable)
 
     def getNonInstallableProducts(self):
         return [
