@@ -1,7 +1,7 @@
 from zope.component import getAdapters, queryMultiAdapter
 from zope.component import getSiteManager
 from zope.contentprovider.interfaces import IContentProvider
-from zope.interface import implements
+from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 
 from plone.app.upgrade.tests.base import MigrationTest
@@ -286,8 +286,8 @@ class TestQIandGS(MigrationTest):
             product=product_id, profile_type=EXTENSION)
 
         # Hide the profile.
+        @implementer(INonInstallable)
         class HiddenProfiles(object):
-            implements(INonInstallable)
 
             def getNonInstallableProfiles(self):
                 return [profile_id]

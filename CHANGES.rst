@@ -23,6 +23,8 @@ Bug fixes:
 - Add missing ``jquery.browser`` dependency which is needed by patternslib.
   [thet]
 
+- Use zope.interface decorator.
+  [gforcada]
 
 1.3.25 (2016-06-21)
 -------------------
