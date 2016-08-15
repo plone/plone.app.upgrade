@@ -243,5 +243,16 @@
             />
     </genericsetup:upgradeSteps>
 
+    <genericsetup:upgradeSteps
+        source="4313"
+        destination="4314"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+    </genericsetup:upgradeSteps>
 
 </configure>

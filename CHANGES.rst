@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Add empty upgrade step for 4.3.11.
+  [esteele]
 
 
 1.3.26 (2016-08-15)
