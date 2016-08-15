@@ -4,14 +4,6 @@ Changelog
 1.3.26 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
