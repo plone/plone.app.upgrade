@@ -17,6 +17,9 @@ Bug fixes:
 - Add empty upgrade step for 4.3.11.
   [esteele]
 
+- Add empty upgrade step for 5.0.6.
+  [esteele]
+
 
 1.3.26 (2016-08-15)
 -------------------
