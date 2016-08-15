@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.3.26.dev0'
+version = '1.3.26'
 
 setup(
     name='plone.app.upgrade',
