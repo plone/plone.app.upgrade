@@ -4,14 +4,6 @@ Changelog
 1.3.27 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Add empty upgrade step for 4.3.11.
