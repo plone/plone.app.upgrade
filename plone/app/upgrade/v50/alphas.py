@@ -181,7 +181,7 @@ def upgrade_editing_controlpanel_settings(context):
                 site_properties.enable_link_integrity_checks
         if site_properties.hasProperty('ext_editor'):
             settings.ext_editor = site_properties.ext_editor
-        # settings.available_editors = site_properties.available_editors
+        settings.available_editors = [a and unicode(a) or None for a in site_properties.available_editors]
 
         # Kupu will not be available as editor in Plone 5. Therefore we just
         # ignore the setting.
