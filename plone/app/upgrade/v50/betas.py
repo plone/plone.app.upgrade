@@ -96,7 +96,9 @@ def upgrade_mail_controlpanel_settings(context):
     mail_settings.smtp_host = unicode(smtp_host)
 
     smtp_port = getattr(portal.MailHost, 'smtp_port', 25)
-    mail_settings.smtp_port = smtp_port
+    # It may happen that smtp_port is a string, maybe empty,
+    # but we need an integer here to match the record constraints
+    mail_settings.smtp_port = int(smtp_port or 25)
 
     smtp_user_id = portal.MailHost.get('smtp_user_id')
     mail_settings.smtp_user_id = smtp_user_id

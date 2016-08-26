@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Be sure smtp_port is an integer.
+  [ale-rt]
 
 
 1.3.27 (2016-08-16)
