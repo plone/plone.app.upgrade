@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- Update ``last_compilation`` to deliver new bundles -->
+  <records prefix="plone.bundles/plone" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
+    <value key="last_compilation">2016-08-27 00:00:00</value>
+  </records>
+  <records prefix="plone.bundles/plone-logged-in" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
+    <value key="last_compilation">2016-08-27 00:00:00</value>
+  </records>
+
+  <!-- Add new Mockup 2.4.0 relateditems resource url -->
+  <records prefix="plone.resources/mockup-patterns-relateditems" interface="Products.CMFPlone.interfaces.IResourceRegistry" purge="False">
+    <value key="url">++resource++mockup/relateditems</value>
+  </records>
+
+</registry>

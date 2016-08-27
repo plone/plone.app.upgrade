@@ -10,7 +10,12 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add new Mockup 2.4.0 relateditems resource url.
+  [thet]
+
+- Update ``last_compilation`` to deliver new bundles.
+  [thet]
+
 
 Bug fixes:
 

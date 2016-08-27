@@ -37,4 +37,20 @@ Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5102"
+        destination="5103"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to51beta1 upgrade profile."
+           description="
+Update ``last_compilation`` to deliver new bundles,
+Add new Mockup 2.4.0 relateditems resource url.
+           "
+           handler=".betas.to51beta1"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>
