@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from Acquisition import aq_base
 
 import logging
 
@@ -70,7 +71,7 @@ def to501(context):
         for brain in zcatalog.unrestrictedSearchResults():
             # First get the new value
             obj = brain._unrestrictedGetObject()
-            new_value = bool(getattr(obj.aq_base, 'image', False))
+            new_value = bool(getattr(aq_base(obj), 'image', False))
 
             # We can now update the record with the new getIcon value
             record = list(catalog.data[brain.getRID()])
