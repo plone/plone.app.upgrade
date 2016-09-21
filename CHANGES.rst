@@ -10,6 +10,15 @@ Breaking changes:
 
 New features:
 
+- Support sites without ``portal_quickinstaller``.
+  We use ``get_installer`` in Plone 5.1 migrations.
+  In earlier version we will keep using the ``portal_quickinstaller``,
+  because ``get_installer`` is not available.
+  In shared utility and base code, we try to import get_installer,
+  and fall back on the previous implementation.
+  See `PLIP 1340 <https://github.com/plone/Products.CMFPlone/issues/1340>`_.
+  [maurits]
+
 - Add new Mockup 2.4.0 relateditems resource url.
   [thet]
 

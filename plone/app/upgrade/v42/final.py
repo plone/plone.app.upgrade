@@ -13,8 +13,9 @@ def to42final_cmfeditions_registry_bases(context):
     # profile isn't installed and so has no installed version number.
     # this applies a necessary upgrade step but also establishes a
     # version for the profile
-    qi = getToolByName(context, 'portal_quickinstaller')
-    qi.upgradeProduct('Products.CMFEditions')
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is not None:
+        qi.upgradeProduct('Products.CMFEditions')
 
 
 def to42final(context):
