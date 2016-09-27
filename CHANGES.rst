@@ -28,6 +28,12 @@ New features:
 
 Bug fixes:
 
+- Install plone.resource in Plone 5.0 alpha 3.  Fixes possible
+  ``TypeError: argument of type 'NoneType' is not iterable`` when
+  migrating from Plone 4.3 for a site that did not have plone.resource
+  or diazo installed yet.
+  Fixes `issue 1756 <https://github.com/plone/Products.CMFPlone/issues/1756>`_. [maurits]
+
 - Be sure smtp_port is an integer.
   [ale-rt]
 
