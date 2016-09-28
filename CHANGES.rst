@@ -22,6 +22,9 @@ Bug fixes:
 - Be sure smtp_port is an integer.
   [ale-rt]
 
+- ```obj.aq_base``` should not break upgrade, use aq_base(obj) instead
+  [2silver]
+
 
 1.3.27 (2016-08-16)
 -------------------
