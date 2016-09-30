@@ -9,7 +9,6 @@ from zope.ramcache.ram import RAMCache
 from Acquisition import aq_base
 from Acquisition import aq_get
 from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
-from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
@@ -19,6 +18,7 @@ from Products.MailHost.interfaces import IMailHost
 from zExceptions import NotFound
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
+from plone.app.upgrade.utils import cleanUpSkinsTool as generalCleanUpSkinsTool
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
@@ -371,32 +371,31 @@ def cleanUpToolRegistry(context):
 
 
 def cleanUpSkinsTool(context):
-    skins = getToolByName(context, 'portal_skins')
-    # Remove directory views for directories missing on the filesystem
-    for name in skins.keys():
-        directory_view = skins.get(name)
-        reg_key = getattr(directory_view, '_dirpath', None)
-        if not reg_key:
-            # not a directory view, but a persistent folder
-            continue
-        try:
-            reg_key = _dirreg.getCurrentKeyFormat(reg_key)
-            _dirreg.getDirectoryInfo(reg_key)
-        except ValueError:
-            skins._delObject(name)
+    """Cleanup the portal_skins tool.
 
-    transaction.savepoint(optimistic=True)
-    existing = skins.keys()
-    # Remove no longer existing entries from skin selections
+    One thing is special for 4.0 alpha:
+
+    - replace plone_styles layer with classic_styles.
+
+    And we do a normal cleanup that would be fine for all Plone versions:
+
+    - Remove directory views for directories missing on the filesystem.
+
+    - Remove invalid skin layers from all skin selections.
+    """
+    skins = getToolByName(context, 'portal_skins')
     for layer, paths in skins.selections.items():
         new_paths = []
         for name in paths.split(','):
             if name == 'plone_styles':
                 # plone_styles has been moved and renamed
                 new_paths.append('classic_styles')
-            elif name in existing:
+            else:
                 new_paths.append(name)
         skins.selections[layer] = ','.join(new_paths)
+
+    # Do the general cleanup.
+    generalCleanUpSkinsTool(context)
 
 
 def cleanUpProductRegistry(context):
