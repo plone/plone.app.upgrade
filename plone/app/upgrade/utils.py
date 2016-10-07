@@ -1,17 +1,20 @@
-import logging
-import new
-import sys
-from types import ListType, TupleType
-
 from Acquisition import aq_base
+from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
 from Products.ZCatalog.ProgressHandler import ZLogHandler
+from types import ListType
+from types import TupleType
 from ZODB.POSException import ConflictError
 
+import logging
+import new
 import pkg_resources
+import sys
+import transaction
+
 
 _marker = []
 
@@ -74,7 +77,11 @@ def saveCloneActions(actionprovider):
 
 
 def testSkinLayer(skinsTool, layer):
-    """Make sure a skin layer exists"""
+    """Make sure a skin layer exists.
+
+    layer can be a sub folder name, like captchas_core/dynamic
+    or a/b/c/d/e.
+    """
     # code adapted from CMFCore.SkinsContainer.getSkinByPath
     ob = aq_base(skinsTool)
     for name in layer.strip().split('/'):
@@ -98,6 +105,45 @@ def cleanupSkinPath(portal, skinName, test=1):
         if layer and testSkinLayer(skinstool, layer):
             new_path.append(layer)
     skinstool.addSkinSelection(skinName, ','.join(new_path), test=test)
+
+
+def cleanUpSkinsTool(context):
+    """Cleanup the portal_skins tool.
+
+    Initially this was created for Plone 4.0 alpha, but was factored out later.
+
+    - Remove directory views for directories missing on the filesystem.
+
+    - Remove invalid skin layers from all skin selections.
+    """
+    skins = getToolByName(context, 'portal_skins')
+    # Remove directory views for directories missing on the filesystem
+    for name in skins.keys():
+        directory_view = skins.get(name)
+        reg_key = getattr(directory_view, '_dirpath', None)
+        if not reg_key:
+            # not a directory view, but a persistent folder
+            continue
+        try:
+            reg_key = _dirreg.getCurrentKeyFormat(reg_key)
+            _dirreg.getDirectoryInfo(reg_key)
+        except ValueError:
+            skins._delObject(name)
+
+    transaction.savepoint(optimistic=True)
+    existing = skins.keys()
+    # Remove no longer existing entries from skin selections
+    for layer, paths in skins.selections.items():
+        new_paths = []
+        for name in paths.split(','):
+            if name in existing:
+                new_paths.append(name)
+            elif '/' in name and testSkinLayer(skins, name):
+                new_paths.append(name)
+            else:
+                logger.info('Removed no longer existing path %s '
+                            'from skin selection %s.', name, layer)
+        skins.selections[layer] = ','.join(new_paths)
 
 
 def installOrReinstallProduct(portal, product_name, out=None, hidden=False):

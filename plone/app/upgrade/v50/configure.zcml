@@ -256,7 +256,7 @@
 
        <gs:upgradeStep
            title="Cleanup the skins tool."
-           handler="plone.app.upgrade.v40.alphas.cleanUpSkinsTool"
+           handler="plone.app.upgrade.utils.cleanUpSkinsTool"
            />
 
        <gs:upgradeStep

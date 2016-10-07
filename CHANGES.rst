@@ -28,6 +28,12 @@ New features:
 
 Bug fixes:
 
+- Don't remove sub skin layers when cleaning ``portal_skins``.
+  Created ``utils.cleanUpSkinsTool`` method which has generally useful
+  code for cleaning up the skins.
+  Fixes `issue 87 <https://github.com/plone/plone.app.upgrade/issues/87>`_.
+  [maurits]
+
 - Install plone.resource in Plone 5.0 alpha 3.  Fixes possible
   ``TypeError: argument of type 'NoneType' is not iterable`` when
   migrating from Plone 4.3 for a site that did not have plone.resource
