@@ -14,4 +14,7 @@
     <value key="url">++resource++mockup/relateditems</value>
   </records>
 
+  <!-- Add sort_on field to search controlpanel -->
+  <records interface="Products.CMFPlone.interfaces.ISearchSchema"
+           prefix="plone" />
 </registry>
