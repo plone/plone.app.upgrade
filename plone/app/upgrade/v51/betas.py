@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.app.upgrade.utils import cleanUpSkinsTool
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -17,7 +18,7 @@ def to51beta1(context):
 
 def addSortOnProperty(context):
     """Add sort_on field to search controlpanel.
-    
+
     The default value of this field is relevance.
     """
     # get the old site properties
@@ -45,3 +46,9 @@ def addSortOnProperty(context):
             settings.sort_on = 'relevance'
         logger.log(logging.INFO,
                    "Added 'sort_on' property to site_properties.")
+
+
+def remove_leftover_skin_layers(context):
+    """Products.MimetypesRegistry no longer has a skin layer, remove it.
+    """
+    cleanUpSkinsTool(context)

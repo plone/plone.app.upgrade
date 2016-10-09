@@ -57,6 +57,12 @@ Add new Mockup 2.4.0 relateditems resource url.
            handler=".betas.addSortOnProperty"
            />
 
+      <gs:upgradeStep
+           title="Remove skins layer converted to browser resources"
+           description="Products.MimetypesRegistry Icons no longer with skins"
+           handler=".betas.remove_leftover_skin_layers"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
