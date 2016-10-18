@@ -10,6 +10,9 @@ Breaking changes:
 
 New features:
 
+- Products.MimetypesRegistry has no longer a skins layer, remove it.
+  [jensens]
+
 - Add sort_on field to search controlpanel.
   [rodfersou]
 
