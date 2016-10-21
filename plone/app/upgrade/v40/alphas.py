@@ -591,3 +591,11 @@ def alpha4_alpha5(context):
     """
     loadMigrationProfile(
         context, 'profile-plone.app.upgrade.v40:4alpha4-4alpha5')
+
+
+def installNewModifiers(context):
+    from Products.CMFEditions.StandardModifiers import install
+    modifiers = getToolByName(context, 'portal_modifier', None)
+    if modifiers is not None:
+        install(modifiers)
+        logger.info('Added new CMFEditions modifiers.')
