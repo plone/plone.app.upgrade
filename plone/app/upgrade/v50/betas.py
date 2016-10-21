@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import get_property
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
@@ -135,7 +136,11 @@ def upgrade_markup_controlpanel_settings(context):
     except KeyError:
         settings = False
     if settings:
-        settings.default_type = site_properties.default_contenttype
+        settings.default_type = get_property(
+            site_properties,
+            'default_contenttype',
+            None,
+        )
 
         forbidden_types = site_properties.getProperty('forbidden_contenttypes')
         forbidden_types = list(forbidden_types) if forbidden_types else []

@@ -9,6 +9,7 @@ from Products.CMFPlone.interfaces import INavigationSchema
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import get_property
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.app.vocabularies.types import BAD_TYPES
 from plone.keyring.interfaces import IKeyManager
@@ -193,7 +194,11 @@ def upgrade_editing_controlpanel_settings(context):
         # ignore the setting.
         if site_properties.default_editor != 'Kupu':
             settings.default_editor = site_properties.default_editor
-        settings.lock_on_ttw_edit = site_properties.lock_on_ttw_edit
+        settings.lock_on_ttw_edit = get_property(
+            site_properties,
+            'lock_on_ttw_edit',
+            None,
+        )
 
 
 def upgrade_maintenance_controlpanel_settings(context):
@@ -218,7 +223,11 @@ def upgrade_maintenance_controlpanel_settings(context):
     except KeyError:
         settings = False
     if settings:
-        settings.days = site_properties.number_of_days_to_keep
+        settings.days = get_property(
+            site_properties,
+            'number_of_days_to_keep',
+            None,
+        )
 
 
 def upgrade_navigation_controlpanel_settings(context):
@@ -252,7 +261,11 @@ def upgrade_navigation_controlpanel_settings(context):
         settings.show_all_parents = navigation_properties.getProperty(
             'showAllParents')
         allTypes = types_tool.listContentTypes()
-        blacklist = navigation_properties.metaTypesNotToList
+        blacklist = get_property(
+            navigation_properties,
+            'metaTypesNotToList',
+            default_value=[],
+        )
         settings.displayed_types = tuple([
             t for t in allTypes if t not in blacklist
             and t not in BAD_TYPES
@@ -289,9 +302,14 @@ def upgrade_search_controlpanel_settings(context):
 
     if site_properties.hasProperty('enable_livesearch'):
         settings.enable_livesearch = site_properties.enable_livesearch
+    types_not_searched = get_property(
+        site_properties,
+        'types_not_searched',
+        default_value=[],
+    )
     settings.types_not_searched = tuple([
         t for t in types_tool.listContentTypes()
-        if t in site_properties.types_not_searched and
+        if t in types_not_searched and
         t not in BAD_TYPES
     ])
 
@@ -319,7 +337,8 @@ def upgrade_site_controlpanel_settings(context):
     except KeyError:
         settings = False
     settings.site_title = unicode(portal.title)
-    settings.webstats_js = unicode(site_properties.webstats_js)
-    settings.enable_sitemap = site_properties.enable_sitemap
+    webstat_js = get_property(site_properties, 'webstats_js', '')
+    settings.webstats_js = unicode(webstat_js)
+    settings.enable_sitemap = get_property(site_properties, 'enable_sitemap')
     if site_properties.hasProperty('exposeDCMetaTags'):
         settings.exposeDCMetaTags = site_properties.exposeDCMetaTags
