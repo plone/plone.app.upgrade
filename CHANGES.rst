@@ -6,7 +6,8 @@ Changelog
 
 Breaking changes:
 
-- *add item here*
+- Remove really old upgrade steps (everything up to v40).
+  [gforcada]
 
 New features:
 
