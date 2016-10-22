@@ -22,9 +22,13 @@ class TestUtils(MigrationTest):
 
         # An initial cleanup should do nothing.
         utils.cleanUpSkinsTool(self.portal)
-        self.assertEqual(len(skins.keys()), len(existing))
+        difference = set(existing) ^ set(skins)
+        self.assertEqual(len(skins.keys()), len(existing),
+                         msg='Skink difference is: {}'.format(list(difference)))
+        difference = set(layers_in_selection(selection)) ^ set(existing_layers_in_selection)
         self.assertEqual(len(layers_in_selection(selection)),
-                         len(existing_layers_in_selection))
+                         len(existing_layers_in_selection),
+                         msg='Layer difference is: {}'.format(list(difference)))
 
         # A second cleanup should also do nothing.  We used to rename
         # plone_styles to classic_styles on the first run, which would get

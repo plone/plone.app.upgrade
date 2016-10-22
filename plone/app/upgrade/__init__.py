@@ -139,3 +139,9 @@ except:
     from Products.CMFPlacefulWorkflow import interfaces
     alias_module(
         'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
+
+try:
+    from Products.PasswordResetTool import PasswordResetTool
+    PasswordResetTool  # pyflakes
+except ImportError:
+    sys.modules['Products.PasswordResetTool.PasswordResetTool'] = bbb

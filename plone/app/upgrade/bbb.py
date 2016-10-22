@@ -1,7 +1,6 @@
 from OFS.SimpleItem import SimpleItem
 from Products.CMFCore.utils import registerToolInterface
 from zope.interface import Interface
-from ZPublisher import BeforeTraverse
 
 
 CalendarTool = SimpleItem
@@ -10,6 +9,7 @@ InterfaceTool = SimpleItem
 SyndicationTool = SimpleItem
 UndoTool = SimpleItem
 TinyMCE = SimpleItem
+PasswordResetTool = SimpleItem
 
 
 class ILanguageTool(Interface):

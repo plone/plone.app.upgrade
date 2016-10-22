@@ -75,4 +75,17 @@ was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5103"
+        destination="5104"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to51beta1 upgrade profile."
+           description="Move PasswordResetTool"
+           handler=".betas.move_pw_reset_tool"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>

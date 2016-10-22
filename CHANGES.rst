@@ -37,6 +37,9 @@ New features:
 - Update ``last_compilation`` to deliver new bundles.
   [thet]
 
+- Move PasswordResetTool to CMFPlone.
+  *Note: Pending password resets are deleted.*
+  [tomgross]
 
 Bug fixes:
 

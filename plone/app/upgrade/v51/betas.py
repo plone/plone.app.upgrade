@@ -65,3 +65,19 @@ def remove_jquery_cookie_from_stub_js_modules(context):
     if 'jquery.cookie' in value:
         value.remove('jquery.cookie')
         registry[reg_key] = value
+
+
+def move_pw_reset_tool(context):
+    """ Move PasswordResetTool from its own product to CMFPlone
+    """
+
+    pw_reset_tool = getToolByName(context, 'portal_password_reset')
+    old_days_timeout = pw_reset_tool._timedelta
+    old_user_check = pw_reset_tool._user_check
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    del portal['portal_password_reset']
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta1')
+    pw_reset_tool = getToolByName(context, 'portal_password_reset')
+    pw_reset_tool._timedelta = int(old_days_timeout / 24)
+    pw_reset_tool._user_check = bool(old_user_check)
+
