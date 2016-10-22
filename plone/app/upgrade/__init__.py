@@ -21,16 +21,6 @@ class HiddenProducts(object):
             'plone.app.upgrade.v51',
         ]
 
-# Make sure folks upgrading from Plone 2.1 see a helpful message telling them
-# how to do a two-stage upgrade, instead of a GroupUserFolder error.
-try:
-    from Products.GroupUserFolder.GroupUserFolder import GroupUserFolder
-except ImportError:
-    from plone.app.upgrade import gruf_bbb
-    sys.modules['Products.GroupUserFolder'] = gruf_bbb
-    sys.modules['Products.GroupUserFolder.GroupUserFolder'] = gruf_bbb
-
-
 try:
     from zope.app.cache.interfaces.ram import IRAMCache
 except ImportError:

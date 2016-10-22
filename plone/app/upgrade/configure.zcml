@@ -16,11 +16,4 @@
         name="plone.app.upgrade"
         />
 
-    <browser:page
-        name="index.html"
-        for=".gruf_bbb.UpgradeProcessError"
-        class=".gruf_bbb.UpgradeProcessErrorView"
-        permission="zope.Public"
-        />
-
 </configure>
