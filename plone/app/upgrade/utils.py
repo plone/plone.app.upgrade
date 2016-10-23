@@ -344,3 +344,10 @@ def updateIconsInBrains(context, typesToUpdate=None):
         i += 1
     pghandler.finish()
     logger.info('Updated `getIcon` metadata.')
+
+
+def get_property(context, property_name, default_value=None):
+    try:
+        return getattr(context, property_name, default_value)
+    except AttributeError:
+        return default_value

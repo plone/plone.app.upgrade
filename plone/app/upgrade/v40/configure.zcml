@@ -120,7 +120,7 @@
 
         <genericsetup:upgradeStep
             title="Add new CMFEditions default modifiers."
-            handler="plone.app.upgrade.v30.final_three0x.installNewModifiers"
+            handler=".alphas.installNewModifiers"
             />
 
         <genericsetup:upgradeStep

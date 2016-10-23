@@ -4,11 +4,6 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone">
 
-    <include package=".v25" />
-    <include package=".v30" />
-    <include package=".v31" />
-    <include package=".v32" />
-    <include package=".v33" />
     <include package=".v40" />
     <include package=".v41" />
     <include package=".v42" />
@@ -19,13 +14,6 @@
     <utility
         factory=".HiddenProducts"
         name="plone.app.upgrade"
-        />
-
-    <browser:page
-        name="index.html"
-        for=".gruf_bbb.UpgradeProcessError"
-        class=".gruf_bbb.UpgradeProcessErrorView"
-        permission="zope.Public"
         />
 
 </configure>
