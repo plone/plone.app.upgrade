@@ -52,3 +52,21 @@ def remove_leftover_skin_layers(context):
     """Products.MimetypesRegistry no longer has a skin layer, remove it.
     """
     cleanUpSkinsTool(context)
+
+
+def remove_jquery_cookie_from_stub_js_modules(context):
+    """Remove jquery.cookie from plone-logged-in bundle's stub_js_modules.
+    The toolbar, which has a dependency on jquery.cookie, was moved from the
+    plone bundle to plone-logged-in in CMPlone 5.1a2.
+    """
+    registry = getUtility(IRegistry)
+
+    import pdb
+    pdb.set_trace()
+
+    reg_key = 'plone.bundles/plone-logged-in.stub_js_modules'
+
+    value = registry.get(reg_key, [])
+    if 'jquery.cookie' in value:
+        value.remove('jquery.cookie')
+        registry[reg_key] = value

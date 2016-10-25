@@ -63,6 +63,16 @@ Add new Mockup 2.4.0 relateditems resource url.
            handler=".betas.remove_leftover_skin_layers"
            />
 
+      <gs:upgradeStep
+           title="Remove jquery.cookie from plone-logged-in stub_js_modules"
+           description="
+Remove jquery.cookie from plone-logged-in bundle's stub_js_modules.
+The toolbar, which has a dependency on jquery.cookie,
+was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
+           "
+           handler=".betas.remove_jquery_cookie_from_stub_js_modules"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
