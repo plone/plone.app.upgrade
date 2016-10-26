@@ -60,12 +60,7 @@ def remove_jquery_cookie_from_stub_js_modules(context):
     plone bundle to plone-logged-in in CMPlone 5.1a2.
     """
     registry = getUtility(IRegistry)
-
-    import pdb
-    pdb.set_trace()
-
     reg_key = 'plone.bundles/plone-logged-in.stub_js_modules'
-
     value = registry.get(reg_key, [])
     if 'jquery.cookie' in value:
         value.remove('jquery.cookie')
