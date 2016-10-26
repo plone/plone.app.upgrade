@@ -6,8 +6,12 @@
 
     <include file="profiles.zcml" />
 
+    <!-- Upgrade from latest 4.3 profile revision.  This source step
+         does not need to exist, it just needs to be higher than other
+         4.3 profile revisions.  GenericSetup will then sort it nicely
+         for us. -->
     <gs:upgradeSteps
-        source="4310"
+        source="4399"
         destination="5000"
         profile="Products.CMFPlone:plone">
 
