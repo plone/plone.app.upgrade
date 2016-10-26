@@ -349,17 +349,9 @@ def to50rc1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc1')
     portal = getSite()
     # install plone.app.linkintegrity and its dependencies
-    try:
-        from Products.CMFPlone.utils import get_installer
-    except ImportError:
-        # BBB For Plone 5.0 and lower.
-        qi = getToolByName(portal, 'portal_quickinstaller')
-        if not qi.isProductInstalled('plone.app.linkintegrity'):
-            qi.installProduct('plone.app.linkintegrity')
-    else:
-        qi = get_installer(portal)
-        if not qi.is_product_installed('plone.app.linkintegrity'):
-            qi.install_product('plone.app.linkintegrity')
+    qi = getToolByName(portal, 'portal_quickinstaller')
+    if not qi.isProductInstalled('plone.app.linkintegrity'):
+        qi.installProduct('plone.app.linkintegrity')
     migrate_linkintegrity_relations(portal)
 
     upgrade_usergroups_controlpanel_settings(context)

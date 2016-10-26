@@ -49,13 +49,7 @@ def to50alpha1(context):
     migrate_registry_settings(portal)
 
     # install plone.app.event
-    try:
-        from Products.CMFPlone.utils import get_installer
-    except ImportError:
-        # BBB For Plone 5.0 and lower.
-        qi = getToolByName(portal, 'portal_quickinstaller')
-    else:
-        qi = get_installer(portal)
+    qi = getToolByName(portal, 'portal_quickinstaller')
     if not qi.isProductInstalled('plone.app.event'):
         qi.installProduct('plone.app.event')
 
