@@ -146,8 +146,8 @@ def update_controlpanel_permissions(context):
 
 
 def install_outputfilters(context):
-    qi = getToolByName(context, 'portal_quickinstaller', None)
-    if qi is not None and qi.isProductInstallable('plone.outputfilters'):
+    qi = getToolByName(context, 'portal_quickinstaller')
+    if qi.isProductInstallable('plone.outputfilters'):
         if not qi.isProductInstalled('plone.outputfilters'):
             qi.installProduct('plone.outputfilters')
 

@@ -87,17 +87,9 @@ class MigrationTest(PloneTestCase):
 
     def uninstallProduct(self, product_name):
         # Removes a product
-        try:
-            from Products.CMFPlone.utils import get_installer
-        except ImportError:
-            # BBB For Plone 5.0 and lower.
-            qi = getToolByName(self.portal, 'portal_quickinstaller', None)
-            if qi is None:
-                return
-        else:
-            qi = get_installer(self.portal)
-        if qi.isProductInstalled(product_name):
-            qi.uninstallProducts([product_name])
+        tool = getToolByName(self.portal, 'portal_quickinstaller')
+        if tool.isProductInstalled(product_name):
+            tool.uninstallProducts([product_name])
 
     def addSkinLayer(self, layer, skin='Plone Default', pos=None):
         # Adds a skin layer at pos. If pos is None, the layer is appended

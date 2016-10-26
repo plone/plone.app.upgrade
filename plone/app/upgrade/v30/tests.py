@@ -837,10 +837,7 @@ class TestMigrations_v3_0_alpha2(MigrationTest):
         super(self.portal.__class__, self.portal).manage_delObjects(
             ['portal_languages'])
         self.uninstallProduct('PloneLanguageTool')
-        qi = getToolByName(self.portal, "portal_quickinstaller", None)
-        if qi is None:
-            # Newer Plone without qi.
-            return
+        qi = getToolByName(self.portal, "portal_quickinstaller")
         # Test it twice
         for i in range(2):
             installProduct('PloneLanguageTool', self.portal)

@@ -278,11 +278,6 @@ class TestQIandGS(MigrationTest):
         from plone.app.upgrade.v43.final import \
             markProductsInstalledForUninstallableProfiles
 
-        qi = getToolByName(self.portal, 'portal_quickinstaller', None)
-        if qi is None:
-            # Newer Plone without qi.
-            return
-
         # Register a profile.
         product_id = 'my.test.package'
         profile_id = '{0}:default'.format(product_id)
@@ -304,6 +299,7 @@ class TestQIandGS(MigrationTest):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getLastVersionForProfile(profile_id), 'unknown')
+        qi = getToolByName(self.portal, 'portal_quickinstaller')
         self.assertFalse(qi.isProductInstalled(product_id))
 
         # Call our upgrade function.  This should have no effect,
@@ -325,10 +321,7 @@ class TestQIandGS(MigrationTest):
 
     def testCleanupUninstalledProducts(self):
         from plone.app.upgrade.v43.final import cleanupUninstalledProducts
-        qi = getToolByName(self.portal, 'portal_quickinstaller', None)
-        if qi is None:
-            # Newer Plone without qi.
-            return
+        qi = getToolByName(self.portal, 'portal_quickinstaller')
         setup = getToolByName(self.portal, 'portal_setup')
         # Register three profiles.  I wanted to take 'new' as product
         # id, but there is already a python module 'new', so that goes

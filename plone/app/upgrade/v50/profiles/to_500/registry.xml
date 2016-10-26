@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<registry>
-  <records interface="Products.CMFPlone.interfaces.ITinyMCESchema"
-           prefix="plone" />
-  <records interface="Products.CMFPlone.interfaces.ILinkSchema"
-           prefix="plone" />
-</registry>

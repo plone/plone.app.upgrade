@@ -152,45 +152,25 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     If product is already installed test if it needs to be reinstalled. Also
     fix skins after reinstalling
     """
-    try:
-        from Products.CMFPlone.utils import get_installer
-    except ImportError:
-        # BBB For Plone 5.0 and lower.
-        qi = getToolByName(portal, 'portal_quickinstaller', None)
-        if qi is None:
-            return
-        old_qi = True
+    qi = getToolByName(portal, 'portal_quickinstaller')
+    if not qi.isProductInstalled(product_name):
+        qi.installProduct(product_name, hidden=hidden)
+        # Refresh skins
+        portal.clearCurrentSkin()
+        if getattr(portal, 'REQUEST', None):
+            portal.setupCurrentSkin(portal.REQUEST)
+        logger.info("Installed %s" % product_name)
     else:
-        qi = get_installer(portal)
-        old_qi = False
-    if old_qi:
-        if not qi.isProductInstalled(product_name):
-            qi.installProduct(product_name, hidden=hidden)
-            logger.info("Installed %s" % product_name)
-        elif old_qi:
-            info = qi._getOb(product_name)
-            installed_version = info.getInstalledVersion()
-            product_version = qi.getProductVersion(product_name)
-            if installed_version != product_version:
-                qi.reinstallProducts([product_name])
-                logger.info("%s is out of date (installed: %s/ "
-                            "filesystem: %s), reinstalled." % (
-                                product_name, installed_version,
-                                product_version))
-            else:
-                logger.info('%s already installed.' % product_name)
-    else:
-        # New QI browser view.
-        if not qi.is_product_installed(product_name):
-            qi.install_product(product_name, allow_hidden=True)
-            logger.info("Installed %s" % product_name)
+        info = qi._getOb(product_name)
+        installed_version = info.getInstalledVersion()
+        product_version = qi.getProductVersion(product_name)
+        if installed_version != product_version:
+            qi.reinstallProducts([product_name])
+            logger.info("%s is out of date (installed: %s/ filesystem: %s), "
+                        "reinstalled." % (product_name, installed_version,
+                                          product_version))
         else:
-            qi.upgrade_product(product_name)
-            logger.info("Upgraded %s", product_name)
-    # Refresh skins
-    portal.clearCurrentSkin()
-    if getattr(portal, 'REQUEST', None):
-        portal.setupCurrentSkin(portal.REQUEST)
+            logger.info('%s already installed.' % product_name)
 
 
 def loadMigrationProfile(context, profile, steps=_marker):
