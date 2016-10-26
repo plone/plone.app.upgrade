@@ -17,4 +17,5 @@
   <!-- Add sort_on field to search controlpanel -->
   <records interface="Products.CMFPlone.interfaces.ISearchSchema"
            prefix="plone" />
+
 </registry>
