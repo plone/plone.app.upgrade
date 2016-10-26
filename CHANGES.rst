@@ -10,27 +10,13 @@ Breaking changes:
 
 New features:
 
-- Products.MimetypesRegistry has no longer a skins layer, remove it.
-  [jensens]
+- Removed Plone 5 migrations.  For migrating to Plone 5, use
+  plone.app.upgrade 2.x, which will be included in Plone 5.0.7.
+  plone.app.upgrade 1.3.27 is the last version to include all upgrades
+  from 2.5 till 5.1.  [maurits]
 
 - Add sort_on field to search controlpanel.
   [rodfersou]
-
-- Support sites without ``portal_quickinstaller``.
-  We use ``get_installer`` in Plone 5.1 migrations.
-  In earlier version we will keep using the ``portal_quickinstaller``,
-  because ``get_installer`` is not available.
-  In shared utility and base code, we try to import get_installer,
-  and fall back on the previous implementation.
-  See `PLIP 1340 <https://github.com/plone/Products.CMFPlone/issues/1340>`_.
-  [maurits]
-
-- Add new Mockup 2.4.0 relateditems resource url.
-  [thet]
-
-- Update ``last_compilation`` to deliver new bundles.
-  [thet]
-
 
 Bug fixes:
 
@@ -39,15 +25,6 @@ Bug fixes:
   code for cleaning up the skins.
   Fixes `issue 87 <https://github.com/plone/plone.app.upgrade/issues/87>`_.
   [maurits]
-
-- Install plone.resource in Plone 5.0 alpha 3.  Fixes possible
-  ``TypeError: argument of type 'NoneType' is not iterable`` when
-  migrating from Plone 4.3 for a site that did not have plone.resource
-  or diazo installed yet.
-  Fixes `issue 1756 <https://github.com/plone/Products.CMFPlone/issues/1756>`_. [maurits]
-
-- Be sure smtp_port is an integer.
-  [ale-rt]
 
 
 1.3.27 (2016-08-16)
