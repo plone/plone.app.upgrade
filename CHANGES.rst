@@ -40,6 +40,10 @@ New features:
 
 Bug fixes:
 
+- Enabled update from latest 4.3 profile revision.
+  Otherwise we would skip a few upgrade steps when migrating to
+  Plone 5.  [maurits]
+
 - Don't remove sub skin layers when cleaning ``portal_skins``.
   Created ``utils.cleanUpSkinsTool`` method which has generally useful
   code for cleaning up the skins.
