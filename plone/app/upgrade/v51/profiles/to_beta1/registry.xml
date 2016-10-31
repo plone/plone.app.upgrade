@@ -14,6 +14,11 @@
     <value key="url">++resource++mockup/relateditems</value>
   </records>
 
+  <!-- Add new optional relateditems upload resource. -->
+  <records prefix="plone.resources/mockup-patterns-relateditems-upload" interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="js">++resource++mockup/relateditems/upload.js</value>
+  </records>
+
   <!-- Add sort_on field to search controlpanel -->
   <records interface="Products.CMFPlone.interfaces.ISearchSchema"
            prefix="plone" />
