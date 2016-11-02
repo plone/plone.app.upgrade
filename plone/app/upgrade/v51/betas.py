@@ -11,6 +11,8 @@ import logging
 
 logger = logging.getLogger('plone.app.upgrade')
 
+_marker = dict()
+
 
 def to51beta1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta1')
@@ -70,14 +72,18 @@ def remove_jquery_cookie_from_stub_js_modules(context):
 def move_pw_reset_tool(context):
     """ Move PasswordResetTool from its own product to CMFPlone
     """
-
     pw_reset_tool = getToolByName(context, 'portal_password_reset')
-    old_days_timeout = pw_reset_tool._timedelta
-    old_user_check = pw_reset_tool._user_check
+    # Need to use getattr here. The _timedelta and _check_user are a class
+    # attributes and not available in the instance dict until set
+    # in case of defaults the do not exist in the <persistent broken ...>
+    # object we fetch here.
+    old_days_timeout = getattr(pw_reset_tool, '_timedelta', _marker)
+    old_user_check = getattr(pw_reset_tool, '_user_check', _marker)
     portal = getToolByName(context, 'portal_url').getPortalObject()
     del portal['portal_password_reset']
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta1')
     pw_reset_tool = getToolByName(context, 'portal_password_reset')
-    pw_reset_tool._timedelta = int(old_days_timeout / 24)
-    pw_reset_tool._user_check = bool(old_user_check)
-
+    if old_days_timeout is not _marker:
+        pw_reset_tool._timedelta = int(old_days_timeout / 24)
+    if old_user_check is not _marker:
+        pw_reset_tool._user_check = bool(old_user_check)

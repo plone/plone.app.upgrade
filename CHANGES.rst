@@ -62,6 +62,9 @@ Bug fixes:
 - Be sure smtp_port is an integer.
   [ale-rt]
 
+- Fix upgrade step for PasswordResetTool if there was never da different value than the default was set.
+  [jensens]
+
 
 1.3.27 (2016-08-16)
 -------------------
