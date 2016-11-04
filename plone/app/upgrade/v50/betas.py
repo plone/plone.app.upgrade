@@ -78,10 +78,6 @@ def upgrade_portal_language(context):
         # Remove the old tool
         portal.manage_delObjects('portal_languages')
 
-    # TODO: Remove portal skin
-    # <object name="LanguageTool" meta_type="Filesystem Directory View"
-    # directory="Products.PloneLanguageTool:skins/LanguageTool"/>
-
 
 def upgrade_mail_controlpanel_settings(context):
     registry = getUtility(IRegistry)
