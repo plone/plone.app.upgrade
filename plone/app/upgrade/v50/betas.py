@@ -22,6 +22,23 @@ import logging
 
 logger = logging.getLogger('plone.app.upgrade')
 
+# Mapping of old portal_languages option to new language settings option.
+LANGUAGE_OPTION_MAPPING = {
+    # 'old': 'new',
+    'always_show_selector': 'always_show_selector',
+    'authenticated_users_only': 'authenticated_users_only',
+    'display_flags': 'display_flags',
+    'set_cookie_everywhere': 'set_cookie_always',  # different
+    'supported_langs': 'available_languages',  # different
+    'use_cctld_negotiation': 'use_cctld_negotiation',
+    'use_combined_language_codes': 'use_combined_language_codes',
+    'use_content_negotiation': 'use_content_negotiation',
+    'use_cookie_negotiation': 'use_cookie_negotiation',
+    'use_path_negotiation': 'use_path_negotiation',
+    'use_request_negotiation': 'use_request_negotiation',
+    'use_subdomain_negotiation': 'use_subdomain_negotiation',
+}
+
 
 def to50beta1(context):
     """5.0alpha3 -> 5.0beta1"""
@@ -55,23 +72,9 @@ def upgrade_portal_language(context):
     lang_settings.default_language = default_lang
     if hasattr(portal, 'portal_languages'):
         portal_languages = getSite().portal_languages
-        lang_settings.available_languages = portal_languages.supported_langs
-
-        lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes  # noqa
-        lang_settings.display_flags = portal_languages.display_flags
-
-        lang_settings.use_path_negotiation = portal_languages.use_path_negotiation  # noqa
-        lang_settings.use_content_negotiation = portal_languages.use_content_negotiation  # noqa
-        lang_settings.use_cookie_negotiation = portal_languages.use_cookie_negotiation  # noqa
-        if hasattr(portal_languages, 'set_cookie_everywhere'):
-            lang_settings.set_cookie_always = portal_languages.set_cookie_everywhere  # noqa
-        lang_settings.authenticated_users_only = portal_languages.authenticated_users_only  # noqa
-        lang_settings.use_request_negotiation = portal_languages.use_request_negotiation  # noqa
-        lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation  # noqa
-        lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation  # noqa
-        if hasattr(portal_languages, 'always_show_selector'):
-            lang_settings.always_show_selector = portal_languages.always_show_selector  # noqa
-
+        for old, new in LANGUAGE_OPTION_MAPPING.items():
+            if hasattr(portal_languages, old):
+                setattr(lang_settings, new, getattr(portal_languages, old))
         # Remove the old tool
         portal.manage_delObjects('portal_languages')
 

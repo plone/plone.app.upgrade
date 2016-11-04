@@ -43,6 +43,12 @@ New features:
 
 Bug fixes:
 
+- Fixed AttributeError ``use_content_negotiation`` when migrating old language tool.
+  Not all versions have the same properties available.
+  Now we only take over existing properties.
+  5.0 beta.
+  [maurits]
+
 - Fixed ConstraintNotSatisfied when default_editor is not allowed.
   5.0 alpha.
   [maurits]
