@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import pkg_resources
 
 from Acquisition import aq_parent, aq_base
 from Products.CMFCore.utils import getToolByName
@@ -22,6 +23,13 @@ from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.schema.interfaces import ConstraintNotSatisfied
 
+try:
+    pkg_resources.get_distribution('plone.app.caching')
+except pkg_resources.DistributionNotFound:
+    HAS_CACHING = False
+else:
+    HAS_CACHING = True
+    from plone.app.caching.interfaces import IPloneCacheSettings
 
 logger = logging.getLogger('plone.app.upgrade')
 
@@ -72,6 +80,7 @@ def to50alpha1(context):
 
     upgrade_keyring(context)
     installOrUpgradePloneAppTheming(context)
+    installOrUpgradePloneAppCaching(context)
 
 
 def installOrUpgradePloneAppTheming(context):
@@ -86,6 +95,36 @@ def installOrUpgradePloneAppTheming(context):
         registry.forInterface(IThemeSettings)
     except KeyError:
         # plone.app.theming not yet installed
+        portal_setup.runAllImportStepsFromProfile(profile_id)
+    else:
+        # Might as well upgrade it if needed.
+        portal_setup.upgradeProfile(profile_id)
+
+
+def installOrUpgradePloneAppCaching(context):
+    """Install plone.app.caching if not installed yet.
+
+    Plone 5.0 installs it by default,
+    and hides it from the add-ons control panel.
+
+    Upgrade it for good measure if it is already installed.
+
+    Note: plone.app.caching is required by Plone, not by
+    Products.CMFPlone, so it may not be available.
+    """
+    if not HAS_CACHING:
+        return
+    profile_id = 'profile-plone.app.caching:default'
+    portal_setup = getToolByName(context, 'portal_setup')
+    if not portal_setup.profileExists(profile_id):
+        # During tests, the package may be there, but the zcml may not have
+        # been loaded, so the profile is not available.
+        return
+    registry = getUtility(IRegistry)
+    try:
+        registry.forInterface(IPloneCacheSettings)
+    except KeyError:
+        # plone.app.caching not yet installed
         portal_setup.runAllImportStepsFromProfile(profile_id)
     else:
         # Might as well upgrade it if needed.
