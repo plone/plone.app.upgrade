@@ -43,6 +43,10 @@ New features:
 
 Bug fixes:
 
+- Install plone.app.theming in 5.0 alpha.
+  When it is already installed, upgrade it.
+  [maurits]
+
 - Fixed AttributeError ``use_content_negotiation`` when migrating old language tool.
   Not all versions have the same properties available.
   Now we only take over existing properties.

@@ -8,6 +8,7 @@ from Products.CMFPlone.interfaces import IMaintenanceSchema
 from Products.CMFPlone.interfaces import INavigationSchema
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
+from plone.app.theming.interfaces import IThemeSettings
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
@@ -70,6 +71,25 @@ def to50alpha1(context):
             qi.installProduct('plonetheme.barceloneta')
 
     upgrade_keyring(context)
+    installOrUpgradePloneAppTheming(context)
+
+
+def installOrUpgradePloneAppTheming(context):
+    """Install plone.app.theming if not installed yet.
+
+    Upgrade it for good measure if it is already installed.
+    """
+    profile_id = 'profile-plone.app.theming:default'
+    portal_setup = getToolByName(context, 'portal_setup')
+    registry = getUtility(IRegistry)
+    try:
+        registry.forInterface(IThemeSettings)
+    except KeyError:
+        # plone.app.theming not yet installed
+        portal_setup.runAllImportStepsFromProfile(profile_id)
+    else:
+        # Might as well upgrade it if needed.
+        portal_setup.upgradeProfile(profile_id)
 
 
 def lowercase_email_login(context):
