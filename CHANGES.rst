@@ -43,6 +43,10 @@ New features:
 
 Bug fixes:
 
+- Fixed ConstraintNotSatisfied when default_editor is not allowed.
+  5.0 alpha.
+  [maurits]
+
 - Enabled update from latest 4.3 profile revision.
   Otherwise we would skip a few upgrade steps when migrating to
   Plone 5.  [maurits]

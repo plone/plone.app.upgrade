@@ -19,6 +19,7 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.schema.interfaces import ConstraintNotSatisfied
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -191,8 +192,15 @@ def upgrade_editing_controlpanel_settings(context):
         # settings.available_editors = site_properties.available_editors
 
         # Kupu will not be available as editor in Plone 5. Therefore we just
-        # ignore the setting.
-        if site_properties.default_editor != 'Kupu':
+        # ignore the setting.  But there may be others (like an empty string)
+        # that will give an error too.  So we validate the value.
+        try:
+            IEditingSchema['default_editor'].validate(
+                site_properties.default_editor)
+        except ConstraintNotSatisfied:
+            logger.warn('Ignoring invalid site_properties.default_editor %r.',
+                        site_properties.default_editor)
+        else:
             settings.default_editor = site_properties.default_editor
         settings.lock_on_ttw_edit = get_property(
             site_properties,
