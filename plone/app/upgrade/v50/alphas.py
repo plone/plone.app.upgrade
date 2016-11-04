@@ -8,6 +8,7 @@ from Products.CMFPlone.interfaces import IMaintenanceSchema
 from Products.CMFPlone.interfaces import INavigationSchema
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
+from plone.app.theming.interfaces import IThemeSettings
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
@@ -19,6 +20,7 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.schema.interfaces import ConstraintNotSatisfied
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -69,6 +71,25 @@ def to50alpha1(context):
             qi.installProduct('plonetheme.barceloneta')
 
     upgrade_keyring(context)
+    installOrUpgradePloneAppTheming(context)
+
+
+def installOrUpgradePloneAppTheming(context):
+    """Install plone.app.theming if not installed yet.
+
+    Upgrade it for good measure if it is already installed.
+    """
+    profile_id = 'profile-plone.app.theming:default'
+    portal_setup = getToolByName(context, 'portal_setup')
+    registry = getUtility(IRegistry)
+    try:
+        registry.forInterface(IThemeSettings)
+    except KeyError:
+        # plone.app.theming not yet installed
+        portal_setup.runAllImportStepsFromProfile(profile_id)
+    else:
+        # Might as well upgrade it if needed.
+        portal_setup.upgradeProfile(profile_id)
 
 
 def lowercase_email_login(context):
@@ -191,8 +212,15 @@ def upgrade_editing_controlpanel_settings(context):
         # settings.available_editors = site_properties.available_editors
 
         # Kupu will not be available as editor in Plone 5. Therefore we just
-        # ignore the setting.
-        if site_properties.default_editor != 'Kupu':
+        # ignore the setting.  But there may be others (like an empty string)
+        # that will give an error too.  So we validate the value.
+        try:
+            IEditingSchema['default_editor'].validate(
+                site_properties.default_editor)
+        except ConstraintNotSatisfied:
+            logger.warn('Ignoring invalid site_properties.default_editor %r.',
+                        site_properties.default_editor)
+        else:
             settings.default_editor = site_properties.default_editor
         settings.lock_on_ttw_edit = get_property(
             site_properties,
