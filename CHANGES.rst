@@ -43,6 +43,10 @@ New features:
 
 Bug fixes:
 
+- Install plone.app.caching in 5.0 alpha if available.
+  When it is already installed, upgrade it.
+  [maurits]
+
 - Install plone.app.theming in 5.0 alpha.
   When it is already installed, upgrade it.
   [maurits]

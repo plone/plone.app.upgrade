@@ -2,12 +2,17 @@
 from os.path import abspath
 from os.path import dirname
 from os.path import join
+from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import FunctionalTesting
+from plone.app.testing.bbb import PTC_FIXTURE
 from plone.app.testing.bbb import PloneTestCase
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.tests.base.testcase import WarningInterceptor
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.context import TarballImportContext
+from zope.configuration import xmlconfig
 from zope.site.hooks import setSite
 
 import transaction
@@ -17,7 +22,30 @@ import transaction
 #
 
 
+class UpgradeTestCaseFixture(PloneSandboxLayer):
+
+    defaultBases = (PLONE_FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        # In 5.0 alpha we install or upgrade plone.app.caching,
+        # so it must be available to Zope.
+        import plone.app.caching
+        xmlconfig.file(
+            'configure.zcml',
+            plone.app.caching,
+            context=configurationContext
+        )
+
+
+UPGRADE_TEST_CASE_FIXTURE = UpgradeTestCaseFixture()
+UPGRADE_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(PTC_FIXTURE, UPGRADE_TEST_CASE_FIXTURE),
+    name='UpgradeTestCase:Functional')
+
+
 class MigrationTest(PloneTestCase):
+
+    layer = UPGRADE_FUNCTIONAL_TESTING
 
     def removeActionFromTool(
         self,
