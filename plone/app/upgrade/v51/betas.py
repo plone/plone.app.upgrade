@@ -84,6 +84,8 @@ def move_pw_reset_tool(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta1')
     pw_reset_tool = getToolByName(context, 'portal_password_reset')
     if old_days_timeout is not _marker:
-        pw_reset_tool._timedelta = int(old_days_timeout / 24)
+        if old_days_timeout < 1:
+            old_days_timeout = 7
+        pw_reset_tool._timedelta = int(old_days_timeout)
     if old_user_check is not _marker:
         pw_reset_tool._user_check = bool(old_user_check)

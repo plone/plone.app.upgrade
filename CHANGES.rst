@@ -43,6 +43,9 @@ New features:
 
 Bug fixes:
 
+- Fix move_pw_reset_tool upgrade step
+  [agitator]
+
 - Install plone.app.caching in 5.0 alpha if available.
   When it is already installed, upgrade it.
   [maurits]
