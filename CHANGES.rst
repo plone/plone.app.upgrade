@@ -32,6 +32,7 @@ New features:
   [maurits]
 
 - Add new Mockup 2.4.0 relateditems resource url.
+  Add new optional relateditems upload resource.
   [thet]
 
 - Update ``last_compilation`` to deliver new bundles.

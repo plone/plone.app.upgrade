@@ -46,7 +46,8 @@ Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
            title="Run to51beta1 upgrade profile."
            description="
 Update ``last_compilation`` to deliver new bundles,
-Add new Mockup 2.4.0 relateditems resource url.
+add new Mockup 2.4.0 relateditems resource url,
+add new optional relateditems upload resource.
            "
            handler=".betas.to51beta1"
            />
