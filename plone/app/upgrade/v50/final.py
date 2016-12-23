@@ -96,3 +96,8 @@ def to502(context):
 def to503(context):
     """5.0.2 -> 5.0.3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to503')
+
+
+def to507(context):
+    """5.0.6 -> 5.0.7"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to507')

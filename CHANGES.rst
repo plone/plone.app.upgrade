@@ -11,6 +11,9 @@ Breaking changes:
 
 New features:
 
+- New mockup releases for Plone 5.0 and 5.1.
+  [thet]
+
 - Remove jquery.cookie from plone-logged-in bundle's stub_js_modules.
   The toolbar, which has a dependency on jquery.cookie,
   was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.

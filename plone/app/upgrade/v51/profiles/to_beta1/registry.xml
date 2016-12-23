@@ -3,7 +3,7 @@
 
   <!-- Update ``last_compilation`` to deliver new bundles -->
   <records prefix="plone.bundles/plone" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
-    <value key="last_compilation">2016-12-13 00:00:00</value>
+    <value key="last_compilation">2016-12-23 00:00:00</value>
   </records>
   <records prefix="plone.bundles/plone-logged-in" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
     <value key="last_compilation">2016-12-13 00:00:00</value>
