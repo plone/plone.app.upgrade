@@ -327,4 +327,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5016"
+        destination="5017"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to507 upgrade profile."
+           description=""
+           handler=".final.to507"
+           />
+
+    </gs:upgradeSteps>
+
 </configure>

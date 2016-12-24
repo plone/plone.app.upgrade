@@ -111,4 +111,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to507"
+      title="Upgrade profile for Plone 5.0.6 to Plone 5.0.7"
+      description=""
+      directory="profiles/to_507"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>
