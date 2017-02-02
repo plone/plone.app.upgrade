@@ -49,10 +49,8 @@ def add_siteadmin_role(context):
     rolemap_exporter = RolemapExportConfigurator(portal)
     permissions = rolemap_exporter.listPermissions()
     extra_permissions = set([
-        'Access arbitrary user session data',
         'Access contents information',
         'Access inactive portal content',
-        'Access session data',
         'Add portal content',
         'Add portal events',
         'Change local roles',
