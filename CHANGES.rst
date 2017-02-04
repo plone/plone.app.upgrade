@@ -45,6 +45,9 @@ New features:
   *Note: Pending password resets are deleted.*
   [tomgross]
 
+- Adopt to changes in Zope4
+  [pbauer]
+
 Bug fixes:
 
 - Remove displayContentsTab from action expressions in 5.1.
@@ -94,6 +97,11 @@ Bug fixes:
 - Fix upgrade step for PasswordResetTool if there was never da different value than the default was set.
   [jensens]
 
+- Check whether avoiding exception in RealUpgradeLayer setup avoids polluting test environment.
+  [davisagli]
+
+- avoid error in layer teardown
+  [davisagli]
 
 1.3.27 (2016-08-16)
 -------------------

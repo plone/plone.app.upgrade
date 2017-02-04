@@ -42,7 +42,10 @@ class RealUpgradeLayer(PloneSandboxLayer):
             setSite(None)
 
     def tearDownPloneSite(self, portal):
-        del self['portal']
+        try:
+            del self['portal']
+        except KeyError:
+            pass
 
 
 REAL_UPGRADE_FIXTURE = RealUpgradeLayer()
