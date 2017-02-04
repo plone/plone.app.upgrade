@@ -87,6 +87,11 @@ was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
            handler=".betas.move_pw_reset_tool"
            />
 
+      <gs:upgradeStep
+           title="Remove displayContentsTab from action expressions"
+           handler=".betas.remove_displayContentsTab_from_action_expressions"
+           />
+
     </gs:upgradeSteps>
 
 </configure>

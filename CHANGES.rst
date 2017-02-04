@@ -47,6 +47,10 @@ New features:
 
 Bug fixes:
 
+- Remove displayContentsTab from action expressions in 5.1.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/1935.
+  [maurits]
+
 - Fix move_pw_reset_tool upgrade step
   [agitator]
 
