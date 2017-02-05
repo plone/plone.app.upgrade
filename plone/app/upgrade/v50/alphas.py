@@ -52,7 +52,8 @@ def to50alpha1(context):
 
     # remove obsolete tools
     tools = [t for t in TOOLS_TO_REMOVE if t in portal]
-    portal.manage_delObjects(tools)
+    if tools:
+        portal.manage_delObjects(tools)
 
     cleanUpToolRegistry(context)
 
