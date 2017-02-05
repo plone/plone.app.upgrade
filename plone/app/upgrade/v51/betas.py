@@ -89,3 +89,31 @@ def move_pw_reset_tool(context):
         pw_reset_tool._timedelta = int(old_days_timeout)
     if old_user_check is not _marker:
         pw_reset_tool._user_check = bool(old_user_check)
+
+
+def remove_displayContentsTab_from_action_expressions(context):
+    """Remove the displayContentsTab script from action expressions.
+
+    This script was removed, but it can still be in actions,
+    at least in portal_actions/object/folderContents,
+    where it makes the homepage fail to load.
+    """
+    atool = getToolByName(context, 'portal_actions')
+    actions = atool.listActions()
+    if not actions:
+        return []
+    script_name = 'displayContentsTab'
+    text = 'object/{}'.format(script_name)
+    for ac in actions:
+        if script_name not in ac.available_expr:
+            continue
+        path = '/'.join(ac.getPhysicalPath())
+        if ac.available_expr.strip() == text:
+            ac._setPropValue('available_expr', '')
+            logger.info('Removed %s from action at %s', text, path)
+            continue
+        # The script is in the expression, but it is different than what
+        # we expect.  We can only warn the user.
+        logger.warn('Action at %s references removed script %s in available. '
+                    'expression %r. Please change it',
+                    path, text, ac.available_expr)
