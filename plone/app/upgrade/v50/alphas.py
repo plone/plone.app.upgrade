@@ -19,6 +19,7 @@ from plone.keyring.keymanager import KeyManager
 from plone.keyring.keyring import Keyring
 from plone.registry.interfaces import IRegistry
 from zope.component import getSiteManager
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.schema.interfaces import ConstraintNotSatisfied
@@ -404,9 +405,9 @@ def upgrade_site_controlpanel_settings(context):
         )
     except KeyError:
         settings = False
-    settings.site_title = unicode(portal.title)
+    settings.site_title = safe_unicode(portal.title)
     webstat_js = get_property(site_properties, 'webstats_js', '')
-    settings.webstats_js = unicode(webstat_js)
+    settings.webstats_js = safe_unicode(webstat_js)
     settings.enable_sitemap = get_property(site_properties, 'enable_sitemap')
     if site_properties.hasProperty('exposeDCMetaTags'):
         settings.exposeDCMetaTags = site_properties.exposeDCMetaTags
