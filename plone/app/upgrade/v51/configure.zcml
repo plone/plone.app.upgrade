@@ -94,4 +94,17 @@ was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5104"
+        destination="5105"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
