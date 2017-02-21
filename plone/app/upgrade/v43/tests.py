@@ -14,6 +14,13 @@ from Products.GenericSetup.interfaces import EXTENSION
 
 import alphas
 
+try:
+    from Products.CMFCore.indexing import processQueue
+except ImportError:
+    def processQueue():
+        pass
+
+
 PLONE5 = getFSVersionTuple()[0] >= 5
 
 
@@ -112,6 +119,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
             id='accidentally-fall', type_name='Document',
             title='And if one green bottle should accidentally fall',
         )
+        processQueue()
 
         # Change title of both, shouldn't be reindexed yet
         portal['accidentally-fall'].title = 'fell'
