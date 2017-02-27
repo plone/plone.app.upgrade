@@ -18,6 +18,9 @@ Bug fixes:
   Part of PLIP 1343: https://github.com/plone/Products.CMFPlone/issues/1343
   [gforcada]
 
+- Fix registration of upgrade-step to Plone 5.1a1
+  [pbauer]
+
 2.0.0 (2017-02-20)
 ------------------
 
