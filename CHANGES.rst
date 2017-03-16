@@ -13,10 +13,6 @@ Bug fixes:
 1.4.0 (2017-02-20)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Removed Plone 5 migrations.  For migrating to Plone 5, use
