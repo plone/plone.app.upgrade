@@ -4,7 +4,10 @@ Changelog
 1.4.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+Bug fixes:
+
+- Add empty upgrade step for 4.3.12
+  [esteele]
 
 
 1.4.0 (2017-02-20)
