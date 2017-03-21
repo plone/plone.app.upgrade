@@ -10,7 +10,9 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add image scaling options to image handling controlpanel
+  when migrating to 5.1b3.
+  [didrix]
 
 Bug fixes:
 
