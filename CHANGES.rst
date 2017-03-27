@@ -16,7 +16,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Update ``twitter_username``, ``facebook_app_id`` and ``facebook_username`` field values as they are now declared as ``ASCIILine`` instead of ``TextLine``.
+  [hvelarde]
 
 
 2.0.1 (2017-03-09)
