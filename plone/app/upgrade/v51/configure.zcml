@@ -123,7 +123,7 @@ Add image scaling options to image handling control panel.
         <gs:upgradeStep
             title="Update social media fields"
             description=""
-            handler="betas.update_social_media_fields"
+            handler=".betas.update_social_media_fields"
             />
 
     </gs:upgradeSteps>
