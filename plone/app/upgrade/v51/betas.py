@@ -117,3 +117,17 @@ def remove_displayContentsTab_from_action_expressions(context):
         logger.warn('Action at %s references removed script %s in available. '
                     'expression %r. Please change it',
                     path, text, ac.available_expr)
+
+
+def update_social_media_fields(context):
+    """Update twitter_username, facebook_app_id and facebook_username
+    field values as they are now declared as ASCIILine instead of
+    TextLine.
+    """
+    from Products.CMFPlone.interfaces.controlpanel import ISocialMediaSchema
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ISocialMediaSchema, prefix='plone')
+    settings.twitter_username = str(settings.twitter_username)
+    settings.facebook_app_id = str(settings.facebook_app_id)
+    settings.facebook_username = str(settings.facebook_username)
+    logger.log(logging.INFO, 'Field types updated on social media schema')
