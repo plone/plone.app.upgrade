@@ -4,10 +4,6 @@ Changelog
 2.0.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add image scaling options to image handling controlpanel
