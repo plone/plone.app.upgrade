@@ -36,7 +36,7 @@
       name="to51beta3"
       title="Upgrade profile for Plone 5.1beta2 to Plone 5.1beta3"
       description=""
-      directory="profiles/to_beta1"
+      directory="profiles/to_beta3"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
