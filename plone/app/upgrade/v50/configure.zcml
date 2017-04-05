@@ -345,11 +345,10 @@
         destination="5018"
         profile="Products.CMFPlone:plone">
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
-            />
+      <gs:upgradeStep
+          title="Fix double shared maxage"
+          handler=".final.fix_double_smaxage"
+          />
 
     </gs:upgradeSteps>
 
