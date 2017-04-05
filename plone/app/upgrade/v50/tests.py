@@ -126,6 +126,59 @@ class TestFunctionalMigrations(unittest.TestCase):
         )
 
 
+class VariousTest(MigrationTest):
+
+    def test_fix_double_smaxage(self):
+        from plone.registry.interfaces import IRegistry
+        from plone.registry.record import Record
+        from plone.registry import field
+        from plone.registry import FieldRef
+        from plone.app.upgrade.v50.final import fix_double_smaxage
+        # Run the upgrade before plone.app.caching is installed,
+        # to check that it does not harm.
+        portal_setup = self.layer['portal'].portal_setup
+        fix_double_smaxage(portal_setup)
+        registry = getUtility(IRegistry)
+        maxage = 'plone.app.caching.strongCaching.plone.resource.maxage'
+        def_maxage = 'plone.app.caching.strongCaching.maxage'
+        def_smaxage = 'plone.app.caching.strongCaching.smaxage'
+        # Install default caching profile.
+        portal_setup.runAllImportStepsFromProfile(
+            'plone.app.caching:default'
+        )
+        self.assertTrue(def_maxage in registry)
+        self.assertTrue(def_smaxage in registry)
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+        # Install the with-caching-proxy settings.
+        portal_setup.runAllImportStepsFromProfile(
+            'plone.app.caching:with-caching-proxy'
+        )
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+
+        # Old situation had maxage referencing the s-maxage definition:
+        field_ref = FieldRef(def_smaxage, registry.records[def_smaxage].field)
+        registry.records[maxage] = Record(field_ref, 999)
+        self.assertEqual(
+            registry.records[maxage].field.recordName, def_smaxage)
+        self.assertEqual(registry[maxage], 999)
+        self.assertIn('shared', registry.records[maxage].field.title.lower())
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+        # Test that this fixes the reference and keeps the value.
+        self.assertEqual(
+            registry.records[maxage].field.recordName, def_maxage)
+        self.assertEqual(registry[maxage], 999)
+        self.assertNotIn(
+            'shared', registry.records[maxage].field.title.lower())
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+        self.assertEqual(
+            registry.records[maxage].field.recordName, def_maxage)
+        self.assertEqual(registry[maxage], 999)
+
+
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
@@ -135,4 +188,5 @@ def test_suite():
         suite = TestSuite()
         suite.addTest(makeSuite(PASUpgradeTest))
         suite.addTest(makeSuite(TestFunctionalMigrations))
+        suite.addTest(makeSuite(VariousTest))
         return suite

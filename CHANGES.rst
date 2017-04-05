@@ -14,7 +14,11 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fixed title and description of plone.resource.maxage.
+  This had the title and description from shared maxage,
+  due to a wrong reference.
+  See https://github.com/plone/Products.CMFPlone/issues/1989
+  [maurits]
 
 
 2.0.2 (2017-04-03)

@@ -134,9 +134,8 @@ Add image scaling options to image handling control panel.
         profile="Products.CMFPlone:plone">
 
         <gs:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
+            title="Fix double shared maxage"
+            handler="..v50.final.fix_double_smaxage"
             />
 
     </gs:upgradeSteps>
