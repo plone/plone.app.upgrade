@@ -288,11 +288,10 @@
         destination="4317"
         profile="Products.CMFPlone:plone">
 
-        <genericsetup:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
-            />
+      <genericsetup:upgradeStep
+          title="Fix double shared maxage"
+          handler=".final.fix_double_smaxage"
+          />
 
     </genericsetup:upgradeSteps>
 

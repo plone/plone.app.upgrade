@@ -334,3 +334,31 @@ def addSortOnProperty(context):
         site_properties.manage_addProperty('sort_on', 'relevance', 'string')
         logger.log(logging.INFO,
                    "Added 'sort_on' property to site_properties.")
+
+
+def fix_double_smaxage(context):
+    """Fix caching definition.
+
+    plone.resource.maxage has title and description from shared maxage.
+    See https://github.com/plone/Products.CMFPlone/issues/1989
+    """
+    from plone.registry.record import Record
+    from plone.registry import FieldRef
+    from plone.registry.interfaces import IRegistry
+    from zope.component import getUtility
+    registry = getUtility(IRegistry)
+    # If these three registry records are not defined,
+    # we do no fix.
+    maxage = 'plone.app.caching.strongCaching.plone.resource.maxage'
+    def_maxage = 'plone.app.caching.strongCaching.maxage'
+    def_smaxage = 'plone.app.caching.strongCaching.smaxage'
+    for name in (maxage, def_maxage, def_smaxage):
+        if name not in registry:
+            return
+    if registry.records[maxage].field.recordName != def_smaxage:
+        # no fix needed
+        return
+    field_ref = FieldRef(def_maxage, registry.records[def_maxage].field)
+    old_value = registry[maxage]
+    registry.records[maxage] = Record(field_ref, old_value)
+    logger.info('Fixed {0} to refer to {1}.'.format(maxage, def_maxage))
