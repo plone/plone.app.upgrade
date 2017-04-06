@@ -108,8 +108,14 @@ try:
     import Products.CMFDefault.MetadataTool
     Products.CMFDefault.MetadataTool  # pyflakes
 except ImportError:
-    from Products.ATContentTypes.tool import metadata
-    sys.modules['Products.CMFDefault.MetadataTool'] = metadata
+    try:
+        pkg_resources.get_distribution('Products.ATContentTypes')
+    except:
+        from plone.app.upgrade import atcontentypes_bbb
+        alias_module('Products.CMFDefault.MetadataTool', atcontentypes_bbb)
+    else:
+        from Products.ATContentTypes.tool import metadata
+        sys.modules['Products.CMFDefault.MetadataTool'] = metadata
 
 try:
     import Products.CMFDefault.SyndicationInfo

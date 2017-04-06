@@ -599,3 +599,19 @@ def installNewModifiers(context):
     if modifiers is not None:
         install(modifiers)
         logger.info('Added new CMFEditions modifiers.')
+
+
+def run_upgrade_dcmi_metadata(tool):
+    """Run the upgrade_dcmi_metadata step from CMFDefault.
+
+    This is only run if CMFDefault is 'installed' (importable).
+    But in Plone 5 it may still be there as aliased module,
+    missing the upgrade module.  So we have a small wrapper around it,
+    to avoid an ImportError on startup.
+    """
+    try:
+        from Products.CMFDefault.upgrade.to22 import upgrade_dcmi_metadata
+    except ImportError:
+        logger.info('Original CMFDefault DCMI upgrade step not available.')
+        return
+    upgrade_dcmi_metadata(tool)

@@ -14,6 +14,10 @@ New features:
 
 Bug fixes:
 
+- Fixed ImportError when ``Products.ATContentTypes`` is not available.
+  This happens when you only have the ``Products.CMFPlone`` egg
+  and not the ``Plone`` egg.  [maurits]
+
 - Fixed title and description of plone.resource.maxage.
   This had the title and description from shared maxage,
   due to a wrong reference.
