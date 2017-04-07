@@ -1,9 +1,15 @@
-from zope.component import getAdapters, queryMultiAdapter
+from zope.component import getAdapters
+from zope.component import getUtility
 from zope.component import getSiteManager
+from zope.component import queryMultiAdapter
+from zope.configuration import xmlconfig
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import IntegrationTesting
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
@@ -13,6 +19,7 @@ from Products.GenericSetup import profile_registry
 from Products.GenericSetup.interfaces import EXTENSION
 
 import alphas
+import unittest
 
 PLONE5 = getFSVersionTuple()[0] >= 5
 
@@ -380,3 +387,78 @@ class TestQIandGS(MigrationTest):
         profile_registry.unregisterProfile('default', 'newproduct')
         profile_registry.unregisterProfile('default', 'installed')
         profile_registry.unregisterProfile('default', 'uninstalled')
+
+
+class PloneAppCachingUpgrade(PloneSandboxLayer):
+
+    defaultBases = (PLONE_FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+
+        # Load ZCML
+        import plone.app.caching
+        xmlconfig.file(
+            'configure.zcml', plone.app.caching, context=configurationContext)
+
+
+PLONE_APP_CACHING_UPGRADE_FIXTURE = PloneAppCachingUpgrade()
+PLONE_APP_CACHING_UPGRADE_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONE_APP_CACHING_UPGRADE_FIXTURE,),
+    name="PloneAppCachingUpgrade:Integration")
+
+
+class TestCaching(unittest.TestCase):
+
+    layer = PLONE_APP_CACHING_UPGRADE_INTEGRATION_TESTING
+
+    def test_fix_double_smaxage(self):
+        from plone.registry.interfaces import IRegistry
+        from plone.registry.record import Record
+        from plone.registry import FieldRef
+        from plone.app.upgrade.v43.final import fix_double_smaxage
+        maxage = 'plone.app.caching.strongCaching.plone.resource.maxage'
+        def_maxage = 'plone.app.caching.strongCaching.maxage'
+        def_smaxage = 'plone.app.caching.strongCaching.smaxage'
+        # Run the upgrade before plone.app.caching is installed,
+        # to check that it does not harm.
+        portal_setup = self.layer['portal'].portal_setup
+        fix_double_smaxage(portal_setup)
+        registry = getUtility(IRegistry)
+        self.assertFalse(def_maxage in registry)
+        self.assertFalse(def_smaxage in registry)
+        # Install default caching profile.
+        portal_setup.runAllImportStepsFromProfile(
+            'plone.app.caching:default'
+        )
+        self.assertTrue(def_maxage in registry)
+        self.assertTrue(def_smaxage in registry)
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+        # Install the with-caching-proxy settings.
+        portal_setup.runAllImportStepsFromProfile(
+            'plone.app.caching:with-caching-proxy'
+        )
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+
+        # Old situation had maxage referencing the s-maxage definition:
+        field_ref = FieldRef(def_smaxage, registry.records[def_smaxage].field)
+        registry.records[maxage] = Record(field_ref, 999)
+        self.assertEqual(
+            registry.records[maxage].field.recordName, def_smaxage)
+        self.assertEqual(registry[maxage], 999)
+        self.assertTrue(
+            'shared' in registry.records[maxage].field.title.lower())
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+        # Test that this fixes the reference and keeps the value.
+        self.assertEqual(
+            registry.records[maxage].field.recordName, def_maxage)
+        self.assertEqual(registry[maxage], 999)
+        self.assertFalse(
+            'shared' in registry.records[maxage].field.title.lower())
+        # Run upgrade.
+        fix_double_smaxage(portal_setup)
+        self.assertEqual(
+            registry.records[maxage].field.recordName, def_maxage)
+        self.assertEqual(registry[maxage], 999)
