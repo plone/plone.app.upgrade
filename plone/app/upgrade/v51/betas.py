@@ -134,3 +134,36 @@ def update_social_media_fields(context):
     if settings.facebook_username:
         settings.facebook_username = str(settings.facebook_username)
     logger.log(logging.INFO, 'Field types updated on social media schema')
+
+
+def reindex_mime_type(context):
+    # Attention, this relies heavily on catalog internals.
+    # get the more visible zcatalog
+    zcatalog = getToolByName(context, 'portal_catalog')
+    # get the more hidden, inner (real) catalog implementation
+    catalog = zcatalog._catalog
+    try:
+        metadata_index = catalog.names.index('mime_type')
+    except ValueError:
+        logger.info('`mime_type` not in metadata, skip upgrade step')
+        return
+    # we are interested in dexterity and archtetype images and files:
+    ifaces = ['plone.app.contenttypes.interfaces.IImage',
+              'plone.app.contenttypes.interfaces.IFile',
+              'Products.ATContentTypes.interfaces.file.IFileContent',
+              'Products.ATContentTypes.interfaces.image.IImageContent']
+    cnt = 0
+    for brain in zcatalog.unrestrictedSearchResults(object_provides=ifaces):
+        obj = brain._unrestrictedGetObject()
+        # First get the new value:
+        new_value = ''
+        try:  # Dexterity
+            new_value = obj.content_type()
+        except TypeError:  # Archetypes
+            new_value = obj.content_type
+        # We can now update the record with the new mime_type value
+        record = list(catalog.data[brain.getRID()])
+        record[metadata_index] = new_value
+        catalog.data[brain.getRID()] = tuple(record)
+        cnt += 1
+    logger.info('Reindexed `mime_type` for %s items' % str(cnt))

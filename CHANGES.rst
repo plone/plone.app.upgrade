@@ -13,6 +13,10 @@ New features:
 - Add Plone 5.1 beta 4 upgrade profile.
   [thet]
 
+- new metadata catalog column mime_type
+  https://github.com/plone/Products.CMFPlone/issues/1995
+  [fgrcon]
+
 Bug fixes:
 
 - Do not convert/fail on None while update_social_media_fields
