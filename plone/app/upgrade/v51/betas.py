@@ -127,7 +127,10 @@ def update_social_media_fields(context):
     from Products.CMFPlone.interfaces.controlpanel import ISocialMediaSchema
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ISocialMediaSchema, prefix='plone')
-    settings.twitter_username = str(settings.twitter_username)
-    settings.facebook_app_id = str(settings.facebook_app_id)
-    settings.facebook_username = str(settings.facebook_username)
+    if settings.twitter_username:
+        settings.twitter_username = str(settings.twitter_username)
+    if settings.facebook_app_id:
+        settings.facebook_app_id = str(settings.facebook_app_id)
+    if settings.facebook_username:
+        settings.facebook_username = str(settings.facebook_username)
     logger.log(logging.INFO, 'Field types updated on social media schema')
