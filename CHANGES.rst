@@ -14,6 +14,9 @@ New features:
 
 Bug fixes:
 
+- Do not convert/fail on None while update_social_media_fields
+  [agitator]
+
 - Fixed ImportError when ``Products.ATContentTypes`` is not available.
   This happens when you only have the ``Products.CMFPlone`` egg
   and not the ``Plone`` egg.  [maurits]
