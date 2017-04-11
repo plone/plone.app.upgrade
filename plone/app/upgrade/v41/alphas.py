@@ -54,7 +54,6 @@ def add_siteadmin_role(context):
         'Add portal content',
         'Add portal events',
         'Change local roles',
-        'Change portal events',
         'Copy or Move',
         'Mail forgotten password',
         'Modify portal content',
