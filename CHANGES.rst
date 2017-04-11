@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add Plone 5.1 beta 4 upgrade profile.
+  [thet]
 
 Bug fixes:
 
