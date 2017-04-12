@@ -138,6 +138,14 @@ Add image scaling options to image handling control panel.
             handler="..v50.final.fix_double_smaxage"
             />
 
+        <gs:upgradeDepends
+            title="Run to51beta4 upgrade profile."
+            description="
+Update plone-logged-in bundle.
+            "
+            import_profile="plone.app.upgrade.v51:to51beta4"
+            />
+
     </gs:upgradeSteps>
 
 </configure>

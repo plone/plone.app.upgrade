@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- Update ``last_compilation`` to deliver new bundles -->
+  <records prefix="plone.bundles/plone-logged-in" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
+    <value key="last_compilation">2017-04-11 16:10:00</value>
+  </records>
+
+</registry>
+
