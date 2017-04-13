@@ -133,17 +133,21 @@ Add image scaling options to image handling control panel.
         destination="5107"
         profile="Products.CMFPlone:plone">
 
+        <gs:upgradeDepends
+            title="Run to51beta4 upgrade profile."
+            description="New metadata column `mime_type`.
+                         Update plone-logged-in bundle."
+            import_profile="plone.app.upgrade.v51:to51beta4"
+            />
+
         <gs:upgradeStep
             title="Fix double shared maxage"
             handler="..v50.final.fix_double_smaxage"
             />
 
-        <gs:upgradeDepends
-            title="Run to51beta4 upgrade profile."
-            description="
-Update plone-logged-in bundle.
-            "
-            import_profile="plone.app.upgrade.v51:to51beta4"
+        <gs:upgradeStep
+            title="Reindex mime_type"
+            handler=".betas.reindex_mime_type"
             />
 
     </gs:upgradeSteps>
