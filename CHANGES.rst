@@ -44,6 +44,8 @@ Bug fixes:
   See https://github.com/plone/Products.CMFPlone/issues/1989
   [maurits]
 
+- Removed "change portal events"
+  [kakshay21]
 
 2.0.2 (2017-04-03)
 ------------------
