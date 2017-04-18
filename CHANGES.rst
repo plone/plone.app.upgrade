@@ -4,10 +4,6 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add Plone 5.1 beta 4 upgrade profile.
