@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix mime_type catalog update in 5.1 betas if file or image is None.
+  [thet]
 
 
 2.0.3 (2017-04-18)
@@ -25,7 +26,7 @@ New features:
 - Add Plone 5.1 beta 4 upgrade profile.
   [thet]
 
-- new metadata catalog column mime_type
+- New metadata catalog column mime_type
   https://github.com/plone/Products.CMFPlone/issues/1995
   [fgrcon]
 
