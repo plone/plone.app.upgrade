@@ -155,12 +155,16 @@ def reindex_mime_type(context):
     cnt = 0
     for brain in zcatalog.unrestrictedSearchResults(object_provides=ifaces):
         obj = brain._unrestrictedGetObject()
+        if not obj:
+            continue
         # First get the new value:
         new_value = ''
         try:  # Dexterity
             new_value = obj.content_type()
         except TypeError:  # Archetypes
             new_value = obj.content_type
+        except AttributeError:
+            continue
         # We can now update the record with the new mime_type value
         record = list(catalog.data[brain.getRID()])
         record[metadata_index] = new_value
