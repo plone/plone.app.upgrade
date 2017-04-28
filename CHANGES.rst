@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix and ``AttributeError`` for the Plone 5.1 beta 4 upgrade.
+  [thet]
 
 
 2.0.3 (2017-04-18)
