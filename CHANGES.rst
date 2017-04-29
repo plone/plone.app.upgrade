@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Update registry for Plone 5.1 to integrate ``mockup-patterns-structureupdater``.
+  [thet]
 
 Bug fixes:
 

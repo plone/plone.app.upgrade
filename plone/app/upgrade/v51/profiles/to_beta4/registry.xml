@@ -6,5 +6,9 @@
     <value key="last_compilation">2017-04-11 16:10:00</value>
   </records>
 
-</registry>
+  <records prefix="plone.resources/mockup-patterns-structureupdater"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++resource++mockup/structure/pattern-structureupdater.js</value>
+  </records>
 
+</registry>
