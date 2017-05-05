@@ -9,7 +9,6 @@ from plone.app.testing.bbb import PTC_FIXTURE
 from plone.app.testing.bbb import PloneTestCase
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
-from Products.CMFCore.tests.base.testcase import WarningInterceptor
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.context import TarballImportContext
 from zope.configuration import xmlconfig
@@ -150,7 +149,7 @@ class MigrationTest(PloneTestCase):
             skins.addSkinSelection(skin, ','.join(path))
 
 
-class FunctionalUpgradeTestCase(PloneTestCase, WarningInterceptor):
+class FunctionalUpgradeTestCase(PloneTestCase):
 
     _setup_fixture = 0
     site_id = 'test'
@@ -168,9 +167,7 @@ class FunctionalUpgradeTestCase(PloneTestCase, WarningInterceptor):
 
     def importFile(self, context, name):
         path = join(abspath(dirname(context)), 'data', name)
-        self._trap_warning_output()
         self.app._importObjectFromFile(path, verify=0)
-        self._free_warning_output()
 
     def migrate(self):
         oldsite = getattr(self.app, self.site_id)
