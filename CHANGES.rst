@@ -15,6 +15,10 @@ New features:
 
 Bug fixes:
 
+- Catch warning the pythonic way. 
+  Makes it work with latest CMFCore.
+  [jensens]
+
 - Fix and ``AttributeError`` for the Plone 5.1 beta 4 upgrade.
   [thet]
 
