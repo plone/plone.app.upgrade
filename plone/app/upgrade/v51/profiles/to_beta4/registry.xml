@@ -2,13 +2,29 @@
 <registry>
 
   <!-- Update ``last_compilation`` to deliver new bundles -->
-  <records prefix="plone.bundles/plone-logged-in" interface="Products.CMFPlone.interfaces.IBundleRegistry" purge="False">
-    <value key="last_compilation">2017-04-11 16:10:00</value>
+  <records
+      prefix="plone.bundles/plone"
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      purge="False">
+    <value key="last_compilation">2017-05-23 00:45:00</value>
+  </records>
+  <records
+      prefix="plone.bundles/plone-logged-in"
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      purge="False">
+    <value key="last_compilation">2017-05-23 00:45:00</value>
   </records>
 
-  <records prefix="plone.resources/mockup-patterns-structureupdater"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-      <value key="js">++resource++mockup/structure/pattern-structureupdater.js</value>
+  <records
+      prefix="plone.resources/mockup-patterns-structureupdater"
+      interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="js">++resource++mockup/structure/pattern-structureupdater.js</value>
   </records>
+
+  <!-- Remove TinyMCE layer resource -->
+  <records 
+      remove="True"
+      prefix="plone.resources/tinymce-layer"
+      interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
 
 </registry>

@@ -10,12 +10,15 @@ Breaking changes:
 
 New features:
 
+- TinyMCE 4.5.6 update.
+  [thet]
+
 - Update registry for Plone 5.1 to integrate ``mockup-patterns-structureupdater``.
   [thet]
 
 Bug fixes:
 
-- Catch warning the pythonic way. 
+- Catch warning the pythonic way.
   Makes it work with latest CMFCore.
   [jensens]
 
