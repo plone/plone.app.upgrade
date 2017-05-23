@@ -136,7 +136,9 @@ Add image scaling options to image handling control panel.
         <gs:upgradeDepends
             title="Run to51beta4 upgrade profile."
             description="New metadata column `mime_type`.
-                         Update plone-logged-in bundle."
+                         Update plone-logged-in bundle.
+                         TinyMCE 4.5.6 update.
+                         New mockup-patterns-structureupdater."
             import_profile="plone.app.upgrade.v51:to51beta4"
             />
 
