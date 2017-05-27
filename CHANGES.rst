@@ -9,6 +9,10 @@ Breaking changes:
 - *add item here*
 
 New features:
+- New Options for thumb- and icon-handling in site control panel
+  https://github.com/plone/Products.CMFPlone/issues/1734
+  upgradesteps to 5.1b4
+  [fgrcon]
 
 - TinyMCE 4.5.6 update.
   [thet]

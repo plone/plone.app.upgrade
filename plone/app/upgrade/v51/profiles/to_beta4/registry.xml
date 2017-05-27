@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <registry>
+<!-- New options for thumb- and icon-handling -->
+    <records interface="Products.CMFPlone.interfaces.ISiteSchema"
+            prefix="plone" />
 
   <!-- Update ``last_compilation`` to deliver new bundles -->
   <records
