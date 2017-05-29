@@ -350,6 +350,11 @@
           handler=".final.fix_double_smaxage"
           />
 
+      <gs:upgradeDepends
+           title="Run to508 upgrade profile."
+           import_profile="plone.app.upgrade.v50:to508"
+           />
+
     </gs:upgradeSteps>
 
 </configure>

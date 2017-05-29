@@ -120,4 +120,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to508"
+      title="Upgrade profile for Plone 5.0.7 to Plone 5.0.8"
+      description=""
+      directory="profiles/to_508"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>
