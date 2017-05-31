@@ -18,6 +18,12 @@ New features:
 
 Bug fixes:
 
+- Register ``ISiteSyndicationSettings`` again.
+  This interface was updated in 5.0rc3.
+  On older sites, this would cause an error on the ``syndication-controlpanel``:
+  KeyError: 'Interface `Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings` defines a field `render_body`, for which there is no record.
+  [maurits]
+
 - Catch warning the pythonic way.
   Makes it work with latest CMFCore.
   [jensens]

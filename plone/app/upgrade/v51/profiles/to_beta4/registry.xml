@@ -22,9 +22,12 @@
   </records>
 
   <!-- Remove TinyMCE layer resource -->
-  <records 
+  <records
       remove="True"
       prefix="plone.resources/tinymce-layer"
       interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+
+  <!-- add missing render_body field -->
+  <records interface="Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings" />
 
 </registry>
