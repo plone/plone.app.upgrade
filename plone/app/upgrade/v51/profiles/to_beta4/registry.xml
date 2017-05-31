@@ -9,13 +9,13 @@
       prefix="plone.bundles/plone"
       interface="Products.CMFPlone.interfaces.IBundleRegistry"
       purge="False">
-    <value key="last_compilation">2017-05-23 00:45:00</value>
+    <value key="last_compilation">2017-05-31 10:40:01</value>
   </records>
   <records
       prefix="plone.bundles/plone-logged-in"
       interface="Products.CMFPlone.interfaces.IBundleRegistry"
       purge="False">
-    <value key="last_compilation">2017-05-23 00:45:00</value>
+    <value key="last_compilation">2017-05-31 10:40:01</value>
   </records>
 
   <records
