@@ -4,10 +4,6 @@ Changelog
 2.0.4 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 - New Options for thumb- and icon-handling in site control panel
   https://github.com/plone/Products.CMFPlone/issues/1734
