@@ -135,7 +135,8 @@ Add image scaling options to image handling control panel.
 
         <gs:upgradeDepends
             title="Run to51beta4 upgrade profile."
-            description="Add options for icon- and thumb-handling to Site control panel.
+            description="Fixup timezone record fields, as old interface plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since plone.app.event 3.0.2.
+                         Add options for icon- and thumb-handling to Site control panel.
                          New metadata column `mime_type`.
                          Update plone-logged-in bundle.
                          TinyMCE 4.5.6 update.
