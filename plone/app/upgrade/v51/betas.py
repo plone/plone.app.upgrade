@@ -6,7 +6,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from zope.component import getUtility
 import logging
-import unicodedata
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -131,14 +130,12 @@ def update_social_media_fields(context):
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ISocialMediaSchema, prefix='plone')
     if settings.twitter_username:
-        twitter_username = unicodedata.normalize(
-            'NFKD', settings.twitter_username).encode('ascii', 'ignore')
+        twitter_username = settings.twitter_username.encode('ascii', 'ignore')
     if settings.facebook_app_id:
-        facebook_app_id = unicodedata.normalize(
-            'NFKD', settings.facebook_app_id).encode('ascii', 'ignore')
+        facebook_app_id = settings.facebook_app_id.encode('ascii', 'ignore')
     if settings.facebook_username:
-        facebook_username = unicodedata.normalize(
-            'NFKD', settings.facebook_username).encode('ascii', 'ignore')
+        facebook_username = settings.facebook_username.encode(
+            'ascii', 'ignore')
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta4')
     settings.twitter_username = twitter_username
     settings.facebook_app_id = facebook_app_id
