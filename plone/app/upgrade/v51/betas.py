@@ -130,12 +130,11 @@ def update_social_media_fields(context):
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ISocialMediaSchema, prefix='plone')
     if settings.twitter_username:
-        twitter_username = settings.twitter_username.encode('ascii', 'ignore')
+        twitter_username = str(settings.twitter_username)
     if settings.facebook_app_id:
-        facebook_app_id = settings.facebook_app_id.encode('ascii', 'ignore')
+        facebook_app_id = str(settings.facebook_app_id)
     if settings.facebook_username:
-        facebook_username = settings.facebook_username.encode(
-            'ascii', 'ignore')
+        facebook_username = str(settings.facebook_username)
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta4')
     settings.twitter_username = twitter_username
     settings.facebook_app_id = facebook_app_id
