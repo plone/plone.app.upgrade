@@ -33,4 +33,6 @@
   <!-- add missing render_body field -->
   <records interface="Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings" />
 
+  <records interface="Products.CMFPlone.interfaces.ISocialMediaSchema"
+           prefix="plone" />
 </registry>

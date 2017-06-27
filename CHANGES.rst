@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix upgrade step for ISocialMediaSchema
+  [MrTango]
 
 
 2.0.4 (2017-06-04)

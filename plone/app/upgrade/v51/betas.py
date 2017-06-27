@@ -5,7 +5,6 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from zope.component import getUtility
-
 import logging
 
 
@@ -124,15 +123,24 @@ def update_social_media_fields(context):
     field values as they are now declared as ASCIILine instead of
     TextLine.
     """
+    twitter_username = ''
+    facebook_app_id = ''
+    facebook_username = ''
     from Products.CMFPlone.interfaces.controlpanel import ISocialMediaSchema
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ISocialMediaSchema, prefix='plone')
     if settings.twitter_username:
-        settings.twitter_username = str(settings.twitter_username)
+        twitter_username = settings.twitter_username.encode('ascii', 'ignore')
     if settings.facebook_app_id:
-        settings.facebook_app_id = str(settings.facebook_app_id)
+        facebook_app_id = settings.facebook_app_id.encode('ascii', 'ignore')
     if settings.facebook_username:
-        settings.facebook_username = str(settings.facebook_username)
+        facebook_username = settings.facebook_username.encode(
+            'ascii', 'ignore')
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51beta4')
+    settings.twitter_username = twitter_username
+    settings.facebook_app_id = facebook_app_id
+    settings.facebook_username = facebook_username
+
     logger.log(logging.INFO, 'Field types updated on social media schema')
 
 

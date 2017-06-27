@@ -120,18 +120,18 @@ Add image scaling options to image handling control panel.
             import_profile="plone.app.upgrade.v51:to51beta3"
             />
 
-        <gs:upgradeStep
-            title="Update social media fields"
-            description=""
-            handler=".betas.update_social_media_fields"
-            />
-
     </gs:upgradeSteps>
 
     <gs:upgradeSteps
         source="5106"
         destination="5107"
         profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Update social media fields"
+            description=""
+            handler=".betas.update_social_media_fields"
+            />
 
         <gs:upgradeDepends
             title="Run to51beta4 upgrade profile."
