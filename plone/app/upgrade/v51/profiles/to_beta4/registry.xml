@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <registry>
-<!-- New options for thumb- and icon-handling -->
-    <records interface="Products.CMFPlone.interfaces.ISiteSchema"
-            prefix="plone" />
+
+  <!-- Fixup timezone record fields, as old interface plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since plone.app.event 3.0.2. -->
+  <records interface="Products.CMFPlone.interfaces.IDateAndTimeSchema" prefix="plone" />
+
+  <!-- New options for thumb- and icon-handling -->
+  <records interface="Products.CMFPlone.interfaces.ISiteSchema" prefix="plone" />
 
   <!-- Update ``last_compilation`` to deliver new bundles -->
   <records
