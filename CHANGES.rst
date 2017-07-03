@@ -1,12 +1,14 @@
 Changelog
 =========
 
-2.0.5 (unreleased)
+2.0.5 (2017-07-03)
 ------------------
 
 Bug fixes:
 
-- Plone 5.1: Fixup timezone record fields, as old interface plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since plone.app.event 3.0.2.
+- Plone 5.1: Fixup timezone record fields, as old interface
+  plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since
+  plone.app.event 3.0.2.
   [thet]
 
 - Fix upgrade step for ISocialMediaSchema
