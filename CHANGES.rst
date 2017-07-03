@@ -4,14 +4,6 @@ Changelog
 2.0.5 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Plone 5.1: Fixup timezone record fields, as old interface plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since plone.app.event 3.0.2.
