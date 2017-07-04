@@ -12,6 +12,9 @@ New features:
 
 - *add item here*
 
+- Add an upgrade step for Products.CMFPlone version 5020 and add jqtree-contextmenu to registry
+  [b4oshany]
+
 Bug fixes:
 
 - *add item here*

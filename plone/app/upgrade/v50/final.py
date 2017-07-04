@@ -104,6 +104,11 @@ def to507(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to507')
 
 
+def to509(context):
+    """5.0.8 -> 5.0.9"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to509')
+
+
 def fix_double_smaxage(context):
     """Fix caching definition.
 
