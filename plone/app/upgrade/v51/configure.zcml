@@ -167,10 +167,10 @@ Add image scaling options to image handling control panel.
             import_profile="plone.app.upgrade.v51:to51beta5"
             />
 
-        <!--<gs:upgradeStep
+        <gs:upgradeStep
             title="Move safe_html settings from portal_transforms to Plone registry"
             handler=".betas.move_safe_html_settings_to_registry"
-            />-->
+            />
 
     </gs:upgradeSteps>
 </configure>
