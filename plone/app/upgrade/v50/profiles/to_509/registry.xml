@@ -5,4 +5,9 @@
       <value key="js">++plone++static/components/cs-jqtree-contextmenu/src/jqTreeContextMenu.js</value>
       <value key="deps">jqtree</value>
   </records>
+  <records prefix="plone.resources/js-shortcuts"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/js-shortcuts/js-shortcuts.js</value>
+      <value key="deps">jquery</value>
+  </records>
 </registry>
