@@ -15,7 +15,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix #84 - usage of aq_base
+  [jensens]
 
 
 2.0.5 (2017-07-03)
