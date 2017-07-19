@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_base
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -70,7 +71,7 @@ def to501(context):
         for brain in zcatalog.unrestrictedSearchResults():
             # First get the new value
             obj = brain._unrestrictedGetObject()
-            new_value = bool(getattr(obj.aq_base, 'image', False))
+            new_value = bool(getattr(aq_base(obj), 'image', False))
 
             # We can now update the record with the new getIcon value
             record = list(catalog.data[brain.getRID()])
