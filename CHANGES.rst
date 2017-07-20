@@ -24,6 +24,10 @@ Bug fixes:
 
 Bug fixes:
 
+- fix role map for `Show Toolbar Permission` 
+  see end of discussion of https://github.com/plone/Products.CMFPlone/issues/1570
+  [fgrcon]
+
 - Plone 5.1: Fixup timezone record fields, as old interface
   plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since
   plone.app.event 3.0.2.
