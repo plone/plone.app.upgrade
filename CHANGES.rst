@@ -16,7 +16,9 @@ New features:
   - add jqtree-contextmenu to the resource registry
   - add js-shortcuts to the resource registry
   [b4oshany]
-
+- Update upgrade step for Plone 5.1 beta 4
+  [b4oshany]
+  
 Bug fixes:
 
 - *add item here*
