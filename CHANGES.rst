@@ -1,12 +1,8 @@
 Changelog
 =========
 
-2.0.6 (unreleased)
+2.0.6 (2017-08-05)
 ------------------
-
-Breaking changes:
-
-- *add item here*
 
 New features:
 
@@ -37,6 +33,7 @@ Bug fixes:
 ------------------
 
 New features:
+
 - New Options for thumb- and icon-handling in site control panel
   https://github.com/plone/Products.CMFPlone/issues/1734
   upgradesteps to 5.1b4
