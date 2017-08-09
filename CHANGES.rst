@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Recover missing dashboard (user actions)
+  https://github.com/plone/Products.CMFPlone/issues/1132
+  [fgrcon]
 
 
 2.0.6 (2017-08-05)

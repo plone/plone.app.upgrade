@@ -164,7 +164,8 @@ Add image scaling options to image handling control panel.
         <gs:upgradeDepends
             title="Run to51beta5 upgrade profile."
             description="Fix safe_html in PortalTransforms.
-                         Add 'Show Toolbar' permission."
+                         Add 'Show Toolbar' permission.
+                         Recover Dashboard in useractions."
             import_profile="plone.app.upgrade.v51:to51beta5"
             />
 
