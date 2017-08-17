@@ -174,4 +174,17 @@ Add image scaling options to image handling control panel.
             />
 
     </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5108"
+        destination="5109"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to51beta6 upgrade profile."
+            description="Add JQTree Contextual Menu and JS Shortcuts to the resource registry."
+            import_profile="plone.app.upgrade.v51:to51beta6"
+            />
+
+    </gs:upgradeSteps>
 </configure>
