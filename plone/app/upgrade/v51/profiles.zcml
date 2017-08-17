@@ -59,13 +59,4 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <genericsetup:registerProfile
-      name="to51beta6"
-      title="Upgrade profile for Plone 5.1beta5 to Plone 5.1beta6"
-      description=""
-      directory="profiles/to_beta6"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
 </configure>

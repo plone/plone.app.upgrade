@@ -164,26 +164,14 @@ Add image scaling options to image handling control panel.
         <gs:upgradeDepends
             title="Run to51beta5 upgrade profile."
             description="Fix safe_html in PortalTransforms.
-                         Add 'Show Toolbar' permission."
+                         Add 'Show Toolbar' permission.
+                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry."
             import_profile="plone.app.upgrade.v51:to51beta5"
             />
 
         <gs:upgradeStep
             title="Move safe_html settings from portal_transforms to Plone registry"
             handler=".betas.move_safe_html_settings_to_registry"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        source="5108"
-        destination="5109"
-        profile="Products.CMFPlone:plone">
-
-        <gs:upgradeDepends
-            title="Run to51beta6 upgrade profile."
-            description="Add JQTree Contextual Menu and JS Shortcuts to the resource registry."
-            import_profile="plone.app.upgrade.v51:to51beta6"
             />
 
     </gs:upgradeSteps>
