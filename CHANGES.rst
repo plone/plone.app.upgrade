@@ -12,6 +12,11 @@ New features:
 
 - *add item here*
 
+- Add an upgrade step for Products.CMFPlone version 5020
+  - add jqtree-contextmenu to the resource registry
+  - add js-shortcuts to the resource registry
+  [b4oshany]
+  
 Bug fixes:
 
 - *add item here*
