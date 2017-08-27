@@ -104,9 +104,9 @@ def to507(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to507')
 
 
-def to509(context):
-    """5.0.8 -> 5.0.9"""
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to509')
+def to5010(context):
+    """5.0.9 -> 5.0.10"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to5010')
 
 
 def fix_double_smaxage(context):
