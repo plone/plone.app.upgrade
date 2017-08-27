@@ -10,13 +10,12 @@ Breaking changes:
 
 New features:
 
-- *add item here*
-
-- Add an upgrade step for Products.CMFPlone version 5020
-  - add jqtree-contextmenu to the resource registry
-  - add js-shortcuts to the resource registry
+- Add jqtree-contextmenu to the resource registry for Plone 5.0 and 5.1
   [b4oshany]
-  
+
+- Add js-shortcuts to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
+
 Bug fixes:
 
 - *add item here*
