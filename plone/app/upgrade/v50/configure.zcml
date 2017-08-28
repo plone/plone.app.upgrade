@@ -376,9 +376,9 @@
         profile="Products.CMFPlone:plone">
 
         <gs:upgradeStep
-            title="Miscellaneous"
+            title="Add jqTree contextual menu and JS Shortcuts to the resource registry"
             description=""
-            handler="..utils.null_upgrade_step"
+            handler=".final.to5010"
             />
 
     </gs:upgradeSteps>

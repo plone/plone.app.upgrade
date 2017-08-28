@@ -10,7 +10,11 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add jqtree-contextmenu to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
+
+- Add js-shortcuts to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
 
 Bug fixes:
 
