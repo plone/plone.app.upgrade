@@ -174,5 +174,10 @@ Add image scaling options to image handling control panel.
             handler=".betas.move_safe_html_settings_to_registry"
             />
 
+        <gs:upgradeStep
+            title="Cleanup duplicate settings from placefiul workflow from Plone registry"
+            handler=".betas.remove_duplicate_iterate_settings"
+            />
+
     </gs:upgradeSteps>
 </configure>

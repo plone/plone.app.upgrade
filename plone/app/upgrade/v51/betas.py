@@ -198,3 +198,25 @@ def move_safe_html_settings_to_registry(context):
     settings.disable_filtering = disable_filtering
     settings.valid_tags = sorted(valid_tags)
     settings.nasty_tags = sorted(nasty_tags)
+
+
+def remove_duplicate_iterate_settings(context):
+    """When migrating from Plone 5 to 5.1 there might be
+    duplicate settings for plone.app.iterate in the registry.
+    One with the prefix 'plone' and one without.
+
+    See https://github.com/plone/plone.app.iterate/pull/47
+    """
+    registry = getUtility(IRegistry)
+    from plone.app.iterate.interfaces import IIterateSettings
+    try:
+        registry.forInterface(IIterateSettings, prefix='plone')
+        del registry['plone.checkout_workflow_policy']
+        del registry['plone.enable_checkout_workflow']
+    except KeyError:
+        pass
+    # Make sure the correct settings are actually initialized
+    from Products.CMFPlone.utils import get_installer
+    qi = get_installer(context)
+    if qi.is_product_installed('plone.app.iterate'):
+        registry.registerInterface(IIterateSettings)
