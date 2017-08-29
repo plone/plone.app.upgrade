@@ -17,7 +17,9 @@ from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
+
 import logging
+import pkg_resources
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -364,6 +366,18 @@ def to50rc1(context):
         qi = get_installer(portal)
         if not qi.is_product_installed('plone.app.linkintegrity'):
             qi.install_product('plone.app.linkintegrity')
+
+    # If Products.PortalTransforms is >= 3.0.1.dev0 it has the new safe_html.
+    # Register and migrate the registry settings needed for it.
+    # Linkintegrity calls the transform when retrieving links from html-fields.
+    pt = pkg_resources.get_distribution('Products.PortalTransforms')
+    if pt.version >= '3.0.1.dev0':
+        from plone.app.upgrade.v51.betas import move_safe_html_settings_to_registry  # noqa: E501
+        from Products.CMFPlone.interfaces import IFilterSchema
+        registry = getUtility(IRegistry)
+        registry.registerInterface(IFilterSchema, prefix='plone')
+        move_safe_html_settings_to_registry(context)
+
     migrate_linkintegrity_relations(portal)
 
     upgrade_usergroups_controlpanel_settings(context)
