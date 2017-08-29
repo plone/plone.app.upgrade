@@ -18,7 +18,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Register settings for safe_html-Transform before linkintegrity-migration in 5.0rc1
+  [pbauer]
 
 
 2.0.6 (2017-08-05)
