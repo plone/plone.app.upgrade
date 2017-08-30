@@ -19,6 +19,11 @@ New features:
 Bug fixes:
 
 - Register settings for safe_html-Transform before linkintegrity-migration in 5.0rc1
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2129
+  [pbauer]
+
+- Fix migration if safe_html-Settings to not drop tags without a closing tag.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2088
   [pbauer]
 
 
