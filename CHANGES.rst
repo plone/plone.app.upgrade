@@ -21,6 +21,9 @@ Bug fixes:
 - Register settings for safe_html-Transform before linkintegrity-migration in 5.0rc1
   [pbauer]
 
+- Cleanup duplicate iterate settings. See also https://github.com/plone/plone.app.iterate/pull/47
+  [pbauer]
+
 
 2.0.6 (2017-08-05)
 ------------------
