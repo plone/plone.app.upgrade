@@ -165,6 +165,7 @@ Add image scaling options to image handling control panel.
             title="Run to51beta5 upgrade profile."
             description="Fix safe_html in PortalTransforms.
                          Add 'Show Toolbar' permission.
+                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry. 
                          Recover Dashboard in useractions."
             import_profile="plone.app.upgrade.v51:to51beta5"
             />
@@ -172,6 +173,11 @@ Add image scaling options to image handling control panel.
         <gs:upgradeStep
             title="Move safe_html settings from portal_transforms to Plone registry"
             handler=".betas.move_safe_html_settings_to_registry"
+            />
+
+        <gs:upgradeStep
+            title="Cleanup duplicate settings from placefiul workflow from Plone registry"
+            handler=".betas.remove_duplicate_iterate_settings"
             />
 
     </gs:upgradeSteps>

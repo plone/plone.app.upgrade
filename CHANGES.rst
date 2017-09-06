@@ -10,13 +10,23 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add jqtree-contextmenu to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
+
+- Add js-shortcuts to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
 
 Bug fixes:
 
 - Recover missing dashboard (user actions)
   https://github.com/plone/Products.CMFPlone/issues/1132
   [fgrcon]
+
+- Register settings for safe_html-Transform before linkintegrity-migration in 5.0rc1
+  [pbauer]
+
+- Cleanup duplicate iterate settings. See also https://github.com/plone/plone.app.iterate/pull/47
+  [pbauer]
 
 
 2.0.6 (2017-08-05)
