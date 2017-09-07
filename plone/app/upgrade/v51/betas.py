@@ -185,16 +185,13 @@ def move_safe_html_settings_to_registry(context):
     """ Move safe_html settings from portal_transforms to Plone registry.
     """
     registry = getUtility(IRegistry)
-    settings = registry.forInterface(
-        IFilterSchema, prefix="plone")
+    settings = registry.forInterface(IFilterSchema, prefix='plone')
     pt = getToolByName(context, 'portal_transforms')
     disable_filtering = pt.safe_html._config.get('disable_transform')
     raw_valid_tags = pt.safe_html._config.get('valid_tags') or {}
     raw_nasty_tags = pt.safe_html._config.get('nasty_tags') or {}
-    valid_tags = [
-        tag.decode() for tag, enabled in raw_valid_tags.items() if enabled]
-    nasty_tags = [
-        tag.decode() for tag, enabled in raw_nasty_tags.items() if enabled]
+    valid_tags = [tag.decode() for tag in raw_valid_tags]
+    nasty_tags = [tag.decode() for tag in raw_nasty_tags]
     settings.disable_filtering = disable_filtering
     settings.valid_tags = sorted(valid_tags)
     settings.nasty_tags = sorted(nasty_tags)

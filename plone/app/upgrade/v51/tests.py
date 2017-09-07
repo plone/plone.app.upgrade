@@ -59,8 +59,12 @@ class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
     def test_migrate_safe_html_settings(self):
         from plone.app.upgrade.v51.betas import \
             move_safe_html_settings_to_registry
-
+        self.pt.safe_html._config['valid_tags'] = {'b': 1, 'img': 0}
         move_safe_html_settings_to_registry(self.portal)
+        # make sure the boolean setting (used to mark open tags like img)
+        # is ignored. Only works in 5.1
+        if getattr(self.settings, 'valid_tags', None):
+            self.assertEqual(self.settings.valid_tags, ['b', 'img'])
 
 
 def test_suite():
