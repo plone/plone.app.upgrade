@@ -165,7 +165,8 @@ Add image scaling options to image handling control panel.
             title="Run to51beta5 upgrade profile."
             description="Fix safe_html in PortalTransforms.
                          Add 'Show Toolbar' permission.
-                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry."
+                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry. 
+                         Recover Dashboard in useractions."
             import_profile="plone.app.upgrade.v51:to51beta5"
             />
 

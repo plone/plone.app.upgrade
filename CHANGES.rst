@@ -18,6 +18,10 @@ New features:
 
 Bug fixes:
 
+- Recover missing dashboard (user actions)
+  https://github.com/plone/Products.CMFPlone/issues/1132
+  [fgrcon]
+
 - Register settings for safe_html-Transform before linkintegrity-migration in 5.0rc1
   Fixes https://github.com/plone/Products.CMFPlone/issues/2129
   [pbauer]
