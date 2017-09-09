@@ -1,10 +1,13 @@
 Changelog
 =========
 
-1.4.3 (unreleased)
+1.4.3 (2017-09-08)
 ------------------
 
-- Nothing changed yet.
+New features:
+
+- Add empty profile for 4.3.16
+  [esteele]
 
 
 1.4.2 (2017-07-03)
