@@ -4,10 +4,6 @@ Changelog
 2.0.7 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add jqtree-contextmenu to the resource registry for Plone 5.0 and 5.1
