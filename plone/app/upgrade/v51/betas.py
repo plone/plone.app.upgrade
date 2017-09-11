@@ -185,7 +185,12 @@ def move_safe_html_settings_to_registry(context):
     """ Move safe_html settings from portal_transforms to Plone registry.
     """
     registry = getUtility(IRegistry)
-    settings = registry.forInterface(IFilterSchema, prefix='plone')
+    try:
+        settings = registry.forInterface(IFilterSchema, prefix='plone')
+    except KeyError:
+        # Catch case where valid_tags is not yet registered
+        registry.registerInterface(IFilterSchema, prefix='plone')
+        settings = registry.forInterface(IFilterSchema, prefix='plone')
     pt = getToolByName(context, 'portal_transforms')
     disable_filtering = pt.safe_html._config.get('disable_transform')
     raw_valid_tags = pt.safe_html._config.get('valid_tags') or {}

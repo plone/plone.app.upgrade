@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Register settings for safe_html-Transform when migrating from 5107 to 5108
+  [pbauer]
 
 
 2.0.7 (2017-09-10)
