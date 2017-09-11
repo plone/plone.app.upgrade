@@ -570,7 +570,7 @@ def to50rc3(context):
         value = site_properties.getProperty('checkout_workflow_policy')
         from plone.app.iterate.interfaces import IIterateSettings
         settings = registry.forInterface(IIterateSettings)
-        settings.checkout_workflow_policy = safe_unicode(value)
+        settings.checkout_workflow_policy = str(value)
         site_properties._delProperty('checkout_workflow_policy')
 
     if site_properties.hasProperty('default_page_types'):
