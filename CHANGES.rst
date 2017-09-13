@@ -14,6 +14,9 @@ New features:
 
 Bug fixes:
 
+- Register Plone 5.1 upgrade steps.
+  [thet]
+
 - Register settings for safe_html-Transform when migrating from 5107 to 5108
   [pbauer]
 
