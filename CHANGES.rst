@@ -14,6 +14,10 @@ New features:
 
 Bug fixes:
 
+- Fix deletion of registry records in ``remove_duplicate_iterate_settings``
+  from the ``5108`` upgrade.
+  [thet]
+
 - Register Plone 5.1 upgrade steps.
   [thet]
 

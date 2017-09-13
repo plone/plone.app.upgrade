@@ -212,9 +212,10 @@ def remove_duplicate_iterate_settings(context):
     registry = getUtility(IRegistry)
     from plone.app.iterate.interfaces import IIterateSettings
     try:
-        registry.forInterface(IIterateSettings, prefix='plone')
-        del registry['plone.checkout_workflow_policy']
-        del registry['plone.enable_checkout_workflow']
+        if 'plone.checkout_workflow_policy' in registry.records:
+            del registry.records['plone.checkout_workflow_policy']
+        if 'plone.enable_checkout_workflow' in registry.records:
+            del registry.records['plone.enable_checkout_workflow']
     except KeyError:
         pass
     # Make sure the correct settings are actually initialized
