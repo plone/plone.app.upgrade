@@ -24,6 +24,9 @@ Bug fixes:
 - Register settings for safe_html-Transform when migrating from 5107 to 5108
   [pbauer]
 
+- Use str() when migrating checkout_workflow_policy since the field is ASCII.
+  See discussion at https://github.com/plone/plone.app.iterate/pull/53
+  [pbauer]
 
 2.0.7 (2017-09-10)
 ------------------
