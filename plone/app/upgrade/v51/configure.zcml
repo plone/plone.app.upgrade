@@ -181,4 +181,18 @@ Add image scaling options to image handling control panel.
             />
 
     </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5108"
+        destination="5109"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to51rc1 upgrade profile."
+            description=""
+            import_profile="plone.app.upgrade.v51:to51rc1"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
