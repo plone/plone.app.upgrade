@@ -9,6 +9,7 @@ from Products.CMFPlone.interfaces import IMaintenanceSchema
 from Products.CMFPlone.interfaces import INavigationSchema
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFPlone.utils import safe_unicode
 from plone.app.theming.interfaces import IThemeSettings
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
@@ -404,9 +405,9 @@ def upgrade_site_controlpanel_settings(context):
         )
     except KeyError:
         settings = False
-    settings.site_title = unicode(portal.title)
+    settings.site_title = safe_unicode(portal.title)
     webstat_js = get_property(site_properties, 'webstats_js', '')
-    settings.webstats_js = unicode(webstat_js)
+    settings.webstats_js = safe_unicode(webstat_js)
     settings.enable_sitemap = get_property(site_properties, 'enable_sitemap')
     if site_properties.hasProperty('exposeDCMetaTags'):
         settings.exposeDCMetaTags = site_properties.exposeDCMetaTags
