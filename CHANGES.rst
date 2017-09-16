@@ -28,6 +28,9 @@ Bug fixes:
   See discussion at https://github.com/plone/plone.app.iterate/pull/53
   [pbauer]
 
+- Use safe_unicode to migrate some settings. Fixes https://github.com/plone/plone.app.upgrade/issues/104
+  [pbauer]
+
 2.0.7 (2017-09-10)
 ------------------
 
