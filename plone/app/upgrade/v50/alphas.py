@@ -20,6 +20,7 @@ from plone.keyring.keymanager import KeyManager
 from plone.keyring.keyring import Keyring
 from plone.registry.interfaces import IRegistry
 from zope.component import getSiteManager
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.schema.interfaces import ConstraintNotSatisfied
