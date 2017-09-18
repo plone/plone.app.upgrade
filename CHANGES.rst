@@ -6,7 +6,8 @@ Changelog
 
 Breaking changes:
 
-- *add item here*
+- Remove old tools portal_css and portal_css.
+  [gforcada, pbauer]
 
 New features:
 
