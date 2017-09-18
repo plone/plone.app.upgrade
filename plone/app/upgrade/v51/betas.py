@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import cleanUpSkinsTool
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IFilterSchema
@@ -223,3 +224,20 @@ def remove_duplicate_iterate_settings(context):
     qi = get_installer(context)
     if qi.is_product_installed('plone.app.iterate'):
         registry.registerInterface(IIterateSettings)
+
+
+def remove_portal_tools(context):
+    """Remove some portal tools."""
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+
+    tools_to_remove = [
+        'portal_css',
+        'portal_javascripts',
+    ]
+
+    # remove obsolete tools
+    tools = [t for t in tools_to_remove if t in portal]
+    portal.manage_delObjects(tools)
+
+    cleanUpToolRegistry(context)

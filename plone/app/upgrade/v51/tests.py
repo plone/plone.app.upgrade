@@ -3,7 +3,10 @@ from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
+from plone.testing.z2 import Browser
 from Products.CMFPlone.interfaces import IFilterSchema
+from Products.CMFCore.utils import getToolByName
+from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 
 import unittest
 
@@ -67,6 +70,30 @@ class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
             self.assertEqual(self.settings.valid_tags, ['b', 'img'])
 
 
+class TestFunctionalMigrations(unittest.TestCase):
+    """Run an upgrade from a real Plone 4.0 ZEXP dump.
+
+    Then test that various things are set up correctly.
+    """
+
+    layer = REAL_UPGRADE_FUNCTIONAL
+
+    def setUp(self):
+        self.portal = self.layer['app'].test
+
+    def testFullyUpgraded(self):
+        self.assertFalse(self.portal.portal_migration.needUpgrading())
+
+    def testCanRenderHomepage(self):
+        browser = Browser(self.layer['app'])
+        browser.open('http://nohost/test')
+        self.assertTrue('Welcome' in browser.contents)
+
+    def testToolsAreRemoved(self):
+        self.assertFalse('portal_css' in self.portal)
+        self.assertFalse('portal_javascripts' in self.portal)
+
+
 def test_suite():
     # Skip these tests on Plone 4
     if not PLONE_5:
@@ -78,5 +105,8 @@ def test_suite():
     )
     suite.addTest(
         unittest.makeSuite(UpgradePortalTransforms51beta4to51beta5Test)
+    )
+    suite.addTest(
+        unittest.makeSuite(TestFunctionalMigrations)
     )
     return suite
