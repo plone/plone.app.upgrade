@@ -5,18 +5,11 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
 from Products.CMFPlone.interfaces import IFilterSchema
-from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
+from pkg_resources import get_distribution
 
 import unittest
 
-try:
-    from Products.CMFPlone.factory import _IMREALLYPLONE5
-    _IMREALLYPLONE5  # pyflakes
-except ImportError:
-    PLONE_5 = False
-else:
-    PLONE_5 = True
+PLONE_51 = get_distribution('Products.CMFPlone').version >= '5.1'
 
 
 class UpgradeRegistry503to51alpha1Test(unittest.TestCase):
@@ -71,7 +64,7 @@ class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
 
 
 class TestFunctionalMigrations(unittest.TestCase):
-    """Run an upgrade from a real Plone 4.0 ZEXP dump.
+    """Run an upgrade from a real Plone 4.0 ZEXP to 5.1.
 
     Then test that various things are set up correctly.
     """
@@ -96,7 +89,7 @@ class TestFunctionalMigrations(unittest.TestCase):
 
 def test_suite():
     # Skip these tests on Plone 4
-    if not PLONE_5:
+    if not PLONE_51:
         return unittest.TestSuite()
 
     suite = unittest.TestSuite()
