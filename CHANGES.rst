@@ -4,14 +4,6 @@ Changelog
 2.0.8 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fix deletion of registry records in ``remove_duplicate_iterate_settings``
