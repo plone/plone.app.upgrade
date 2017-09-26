@@ -162,12 +162,12 @@ Add image scaling options to image handling control panel.
         profile="Products.CMFPlone:plone">
 
         <gs:upgradeDepends
-            title="Run to51beta5 upgrade profile."
+            title="Run to51rc1 upgrade profile."
             description="Fix safe_html in PortalTransforms.
                          Add 'Show Toolbar' permission.
-                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry. 
+                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry.
                          Recover Dashboard in useractions."
-            import_profile="plone.app.upgrade.v51:to51beta5"
+            import_profile="plone.app.upgrade.v51:to51rc1"
             />
 
         <gs:upgradeStep
@@ -180,18 +180,6 @@ Add image scaling options to image handling control panel.
             handler=".betas.remove_duplicate_iterate_settings"
             />
 
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        source="5108"
-        destination="5109"
-        profile="Products.CMFPlone:plone">
-
-        <gs:upgradeDepends
-            title="Run to51rc1 upgrade profile."
-            description=""
-            import_profile="plone.app.upgrade.v51:to51rc1"
-            />
 
     </gs:upgradeSteps>
 
