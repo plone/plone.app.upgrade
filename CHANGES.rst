@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fixed WrongType exception when migrating installed Iterate to 5.0.
+  [maurits]
 
 
 2.0.8 (2017-09-25)
