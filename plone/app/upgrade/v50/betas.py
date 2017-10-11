@@ -17,6 +17,7 @@ from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.schema._bootstrapinterfaces import WrongType
 
 import logging
 import pkg_resources
@@ -570,7 +571,14 @@ def to50rc3(context):
         value = site_properties.getProperty('checkout_workflow_policy')
         from plone.app.iterate.interfaces import IIterateSettings
         settings = registry.forInterface(IIterateSettings)
-        settings.checkout_workflow_policy = str(value)
+        # Some versions of plone.app.iterate require a string here,
+        # others a unicode.  Best seems to be to try both.
+        try:
+            # plone.app.iterate 3.3.2+
+            settings.checkout_workflow_policy = str(value)
+        except WrongType:
+            # plone.app.iterate 3.3.1-
+            settings.checkout_workflow_policy = safe_unicode(value)
         site_properties._delProperty('checkout_workflow_policy')
 
     if site_properties.hasProperty('default_page_types'):
