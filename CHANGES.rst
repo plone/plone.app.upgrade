@@ -17,6 +17,8 @@ Bug fixes:
 - Fixed WrongType exception when migrating installed Iterate to 5.0.
   [maurits]
 
+- Adapt to changes in CMF 2.4 (getCurrentKeyFormat removed) and Zope 4 (not Products in Control Panel).
+  [pbauer]
 
 2.0.8 (2017-09-25)
 ------------------

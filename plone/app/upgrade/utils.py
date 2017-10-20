@@ -125,7 +125,9 @@ def cleanUpSkinsTool(context):
             # not a directory view, but a persistent folder
             continue
         try:
-            reg_key = _dirreg.getCurrentKeyFormat(reg_key)
+            # Removed in CMF 2.3
+            if getattr(_dirreg, 'getCurrentKeyFormat', None):
+                reg_key = _dirreg.getCurrentKeyFormat(reg_key)
             _dirreg.getDirectoryInfo(reg_key)
         except ValueError:
             skins._delObject(name)
