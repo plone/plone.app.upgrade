@@ -20,6 +20,9 @@ Bug fixes:
 - Adapt to changes in CMF 2.4 (getCurrentKeyFormat removed) and Zope 4 (not Products in Control Panel).
   [pbauer]
 
+- Register upgrades for Plone 5.2
+  [pbauer]
+
 2.0.8 (2017-09-25)
 ------------------
 

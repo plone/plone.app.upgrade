@@ -10,5 +10,3 @@ logger = logging.getLogger('plone.app.upgrade')
 
 def to52alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha1')
-    _fix_typo_in_toolbar_less_variable(context)
-
