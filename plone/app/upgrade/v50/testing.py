@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.testing.z2 import FunctionalTesting, login
 from zope.component.hooks import setSite
 from zope.configuration import xmlconfig
@@ -38,6 +40,10 @@ class RealUpgradeLayer(PloneSandboxLayer):
             # run upgrades
             self['portal'] = portal = app.test
             setSite(portal)
+            loadMigrationProfile(
+                portal.portal_setup,
+                'profile-plone.app.upgrade.v52:to52alpha1',
+                steps=['componentregistry'])
             portal.portal_migration.upgrade(swallow_errors=False)
             setSite(None)
 

@@ -10,7 +10,9 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add upgrade step for 5.2 to register tools as utilities.
+  Run it before testing the zexp-import.
+  [pbauer]
 
 Bug fixes:
 
