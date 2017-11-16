@@ -25,6 +25,12 @@ Bug fixes:
 - Register upgrades for Plone 5.2
   [pbauer]
 
+- Fix installation of IUserGroupsSettingsSchema into registry for Plone 5.0rc1.
+  [davisagli]
+
+- Avoid swallowing errors during registry setting upgrades.
+  [davisagli]
+
 2.0.8 (2017-09-25)
 ------------------
 
