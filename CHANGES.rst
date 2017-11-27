@@ -4,10 +4,6 @@ Changelog
 2.0.9 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add upgrade step for 5.2 to register tools as utilities.
