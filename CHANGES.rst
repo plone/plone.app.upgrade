@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Unregister import_steps that were moved to post_handlers.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2238
+  [pbauer]
 
 
 2.0.9 (2017-11-26)
