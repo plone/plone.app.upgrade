@@ -189,9 +189,8 @@ Add image scaling options to image handling control panel.
         profile="Products.CMFPlone:plone">
 
         <gs:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
+            title="Remove registration of p.a.c import_steps since they were transformed into post_handlers"
+            handler=".betas.cleanup_import_steps"
             />
     </gs:upgradeSteps>
 

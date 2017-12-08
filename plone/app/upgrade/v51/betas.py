@@ -214,3 +214,18 @@ def remove_duplicate_iterate_settings(context):
     qi = get_installer(context)
     if qi.is_product_installed('plone.app.iterate'):
         registry.registerInterface(IIterateSettings)
+
+
+def cleanup_import_steps(context):
+    """Remove registration of old GS-import_steps since they were transformed
+    into post_handlers. Otherwise the registered methods would run for each
+    profile.
+    See https://github.com/plone/Products.CMFPlone/issues/2238
+    """
+    steps = [
+        'plone.app.contenttypes--plone-content',
+        'plone.app.contenttypes',
+    ]
+    for step in steps:
+        if step in context._import_registry.listSteps():
+            context._import_registry.unregisterStep(step)
