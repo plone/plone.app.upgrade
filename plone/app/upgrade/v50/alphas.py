@@ -18,10 +18,13 @@ from plone.app.vocabularies.types import BAD_TYPES
 from plone.keyring.interfaces import IKeyManager
 from plone.keyring.keymanager import KeyManager
 from plone.keyring.keyring import Keyring
+from plone.protect.interfaces import IDisableCSRFProtection
 from plone.registry.interfaces import IRegistry
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.globalrequest import getRequest
+from zope.interface import alsoProvides
 from zope.schema.interfaces import ConstraintNotSatisfied
 
 try:
@@ -205,6 +208,13 @@ def upgrade_keyring(context):
     if sm.queryUtility(IKeyManager) is None:
         obj = KeyManager()
         sm.registerUtility(aq_base(obj), IKeyManager, '')
+
+    # disable CSRF protection which will fail due to
+    # using different secrets than when the authenticator
+    # was generated
+    request = getRequest()
+    if request is not None:
+        alsoProvides(request, IDisableCSRFProtection)
 
 
 def to50alhpa3(context):

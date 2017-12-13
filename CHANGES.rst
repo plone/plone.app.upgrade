@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.10 (unreleased)
+2.0.11 (unreleased)
 -------------------
 
 Breaking changes:
@@ -11,6 +11,19 @@ Breaking changes:
 New features:
 
 - *add item here*
+
+Bug fixes:
+
+- Log progress and ignore bad catalog entries while updating catalog metadata.
+  [davisagli]
+
+- Disable CSRF protection when replacing keyring.
+  This fixes running specific upgrade steps via the portal_setup UI.
+  [davisagli]
+
+
+2.0.10 (2017-12-13)
+-------------------
 
 Bug fixes:
 
