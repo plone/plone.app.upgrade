@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Log progress and ignore bad catalog entries while updating catalog metadata.
+  [davisagli]
 
 
 2.0.10 (2017-12-13)
