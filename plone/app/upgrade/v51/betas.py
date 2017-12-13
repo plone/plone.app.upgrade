@@ -5,6 +5,8 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IFilterSchema
 from Products.CMFPlone.interfaces import ISearchSchema
+from Products.ZCatalog.ProgressHandler import ZLogHandler
+from zExceptions import NotFound
 from zope.component import getUtility
 import logging
 
@@ -152,8 +154,16 @@ def reindex_mime_type(context):
               'Products.ATContentTypes.interfaces.file.IFileContent',
               'Products.ATContentTypes.interfaces.image.IImageContent']
     cnt = 0
-    for brain in zcatalog.unrestrictedSearchResults(object_provides=ifaces):
-        obj = brain._unrestrictedGetObject()
+    results = zcatalog.unrestrictedSearchResults(object_provides=ifaces)
+    num_objects = len(results)
+    pghandler = ZLogHandler(1000)
+    pghandler.init('Updating mime_type metadata', num_objects)
+    for brain in results:
+        pghandler.report(cnt)
+        try:
+            obj = brain._unrestrictedGetObject()
+        except (AttributeError, KeyError, TypeError, NotFound):
+            continue
         if not obj:
             continue
         # First get the new value:
@@ -169,6 +179,7 @@ def reindex_mime_type(context):
         record[metadata_index] = new_value
         catalog.data[brain.getRID()] = tuple(record)
         cnt += 1
+    pghandler.finish()
     logger.info('Reindexed `mime_type` for %s items' % str(cnt))
 
 
