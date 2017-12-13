@@ -167,8 +167,18 @@ def upgrade_security_controlpanel_settings(context):
     settings.enable_user_folders = pmembership.getMemberareaCreationFlag()
     settings.allow_anon_views_about = site_properties.getProperty(
         'allowAnonymousViewAbout', False)
+
+    # suppress migrating login names while setting use_email_as_login to existing value
+    from Products.CMFPlone.controlpanel import events
+    migrate_to_email_login = events.migrate_to_email_login
+    migrate_from_email_login = events.migrate_from_email_login
+    events.migrate_to_email_login = lambda x: None
+    events.migrate_to_email_login = lambda x: None
     settings.use_email_as_login = site_properties.getProperty(
         'use_email_as_login', False)
+    events.migrate_to_email_login = migrate_to_email_login
+    events.migrate_from_email_login = migrate_from_email_login
+
     settings.use_uuid_as_userid = site_properties.getProperty(
         'use_uuid_as_userid', False)
 

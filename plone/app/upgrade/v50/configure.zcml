@@ -158,7 +158,7 @@
            />
 
        <gs:upgradeStep
-           title="Run to50beta4 upgrade profile"
+           title="Upgrade plone.app.querystring"
            description=""
            handler=".betas.upgrade_querystring"
            />
