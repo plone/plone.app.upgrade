@@ -4,14 +4,6 @@ Changelog
 2.0.10 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Unregister import_steps that were moved to post_handlers.
