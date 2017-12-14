@@ -21,6 +21,10 @@ Bug fixes:
   This fixes running specific upgrade steps via the portal_setup UI.
   [davisagli]
 
+- Avoid triggering an unnecessary migration of user logins
+  when the use_email_as_login setting is migrated to portal_registry.
+  [davisagli]
+
 
 2.0.10 (2017-12-13)
 -------------------
