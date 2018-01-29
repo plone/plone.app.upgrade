@@ -370,7 +370,10 @@ New:
   [jensens]
 
 - Update to 5.1a2 upgrade step to allow upgrades from Plone 5.1a1.
-  [jensens]
+  [jensens, bsuttor]
+
+- Add leadimage registry settings.
+  [bsuttor]
 
 
 1.3.24 (2016-03-31)

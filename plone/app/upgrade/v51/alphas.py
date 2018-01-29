@@ -34,4 +34,5 @@ def to51alpha1(context):
 
 
 def to51alpha2(context):
+    """5.1a1 -> 5.1a2"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to51alpha2')
