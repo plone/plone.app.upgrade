@@ -94,7 +94,7 @@ def cleanDefaultCharset(context):
 
 
 def addAutoGroupToPAS(context):
-    from Products.PlonePAS.Extensions.Install import activatePluginInterfaces
+    from Products.PlonePAS.setuphandlers import activatePluginInterfaces
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
     sout = StringIO()

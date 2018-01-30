@@ -73,7 +73,7 @@ setup(
         'Products.GenericSetup>=1.8.1',
         'Products.MimetypesRegistry',
         # 'Products.PloneLanguageTool',
-        'Products.PlonePAS',
+        'Products.PlonePAS >= 5.0.1',
         'Products.PluggableAuthService',
         'Products.PortalTransforms',
         'Products.ResourceRegistries',

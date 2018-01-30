@@ -44,7 +44,7 @@ def removePersistentKSSMimeTypeImportStep(context):
 
 def addDefaultPlonePasswordPolicy(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    from Products.PlonePAS.Extensions.Install import setupPasswordPolicyPlugin
+    from Products.PlonePAS.setuphandlers import setupPasswordPolicyPlugin
     setupPasswordPolicyPlugin(portal)
 
 
