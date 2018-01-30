@@ -14,6 +14,9 @@ New features:
 
 Bug fixes:
 
+- Import ``setupPasswordPolicyPlugin`` from canonical place in ``PlonePAS``.
+  [maurits]
+
 - Log progress and ignore bad catalog entries while updating catalog metadata.
   [davisagli]
 

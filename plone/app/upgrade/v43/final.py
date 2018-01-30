@@ -44,7 +44,7 @@ def removePersistentKSSMimeTypeImportStep(context):
 
 def addDefaultPlonePasswordPolicy(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
-    from Products.PlonePAS.Extensions.Install import setupPasswordPolicyPlugin
+    from Products.PlonePAS.setuphandlers import setupPasswordPolicyPlugin
     setupPasswordPolicyPlugin(portal)
 
 
@@ -323,7 +323,7 @@ def removeFakeKupu(context):
 
 def addSortOnProperty(context):
     """Add sort_on field to search controlpanel.
-    
+
     The default value of this field is relevance.
     """
     site_properties = getToolByName(context, 'portal_properties').site_properties
