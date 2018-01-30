@@ -53,7 +53,7 @@ setup(
         'Products.CMFEditions',
         'Products.CMFQuickInstallerTool',
         'Products.GenericSetup>=1.8.1',
-        'Products.PlonePAS',
+        'Products.PlonePAS >= 5.0.1',
         'Products.PluggableAuthService',
         'Products.ZCatalog >= 2.13.4',
         'Zope2',
