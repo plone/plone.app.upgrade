@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Import from ``Products.PlonePAS.setuphandlers`` instead of ``Extensions/Install.py``.
+  [maurits]
 
 
 1.4.3 (2017-09-08)

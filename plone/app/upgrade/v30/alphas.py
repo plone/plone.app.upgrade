@@ -404,7 +404,7 @@ def updateMemberSecurity(context):
 
 
 def updatePASPlugins(context):
-    from Products.PlonePAS.Extensions.Install import activatePluginInterfaces
+    from Products.PlonePAS.setuphandlers import activatePluginInterfaces
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
 
