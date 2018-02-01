@@ -51,7 +51,6 @@ setup(
         'Products.CMFPlone',
         'Products.CMFCore',
         'Products.CMFEditions',
-        'Products.CMFQuickInstallerTool',
         'Products.GenericSetup>=1.8.1',
         'Products.PlonePAS >= 5.0.1',
         'Products.PluggableAuthService',
