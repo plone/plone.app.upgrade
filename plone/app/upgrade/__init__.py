@@ -1,7 +1,15 @@
 import pkg_resources
 import sys
 from zope.interface import implementer
-from Products.CMFQuickInstallerTool.interfaces import INonInstallable
+try:
+    # This is needed on Plone 5.0.
+    from Products.CMFQuickInstallerTool.interfaces import INonInstallable
+except ImportError:
+    # On Plone 5.1 we can use this.
+    # Note that the interface is available on earlier Plones,
+    # but not for the getNonInstallableProducts method.
+    # So we must use this as fallback.
+    from Products.CMFPlone.interfaces import INonInstallable
 from plone.app.upgrade.utils import alias_module
 import bbb
 import bbbd
@@ -19,6 +27,7 @@ class HiddenProducts(object):
             'plone.app.upgrade.v43',
             'plone.app.upgrade.v50',
             'plone.app.upgrade.v51',
+            'plone.app.upgrade.v52',
         ]
 
 try:

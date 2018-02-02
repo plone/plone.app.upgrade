@@ -14,6 +14,9 @@ New features:
 
 Bug fixes:
 
+- Removed hard dependency on ``CMFQuickInstallerTool``.
+  And marked the v52 module as non installable.  [maurits]
+
 - Import ``setupPasswordPolicyPlugin`` from canonical place in ``PlonePAS``.
   [maurits]
 
