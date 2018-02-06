@@ -4,6 +4,8 @@ from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
+from Products.ZCatalog.ProgressHandler import ZLogHandler
+from zExceptions import NotFound
 from zope.component import getUtility
 from zope.component.hooks import getSite
 
@@ -68,9 +70,17 @@ def to501(context):
 
         cnt = 0
         # search whole catalog
-        for brain in zcatalog.unrestrictedSearchResults():
+        results = zcatalog.unrestrictedSearchResults()
+        num_objects = len(results)
+        pghandler = ZLogHandler(1000)
+        pghandler.init('Updating getIcon metadata', num_objects)
+        for brain in results:
+            pghandler.report(cnt)
             # First get the new value
-            obj = brain._unrestrictedGetObject()
+            try:
+                obj = brain._unrestrictedGetObject()
+            except (AttributeError, KeyError, TypeError, NotFound):
+                continue
             new_value = bool(getattr(aq_base(obj), 'image', False))
 
             # We can now update the record with the new getIcon value
@@ -80,6 +90,7 @@ def to501(context):
 
             cnt += 1  # we are curious
         # done
+        pghandler.finish()
         logger.info('Reindexed `getIcon` for %s items' % str(cnt))
 
     refresh_getIcon_catalog_metadata(context)

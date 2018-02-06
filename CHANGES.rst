@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0.8 (unreleased)
-------------------
+2.0.12 (unreleased)
+-------------------
 
 Breaking changes:
 
@@ -12,6 +12,73 @@ Breaking changes:
 New features:
 
 - *add item here*
+
+Bug fixes:
+
+- *add item here*
+
+
+2.0.11 (2018-02-05)
+-------------------
+
+Bug fixes:
+
+- Removed hard dependency on ``CMFQuickInstallerTool``.
+  And marked the v52 module as non installable.  [maurits]
+
+- Import ``setupPasswordPolicyPlugin`` from canonical place in ``PlonePAS``.
+  [maurits]
+
+- Log progress and ignore bad catalog entries while updating catalog metadata.
+  [davisagli]
+
+- Disable CSRF protection when replacing keyring.
+  This fixes running specific upgrade steps via the portal_setup UI.
+  [davisagli]
+
+- Avoid triggering an unnecessary migration of user logins
+  when the use_email_as_login setting is migrated to portal_registry.
+  [davisagli]
+
+
+2.0.10 (2017-12-13)
+-------------------
+
+Bug fixes:
+
+- Unregister import_steps that were moved to post_handlers.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2238
+  [pbauer]
+
+
+2.0.9 (2017-11-26)
+------------------
+
+New features:
+
+- Add upgrade step for 5.2 to register tools as utilities.
+  Run it before testing the zexp-import.
+  [pbauer]
+
+Bug fixes:
+
+- Fixed WrongType exception when migrating installed Iterate to 5.0.
+  [maurits]
+
+- Adapt to changes in CMF 2.4 (getCurrentKeyFormat removed) and Zope 4 (not Products in Control Panel).
+  [pbauer]
+
+- Register upgrades for Plone 5.2
+  [pbauer]
+
+- Fix installation of IUserGroupsSettingsSchema into registry for Plone 5.0rc1.
+  [davisagli]
+
+- Avoid swallowing errors during registry setting upgrades.
+  [davisagli]
+
+2.0.8 (2017-09-25)
+------------------
 
 Bug fixes:
 

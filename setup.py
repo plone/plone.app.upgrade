@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.0.8.dev0'
+version = '2.0.12.dev0'
 
 setup(
     name='plone.app.upgrade',
@@ -15,7 +15,7 @@ setup(
         "Framework :: Plone :: 5.0",
         "Framework :: Plone :: 5.1",
         "Framework :: Zope2",
-        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         'Programming Language :: Python :: 2.6',
@@ -51,9 +51,8 @@ setup(
         'Products.CMFPlone',
         'Products.CMFCore',
         'Products.CMFEditions',
-        'Products.CMFQuickInstallerTool',
         'Products.GenericSetup>=1.8.1',
-        'Products.PlonePAS',
+        'Products.PlonePAS >= 5.0.1',
         'Products.PluggableAuthService',
         'Products.ZCatalog >= 2.13.4',
         'Zope2',

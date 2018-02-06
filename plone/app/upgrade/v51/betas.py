@@ -6,6 +6,8 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IFilterSchema
 from Products.CMFPlone.interfaces import ISearchSchema
+from Products.ZCatalog.ProgressHandler import ZLogHandler
+from zExceptions import NotFound
 from zope.component import getUtility
 import logging
 
@@ -29,26 +31,17 @@ def addSortOnProperty(context):
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        settings = registry.forInterface(
-            ISearchSchema,
-            prefix='plone',
-        )
-    except KeyError:
-        settings = False
-    if settings:
-        # migrate the old site properties to the new registry
-        if site_properties.hasProperty('sort_on'):
-            settings.sort_on = site_properties.sort_on
-        else:
-            settings.sort_on = 'relevance'
-        logger.log(logging.INFO,
-                   "Added 'sort_on' property to site_properties.")
+    settings = registry.forInterface(
+        ISearchSchema,
+        prefix='plone',
+    )
+    # migrate the old site properties to the new registry
+    if site_properties.hasProperty('sort_on'):
+        settings.sort_on = site_properties.sort_on
+    else:
+        settings.sort_on = 'relevance'
+    logger.log(logging.INFO,
+               "Added 'sort_on' property to site_properties.")
 
 
 def remove_leftover_skin_layers(context):
@@ -162,8 +155,16 @@ def reindex_mime_type(context):
               'Products.ATContentTypes.interfaces.file.IFileContent',
               'Products.ATContentTypes.interfaces.image.IImageContent']
     cnt = 0
-    for brain in zcatalog.unrestrictedSearchResults(object_provides=ifaces):
-        obj = brain._unrestrictedGetObject()
+    results = zcatalog.unrestrictedSearchResults(object_provides=ifaces)
+    num_objects = len(results)
+    pghandler = ZLogHandler(1000)
+    pghandler.init('Updating mime_type metadata', num_objects)
+    for brain in results:
+        pghandler.report(cnt)
+        try:
+            obj = brain._unrestrictedGetObject()
+        except (AttributeError, KeyError, TypeError, NotFound):
+            continue
         if not obj:
             continue
         # First get the new value:
@@ -179,6 +180,7 @@ def reindex_mime_type(context):
         record[metadata_index] = new_value
         catalog.data[brain.getRID()] = tuple(record)
         cnt += 1
+    pghandler.finish()
     logger.info('Reindexed `mime_type` for %s items' % str(cnt))
 
 
@@ -241,3 +243,18 @@ def remove_portal_tools(context):
     portal.manage_delObjects(tools)
 
     cleanUpToolRegistry(context)
+
+    
+def cleanup_import_steps(context):
+    """Remove registration of old GS-import_steps since they were transformed
+    into post_handlers. Otherwise the registered methods would run for each
+    profile.
+    See https://github.com/plone/Products.CMFPlone/issues/2238
+    """
+    steps = [
+        'plone.app.contenttypes--plone-content',
+        'plone.app.contenttypes',
+    ]
+    for step in steps:
+        if step in context._import_registry.listSteps():
+            context._import_registry.unregisterStep(step)
