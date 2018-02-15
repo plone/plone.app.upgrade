@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Hide our 'products' from installation for both CMFQuickInstallerTool and CMFPlone.
+  [maurits]
 
 
 2.0.11 (2018-02-05)
