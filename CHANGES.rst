@@ -14,6 +14,10 @@ New features:
 
 Bug fixes:
 
+- Rename retina_scales to highpixeldensity_scales.
+  Fixes `issue 2331 <https://github.com/plone/Products.CMFPlone/issues/2331>`_.
+  [maurits]
+
 - Hide our 'products' from installation for both CMFQuickInstallerTool and CMFPlone.
   [maurits]
 
