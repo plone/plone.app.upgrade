@@ -8,6 +8,7 @@ from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zExceptions import NotFound
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from Acquisition import aq_base
 
 import logging
 

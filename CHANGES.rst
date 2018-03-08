@@ -14,6 +14,9 @@ New features:
 
 Bug fixes:
 
+- ```obj.aq_base``` should not break upgrade, use aq_base(obj) instead
+  [2silver]
+
 - Hide our 'products' from installation for both CMFQuickInstallerTool and CMFPlone.
   [maurits]
 
