@@ -7,7 +7,7 @@
     <include file="profiles.zcml" />
 
     <gs:upgradeSteps
-        source="5015"
+        source="5099"
         destination="5101"
         profile="Products.CMFPlone:plone">
 
@@ -46,11 +46,164 @@ Remove deprecated ``mockup-registry`` and ``mockup-parser`` resources.
            title="Run to51beta1 upgrade profile."
            description="
 Update ``last_compilation`` to deliver new bundles,
-Add new Mockup 2.4.0 relateditems resource url.
+add new Mockup 2.4.0 relateditems resource url,
+add new optional relateditems upload resource.
            "
            handler=".betas.to51beta1"
            />
 
+      <gs:upgradeStep
+           title="Add default search options"
+           description="Add sort_on field to search controlpanel."
+           handler=".betas.addSortOnProperty"
+           />
+
+      <gs:upgradeStep
+           title="Remove skins layer converted to browser resources"
+           description="Products.MimetypesRegistry Icons no longer with skins"
+           handler=".betas.remove_leftover_skin_layers"
+           />
+
+      <gs:upgradeStep
+           title="Remove jquery.cookie from plone-logged-in stub_js_modules"
+           description="
+Remove jquery.cookie from plone-logged-in bundle's stub_js_modules.
+The toolbar, which has a dependency on jquery.cookie,
+was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
+           "
+           handler=".betas.remove_jquery_cookie_from_stub_js_modules"
+           />
+
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5103"
+        destination="5104"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to51beta1 upgrade profile."
+           description="Move PasswordResetTool"
+           handler=".betas.move_pw_reset_tool"
+           />
+
+      <gs:upgradeStep
+           title="Remove displayContentsTab from action expressions"
+           handler=".betas.remove_displayContentsTab_from_action_expressions"
+           />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5104"
+        destination="5105"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5105"
+        destination="5106"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to51beta3 upgrade profile."
+            description="
+Add image scaling options to image handling control panel.
+            "
+            import_profile="plone.app.upgrade.v51:to51beta3"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5106"
+        destination="5107"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Update social media fields"
+            description=""
+            handler=".betas.update_social_media_fields"
+            />
+
+        <gs:upgradeDepends
+            title="Run to51beta4 upgrade profile."
+            description="Fixup timezone record fields, as old interface plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since plone.app.event 3.0.2.
+                         Add options for icon- and thumb-handling to Site control panel.
+                         New metadata column `mime_type`.
+                         Update plone-logged-in bundle.
+                         TinyMCE 4.5.6 update.
+                         New mockup-patterns-structureupdater."
+            import_profile="plone.app.upgrade.v51:to51beta4"
+            />
+
+        <gs:upgradeStep
+            title="Fix double shared maxage"
+            handler="..v50.final.fix_double_smaxage"
+            />
+
+        <gs:upgradeStep
+            title="Reindex mime_type"
+            handler=".betas.reindex_mime_type"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5107"
+        destination="5108"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to51rc1 upgrade profile."
+            description="Fix safe_html in PortalTransforms.
+                         Add 'Show Toolbar' permission.
+                         Add JQTree Contextual Menu and JS Shortcuts to the resource registry.
+                         Recover Dashboard in useractions."
+            import_profile="plone.app.upgrade.v51:to51rc1"
+            />
+
+        <gs:upgradeStep
+            title="Move safe_html settings from portal_transforms to Plone registry"
+            handler=".betas.move_safe_html_settings_to_registry"
+            />
+
+        <gs:upgradeStep
+            title="Cleanup duplicate settings from placefiul workflow from Plone registry"
+            handler=".betas.remove_duplicate_iterate_settings"
+            />
+
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5108"
+        destination="5109"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Remove registration of p.a.c import_steps since they were transformed into post_handlers"
+            handler=".betas.cleanup_import_steps"
+            />
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5109"
+        destination="5110"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
 </configure>

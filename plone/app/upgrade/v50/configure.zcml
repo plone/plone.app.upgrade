@@ -6,8 +6,12 @@
 
     <include file="profiles.zcml" />
 
+    <!-- Upgrade from latest 4.3 profile revision.  This source step
+         does not need to exist, it just needs to be higher than other
+         4.3 profile revisions.  GenericSetup will then sort it nicely
+         for us. -->
     <gs:upgradeSteps
-        source="4310"
+        source="4399"
         destination="5000"
         profile="Products.CMFPlone:plone">
 
@@ -154,7 +158,7 @@
            />
 
        <gs:upgradeStep
-           title="Run to50beta4 upgrade profile"
+           title="Upgrade plone.app.querystring"
            description=""
            handler=".betas.upgrade_querystring"
            />
@@ -256,7 +260,7 @@
 
        <gs:upgradeStep
            title="Cleanup the skins tool."
-           handler="plone.app.upgrade.v40.alphas.cleanUpSkinsTool"
+           handler="plone.app.upgrade.utils.cleanUpSkinsTool"
            />
 
        <gs:upgradeStep
@@ -323,4 +327,59 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5016"
+        destination="5017"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to507 upgrade profile."
+           description=""
+           handler=".final.to507"
+           />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5017"
+        destination="5018"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+          title="Fix double shared maxage"
+          handler=".final.fix_double_smaxage"
+          />
+
+      <gs:upgradeDepends
+           title="Run to508 upgrade profile."
+           import_profile="plone.app.upgrade.v50:to508"
+           />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5018"
+        destination="5019"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5019"
+        destination="5020"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Add jqTree contextual menu and JS Shortcuts to the resource registry"
+            description=""
+            handler=".final.to5010"
+            />
+
+    </gs:upgradeSteps>
 </configure>

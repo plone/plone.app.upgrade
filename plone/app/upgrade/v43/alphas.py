@@ -232,8 +232,8 @@ def removeKSS(context):
     cleanUpToolRegistry(context)
 
     # make sure plone.app.kss is not activated in the quick installer
-    qi = getToolByName(context, 'portal_quickinstaller')
-    if qi.isProductInstalled('plone.app.kss'):
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is not None and qi.isProductInstalled('plone.app.kss'):
         qi.uninstallProduct('plone.app.kss')
 
 

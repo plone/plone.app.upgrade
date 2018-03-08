@@ -9,7 +9,6 @@ from zope.ramcache.ram import RAMCache
 from Acquisition import aq_base
 from Acquisition import aq_get
 from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
-from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.setuphandlers import addCacheHandlers
@@ -19,6 +18,7 @@ from Products.MailHost.interfaces import IMailHost
 from zExceptions import NotFound
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 
+from plone.app.upgrade.utils import cleanUpSkinsTool as generalCleanUpSkinsTool
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
@@ -67,7 +67,7 @@ def threeX_alpha1(context):
     """3.x -> 4.0alpha1
     """
     try:
-        import plone.app.jquerytools
+        import plone.app.jquerytools  # noqa
         loadMigrationProfile(context, 'profile-plone.app.jquerytools:default')
     except ImportError:
         pass
@@ -77,12 +77,23 @@ def threeX_alpha1(context):
         steps=('controlpanel', 'jsregistry'))
     # Install plonetheme.classic profile
     # (if, installed, it will be removed in Plone 5)
-    qi = getToolByName(context, 'portal_quickinstaller')
+    qi = getToolByName(context, 'portal_quickinstaller', None)
     stool = getToolByName(context, 'portal_setup')
-    if 'plonetheme.classic' in qi:
-        stool.runAllImportStepsFromProfile(
-            'profile-plonetheme.classic:default'
-        )
+    if qi is not None:
+        if 'plonetheme.classic' in qi:
+            stool.runAllImportStepsFromProfile(
+                'profile-plonetheme.classic:default'
+            )
+    else:
+        # Plone 5.1 and higher.
+        from Products.CMFPlone.utils import get_installer
+        qi = get_installer(context)
+        # It needs to be reinstalled.  Probably this actually does nothing on
+        # Plone 5, which is fine, but we will try it anyway.
+        if qi.is_product_installed('plonetheme.classic'):
+            stool.runAllImportStepsFromProfile(
+                'profile-plonetheme.classic:default'
+                )
     # Install packages that are needed for Plone 4,
     # but don't break on Plone 5 where they are gone
     for profile in ('archetypes.referencebrowserwidget:default',
@@ -360,43 +371,42 @@ def cleanUpToolRegistry(context):
 
 
 def cleanUpSkinsTool(context):
-    skins = getToolByName(context, 'portal_skins')
-    # Remove directory views for directories missing on the filesystem
-    for name in skins.keys():
-        directory_view = skins.get(name)
-        reg_key = getattr(directory_view, '_dirpath', None)
-        if not reg_key:
-            # not a directory view, but a persistent folder
-            continue
-        try:
-            reg_key = _dirreg.getCurrentKeyFormat(reg_key)
-            _dirreg.getDirectoryInfo(reg_key)
-        except ValueError:
-            skins._delObject(name)
+    """Cleanup the portal_skins tool.
 
-    transaction.savepoint(optimistic=True)
-    existing = skins.keys()
-    # Remove no longer existing entries from skin selections
+    One thing is special for 4.0 alpha:
+
+    - replace plone_styles layer with classic_styles.
+
+    And we do a normal cleanup that would be fine for all Plone versions:
+
+    - Remove directory views for directories missing on the filesystem.
+
+    - Remove invalid skin layers from all skin selections.
+    """
+    skins = getToolByName(context, 'portal_skins')
     for layer, paths in skins.selections.items():
         new_paths = []
         for name in paths.split(','):
             if name == 'plone_styles':
                 # plone_styles has been moved and renamed
                 new_paths.append('classic_styles')
-            elif name in existing:
+            else:
                 new_paths.append(name)
         skins.selections[layer] = ','.join(new_paths)
+
+    # Do the general cleanup.
+    generalCleanUpSkinsTool(context)
 
 
 def cleanUpProductRegistry(context):
     control = getattr(context, 'Control_Panel', None)
-    if control:
+    # Zope 4 has no Products anymore
+    if control and getattr(control, 'Products', None):
         products = control.Products
 
         # Remove all product entries
         for name in products.keys():
             products._delObject(name)
-    # else: pass  # Zope 4 doesn't have the Control_Panel anymore
 
 
 def migrateStaticTextPortlets(context):
@@ -555,8 +565,8 @@ def cleanUpClassicThemeResources(context):
     product is uninstalled. These registrations now live in
     Products.CMFPlone.
     """
-    qi = getToolByName(context, 'portal_quickinstaller')
-    if 'plonetheme.classic' in qi:
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is not None and 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
         classictheme.resources_css = []  # empty the list of installed resources
 
@@ -581,3 +591,27 @@ def alpha4_alpha5(context):
     """
     loadMigrationProfile(
         context, 'profile-plone.app.upgrade.v40:4alpha4-4alpha5')
+
+
+def installNewModifiers(context):
+    from Products.CMFEditions.StandardModifiers import install
+    modifiers = getToolByName(context, 'portal_modifier', None)
+    if modifiers is not None:
+        install(modifiers)
+        logger.info('Added new CMFEditions modifiers.')
+
+
+def run_upgrade_dcmi_metadata(tool):
+    """Run the upgrade_dcmi_metadata step from CMFDefault.
+
+    This is only run if CMFDefault is 'installed' (importable).
+    But in Plone 5 it may still be there as aliased module,
+    missing the upgrade module.  So we have a small wrapper around it,
+    to avoid an ImportError on startup.
+    """
+    try:
+        from Products.CMFDefault.upgrade.to22 import upgrade_dcmi_metadata
+    except ImportError:
+        logger.info('Original CMFDefault DCMI upgrade step not available.')
+        return
+    upgrade_dcmi_metadata(tool)

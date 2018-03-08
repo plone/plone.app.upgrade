@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<registry>
+  <!-- add missing render_body field -->
+  <records interface="Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings" />
+</registry>

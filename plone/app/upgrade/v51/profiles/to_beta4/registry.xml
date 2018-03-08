@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- Fixup timezone record fields, as old interface plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since plone.app.event 3.0.2. -->
+  <records interface="Products.CMFPlone.interfaces.IDateAndTimeSchema" prefix="plone" />
+
+  <!-- New options for thumb- and icon-handling -->
+  <records interface="Products.CMFPlone.interfaces.ISiteSchema" prefix="plone" />
+
+  <!-- Update ``last_compilation`` to deliver new bundles -->
+  <records
+      prefix="plone.bundles/plone"
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      purge="False">
+    <value key="last_compilation">2017-05-31 10:40:01</value>
+  </records>
+  <records
+      prefix="plone.bundles/plone-logged-in"
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      purge="False">
+    <value key="last_compilation">2017-05-31 10:40:01</value>
+  </records>
+
+  <records
+      prefix="plone.resources/mockup-patterns-structureupdater"
+      interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+    <value key="js">++resource++mockup/structure/pattern-structureupdater.js</value>
+  </records>
+
+  <!-- Remove TinyMCE layer resource -->
+  <records
+      remove="True"
+      prefix="plone.resources/tinymce-layer"
+      interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+
+  <!-- add missing render_body field -->
+  <records interface="Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings" />
+
+  <records interface="Products.CMFPlone.interfaces.ISocialMediaSchema"
+           prefix="plone" />
+</registry>

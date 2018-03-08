@@ -30,4 +30,33 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- Note: to51beta2 does not exist, because no profile changes were needed. -->
+
+  <genericsetup:registerProfile
+      name="to51beta3"
+      title="Upgrade profile for Plone 5.1beta2 to Plone 5.1beta3"
+      description=""
+      directory="profiles/to_beta3"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
+      name="to51beta4"
+      title="Upgrade profile for Plone 5.1beta3 to Plone 5.1beta4"
+      description=""
+      directory="profiles/to_beta4"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
+      name="to51rc1"
+      title="Upgrade profile for Plone 5.1beta4 to Plone 5.1rc1"
+      description=""
+      directory="profiles/to_rc1"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

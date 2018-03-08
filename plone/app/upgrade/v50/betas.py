@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import get_property
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
@@ -16,10 +17,30 @@ from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.schema._bootstrapinterfaces import WrongType
+
 import logging
+import pkg_resources
 
 
 logger = logging.getLogger('plone.app.upgrade')
+
+# Mapping of old portal_languages option to new language settings option.
+LANGUAGE_OPTION_MAPPING = {
+    # 'old': 'new',
+    'always_show_selector': 'always_show_selector',
+    'authenticated_users_only': 'authenticated_users_only',
+    'display_flags': 'display_flags',
+    'set_cookie_everywhere': 'set_cookie_always',  # different
+    'supported_langs': 'available_languages',  # different
+    'use_cctld_negotiation': 'use_cctld_negotiation',
+    'use_combined_language_codes': 'use_combined_language_codes',
+    'use_content_negotiation': 'use_content_negotiation',
+    'use_cookie_negotiation': 'use_cookie_negotiation',
+    'use_path_negotiation': 'use_path_negotiation',
+    'use_request_negotiation': 'use_request_negotiation',
+    'use_subdomain_negotiation': 'use_subdomain_negotiation',
+}
 
 
 def to50beta1(context):
@@ -30,15 +51,7 @@ def to50beta1(context):
 def upgrade_portal_language(context):
     portal = getSite()
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        lang_settings = registry.forInterface(ILanguageSchema, prefix='plone')
-    except KeyError:
-        return
+    lang_settings = registry.forInterface(ILanguageSchema, prefix='plone')
     # Get old values
 
     # Merge default language options to registry
@@ -54,42 +67,16 @@ def upgrade_portal_language(context):
     lang_settings.default_language = default_lang
     if hasattr(portal, 'portal_languages'):
         portal_languages = getSite().portal_languages
-        lang_settings.available_languages = portal_languages.supported_langs
-
-        lang_settings.use_combined_language_codes = portal_languages.use_combined_language_codes  # noqa
-        lang_settings.display_flags = portal_languages.display_flags
-
-        lang_settings.use_path_negotiation = portal_languages.use_path_negotiation  # noqa
-        lang_settings.use_content_negotiation = portal_languages.use_content_negotiation  # noqa
-        lang_settings.use_cookie_negotiation = portal_languages.use_cookie_negotiation  # noqa
-        if hasattr(portal_languages, 'set_cookie_everywhere'):
-            lang_settings.set_cookie_always = portal_languages.set_cookie_everywhere  # noqa
-        lang_settings.authenticated_users_only = portal_languages.authenticated_users_only  # noqa
-        lang_settings.use_request_negotiation = portal_languages.use_request_negotiation  # noqa
-        lang_settings.use_cctld_negotiation = portal_languages.use_cctld_negotiation  # noqa
-        lang_settings.use_subdomain_negotiation = portal_languages.use_subdomain_negotiation  # noqa
-        if hasattr(portal_languages, 'always_show_selector'):
-            lang_settings.always_show_selector = portal_languages.always_show_selector  # noqa
-
+        for old, new in LANGUAGE_OPTION_MAPPING.items():
+            if hasattr(portal_languages, old):
+                setattr(lang_settings, new, getattr(portal_languages, old))
         # Remove the old tool
         portal.manage_delObjects('portal_languages')
-
-    # TODO: Remove portal skin
-    # <object name="LanguageTool" meta_type="Filesystem Directory View"
-    # directory="Products.PloneLanguageTool:skins/LanguageTool"/>
 
 
 def upgrade_mail_controlpanel_settings(context):
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        mail_settings = registry.forInterface(IMailSchema, prefix='plone')
-    except KeyError:
-        return
+    mail_settings = registry.forInterface(IMailSchema, prefix='plone')
     portal = getSite()
 
     smtp_host = getattr(portal.MailHost, 'smtp_host', '')
@@ -122,32 +109,27 @@ def upgrade_markup_controlpanel_settings(context):
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        settings = registry.forInterface(
-            IMarkupSchema,
-            prefix='plone',
-        )
-    except KeyError:
-        settings = False
-    if settings:
-        settings.default_type = site_properties.default_contenttype
+    settings = registry.forInterface(
+        IMarkupSchema,
+        prefix='plone',
+    )
+    settings.default_type = get_property(
+        site_properties,
+        'default_contenttype',
+        None,
+    )
 
-        forbidden_types = site_properties.getProperty('forbidden_contenttypes')
-        forbidden_types = list(forbidden_types) if forbidden_types else []
+    forbidden_types = site_properties.getProperty('forbidden_contenttypes')
+    forbidden_types = list(forbidden_types) if forbidden_types else []
 
-        portal_transforms = getToolByName(context, 'portal_transforms')
-        allowable_types = portal_transforms.listAvailableTextInputs()
+    portal_transforms = getToolByName(context, 'portal_transforms')
+    allowable_types = portal_transforms.listAvailableTextInputs()
 
-        settings.allowed_types = tuple([
-            _type for _type in allowable_types
-            if _type not in forbidden_types
-            and _type not in 'text/x-plone-outputfilters-html'  # removed, as in plone.app.vocabularies.types  # noqa
-        ])
+    settings.allowed_types = tuple([
+        _type for _type in allowable_types
+        if _type not in forbidden_types
+        and _type not in 'text/x-plone-outputfilters-html'  # removed, as in plone.app.vocabularies.types  # noqa
+    ])
 
 
 def upgrade_security_controlpanel_settings(context):
@@ -171,33 +153,34 @@ def upgrade_security_controlpanel_settings(context):
     # get the new registry
     registry = getUtility(IRegistry)
 
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        settings = registry.forInterface(
-            ISecuritySchema,
-            prefix='plone',
-        )
-    except KeyError:
-        settings = False
-    if settings:
-        settings.enable_self_reg = _get_enable_self_reg()
-        validate_email = portal.getProperty('validate_email', True)
-        if validate_email:
-            settings.enable_user_pwd_choice = False
-        else:
-            settings.enable_user_pwd_choice = True
-        pmembership = getToolByName(portal, 'portal_membership')
-        settings.enable_user_folders = pmembership.getMemberareaCreationFlag()
-        settings.allow_anon_views_about = site_properties.getProperty(
-            'allowAnonymousViewAbout', False)
-        settings.use_email_as_login = site_properties.getProperty(
-            'use_email_as_login', False)
-        settings.use_uuid_as_userid = site_properties.getProperty(
-            'use_uuid_as_userid', False)
+    settings = registry.forInterface(
+        ISecuritySchema,
+        prefix='plone',
+    )
+    settings.enable_self_reg = _get_enable_self_reg()
+    validate_email = portal.getProperty('validate_email', True)
+    if validate_email:
+        settings.enable_user_pwd_choice = False
+    else:
+        settings.enable_user_pwd_choice = True
+    pmembership = getToolByName(portal, 'portal_membership')
+    settings.enable_user_folders = pmembership.getMemberareaCreationFlag()
+    settings.allow_anon_views_about = site_properties.getProperty(
+        'allowAnonymousViewAbout', False)
+
+    # suppress migrating login names while setting use_email_as_login to existing value
+    from Products.CMFPlone.controlpanel import events
+    migrate_to_email_login = events.migrate_to_email_login
+    migrate_from_email_login = events.migrate_from_email_login
+    events.migrate_to_email_login = lambda x: None
+    events.migrate_to_email_login = lambda x: None
+    settings.use_email_as_login = site_properties.getProperty(
+        'use_email_as_login', False)
+    events.migrate_to_email_login = migrate_to_email_login
+    events.migrate_from_email_login = migrate_from_email_login
+
+    settings.use_uuid_as_userid = site_properties.getProperty(
+        'use_uuid_as_userid', False)
 
 
 def to50beta2(context):
@@ -297,21 +280,12 @@ def upgrade_usergroups_controlpanel_settings(context):
     # get the new registry
     registry = getUtility(IRegistry)
 
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        settings = registry.forInterface(IUserGroupsSettingsSchema,
-                                         prefix='plone')
-    except KeyError:
-        settings = False
-    if settings:
-        settings.many_groups = site_properties.getProperty('many_groups',
-                                                           False)
-        settings.many_users = site_properties.getProperty('many_users',
-                                                          False)
+    settings = registry.forInterface(IUserGroupsSettingsSchema,
+                                     prefix='plone')
+    settings.many_groups = site_properties.getProperty('many_groups',
+                                                       False)
+    settings.many_users = site_properties.getProperty('many_users',
+                                                      False)
 
 
 def migrate_displayPublicationDateInByline(context):
@@ -322,26 +296,17 @@ def migrate_displayPublicationDateInByline(context):
     # get the new registry
     registry = getUtility(IRegistry)
 
-    # XXX: Somehow this code is executed for old migration steps as well
-    # ( < Plone 4 ) and breaks because there is no registry. Looking up the
-    # registry interfaces with 'check=False' will not work, because it will
-    # return a settings object and then fail when we try to access the
-    # attributes.
-    try:
-        settings = registry.forInterface(IUserGroupsSettingsSchema,
-                                         prefix='plone')
-    except KeyError:
-        settings = False
-    if settings:
-        # get the old site properties
-        portal_url = getToolByName(context, 'portal_url')
-        portal = portal_url.getPortalObject()
-        portal_properties = getToolByName(portal, "portal_properties")
-        site_properties = portal_properties.site_properties
+    settings = registry.forInterface(IUserGroupsSettingsSchema,
+                                     prefix='plone')
+    # get the old site properties
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+    portal_properties = getToolByName(portal, "portal_properties")
+    site_properties = portal_properties.site_properties
 
-        value = site_properties.getProperty('displayPublicationDateInByline',
-                                            False)
-        settings.display_publication_date_in_byline = value
+    value = site_properties.getProperty('displayPublicationDateInByline',
+                                        False)
+    settings.display_publication_date_in_byline = value
 
 
 def to50rc1(context):
@@ -349,9 +314,29 @@ def to50rc1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc1')
     portal = getSite()
     # install plone.app.linkintegrity and its dependencies
-    qi = getToolByName(portal, 'portal_quickinstaller')
-    if not qi.isProductInstalled('plone.app.linkintegrity'):
-        qi.installProduct('plone.app.linkintegrity')
+    try:
+        from Products.CMFPlone.utils import get_installer
+    except ImportError:
+        # BBB For Plone 5.0 and lower.
+        qi = getToolByName(portal, 'portal_quickinstaller')
+        if not qi.isProductInstalled('plone.app.linkintegrity'):
+            qi.installProduct('plone.app.linkintegrity')
+    else:
+        qi = get_installer(portal)
+        if not qi.is_product_installed('plone.app.linkintegrity'):
+            qi.install_product('plone.app.linkintegrity')
+
+    # If Products.PortalTransforms is >= 3.0.1.dev0 it has the new safe_html.
+    # Register and migrate the registry settings needed for it.
+    # Linkintegrity calls the transform when retrieving links from html-fields.
+    pt = pkg_resources.get_distribution('Products.PortalTransforms')
+    if pt.version >= '3.0.1.dev0':
+        from plone.app.upgrade.v51.betas import move_safe_html_settings_to_registry  # noqa: E501
+        from Products.CMFPlone.interfaces import IFilterSchema
+        registry = getUtility(IRegistry)
+        registry.registerInterface(IFilterSchema, prefix='plone')
+        move_safe_html_settings_to_registry(context)
+
     migrate_linkintegrity_relations(portal)
 
     upgrade_usergroups_controlpanel_settings(context)
@@ -544,7 +529,14 @@ def to50rc3(context):
         value = site_properties.getProperty('checkout_workflow_policy')
         from plone.app.iterate.interfaces import IIterateSettings
         settings = registry.forInterface(IIterateSettings)
-        settings.checkout_workflow_policy = safe_unicode(value)
+        # Some versions of plone.app.iterate require a string here,
+        # others a unicode.  Best seems to be to try both.
+        try:
+            # plone.app.iterate 3.3.2+
+            settings.checkout_workflow_policy = str(value)
+        except WrongType:
+            # plone.app.iterate 3.3.1-
+            settings.checkout_workflow_policy = safe_unicode(value)
         site_properties._delProperty('checkout_workflow_policy')
 
     if site_properties.hasProperty('default_page_types'):

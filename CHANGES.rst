@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.28 (unreleased)
+2.0.12 (unreleased)
 -------------------
 
 Breaking changes:
@@ -10,21 +10,345 @@ Breaking changes:
 
 New features:
 
+- *add item here*
+
+Bug fixes:
+
+- ```obj.aq_base``` should not break upgrade, use aq_base(obj) instead
+  [2silver]
+
+- Hide our 'products' from installation for both CMFQuickInstallerTool and CMFPlone.
+  [maurits]
+
+
+2.0.11 (2018-02-05)
+-------------------
+
+Bug fixes:
+
+- Removed hard dependency on ``CMFQuickInstallerTool``.
+  And marked the v52 module as non installable.  [maurits]
+
+- Import ``setupPasswordPolicyPlugin`` from canonical place in ``PlonePAS``.
+  [maurits]
+
+- Log progress and ignore bad catalog entries while updating catalog metadata.
+  [davisagli]
+
+- Disable CSRF protection when replacing keyring.
+  This fixes running specific upgrade steps via the portal_setup UI.
+  [davisagli]
+
+- Avoid triggering an unnecessary migration of user logins
+  when the use_email_as_login setting is migrated to portal_registry.
+  [davisagli]
+
+
+2.0.10 (2017-12-13)
+-------------------
+
+Bug fixes:
+
+- Unregister import_steps that were moved to post_handlers.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2238
+  [pbauer]
+
+
+2.0.9 (2017-11-26)
+------------------
+
+New features:
+
+- Add upgrade step for 5.2 to register tools as utilities.
+  Run it before testing the zexp-import.
+  [pbauer]
+
+Bug fixes:
+
+- Fixed WrongType exception when migrating installed Iterate to 5.0.
+  [maurits]
+
+- Adapt to changes in CMF 2.4 (getCurrentKeyFormat removed) and Zope 4 (not Products in Control Panel).
+  [pbauer]
+
+- Register upgrades for Plone 5.2
+  [pbauer]
+
+- Fix installation of IUserGroupsSettingsSchema into registry for Plone 5.0rc1.
+  [davisagli]
+
+- Avoid swallowing errors during registry setting upgrades.
+  [davisagli]
+
+2.0.8 (2017-09-25)
+------------------
+
+Bug fixes:
+
+- Fix deletion of registry records in ``remove_duplicate_iterate_settings``
+  from the ``5108`` upgrade.
+  [thet]
+
+- Register Plone 5.1 upgrade steps.
+  [thet]
+
+- Register settings for safe_html-Transform when migrating from 5107 to 5108
+  [pbauer]
+
+- Use str() when migrating checkout_workflow_policy since the field is ASCII.
+  See discussion at https://github.com/plone/plone.app.iterate/pull/53
+  [pbauer]
+
+- Use safe_unicode to migrate some settings. Fixes https://github.com/plone/plone.app.upgrade/issues/104
+  [pbauer]
+
+2.0.7 (2017-09-10)
+------------------
+
+New features:
+
+- Add jqtree-contextmenu to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
+
+- Add js-shortcuts to the resource registry for Plone 5.0 and 5.1
+  [b4oshany]
+
+Bug fixes:
+
+- Recover missing dashboard (user actions)
+  https://github.com/plone/Products.CMFPlone/issues/1132
+  [fgrcon]
+
+- Register settings for safe_html-Transform before linkintegrity-migration in 5.0rc1
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2129
+  [pbauer]
+
+- Fix migration if safe_html-Settings to not drop tags without a closing tag.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2088
+  [pbauer]
+
+- Cleanup duplicate iterate settings. See also https://github.com/plone/plone.app.iterate/pull/47
+  [pbauer]
+
+
+2.0.6 (2017-08-05)
+------------------
+
+New features:
+
+- Added ``Show Toolbar`` permission.
+  [agitator]
+
+Bug fixes:
+
+- Fix #84 - usage of aq_base
+  [jensens]
+
+
+2.0.5 (2017-07-03)
+------------------
+
+Bug fixes:
+
+- Plone 5.1: Fixup timezone record fields, as old interface
+  plone.app.event.bbb.interfaces.IDateAndTimeSchema is gone since
+  plone.app.event 3.0.2.
+  [thet]
+
+- Fix upgrade step for ISocialMediaSchema
+  [MrTango]
+
+
+2.0.4 (2017-06-04)
+------------------
+
+New features:
+
+- New Options for thumb- and icon-handling in site control panel
+  https://github.com/plone/Products.CMFPlone/issues/1734
+  upgradesteps to 5.1b4
+  [fgrcon]
+
+- TinyMCE 4.5.6 update.
+  [thet]
+
+- Update registry for Plone 5.1 to integrate ``mockup-patterns-structureupdater``.
+  [thet]
+
+Bug fixes:
+
+- Register ``ISiteSyndicationSettings`` again.
+  This interface was updated in 5.0rc3.
+  On older sites, this would cause an error on the ``syndication-controlpanel``:
+  KeyError: 'Interface `Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings` defines a field `render_body`, for which there is no record.
+  [maurits]
+
+- Catch warning the pythonic way.
+  Makes it work with latest CMFCore.
+  [jensens]
+
+- Fix and ``AttributeError`` for the Plone 5.1 beta 4 upgrade.
+  [thet]
+
+
+2.0.3 (2017-04-18)
+------------------
+
+New features:
+
+- Add Plone 5.1 beta 4 upgrade profile.
+  [thet]
+
+- new metadata catalog column mime_type
+  https://github.com/plone/Products.CMFPlone/issues/1995
+  [fgrcon]
+
+Bug fixes:
+
+- Do not convert/fail on None while update_social_media_fields
+  [agitator]
+
+- Fixed ImportError when ``Products.ATContentTypes`` is not available.
+  This happens when you only have the ``Products.CMFPlone`` egg
+  and not the ``Plone`` egg.  [maurits]
+
+- Fixed title and description of plone.resource.maxage.
+  This had the title and description from shared maxage,
+  due to a wrong reference.
+  See https://github.com/plone/Products.CMFPlone/issues/1989
+  [maurits]
+
+- Removed "change portal events"
+  [kakshay21]
+
+2.0.2 (2017-04-03)
+------------------
+
+New features:
+
+- Add image scaling options to image handling controlpanel
+  when migrating to 5.1b3.
+  [didrix]
+
+Bug fixes:
+
+- Update ``twitter_username``, ``facebook_app_id`` and ``facebook_username`` field values as they are now declared as ``ASCIILine`` instead of ``TextLine``.
+  [hvelarde]
+
+
+2.0.1 (2017-03-09)
+------------------
+
+Bug fixes:
+
+- Adapt tests to the new indexing operations queueing.
+  Part of PLIP 1343: https://github.com/plone/Products.CMFPlone/issues/1343
+  [gforcada]
+
+- Fix registration of upgrade-step to Plone 5.1a1
+  [pbauer]
+
+2.0.0 (2017-02-20)
+------------------
+
+Breaking changes:
+
+- Remove really old upgrade steps (everything up to v40).
+  [gforcada]
+
+New features:
+
+- New mockup releases for Plone 5.0 and 5.1.
+  [thet]
+
+- Remove jquery.cookie from plone-logged-in bundle's stub_js_modules.
+  The toolbar, which has a dependency on jquery.cookie,
+  was moved from the plone bundle to plone-logged-in in CMPlone 5.1a2.
+  [thet]
+
+- Products.MimetypesRegistry has no longer a skins layer, remove it.
+  [jensens]
+
+- Add sort_on field to search controlpanel.
+  [rodfersou]
+
+- Support sites without ``portal_quickinstaller``.
+  We use ``get_installer`` in Plone 5.1 migrations.
+  In earlier version we will keep using the ``portal_quickinstaller``,
+  because ``get_installer`` is not available.
+  In shared utility and base code, we try to import get_installer,
+  and fall back on the previous implementation.
+  See `PLIP 1340 <https://github.com/plone/Products.CMFPlone/issues/1340>`_.
+  [maurits]
+
 - Add new Mockup 2.4.0 relateditems resource url.
+  Add new optional relateditems upload resource.
   [thet]
 
 - Update ``last_compilation`` to deliver new bundles.
   [thet]
 
+- Move PasswordResetTool to CMFPlone.
+  *Note: Pending password resets are deleted.*
+  [tomgross]
+
+- Adopt to changes in Zope4
+  [pbauer]
 
 Bug fixes:
+
+- Remove displayContentsTab from action expressions in 5.1.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/1935.
+  [maurits]
+
+- Fix move_pw_reset_tool upgrade step
+  [agitator]
+
+- Install plone.app.caching in 5.0 alpha if available.
+  When it is already installed, upgrade it.
+  [maurits]
+
+- Install plone.app.theming in 5.0 alpha.
+  When it is already installed, upgrade it.
+  [maurits]
+
+- Fixed AttributeError ``use_content_negotiation`` when migrating old language tool.
+  Not all versions have the same properties available.
+  Now we only take over existing properties.
+  5.0 beta.
+  [maurits]
+
+- Fixed ConstraintNotSatisfied when default_editor is not allowed.
+  5.0 alpha.
+  [maurits]
+
+- Enabled update from latest 4.3 profile revision.
+  Otherwise we would skip a few upgrade steps when migrating to
+  Plone 5.  [maurits]
+
+- Don't remove sub skin layers when cleaning ``portal_skins``.
+  Created ``utils.cleanUpSkinsTool`` method which has generally useful
+  code for cleaning up the skins.
+  Fixes `issue 87 <https://github.com/plone/plone.app.upgrade/issues/87>`_.
+  [maurits]
+
+- Install plone.resource in Plone 5.0 alpha 3.  Fixes possible
+  ``TypeError: argument of type 'NoneType' is not iterable`` when
+  migrating from Plone 4.3 for a site that did not have plone.resource
+  or diazo installed yet.
+  Fixes `issue 1756 <https://github.com/plone/Products.CMFPlone/issues/1756>`_. [maurits]
 
 - Be sure smtp_port is an integer.
   [ale-rt]
 
-- ```obj.aq_base``` should not break upgrade, use aq_base(obj) instead
-  [2silver]
+- Fix upgrade step for PasswordResetTool if there was never da different value than the default was set.
+  [jensens]
 
+- Check whether avoiding exception in RealUpgradeLayer setup avoids polluting test environment.
+  [davisagli]
+
+- avoid error in layer teardown
+  [davisagli]
 
 1.3.27 (2016-08-16)
 -------------------

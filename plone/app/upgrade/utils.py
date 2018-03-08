@@ -1,17 +1,20 @@
-import logging
-import new
-import sys
-from types import ListType, TupleType
-
 from Acquisition import aq_base
+from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
 from Products.ZCatalog.ProgressHandler import ZLogHandler
+from types import ListType
+from types import TupleType
 from ZODB.POSException import ConflictError
 
+import logging
+import new
 import pkg_resources
+import sys
+import transaction
+
 
 _marker = []
 
@@ -74,7 +77,11 @@ def saveCloneActions(actionprovider):
 
 
 def testSkinLayer(skinsTool, layer):
-    """Make sure a skin layer exists"""
+    """Make sure a skin layer exists.
+
+    layer can be a sub folder name, like captchas_core/dynamic
+    or a/b/c/d/e.
+    """
     # code adapted from CMFCore.SkinsContainer.getSkinByPath
     ob = aq_base(skinsTool)
     for name in layer.strip().split('/'):
@@ -100,31 +107,92 @@ def cleanupSkinPath(portal, skinName, test=1):
     skinstool.addSkinSelection(skinName, ','.join(new_path), test=test)
 
 
+def cleanUpSkinsTool(context):
+    """Cleanup the portal_skins tool.
+
+    Initially this was created for Plone 4.0 alpha, but was factored out later.
+
+    - Remove directory views for directories missing on the filesystem.
+
+    - Remove invalid skin layers from all skin selections.
+    """
+    skins = getToolByName(context, 'portal_skins')
+    # Remove directory views for directories missing on the filesystem
+    for name in skins.keys():
+        directory_view = skins.get(name)
+        reg_key = getattr(directory_view, '_dirpath', None)
+        if not reg_key:
+            # not a directory view, but a persistent folder
+            continue
+        try:
+            # Removed in CMF 2.3
+            if getattr(_dirreg, 'getCurrentKeyFormat', None):
+                reg_key = _dirreg.getCurrentKeyFormat(reg_key)
+            _dirreg.getDirectoryInfo(reg_key)
+        except ValueError:
+            skins._delObject(name)
+
+    transaction.savepoint(optimistic=True)
+    existing = skins.keys()
+    # Remove no longer existing entries from skin selections
+    for layer, paths in skins.selections.items():
+        new_paths = []
+        for name in paths.split(','):
+            if name in existing:
+                new_paths.append(name)
+            elif '/' in name and testSkinLayer(skins, name):
+                new_paths.append(name)
+            else:
+                logger.info('Removed no longer existing path %s '
+                            'from skin selection %s.', name, layer)
+        skins.selections[layer] = ','.join(new_paths)
+
+
 def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     """Installs a product
 
     If product is already installed test if it needs to be reinstalled. Also
     fix skins after reinstalling
     """
-    qi = getToolByName(portal, 'portal_quickinstaller')
-    if not qi.isProductInstalled(product_name):
-        qi.installProduct(product_name, hidden=hidden)
-        # Refresh skins
-        portal.clearCurrentSkin()
-        if getattr(portal, 'REQUEST', None):
-            portal.setupCurrentSkin(portal.REQUEST)
-        logger.info("Installed %s" % product_name)
+    try:
+        from Products.CMFPlone.utils import get_installer
+    except ImportError:
+        # BBB For Plone 5.0 and lower.
+        qi = getToolByName(portal, 'portal_quickinstaller', None)
+        if qi is None:
+            return
+        old_qi = True
     else:
-        info = qi._getOb(product_name)
-        installed_version = info.getInstalledVersion()
-        product_version = qi.getProductVersion(product_name)
-        if installed_version != product_version:
-            qi.reinstallProducts([product_name])
-            logger.info("%s is out of date (installed: %s/ filesystem: %s), "
-                        "reinstalled." % (product_name, installed_version,
-                                          product_version))
+        qi = get_installer(portal)
+        old_qi = False
+    if old_qi:
+        if not qi.isProductInstalled(product_name):
+            qi.installProduct(product_name, hidden=hidden)
+            logger.info("Installed %s" % product_name)
+        elif old_qi:
+            info = qi._getOb(product_name)
+            installed_version = info.getInstalledVersion()
+            product_version = qi.getProductVersion(product_name)
+            if installed_version != product_version:
+                qi.reinstallProducts([product_name])
+                logger.info("%s is out of date (installed: %s/ "
+                            "filesystem: %s), reinstalled." % (
+                                product_name, installed_version,
+                                product_version))
+            else:
+                logger.info('%s already installed.' % product_name)
+    else:
+        # New QI browser view.
+        if not qi.is_product_installed(product_name):
+            qi.install_product(product_name, allow_hidden=True)
+            logger.info("Installed %s" % product_name)
         else:
-            logger.info('%s already installed.' % product_name)
+            qi.upgrade_product(product_name)
+            logger.info("Upgraded %s", product_name)
+    # Refresh skins
+    portal.clearCurrentSkin()
+    if getattr(portal, 'REQUEST', None):
+        portal.setupCurrentSkin(portal.REQUEST)
 
 
 def loadMigrationProfile(context, profile, steps=_marker):
@@ -278,3 +346,10 @@ def updateIconsInBrains(context, typesToUpdate=None):
         i += 1
     pghandler.finish()
     logger.info('Updated `getIcon` metadata.')
+
+
+def get_property(context, property_name, default_value=None):
+    try:
+        return getattr(context, property_name, default_value)
+    except AttributeError:
+        return default_value

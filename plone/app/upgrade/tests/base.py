@@ -2,22 +2,50 @@
 from os.path import abspath
 from os.path import dirname
 from os.path import join
+from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import FunctionalTesting
+from plone.app.testing.bbb import PTC_FIXTURE
 from plone.app.testing.bbb import PloneTestCase
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
-from Products.CMFCore.tests.base.testcase import WarningInterceptor
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.context import TarballImportContext
+from zope.configuration import xmlconfig
 from zope.site.hooks import setSite
 
 import transaction
+import warnings
 
 #
 # Base TestCase for upgrades
 #
 
 
+class UpgradeTestCaseFixture(PloneSandboxLayer):
+
+    defaultBases = (PLONE_FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        # In 5.0 alpha we install or upgrade plone.app.caching,
+        # so it must be available to Zope.
+        import plone.app.caching
+        xmlconfig.file(
+            'configure.zcml',
+            plone.app.caching,
+            context=configurationContext
+        )
+
+
+UPGRADE_TEST_CASE_FIXTURE = UpgradeTestCaseFixture()
+UPGRADE_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(PTC_FIXTURE, UPGRADE_TEST_CASE_FIXTURE),
+    name='UpgradeTestCase:Functional')
+
+
 class MigrationTest(PloneTestCase):
+
+    layer = UPGRADE_FUNCTIONAL_TESTING
 
     def removeActionFromTool(
         self,
@@ -87,9 +115,17 @@ class MigrationTest(PloneTestCase):
 
     def uninstallProduct(self, product_name):
         # Removes a product
-        tool = getToolByName(self.portal, 'portal_quickinstaller')
-        if tool.isProductInstalled(product_name):
-            tool.uninstallProducts([product_name])
+        try:
+            from Products.CMFPlone.utils import get_installer
+        except ImportError:
+            # BBB For Plone 5.0 and lower.
+            qi = getToolByName(self.portal, 'portal_quickinstaller', None)
+            if qi is None:
+                return
+        else:
+            qi = get_installer(self.portal)
+        if qi.isProductInstalled(product_name):
+            qi.uninstallProducts([product_name])
 
     def addSkinLayer(self, layer, skin='Plone Default', pos=None):
         # Adds a skin layer at pos. If pos is None, the layer is appended
@@ -114,7 +150,7 @@ class MigrationTest(PloneTestCase):
             skins.addSkinSelection(skin, ','.join(path))
 
 
-class FunctionalUpgradeTestCase(PloneTestCase, WarningInterceptor):
+class FunctionalUpgradeTestCase(PloneTestCase):
 
     _setup_fixture = 0
     site_id = 'test'
@@ -132,9 +168,8 @@ class FunctionalUpgradeTestCase(PloneTestCase, WarningInterceptor):
 
     def importFile(self, context, name):
         path = join(abspath(dirname(context)), 'data', name)
-        self._trap_warning_output()
-        self.app._importObjectFromFile(path, verify=0)
-        self._free_warning_output()
+        with warnings.catch_warnings():
+            self.app._importObjectFromFile(path, verify=0)
 
     def migrate(self):
         oldsite = getattr(self.app, self.site_id)

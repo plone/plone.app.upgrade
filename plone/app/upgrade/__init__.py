@@ -1,40 +1,8 @@
 import pkg_resources
 import sys
-from zope.interface import implementer
-from Products.CMFQuickInstallerTool.interfaces import INonInstallable
 from plone.app.upgrade.utils import alias_module
 import bbb
 import bbbd
-
-
-@implementer(INonInstallable)
-class HiddenProducts(object):
-    """This hides the upgrade profiles from the quick installer tool."""
-
-    def getNonInstallableProducts(self):
-        return [
-            'plone.app.upgrade.v25',
-            'plone.app.upgrade.v30',
-            'plone.app.upgrade.v31',
-            'plone.app.upgrade.v32',
-            'plone.app.upgrade.v33',
-            'plone.app.upgrade.v40',
-            'plone.app.upgrade.v41',
-            'plone.app.upgrade.v42',
-            'plone.app.upgrade.v43',
-            'plone.app.upgrade.v50',
-            'plone.app.upgrade.v51',
-        ]
-
-# Make sure folks upgrading from Plone 2.1 see a helpful message telling them
-# how to do a two-stage upgrade, instead of a GroupUserFolder error.
-try:
-    from Products.GroupUserFolder.GroupUserFolder import GroupUserFolder
-except ImportError:
-    from plone.app.upgrade import gruf_bbb
-    sys.modules['Products.GroupUserFolder'] = gruf_bbb
-    sys.modules['Products.GroupUserFolder.GroupUserFolder'] = gruf_bbb
-
 
 try:
     from zope.app.cache.interfaces.ram import IRAMCache
@@ -123,8 +91,14 @@ try:
     import Products.CMFDefault.MetadataTool
     Products.CMFDefault.MetadataTool  # pyflakes
 except ImportError:
-    from Products.ATContentTypes.tool import metadata
-    sys.modules['Products.CMFDefault.MetadataTool'] = metadata
+    try:
+        pkg_resources.get_distribution('Products.ATContentTypes')
+    except:
+        from plone.app.upgrade import atcontentypes_bbb
+        alias_module('Products.CMFDefault.MetadataTool', atcontentypes_bbb)
+    else:
+        from Products.ATContentTypes.tool import metadata
+        sys.modules['Products.CMFDefault.MetadataTool'] = metadata
 
 try:
     import Products.CMFDefault.SyndicationInfo
@@ -154,3 +128,27 @@ except:
     from Products.CMFPlacefulWorkflow import interfaces
     alias_module(
         'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
+
+try:
+    from Products.PasswordResetTool import PasswordResetTool
+    PasswordResetTool  # pyflakes
+except ImportError:
+    sys.modules['Products.PasswordResetTool.PasswordResetTool'] = bbb
+
+
+class HiddenProducts(object):
+    """This hides the upgrade profiles from the quick installer tool."""
+
+    def getNonInstallableProducts(self):
+        return [
+            'plone.app.upgrade.v40',
+            'plone.app.upgrade.v41',
+            'plone.app.upgrade.v42',
+            'plone.app.upgrade.v43',
+            'plone.app.upgrade.v50',
+            'plone.app.upgrade.v51',
+            'plone.app.upgrade.v52',
+        ]
+
+    def getNonInstallableProfiles(self):
+        return []

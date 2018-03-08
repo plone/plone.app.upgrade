@@ -11,7 +11,7 @@ class FactoryTool(SimpleItem):
     '''
 
     def __nonzero__(self):
-        ''' Always evealuate to False
+        ''' Always evaluate to False
         '''
         return 0
 

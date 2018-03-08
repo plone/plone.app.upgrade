@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<registry>
+  <records
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      prefix="plone.bundles/plone-logged-in">
+    <value key="last_compilation">2016-12-23 00:00:00</value>
+  </records>
+  <records
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      prefix="plone.bundles/plone">
+    <value key="last_compilation">2016-12-23 00:00:00</value>
+  </records>
+</registry>

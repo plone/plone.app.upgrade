@@ -221,7 +221,7 @@
 
         <genericsetup:upgradeStep
             title="Cleanup the skins tool."
-            handler="plone.app.upgrade.v40.alphas.cleanUpSkinsTool"
+            handler="plone.app.upgrade.utils.cleanUpSkinsTool"
             />
 
         <genericsetup:upgradeStep
@@ -241,6 +241,7 @@
             description=""
             handler="..utils.null_upgrade_step"
             />
+
     </genericsetup:upgradeSteps>
 
     <genericsetup:upgradeSteps
@@ -253,6 +254,20 @@
             description=""
             handler="..utils.null_upgrade_step"
             />
+
+    </genericsetup:upgradeSteps>
+
+    <genericsetup:upgradeSteps
+        source="4314"
+        destination="4315"
+        profile="Products.CMFPlone:plone">
+
+        <genericsetup:upgradeStep
+            title="Add default search options"
+            description="Add sort_on field to search controlpanel."
+            handler=".final.addSortOnProperty"
+            />
+
     </genericsetup:upgradeSteps>
 
 </configure>

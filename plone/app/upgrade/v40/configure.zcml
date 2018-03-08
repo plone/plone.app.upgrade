@@ -120,7 +120,7 @@
 
         <genericsetup:upgradeStep
             title="Add new CMFEditions default modifiers."
-            handler="plone.app.upgrade.v30.final_three0x.installNewModifiers"
+            handler=".alphas.installNewModifiers"
             />
 
         <genericsetup:upgradeStep
@@ -172,7 +172,7 @@
         <genericsetup:upgradeStep
             zcml:condition="installed Products.CMFDefault"
             title="Upgrade DCMI metadata storage in portal_metadata"
-            handler="Products.CMFDefault.upgrade.to22.upgrade_dcmi_metadata"
+            handler=".alphas.run_upgrade_dcmi_metadata"
             />
 
         <genericsetup:upgradeStep

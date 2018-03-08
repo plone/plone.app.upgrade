@@ -49,14 +49,11 @@ def add_siteadmin_role(context):
     rolemap_exporter = RolemapExportConfigurator(portal)
     permissions = rolemap_exporter.listPermissions()
     extra_permissions = set([
-        'Access arbitrary user session data',
         'Access contents information',
         'Access inactive portal content',
-        'Access session data',
         'Add portal content',
         'Add portal events',
         'Change local roles',
-        'Change portal events',
         'Copy or Move',
         'Mail forgotten password',
         'Modify portal content',
@@ -146,8 +143,8 @@ def update_controlpanel_permissions(context):
 
 
 def install_outputfilters(context):
-    qi = getToolByName(context, 'portal_quickinstaller')
-    if qi.isProductInstallable('plone.outputfilters'):
+    qi = getToolByName(context, 'portal_quickinstaller', None)
+    if qi is not None and qi.isProductInstallable('plone.outputfilters'):
         if not qi.isProductInstalled('plone.outputfilters'):
             qi.installProduct('plone.outputfilters')
 
