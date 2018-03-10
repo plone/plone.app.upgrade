@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- Rename retina_scales to highpixeldensity_scales. -->
+  <records interface="Products.CMFPlone.interfaces.IImagingSchema"
+           prefix="plone" />
+
+</registry>
