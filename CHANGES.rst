@@ -4,14 +4,6 @@ Changelog
 2.0.12 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Rename retina_scales to highpixeldensity_scales.
