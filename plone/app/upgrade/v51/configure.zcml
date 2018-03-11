@@ -220,4 +220,17 @@ Add image scaling options to image handling control panel.
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5111"
+        destination="5112"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
