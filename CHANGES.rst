@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Add configuration for PortalTransform markdown extensions.
+  [pabo3000]
 
 
 2.0.12 (2018-03-10)
