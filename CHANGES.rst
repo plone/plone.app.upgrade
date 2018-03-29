@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Change in TinyMCE css location so bundles can be built without errors
+  Fixes `issue 2359 <https://github.com/plone/Products.CMFPlone/issues/2359>`_.
+  [frapell]
 
 
 2.0.12 (2018-03-10)
