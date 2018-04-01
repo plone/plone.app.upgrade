@@ -18,6 +18,9 @@ Bug fixes:
   Fixes `issue 2359 <https://github.com/plone/Products.CMFPlone/issues/2359>`_.
   [frapell]
 
+- Fix i18n domain for some portal_actions that were on plone.app.event domain.
+  Fixes https://github.com/plone/plone.app.event/pull/204
+  [gforcada]
 
 2.0.12 (2018-03-10)
 -------------------
