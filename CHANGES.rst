@@ -4,14 +4,6 @@ Changelog
 2.0.13 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Change in TinyMCE css location so bundles can be built without errors
