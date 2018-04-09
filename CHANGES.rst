@@ -4,14 +4,6 @@ Changelog
 2.0.14 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fix i18n domain for some portal_actions that were on plone.app.event domain.
