@@ -231,6 +231,11 @@ Add image scaling options to image handling control panel.
             import_profile="plone.app.upgrade.v51:to512"
             />
 
+        <gs:upgradeStep
+            title="Update an action i18n domain"
+            handler=".final.fix_i18n_domain"
+            />
+
     </gs:upgradeSteps>
 
     <gs:upgradeSteps
