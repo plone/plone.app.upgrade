@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Temporarily removed 5113 profile upgrade step.
+  You would get a warning when upgrading to Plone 5.1.2.
+  [maurits]
 
 
 2.0.14 (2018-04-09)
