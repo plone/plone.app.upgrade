@@ -106,7 +106,8 @@ def upgradePloneAppTheming(context):
         return
 
     portal_setup = getToolByName(context, 'portal_setup')
-    return portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+    return portal_setup.runAllImportStepsFromProfile(
+        'profile-plone.app.theming:default')
 
 
 def upgradePloneAppJQuery(context):

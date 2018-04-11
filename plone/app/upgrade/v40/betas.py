@@ -21,7 +21,8 @@ def repositionRecursiveGroupsPlugin(context):
     plugins = acl.plugins
     existingGroupsPlugins = plugins.listPlugins(IGroupsPlugin)
     if 'recursive_groups' in [a[0] for a in existingGroupsPlugins]:
-        while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') < len(existingGroupsPlugins) - 1:
+        while plugins.getAllPlugins('IGroupsPlugin')['active'].index(
+                'recursive_groups') < len(existingGroupsPlugins) - 1:
             plugins.movePluginsDown(IGroupsPlugin, ['recursive_groups'])
 
 

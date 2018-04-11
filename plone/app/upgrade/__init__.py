@@ -69,7 +69,7 @@ try:
 except ImportError:
     try:
         pkg_resources.get_distribution('Products.ATContentTypes')
-    except:
+    except BaseException:
         from plone.app.upgrade import atcontentypes_bbb
         alias_module('Products.CMFPlone.FactoryTool', atcontentypes_bbb)
     else:
@@ -82,7 +82,7 @@ try:
 except ImportError:
     try:
         pkg_resources.get_distribution('Products.ATContentTypes')
-    except:
+    except BaseException:
         from plone.app.upgrade import atcontentypes_bbb
         alias_module('Products.CMFPlone.MetadataTool', atcontentypes_bbb)
     else:
@@ -95,7 +95,7 @@ try:
 except ImportError:
     try:
         pkg_resources.get_distribution('Products.ATContentTypes')
-    except:
+    except BaseException:
         from plone.app.upgrade import atcontentypes_bbb
         alias_module('Products.CMFDefault.MetadataTool', atcontentypes_bbb)
     else:
@@ -126,7 +126,7 @@ except pkg_resources.DistributionNotFound:
     # No package in this environment requires CMFPlacefulWorkflow,
     # so no patching necessary
     pass
-except:
+except BaseException:
     from Products.CMFPlacefulWorkflow import interfaces
     alias_module(
         'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)

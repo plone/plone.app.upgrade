@@ -168,7 +168,8 @@ def upgrade_security_controlpanel_settings(context):
     settings.allow_anon_views_about = site_properties.getProperty(
         'allowAnonymousViewAbout', False)
 
-    # suppress migrating login names while setting use_email_as_login to existing value
+    # suppress migrating login names while setting use_email_as_login to
+    # existing value
     from Products.CMFPlone.controlpanel import events
     migrate_to_email_login = events.migrate_to_email_login
     migrate_from_email_login = events.migrate_from_email_login
