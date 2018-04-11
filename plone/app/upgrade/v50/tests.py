@@ -50,7 +50,7 @@ class PASUpgradeTest(MigrationTest):
         registry = getUtility(IRegistry)
         from Products.CMFPlone.interfaces import ISecuritySchema
         security_settings = registry.forInterface(ISecuritySchema,
-                                                  prefix="plone")
+                                                  prefix='plone')
         security_settings.use_email_as_login = True
 
         # Second call.
@@ -72,7 +72,7 @@ class PASUpgradeTest(MigrationTest):
     def test_footer_viewlets_hidden(self):
 
         storage = getUtility(IViewletSettingsStorage)
-        manager = "plone.portalfooter"
+        manager = 'plone.portalfooter'
         skinname = self.portal.getCurrentSkinName()
 
         hidden_viewlets = storage.getHidden(manager, skinname)

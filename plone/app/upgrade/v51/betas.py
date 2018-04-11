@@ -27,7 +27,7 @@ def addSortOnProperty(context):
     The default value of this field is relevance.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)

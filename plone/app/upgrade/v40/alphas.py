@@ -533,7 +533,7 @@ def updateLargeFolderType(context):
         update(brain)
     for brain in search(Type='Large Folder'):   # just to make sure...
         update(brain)
-    logger.info('Updated `portal_type` for former "Large Folder" content')
+    logger.info("Updated `portal_type` for former 'Large Folder' content")
 
 
 def addRecursiveGroupsPlugin(context):
@@ -553,7 +553,7 @@ def addRecursiveGroupsPlugin(context):
 
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(
-            acl, 'recursive_groups', "Recursive Groups Plugin")
+            acl, 'recursive_groups', 'Recursive Groups Plugin')
 
 
 def cleanUpClassicThemeResources(context):
@@ -579,7 +579,7 @@ def migrateTypeIcons(context):
         if 'content_icon' in type.__dict__:
             icon = type.content_icon
             if icon and not getattr(type, 'icon_expr', False):
-                type.icon_expr = "string:${portal_url}/%s" % icon
+                type.icon_expr = 'string:${portal_url}/%s' % icon
                 type.icon_expr_object = Expression(type.icon_expr)
                 del type.content_icon
 

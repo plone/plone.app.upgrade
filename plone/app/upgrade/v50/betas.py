@@ -58,7 +58,7 @@ def upgrade_portal_language(context):
     portal = getUtility(ISiteRoot)
     default_lang = portal.getProperty('default_language', 'en')
 
-    portal_properties = getToolByName(context, "portal_properties", None)
+    portal_properties = getToolByName(context, 'portal_properties', None)
     if portal_properties is not None:
         site_properties = getattr(portal_properties, 'site_properties', None)
         if site_properties is not None:
@@ -105,7 +105,7 @@ def upgrade_markup_controlpanel_settings(context):
        new registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
@@ -147,7 +147,7 @@ def upgrade_security_controlpanel_settings(context):
     # get the old site properties
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
-    portal_properties = getToolByName(portal, "portal_properties")
+    portal_properties = getToolByName(portal, 'portal_properties')
     site_properties = portal_properties.site_properties
 
     # get the new registry
@@ -190,7 +190,7 @@ def to50beta2(context):
     portal = getSite()
 
     registry = getUtility(IRegistry)
-    settings = registry.forInterface(IImagingSchema, prefix="plone")
+    settings = registry.forInterface(IImagingSchema, prefix='plone')
 
     try:
         iprops = portal.portal_properties.imaging_properties
@@ -253,9 +253,9 @@ def to50beta3(context):
         x for x in configlets
         if x.id == 'TypesSettings'
     ][0]
-    configlet.title = "Content Settings"
+    configlet.title = 'Content Settings'
     configlet.setActionExpression(
-        "string:${portal_url}/@@content-controlpanel")
+        'string:${portal_url}/@@content-controlpanel')
 
 
 def to50beta4(context):
@@ -276,7 +276,7 @@ def upgrade_usergroups_controlpanel_settings(context):
     # get the old site properties
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
-    portal_properties = getToolByName(portal, "portal_properties")
+    portal_properties = getToolByName(portal, 'portal_properties')
     site_properties = portal_properties.site_properties
 
     # get the new registry
@@ -291,7 +291,7 @@ def upgrade_usergroups_controlpanel_settings(context):
 
 
 def migrate_displayPublicationDateInByline(context):
-    """ Migrate the "display publication date" setting to the configuration
+    """ Migrate the 'display publication date' setting to the configuration
     registry
     """
 
@@ -303,7 +303,7 @@ def migrate_displayPublicationDateInByline(context):
     # get the old site properties
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
-    portal_properties = getToolByName(portal, "portal_properties")
+    portal_properties = getToolByName(portal, 'portal_properties')
     site_properties = portal_properties.site_properties
 
     value = site_properties.getProperty('displayPublicationDateInByline',
@@ -441,7 +441,7 @@ def upgrade_navigation_controlpanel_settings_2(context):
        only missing values not migrated before
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     navigation_properties = portal_properties.navtree_properties
     # get the new registry
     registry = getUtility(IRegistry)

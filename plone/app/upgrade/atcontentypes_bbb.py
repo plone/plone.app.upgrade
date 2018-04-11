@@ -7,12 +7,12 @@ MetadataTool = SimpleItem
 
 
 class FactoryTool(SimpleItem):
-    ''' Compatibility code for portal_factory
-    '''
+    """ Compatibility code for portal_factory
+    """
 
     def __nonzero__(self):
-        ''' Always evaluate to False
-        '''
+        """ Always evaluate to False
+        """
         return 0
 
 

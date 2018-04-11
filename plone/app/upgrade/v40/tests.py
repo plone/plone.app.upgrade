@@ -52,7 +52,7 @@ class FakeSecureMailHost(object):
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:3-4alpha1"
+    profile = 'profile-plone.app.upgrade.v40:3-4alpha1'
 
     def afterSetUp(self):
         self.atool = getToolByName(self.portal, 'portal_actions')
@@ -157,37 +157,37 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         FTIs should now be using icon_expr instead of content_icon.
         (The former caches the expression object.)
         """
-        tt = getToolByName(self.portal, "portal_types")
+        tt = getToolByName(self.portal, 'portal_types')
         tt.Document.icon_expr = None
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
+                         'string:${portal_url}/document_icon.png')
 
     def testMigrateTypeIcons(self):
         """
         FTIs having content_icon should be upgraded to icon_expr.
         """
-        tt = getToolByName(self.portal, "portal_types")
+        tt = getToolByName(self.portal, 'portal_types')
         del tt.Document.icon_expr
         tt.Document.content_icon = 'document_icon.gif'
         migrateTypeIcons(self.portal)
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.gif")
+                         'string:${portal_url}/document_icon.gif')
         self.assertTrue(hasattr(tt.Document, 'icon_expr_object'))
 
         # Don't upgrade if there is already an icon_expr.
-        tt.Document.icon_expr = "string:${portal_url}/document_icon.png"
+        tt.Document.icon_expr = 'string:${portal_url}/document_icon.png'
         tt.Document.content_icon = 'document_icon.gif'
         migrateTypeIcons(self.portal)
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
+                         'string:${portal_url}/document_icon.png')
 
     def testPngContentIcons(self):
-        tt = getToolByName(self.portal, "portal_types")
-        tt.Document.icon_expr = "string:${portal_url}/document_icon.gif"
+        tt = getToolByName(self.portal, 'portal_types')
+        tt.Document.icon_expr = 'string:${portal_url}/document_icon.gif'
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
+                         'string:${portal_url}/document_icon.png')
 
     def testAddRAMCache(self):
         # Test it twice
@@ -342,8 +342,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         class HiddenAssignment(static.Assignment):
             hide = True
 
-        self.setRoles(["Manager"])
-        self.portal.invokeFactory('Folder', id="statictest")
+        self.setRoles(['Manager'])
+        self.portal.invokeFactory('Folder', id='statictest')
         folder = self.portal['statictest']
 
         manager = getUtility(
@@ -384,7 +384,7 @@ class TestMigrations_v4_0alpha2(MigrationTest):
 
 class TestMigrations_v4_0alpha3(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha2-4alpha3"
+    profile = 'profile-plone.app.upgrade.v40:4alpha2-4alpha3'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -400,7 +400,7 @@ class TestMigrations_v4_0alpha3(MigrationTest):
 
 class TestMigrations_v4_0alpha5(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha4-4alpha5"
+    profile = 'profile-plone.app.upgrade.v40:4alpha4-4alpha5'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -476,7 +476,7 @@ class TestMigrations_v4_0alpha5(MigrationTest):
 
 class TestMigrations_v4_0beta1(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha5-4beta1"
+    profile = 'profile-plone.app.upgrade.v40:4alpha5-4beta1'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -510,7 +510,7 @@ class TestMigrations_v4_0beta1(MigrationTest):
 
 class TestMigrations_v4_0beta2(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4beta1-4beta2"
+    profile = 'profile-plone.app.upgrade.v40:4beta1-4beta2'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -526,7 +526,7 @@ class TestMigrations_v4_0beta2(MigrationTest):
         front = self.portal['front-page']
         catalog.reindexObject(front)
         old_modified = front.modified()
-        # Make sure the getIcon metadata column shows the "original" value
+        # Make sure the getIcon metadata column shows the 'original' value
         brains = catalog(id='front-page')
         self.assertEqual(brains[0].getIcon, 'document_icon.png')
         # Run the migration

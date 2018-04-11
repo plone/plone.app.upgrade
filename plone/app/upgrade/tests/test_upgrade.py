@@ -9,7 +9,7 @@ import mock
 class TestUpgrade(MigrationTest):
 
     def afterSetUp(self):
-        self.setup = getToolByName(self.portal, "portal_setup")
+        self.setup = getToolByName(self.portal, 'portal_setup')
 
     def testListUpgradeSteps(self):
         # There should be no upgrade steps from the current version

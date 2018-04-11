@@ -31,7 +31,7 @@ class UpgradeRegistry503to51alpha1Test(unittest.TestCase):
 
         # set to a defined state
         plv = 'plone.lessvariables'
-        registry[plv]['plone-toolbar-font-secundary'] = "Foo"
+        registry[plv]['plone-toolbar-font-secundary'] = 'Foo'
         if 'plone-toolbar-font-secondary' in registry[plv]:
             del registry[plv]['plone-toolbar-font-secondary']
 
@@ -55,7 +55,7 @@ class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
         self.pt = self.portal.portal_transforms
         registry = getUtility(IRegistry)
         self.settings = registry.forInterface(
-            IFilterSchema, prefix="plone")
+            IFilterSchema, prefix='plone')
 
     def test_migrate_safe_html_settings(self):
         from plone.app.upgrade.v51.betas import \

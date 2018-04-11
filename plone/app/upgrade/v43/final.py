@@ -191,7 +191,7 @@ def markProductsInstalledForUninstallableProfiles(context):
         qi.notifyInstalled(
             product_id,
             locked=False,
-            logmsg="Marked as installed by plone.app.upgrade",
+            logmsg='Marked as installed by plone.app.upgrade',
             settings={},
             installedversion=version,
             status='installed',
@@ -280,7 +280,7 @@ def removeFakeKupu(context):
             elif kupu_id in expression:
                 # We are tempted to remove this, but who knows if the
                 # expression is something like this:
-                # "'kupu_library_tool' not in portal"
+                # ''kupu_library_tool' not in portal'
                 logger.warn('%s in %s has %s in expression. You probably '
                             'want to change the expression or remove the '
                             'resource.', resource_id, tool_id, kupu_id)

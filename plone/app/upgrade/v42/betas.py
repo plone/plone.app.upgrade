@@ -25,7 +25,7 @@ def installPloneAppDiscussion(portal):
     # Make sure plone.app.discussion is properly installed.
     installOrReinstallProduct(
         portal,
-        "plone.app.discussion",
+        'plone.app.discussion',
         out=None,
         hidden=True)
 
@@ -74,17 +74,17 @@ def to42rc1_discussion(context):
 
 
 def to42rc1_member_dashboard(context):
-    """Add Member role to "Portlets: View dashboard" permission
+    """Add Member role to 'Portlets: View dashboard' permission
     """
 
     p = 'Portlets: View dashboard'
     portal = getToolByName(context, 'portal_url').getPortalObject()
     roles = Permission(p, (), portal).getRoles(default=[])
-    if not "Member" in roles:
+    if not 'Member' in roles:
         acquire = isinstance(roles, list) and True or False
         roles = list(roles)
-        roles.append("Member")
-        portal.manage_permission("Portlets: View dashboard",
+        roles.append('Member')
+        portal.manage_permission('Portlets: View dashboard',
                                  roles,
                                  acquire,
                                  )

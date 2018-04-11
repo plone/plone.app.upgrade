@@ -71,7 +71,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
                 '++resource++tinymce.kss/tinymce.kss' in kssresourceids)
 
         request = self.app.REQUEST
-        plone_view = queryMultiAdapter((self.portal, request), name="plone")
+        plone_view = queryMultiAdapter((self.portal, request), name='plone')
         manager = queryMultiAdapter(
             (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
         viewlets = getAdapters(
@@ -103,14 +103,14 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         try:
             registry.forInterface(IThemeSettings)
         except KeyError:
-            self.fail("plone.app.theming not installed")
+            self.fail('plone.app.theming not installed')
 
     def testReindexNumericalTitle(self):
         from Products.CMFCore.utils import getToolByName
 
         # Create 2 pages, one with a numerical title
         portal = self.portal
-        self.setRoles(["Manager"])
+        self.setRoles(['Manager'])
         catalog = getToolByName(portal, 'portal_catalog')
         portal.invokeFactory(
             id='num-title', type_name='Document',
@@ -180,7 +180,7 @@ class TestFakeKupuMigration(MigrationTest):
         self.site_properties = pprops.site_properties
         bad_expr = ('python:portal.kupu_library_tool.isKupuEnabled'
                     '(REQUEST=request)')
-        allowed_expr = 'python:"kupu_library_tool" not in portal'
+        allowed_expr = "python:'kupu_library_tool' not in portal"
         # Setup a fake kupu with resources and settings
         self.kupu_id = 'kupu_library_tool'
         portal._setObject(self.kupu_id, PloneKupuLibraryTool(id=self.kupu_id))

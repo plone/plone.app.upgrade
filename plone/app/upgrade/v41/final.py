@@ -35,7 +35,7 @@ def installPloneAppDiscussion(portal):
     # Make sure plone.app.discussion is properly installed.
     installOrReinstallProduct(
         portal,
-        "plone.app.discussion",
+        'plone.app.discussion',
         out=None,
         hidden=True)
 
