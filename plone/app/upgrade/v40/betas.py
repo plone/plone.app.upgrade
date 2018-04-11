@@ -1,11 +1,11 @@
-import transaction
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import logger
+from plone.app.upgrade.utils import updateIconsInBrains
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import BLACKLISTED_INTERFACES
 from zope.dottedname.resolve import resolve
 
-from plone.app.upgrade.utils import logger
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import updateIconsInBrains
+import transaction
 
 
 def alpha5_beta1(context):

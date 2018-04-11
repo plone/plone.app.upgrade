@@ -1,7 +1,8 @@
-from Products.CMFPlone.factory import _DEFAULT_PROFILE
-from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.utils import version_match
 from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import version_match
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.factory import _DEFAULT_PROFILE
+
 import mock
 
 

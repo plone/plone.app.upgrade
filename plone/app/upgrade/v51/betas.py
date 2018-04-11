@@ -8,6 +8,7 @@ from Products.CMFPlone.interfaces import ISearchSchema
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zExceptions import NotFound
 from zope.component import getUtility
+
 import logging
 
 

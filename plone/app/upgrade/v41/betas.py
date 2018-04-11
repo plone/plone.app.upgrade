@@ -1,16 +1,15 @@
-import transaction
-from Products.CMFCore.utils import getToolByName
-from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
-from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
-
-from zope.event import notify
-from zope.lifecycleevent import ObjectCreatedEvent
-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
+from Products.CMFCore.utils import getToolByName
+from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
+from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
+from zope.event import notify
+from zope.lifecycleevent import ObjectCreatedEvent
+
+import transaction
 
 
 def optimize_rangeindex_floor_ceiling(index):

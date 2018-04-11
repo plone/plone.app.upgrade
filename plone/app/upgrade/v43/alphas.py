@@ -1,11 +1,13 @@
-import logging
-import re
 from Acquisition import aq_get
-from Products.CMFCore.utils import getToolByName
-from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.ZCatalog.ProgressHandler import ZLogHandler
 from Products.ZCTextIndex.interfaces import IZCTextIndex
+
+import logging
+import re
+
 
 logger = logging.getLogger('plone.app.upgrade')
 num_sort_regex = re.compile('\d+')

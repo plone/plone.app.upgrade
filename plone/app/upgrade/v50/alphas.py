@@ -1,18 +1,9 @@
 # -*- coding: utf-8 -*-
-import logging
-import pkg_resources
-
-from Acquisition import aq_parent, aq_base
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IEditingSchema
-from Products.CMFPlone.interfaces import IMaintenanceSchema
-from Products.CMFPlone.interfaces import INavigationSchema
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import safe_unicode
+from Acquisition import aq_base
+from Acquisition import aq_parent
 from plone.app.theming.interfaces import IThemeSettings
-from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.app.vocabularies.types import BAD_TYPES
 from plone.keyring.interfaces import IKeyManager
@@ -20,12 +11,23 @@ from plone.keyring.keymanager import KeyManager
 from plone.keyring.keyring import Keyring
 from plone.protect.interfaces import IDisableCSRFProtection
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IEditingSchema
+from Products.CMFPlone.interfaces import IMaintenanceSchema
+from Products.CMFPlone.interfaces import INavigationSchema
+from Products.CMFPlone.interfaces import ISearchSchema
+from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.interface import alsoProvides
 from zope.schema.interfaces import ConstraintNotSatisfied
+
+import logging
+import pkg_resources
+
 
 try:
     pkg_resources.get_distribution('plone.app.caching')

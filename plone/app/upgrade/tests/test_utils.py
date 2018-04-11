@@ -1,6 +1,6 @@
-from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade import utils
+from plone.app.upgrade.tests.base import MigrationTest
+from Products.CMFCore.utils import getToolByName
 
 
 class TestUtils(MigrationTest):

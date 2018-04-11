@@ -2,11 +2,11 @@
 from os.path import abspath
 from os.path import dirname
 from os.path import join
-from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import FunctionalTesting
-from plone.app.testing.bbb import PTC_FIXTURE
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 from plone.app.testing.bbb import PloneTestCase
+from plone.app.testing.bbb import PTC_FIXTURE
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
@@ -16,6 +16,7 @@ from zope.site.hooks import setSite
 
 import transaction
 import warnings
+
 
 #
 # Base TestCase for upgrades

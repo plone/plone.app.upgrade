@@ -1,8 +1,10 @@
-import pkg_resources
-import sys
 from plone.app.upgrade.utils import alias_module
+
 import bbb
 import bbbd
+import pkg_resources
+import sys
+
 
 try:
     from zope.app.cache.interfaces.ram import IRAMCache

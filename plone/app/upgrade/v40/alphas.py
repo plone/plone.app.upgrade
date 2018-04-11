@@ -1,33 +1,31 @@
-import transaction
-
-from zope.component import queryMultiAdapter
-from zope.component import getUtilitiesFor
-from zope.component import getSiteManager, getUtility
-from zope.ramcache.interfaces.ram import IRAMCache
-from zope.ramcache.ram import RAMCache
-
 from Acquisition import aq_base
 from Acquisition import aq_get
-from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
-from Products.CMFCore.interfaces import ICachingPolicyManager
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.setuphandlers import addCacheHandlers
-from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
-from Products.MailHost.MailHost import MailHost
-from Products.MailHost.interfaces import IMailHost
-from zExceptions import NotFound
-from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-
 from plone.app.upgrade.utils import cleanUpSkinsTool as generalCleanUpSkinsTool
-from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import unregisterSteps
+from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 from plone.portlet.static.static import IStaticPortlet
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
-
+from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.interfaces import ICachingPolicyManager
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
+from Products.CMFPlone.setuphandlers import addCacheHandlers
+from Products.MailHost.interfaces import IMailHost
+from Products.MailHost.MailHost import MailHost
+from zExceptions import NotFound
+from zope.component import getSiteManager
+from zope.component import getUtilitiesFor
+from zope.component import getUtility
+from zope.component import queryMultiAdapter
+from zope.ramcache.interfaces.ram import IRAMCache
+from zope.ramcache.ram import RAMCache
+
+import transaction
 
 
 _KNOWN_ACTION_ICONS = {

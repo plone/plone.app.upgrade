@@ -1,10 +1,11 @@
-import logging
-
-from plone.app.upgrade.utils import loadMigrationProfile
+from BTrees.Length import Length
 from plone.app.upgrade.utils import installOrReinstallProduct
+from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 from Products.ZCTextIndex.OkapiIndex import OkapiIndex
-from BTrees.Length import Length
+
+import logging
+
 
 logger = logging.getLogger('plone.app.upgrade')
 

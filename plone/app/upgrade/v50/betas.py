@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
-from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName

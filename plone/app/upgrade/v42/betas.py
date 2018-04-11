@@ -1,10 +1,10 @@
+from AccessControl.Permission import Permission
+from plone.app.upgrade.utils import installOrReinstallProduct
+from plone.app.upgrade.utils import loadMigrationProfile
+from Products.CMFCore.utils import getToolByName
+
 import logging
 
-from AccessControl.Permission import Permission
-
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import installOrReinstallProduct
-from Products.CMFCore.utils import getToolByName
 
 logger = logging.getLogger('plone.app.upgrade')
 

@@ -1,9 +1,3 @@
-from zope.component import getAdapters, queryMultiAdapter
-from zope.component import getSiteManager
-from zope.contentprovider.interfaces import IContentProvider
-from zope.interface import implementer
-from zope.viewlet.interfaces import IViewlet
-
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
@@ -11,8 +5,15 @@ from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getFSVersionTuple
 from Products.GenericSetup import profile_registry
 from Products.GenericSetup.interfaces import EXTENSION
+from zope.component import getAdapters
+from zope.component import getSiteManager
+from zope.component import queryMultiAdapter
+from zope.contentprovider.interfaces import IContentProvider
+from zope.interface import implementer
+from zope.viewlet.interfaces import IViewlet
 
 import alphas
+
 
 try:
     from Products.CMFCore.indexing import processQueue

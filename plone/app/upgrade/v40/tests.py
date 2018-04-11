@@ -1,41 +1,38 @@
-import time
-
+from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import version_match
+from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
+from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
+from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
+from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
+from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
+from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
+from plone.app.upgrade.v40.alphas import migrateActionIcons
+from plone.app.upgrade.v40.alphas import migrateFolders
+from plone.app.upgrade.v40.alphas import migrateMailHost
+from plone.app.upgrade.v40.alphas import migrateStaticTextPortlets
+from plone.app.upgrade.v40.alphas import migrateTypeIcons
+from plone.app.upgrade.v40.alphas import renameJoinFormFields
+from plone.app.upgrade.v40.alphas import setupReferencebrowser
+from plone.app.upgrade.v40.alphas import updateLargeFolderType
+from plone.app.upgrade.v40.betas import removeLargePloneFolder
+from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
+from plone.app.upgrade.v40.betas import updateIconMetadata
+from plone.portlet.static import static
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.portlets.interfaces import IPortletAssignmentSettings
+from plone.portlets.interfaces import IPortletManager
+from Products.CMFCore.ActionInformation import Action
+from Products.CMFCore.Expression import Expression
+from Products.CMFCore.utils import getToolByName
+from Products.MailHost.interfaces import IMailHost
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
-from Products.CMFCore.ActionInformation import Action
-from Products.CMFCore.Expression import Expression
-from Products.CMFCore.utils import getToolByName
-from Products.MailHost.interfaces import IMailHost
-
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
-from plone.app.upgrade.v40.alphas import migrateActionIcons
-from plone.app.upgrade.v40.alphas import migrateTypeIcons
-from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
-from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
-from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
-from plone.app.upgrade.v40.alphas import setupReferencebrowser
-from plone.app.upgrade.v40.alphas import migrateMailHost
-from plone.app.upgrade.v40.alphas import migrateFolders
-from plone.app.upgrade.v40.alphas import renameJoinFormFields
-from plone.app.upgrade.v40.alphas import updateLargeFolderType
-from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
-from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
-from plone.app.upgrade.v40.alphas import migrateStaticTextPortlets
-from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
-from plone.app.upgrade.v40.betas import updateIconMetadata
-from plone.app.upgrade.v40.betas import removeLargePloneFolder
-from plone.app.upgrade.tests.base import MigrationTest
-from plone.app.upgrade.utils import version_match
-
-from plone.portlet.static import static
-from plone.portlets.interfaces import IPortletAssignmentMapping
-from plone.portlets.interfaces import IPortletAssignmentSettings
-from plone.portlets.interfaces import IPortletManager
+import time
 
 
 class FakeSecureMailHost(object):

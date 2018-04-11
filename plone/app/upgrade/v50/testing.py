@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.testing.z2 import FunctionalTesting, login
+from plone.testing.z2 import FunctionalTesting
+from plone.testing.z2 import login
 from zope.component.hooks import setSite
 from zope.configuration import xmlconfig
+
 import logging
 import os
+
 
 logger = logging.getLogger(__file__)
 

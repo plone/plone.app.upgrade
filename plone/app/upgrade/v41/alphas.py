@@ -1,12 +1,9 @@
-import logging
-
-import pkg_resources
-import transaction
 from BTrees.IIBTree import IIBTree
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
-from BTrees.OIBTree import OIBTree
 from BTrees.Length import Length
+from BTrees.OIBTree import OIBTree
+from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.rolemap import RolemapExportConfigurator
 from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
@@ -15,7 +12,10 @@ from Products.PluginIndexes.FieldIndex.FieldIndex import FieldIndex
 from Products.PluginIndexes.KeywordIndex.KeywordIndex import KeywordIndex
 from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
 
-from plone.app.upgrade.utils import loadMigrationProfile
+import logging
+import pkg_resources
+import transaction
+
 
 logger = logging.getLogger('plone.app.upgrade')
 

@@ -1,7 +1,9 @@
-import unittest
 from Products.ZCatalog.ZCatalog import ZCatalog
-from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex, PLexicon
 from Products.ZCTextIndex.OkapiIndex import OkapiIndex
+from Products.ZCTextIndex.ZCTextIndex import PLexicon
+from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex
+
+import unittest
 
 
 class MigrationUnitTests(unittest.TestCase):

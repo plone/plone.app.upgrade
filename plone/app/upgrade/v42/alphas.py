@@ -1,5 +1,7 @@
-import logging
 from plone.app.upgrade.utils import loadMigrationProfile
+
+import logging
+
 
 logger = logging.getLogger('plone.app.upgrade')
 

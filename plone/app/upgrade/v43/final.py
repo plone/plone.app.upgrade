@@ -1,15 +1,14 @@
-import logging
-from Products.CMFCore.utils import getToolByName
-
-from zope.component import getAllUtilitiesRegisteredFor
-from zope.component import queryUtility
-from plone.contentrules.engine.interfaces import IRuleStorage
-from plone.contentrules.engine.assignments import \
-    check_rules_with_dotted_name_moved
-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
 from plone.app.upgrade.v43.alphas import upgradeTinyMCEAgain
+from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved
+from plone.contentrules.engine.interfaces import IRuleStorage
+from Products.CMFCore.utils import getToolByName
+from zope.component import getAllUtilitiesRegisteredFor
+from zope.component import queryUtility
+
+import logging
+
 
 # We had our own version of this, but it was just a copy.  We keep a
 # reference here to avoid breakage if someone imports it.
