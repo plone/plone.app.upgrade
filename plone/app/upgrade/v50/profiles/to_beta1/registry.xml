@@ -136,7 +136,7 @@
 
 
   <!-- add theme mapper related -->
-  
+
     <!-- pattern -->
     <records prefix="plone.resources/mockup-patterns-filemanager"
             interface='Products.CMFPlone.interfaces.IResourceRegistry'>
