@@ -325,7 +325,8 @@ def addSortOnProperty(context):
 
     The default value of this field is relevance.
     """
-    site_properties = getToolByName(context, 'portal_properties').site_properties
+    site_properties = getToolByName(
+        context, 'portal_properties').site_properties
     if not site_properties.hasProperty('sort_on'):
         if 'sort_on' in site_properties.__dict__:
             # fix bug if 4.3.1 pending has been tested

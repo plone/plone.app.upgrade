@@ -200,6 +200,7 @@ def to50beta2(context):
         # will only be there if from older plone instance
         pass
 
+
 # configlet id -> category
 cp_mapping = {
     # General

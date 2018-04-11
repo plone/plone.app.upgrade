@@ -18,4 +18,6 @@ class FactoryTool(SimpleItem):
 
 class IFactoryTool(Interface):
     pass
+
+
 registerToolInterface('portal_factory', IFactoryTool)

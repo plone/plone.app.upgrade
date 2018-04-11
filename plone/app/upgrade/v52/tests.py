@@ -17,7 +17,6 @@ else:
     PLONE_5 = True
 
 
-
 def test_suite():
     # Skip these tests on Plone 4
     if not PLONE_5:

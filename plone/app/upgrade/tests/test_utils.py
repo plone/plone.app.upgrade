@@ -25,7 +25,8 @@ class TestUtils(MigrationTest):
         difference = set(existing) ^ set(skins)
         self.assertEqual(len(skins.keys()), len(existing),
                          msg='Skink difference is: {}'.format(list(difference)))
-        difference = set(layers_in_selection(selection)) ^ set(existing_layers_in_selection)
+        difference = set(layers_in_selection(selection)) ^ set(
+            existing_layers_in_selection)
         self.assertEqual(len(layers_in_selection(selection)),
                          len(existing_layers_in_selection),
                          msg='Layer difference is: {}'.format(list(difference)))

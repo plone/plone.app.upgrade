@@ -26,6 +26,8 @@ class ICalendarTool(Interface):
 
 class IActionIconsTool(Interface):
     pass
+
+
 registerToolInterface('portal_actionicons', IActionIconsTool)
 
 

@@ -91,7 +91,7 @@ def threeX_alpha1(context):
         if qi.is_product_installed('plonetheme.classic'):
             stool.runAllImportStepsFromProfile(
                 'profile-plonetheme.classic:default'
-                )
+            )
     # Install packages that are needed for Plone 4,
     # but don't break on Plone 5 where they are gone
     for profile in ('archetypes.referencebrowserwidget:default',
