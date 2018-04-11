@@ -50,15 +50,15 @@ def safeEditProperty(obj, key, value, data_type='string'):
 def addLinesToProperty(obj, key, values):
     if obj.hasProperty(key):
         data = getattr(obj, key)
-        if type(data) is TupleType:
+        if isinstance(data, TupleType):
             data = list(data)
-        if type(values) is ListType:
+        if isinstance(values, ListType):
             data.extend(values)
         else:
             data.append(values)
         obj._updateProperty(key, data)
     else:
-        if type(values) is not ListType:
+        if not isinstance(values, ListType):
             values = [values]
         obj._setProperty(key, values, 'lines')
 
