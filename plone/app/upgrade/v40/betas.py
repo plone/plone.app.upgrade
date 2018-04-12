@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_base
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import updateIconsInBrains
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import BLACKLISTED_INTERFACES
+from Products.CMFPlone.utils import safe_hasattr
 from zope.dottedname.resolve import resolve
 
 import transaction
@@ -44,14 +46,15 @@ def updateSafeHTMLConfig(context):
     list_conf = []
     # Kupu sets its attributes on first use, rather than providing class level
     # defaults.
-    if hasattr(kupu_tool.aq_base, 'style_whitelist'):
+    kupu_tool_base = aq_base(kupu_tool)
+    if safe_hasattr(kupu_tool_base, 'style_whitelist'):
         styles = list(kupu_tool.style_whitelist)
         if 'padding-left' not in styles:
             styles.append('padding-left')
         list_conf.append(('style_whitelist', styles))
-    if hasattr(kupu_tool.aq_base, 'class_blacklist'):
+    if safe_hasattr(kupu_tool_base, 'class_blacklist'):
         list_conf.append(('class_blacklist', kupu_tool.class_blacklist))
-    if hasattr(kupu_tool.aq_base, 'html_exclusions'):
+    if safe_hasattr(kupu_tool_base, 'html_exclusions'):
         list_conf.append(
             ('stripped_attributes', kupu_tool.get_stripped_attributes()))
     for k, v in list_conf:
@@ -61,7 +64,7 @@ def updateSafeHTMLConfig(context):
         while tdata:
             tdata.pop()
         tdata.extend(v)
-    if hasattr(kupu_tool.aq_base, 'html_exclusions'):
+    if safe_hasattr(kupu_tool_base, 'html_exclusions'):
         ksc = dict((str(' '.join(k)), str(' '.join(v)))
                    for k, v in kupu_tool.get_stripped_combinations())
         tsc = transform._config['stripped_combinations']

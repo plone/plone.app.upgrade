@@ -2,6 +2,7 @@
 from Acquisition import aq_base
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
@@ -69,7 +70,7 @@ def saveCloneActions(actionprovider):
         return True, actionprovider._cloneActions()
     except AttributeError:
         # Stumbled across ancient dictionary actions
-        if not hasattr(aq_base(actionprovider), '_convertActions'):
+        if not base_hasattr(actionprovider, '_convertActions'):
             return False, (
                 "Can't convert actions of {0}! Jumping to next "
                 'action.'.format(actionprovider.getId()), logging.ERROR)
