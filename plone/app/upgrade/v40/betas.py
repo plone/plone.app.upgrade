@@ -152,13 +152,13 @@ def convertToBlobs(context):
 
     output = migrateATBlobFiles(context)
     count = len(output.split('\n')) - 1
-    logger.info('Migrated %s files to blobs.' % count)
+    logger.info('Migrated %s files to blobs.', count)
 
     logger.info('Started migration of images to blobs.')
     from plone.app.blob.migrations import migrateATBlobImages
     output = migrateATBlobImages(context)
     count = len(output.split('\n')) - 1
-    logger.info('Migrated %s images to blobs.' % count)
+    logger.info('Migrated %s images to blobs.', count)
     if ori_enable_link_integrity_checks:
         logger.info('Restored original link integrity checking setting')
         sprop.enable_link_integrity_checks = ori_enable_link_integrity_checks
@@ -246,8 +246,9 @@ def fix_cataloged_interface_names(context):
                 new_value = list(sorted((set(value) - delete).union(rename)))
                 if value != new_value:
                     _unindex[docid] = new_value
-                if pos and pos % 10000 == 0:
-                    logger.info('Processed %s items.' % pos)
+                # Note: flake8 erroneously complains about module formatter.
+                if pos and pos % 10000 == 0:  # noqa S001
+                    logger.info('Processed %s items.', pos)
                     transaction.savepoint(optimistic=True)
 
     transaction.savepoint(optimistic=True)

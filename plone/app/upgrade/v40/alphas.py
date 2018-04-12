@@ -218,14 +218,16 @@ def migrateActionIcons(context):
             action = atool[new_cat].get(ident)
             if action is not None:
                 if not action.icon_expr:
-                    action._setPropValue('icon_expr', '%s%s' % (prefix, expr))
+                    action._setPropValue(
+                        'icon_expr', '{0}{1}'.format(prefix, expr))
         elif cat == 'controlpanel':
             # control panel tool
             action_infos = [a for a in cptool.listActions()
                             if a.getId() == ident]
             if len(action_infos):
                 if not action_infos[0].getIconExpression():
-                    action_infos[0].setIconExpression('%s%s' % (prefix, expr))
+                    action_infos[0].setIconExpression(
+                        '{0}{1}'.format(prefix, expr))
 
         # Remove the action icon
         aitool.removeActionIcon(cat, ident)
@@ -421,7 +423,7 @@ def migrateStaticTextPortlets(context):
                 if IStaticPortlet.providedBy(portlet) and \
                         getattr(portlet, 'hide', False):
                     logger.info(
-                        'Found hidden static text portlet %s at %s' %
+                        'Found hidden static text portlet %s at %s',
                         (portlet_id, path))
                     settings = IPortletAssignmentSettings(portlet)
                     settings['visible'] = False
@@ -550,7 +552,8 @@ def addRecursiveGroupsPlugin(context):
             if IRecursiveGroupsPlugin.providedBy(p):
                 plugins.deactivatePlugin(IGroupsPlugin, id)
                 logger.warn(
-                    'Found an existing Recursive Groups plugin, %s, in acl_users, deactivating.' % id)
+                    'Found an existing Recursive Groups plugin, %s, '
+                    'in acl_users, deactivating.', id)
 
     if not 'recursive_groups' in acl:
         addRecursiveGroupsPlugin(
@@ -580,7 +583,8 @@ def migrateTypeIcons(context):
         if 'content_icon' in type.__dict__:
             icon = type.content_icon
             if icon and not getattr(type, 'icon_expr', False):
-                type.icon_expr = 'string:${portal_url}/%s' % icon
+                # Replacing %s with .format would give a KeyError portal_url.
+                type.icon_expr = 'string:${portal_url}/%s' % icon  # noqa S001
                 type.icon_expr_object = Expression(type.icon_expr)
                 del type.content_icon
 

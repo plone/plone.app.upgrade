@@ -30,7 +30,7 @@ def to500(context):
         if site_properties.hasProperty(original_id):
             value = site_properties.getProperty(original_id)
             value = [safe_unicode(a) for a in value]
-            registry['plone.%s' % new_id] = value
+            registry['plone.{0}'.format(new_id)] = value
             site_properties._delProperty(original_id)
 
     # Old versions of to50rc3 migrated values from
@@ -91,7 +91,7 @@ def to501(context):
             cnt += 1  # we are curious
         # done
         pghandler.finish()
-        logger.info('Reindexed `getIcon` for %s items' % str(cnt))
+        logger.info('Reindexed `getIcon` for %s items', str(cnt))
 
     refresh_getIcon_catalog_metadata(context)
 
@@ -146,4 +146,4 @@ def fix_double_smaxage(context):
     field_ref = FieldRef(def_maxage, registry.records[def_maxage].field)
     old_value = registry[maxage]
     registry.records[maxage] = Record(field_ref, old_value)
-    logger.info('Fixed {} to refer to {}.'.format(maxage, def_maxage))
+    logger.info('Fixed {0} to refer to {1}.'.format(maxage, def_maxage))

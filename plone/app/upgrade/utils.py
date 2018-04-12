@@ -70,8 +70,9 @@ def saveCloneActions(actionprovider):
     except AttributeError:
         # Stumbled across ancient dictionary actions
         if not hasattr(aq_base(actionprovider), '_convertActions'):
-            return False, ("Can't convert actions of %s! Jumping to next "
-                           'action.' % actionprovider.getId(), logging.ERROR)
+            return False, (
+                "Can't convert actions of {0}! Jumping to next "
+                'action.'.format(actionprovider.getId()), logging.ERROR)
         else:
             actionprovider._convertActions()
             return True, actionprovider._cloneActions()
@@ -169,24 +170,24 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     if old_qi:
         if not qi.isProductInstalled(product_name):
             qi.installProduct(product_name, hidden=hidden)
-            logger.info('Installed %s' % product_name)
+            logger.info('Installed %s', product_name)
         elif old_qi:
             info = qi._getOb(product_name)
             installed_version = info.getInstalledVersion()
             product_version = qi.getProductVersion(product_name)
             if installed_version != product_version:
                 qi.reinstallProducts([product_name])
-                logger.info('%s is out of date (installed: %s/ '
-                            'filesystem: %s), reinstalled.' % (
-                                product_name, installed_version,
-                                product_version))
+                logger.info(
+                    '%s is out of date (installed: %s/ filesystem: %s), '
+                    'reinstalled.',
+                    product_name, installed_version, product_version)
             else:
-                logger.info('%s already installed.' % product_name)
+                logger.info('%s already installed.', product_name)
     else:
         # New QI browser view.
         if not qi.is_product_installed(product_name):
             qi.install_product(product_name, allow_hidden=True)
-            logger.info('Installed %s' % product_name)
+            logger.info('Installed %s', product_name)
         else:
             qi.upgrade_product(product_name)
             logger.info('Upgraded %s', product_name)

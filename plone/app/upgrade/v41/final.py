@@ -27,7 +27,7 @@ def fixOwnerTuples(portal):
         old = obj.getOwnerTuple()
         if old and old[0][-1] == 'portal_memberdata':
             new = (['acl_users'], old[1])
-            logger.info('Repairing %s: %r -> %r' % (path, old, new))
+            logger.info('Repairing %s: %r -> %r', path, old, new)
             obj._owner = new
     portal.ZopeFindAndApply(portal, search_sub=True, apply_func=fixOwnerTuple)
 
