@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Improved code quality.  [maurits]
 
 
 2.0.14 (2018-04-09)
