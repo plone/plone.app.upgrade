@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from AccessControl.Permission import Permission
 from plone.app.upgrade.utils import installOrReinstallProduct
 from plone.app.upgrade.utils import loadMigrationProfile

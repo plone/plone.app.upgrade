@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import version_match
 from Products.CMFCore.utils import getToolByName

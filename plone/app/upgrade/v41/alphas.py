@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from BTrees.IIBTree import IIBTree
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet

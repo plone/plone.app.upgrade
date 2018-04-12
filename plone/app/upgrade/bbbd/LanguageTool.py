@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from OFS.SimpleItem import SimpleItem
 from Products.CMFCore.utils import registerToolInterface
 from zope.interface import Interface

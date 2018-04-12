@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_get
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry

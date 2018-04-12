@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v43.alphas import upgradeToI18NCaseNormalizer
 

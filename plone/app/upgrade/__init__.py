@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import alias_module
 
 import bbb

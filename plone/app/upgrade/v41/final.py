@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from BTrees.Length import Length
 from plone.app.upgrade.utils import installOrReinstallProduct
 from plone.app.upgrade.utils import loadMigrationProfile
