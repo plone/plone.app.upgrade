@@ -555,7 +555,7 @@ def addRecursiveGroupsPlugin(context):
                     'Found an existing Recursive Groups plugin, %s, '
                     'in acl_users, deactivating.', id)
 
-    if not 'recursive_groups' in acl:
+    if 'recursive_groups' not in acl:
         addRecursiveGroupsPlugin(
             acl, 'recursive_groups', 'Recursive Groups Plugin')
 

@@ -81,7 +81,7 @@ def to42rc1_member_dashboard(context):
     p = 'Portlets: View dashboard'
     portal = getToolByName(context, 'portal_url').getPortalObject()
     roles = Permission(p, (), portal).getRoles(default=[])
-    if not 'Member' in roles:
+    if 'Member' not in roles:
         acquire = isinstance(roles, list) and True or False
         roles = list(roles)
         roles.append('Member')

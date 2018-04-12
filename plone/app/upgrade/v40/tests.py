@@ -258,7 +258,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
     def testAddedUseEmailProperty(self):
         tool = getToolByName(self.portal, 'portal_properties')
         sheet = getattr(tool, 'site_properties')
-        #self.assertEqual(sheet.getProperty('use_email_as_login'), False)
+        # self.assertEqual(sheet.getProperty('use_email_as_login'), False)
         self.removeSiteProperty('use_email_as_login')
         loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
         self.assertEqual(sheet.getProperty('use_email_as_login'), False)
