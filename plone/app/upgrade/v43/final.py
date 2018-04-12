@@ -2,7 +2,7 @@
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
 from plone.app.upgrade.v43.alphas import upgradeTinyMCEAgain
-from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved
+from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved  # noqa E501
 from plone.contentrules.engine.interfaces import IRuleStorage
 from Products.CMFCore.utils import getToolByName
 from zope.component import getAllUtilitiesRegisteredFor

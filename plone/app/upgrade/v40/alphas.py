@@ -10,7 +10,9 @@ from plone.portlet.static.static import IStaticPortlet
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
-from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
+# We either get E501 line too long,
+# or I001 isort found an import in the wrong position...
+from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager  # noqa E501
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
@@ -111,20 +113,22 @@ def restoreTheme(context):
 
     if old_default_skin == 'Plone Default':
         v_storage = getUtility(IViewletSettingsStorage)
-        uncustomized_layers = ('custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
-                               'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
-                               'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
-                               'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
-                               'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
-                               'plone_images,plone_content,plone_login,plone_deprecated,'
-                               'plone_3rdParty,cmf_legacy')
+        uncustomized_layers = (
+            'custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
+            'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
+            'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
+            'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
+            'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
+            'plone_images,plone_content,plone_login,plone_deprecated,'
+            'plone_3rdParty,cmf_legacy')
         if skins.selections.get('Plone Default') == uncustomized_layers:
             # if the old theme's layers hadn't been mucked with, we can just
             # use Plone Classic Theme
             old_default_skin = 'Plone Classic Theme'
         else:
             # otherwise, copy Plone Default to a new theme
-            skins.selections['Old Plone 3 Custom Theme'] = skins.selections.get(
+            skins.selections[
+                'Old Plone 3 Custom Theme'] = skins.selections.get(
                 'Plone Default')
             # copy the viewlet order
             v_storage._order['Old Plone 3 Custom Theme'] = dict(
@@ -268,9 +272,16 @@ def changeAuthenticatedResourcesCondition(context):
     """
     resources = {
         'portal_css': ('member.css', ),
-        'portal_javascripts': ('dropdown.js', 'table_sorter.js',
-                               'calendar_formfield.js', 'calendarpopup.js', 'formUnload.js',
-                               'formsubmithelpers.js', 'unlockOnFormUnload.js')}
+        'portal_javascripts': (
+            'dropdown.js',
+            'table_sorter.js',
+            'calendar_formfield.js',
+            'calendarpopup.js',
+            'formUnload.js',
+            'formsubmithelpers.js',
+            'unlockOnFormUnload.js',
+        ),
+    }
     ANON = ('not: portal/portal_membership/isAnonymousUser',
             'not:portal/portal_membership/isAnonymousUser', )
     for tool_id, resource_ids in resources.items():
@@ -541,7 +552,10 @@ def updateLargeFolderType(context):
 
 def addRecursiveGroupsPlugin(context):
     """Add a recursive groups plugin to acl_users"""
-    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import addRecursiveGroupsPlugin, IRecursiveGroupsPlugin
+    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import (
+        addRecursiveGroupsPlugin)
+    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import (
+        IRecursiveGroupsPlugin)
     from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
     acl = getToolByName(context, 'acl_users')
     plugins = acl.plugins
@@ -570,7 +584,8 @@ def cleanUpClassicThemeResources(context):
     qi = getToolByName(context, 'portal_quickinstaller', None)
     if qi is not None and 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
-        classictheme.resources_css = []  # empty the list of installed resources
+        # empty the list of installed resources
+        classictheme.resources_css = []
 
 
 def migrateTypeIcons(context):

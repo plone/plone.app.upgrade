@@ -41,8 +41,11 @@ def add_siteadmin_role(context):
     uf = getToolByName(context, 'acl_users')
     gtool = getToolByName(context, 'portal_groups')
     if not uf.searchGroups(id='Site Administrators'):
-        gtool.addGroup('Site Administrators', title='Site Administrators', roles=[
-                       'Site Administrator'])
+        gtool.addGroup(
+            'Site Administrators',
+            title='Site Administrators',
+            roles=['Site Administrator'],
+        )
 
     # update rolemap:
     # add Site Administrator role to permissions that have the Manager role,

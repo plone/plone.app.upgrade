@@ -18,7 +18,11 @@ def alpha5_beta1(context):
 
 
 def repositionRecursiveGroupsPlugin(context):
-    """If the recursive groups plugin is active, make sure it's at the bottom of the active plugins list"""
+    """Reposition recursive groups plugin.
+
+    If the recursive groups plugin is active,
+    make sure it's at the bottom of the active plugins list.
+    """
     from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
     acl = getToolByName(context, 'acl_users')
     plugins = acl.plugins
@@ -37,7 +41,10 @@ def beta1_beta2(context):
 
 
 def updateSafeHTMLConfig(context):
-    """Update the safe_html transform with the new config params, migrating existing config from Kupu."""
+    """Update the safe_html transform with the new config params.
+
+    Migrate existing config from Kupu.
+    """
     transform = getToolByName(context, 'portal_transforms').safe_html
     transform._tr_init(1)  # load new config items
     kupu_tool = getToolByName(context, 'kupu_library_tool', None)

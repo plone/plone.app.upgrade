@@ -114,8 +114,11 @@ try:
 except ImportError:
     alias_module('Products.PloneLanguageTool.interfaces', bbb)
     alias_module('Products.PloneLanguageTool', bbbd)
-    __import__('Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool = __import__(
-        'Products.PloneLanguageTool.LanguageTool').PloneLanguageTool.LanguageTool.LanguageTool
+    __import__(
+        'Products.PloneLanguageTool.LanguageTool',
+    ).PloneLanguageTool.LanguageTool = __import__(
+        'Products.PloneLanguageTool.LanguageTool',
+    ).PloneLanguageTool.LanguageTool.LanguageTool
 
 
 # To solve the __iro__ problem because CMFPlacefulWorkflow interfaces
@@ -131,7 +134,8 @@ except pkg_resources.DistributionNotFound:
 except BaseException:
     from Products.CMFPlacefulWorkflow import interfaces  # noqa F811
     alias_module(
-        'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
+        'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow',
+        interfaces)
 
 try:
     from Products.PasswordResetTool import PasswordResetTool

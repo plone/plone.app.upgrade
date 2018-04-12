@@ -45,7 +45,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
             False)
 
     def testUpgradeToI18NCaseNormalizer(self):
-        from Products.CMFPlone.UnicodeSplitter.splitter import Splitter, CaseNormalizer
+        from Products.CMFPlone.UnicodeSplitter.splitter import Splitter
+        from Products.CMFPlone.UnicodeSplitter.splitter import CaseNormalizer
         ctool = self.portal.portal_catalog
         ctool.plone_lexicon._pipeline[1] == (Splitter(), CaseNormalizer())
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
@@ -74,9 +75,12 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         request = self.app.REQUEST
         plone_view = queryMultiAdapter((self.portal, request), name='plone')
         manager = queryMultiAdapter(
-            (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
+            (self.portal, request, plone_view),
+            IContentProvider,
+            'plone.htmlhead')
         viewlets = getAdapters(
-            (manager.context, manager.request, manager.__parent__, manager), IViewlet)
+            (manager.context, manager.request, manager.__parent__, manager),
+            IViewlet)
         self.assertFalse(u'tinymce.configuration' in dict(viewlets))
 
     def testInstallThemingNotPreviouslyInstalled(self):
