@@ -81,7 +81,7 @@ def threeX_alpha1(context):
     if qi is not None:
         if 'plonetheme.classic' in qi:
             stool.runAllImportStepsFromProfile(
-                'profile-plonetheme.classic:default'
+                'profile-plonetheme.classic:default',
             )
     else:
         # Plone 5.1 and higher.
@@ -91,7 +91,7 @@ def threeX_alpha1(context):
         # Plone 5, which is fine, but we will try it anyway.
         if qi.is_product_installed('plonetheme.classic'):
             stool.runAllImportStepsFromProfile(
-                'profile-plonetheme.classic:default'
+                'profile-plonetheme.classic:default',
             )
     # Install packages that are needed for Plone 4,
     # but don't break on Plone 5 where they are gone

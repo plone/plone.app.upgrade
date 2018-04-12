@@ -34,7 +34,7 @@ class UpgradeTestCaseFixture(PloneSandboxLayer):
         xmlconfig.file(
             'configure.zcml',
             plone.app.caching,
-            context=configurationContext
+            context=configurationContext,
         )
 
 
@@ -52,7 +52,7 @@ class MigrationTest(PloneTestCase):
         self,
         action_id,
         category=None,
-        action_provider='portal_actions'
+        action_provider='portal_actions',
     ):
         # Removes an action from portal_actions
         tool = getToolByName(self.portal, action_provider)

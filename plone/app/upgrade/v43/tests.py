@@ -141,7 +141,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         alphas.reindex_sortable_title(portal.portal_setup)
         self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
-            '9 green bottles, hanging on the wall'
+            '9 green bottles, hanging on the wall',
         )
         self.assertEqual(
             catalog(id=portal['accidentally-fall'].id)[0].Title,
