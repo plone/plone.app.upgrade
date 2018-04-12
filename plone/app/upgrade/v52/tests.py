@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-from plone.app.testing import PLONE_INTEGRATION_TESTING
-from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
-from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import IFilterSchema
-from zope.component import getUtility
-
 import unittest
 
 

@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import alphas
-import betas
+import alphas  # noqa F401
+import betas  # noqa F401

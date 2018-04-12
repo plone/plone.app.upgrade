@@ -126,11 +126,8 @@ def fix_double_smaxage(context):
     plone.resource.maxage has title and description from shared maxage.
     See https://github.com/plone/Products.CMFPlone/issues/1989
     """
-    from plone.registry.interfaces import IPersistentField
     from plone.registry.record import Record
-    from plone.registry import field
     from plone.registry import FieldRef
-    from zope.component import queryAdapter
     registry = getUtility(IRegistry)
     # If these three registry records are not defined,
     # we do no fix.

@@ -60,7 +60,7 @@ def to42rc1(context):
     """4.2b2 -> 4.2rc1
     """
     try:
-        import plone.app.jquerytools
+        import plone.app.jquerytools  # noqa F401
         loadMigrationProfile(context, 'profile-plone.app.jquery:default')
     except ImportError:
         pass

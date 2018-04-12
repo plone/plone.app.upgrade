@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
 
 import logging
 

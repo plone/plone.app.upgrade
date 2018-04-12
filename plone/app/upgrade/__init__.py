@@ -8,7 +8,7 @@ import sys
 
 
 try:
-    from zope.app.cache.interfaces.ram import IRAMCache
+    from zope.app.cache.interfaces.ram import IRAMCache  # noqa F401
 except ImportError:
     import zope.ramcache.interfaces.ram
     alias_module('zope.app.cache.interfaces.ram', zope.ramcache.interfaces.ram)
@@ -25,27 +25,27 @@ except ImportError:
     alias_module('Products.CMFCalendar.interfaces', bbb)
 
 try:
-    from Products.CMFPlone import CalendarTool
+    from Products.CMFPlone import CalendarTool  # noqa F401
 except ImportError:
     sys.modules['Products.CMFPlone.CalendarTool'] = bbb
 
 try:
-    from Products.CMFPlone import DiscussionTool
+    from Products.CMFPlone import DiscussionTool  # noqa F401
 except ImportError:
     sys.modules['Products.CMFPlone.DiscussionTool'] = bbb
 
 try:
-    from Products.CMFPlone import InterfaceTool
+    from Products.CMFPlone import InterfaceTool  # noqa F401
 except ImportError:
     sys.modules['Products.CMFPlone.InterfaceTool'] = bbb
 
 try:
-    from Products.CMFPlone import SyndicationTool
+    from Products.CMFPlone import SyndicationTool  # noqa F401
 except ImportError:
     sys.modules['Products.CMFPlone.SyndicationTool'] = bbb
 
 try:
-    from Products.CMFPlone import UndoTool
+    from Products.CMFPlone import UndoTool  # noqa F401
 except ImportError:
     sys.modules['Products.CMFPlone.UndoTool'] = bbb
 
@@ -110,7 +110,7 @@ except ImportError:
     sys.modules['Products.CMFDefault.SyndicationInfo'] = bbb
 
 try:
-    from Products.PloneLanguageTool import interfaces
+    from Products.PloneLanguageTool import interfaces  # noqa F811
 except ImportError:
     alias_module('Products.PloneLanguageTool.interfaces', bbb)
     alias_module('Products.PloneLanguageTool', bbbd)
@@ -122,13 +122,14 @@ except ImportError:
 # changed on 1.6.1
 try:
     pkg_resources.get_distribution('Products.CMFPlacefulWorkflow')
-    from Products.CMFPlacefulWorkflow.interfaces import portal_placeful_workflow
+    from Products.CMFPlacefulWorkflow.interfaces import (  # noqa F401
+        portal_placeful_workflow)
 except pkg_resources.DistributionNotFound:
     # No package in this environment requires CMFPlacefulWorkflow,
     # so no patching necessary
     pass
 except BaseException:
-    from Products.CMFPlacefulWorkflow import interfaces
+    from Products.CMFPlacefulWorkflow import interfaces  # noqa F811
     alias_module(
         'Products.CMFPlacefulWorkflow.interfaces.portal_placeful_workflow', interfaces)
 
