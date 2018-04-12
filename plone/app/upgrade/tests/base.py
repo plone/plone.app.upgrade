@@ -11,7 +11,6 @@ from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.context import TarballImportContext
-from zope.configuration import xmlconfig
 from zope.site.hooks import setSite
 
 import transaction
@@ -31,10 +30,9 @@ class UpgradeTestCaseFixture(PloneSandboxLayer):
         # In 5.0 alpha we install or upgrade plone.app.caching,
         # so it must be available to Zope.
         import plone.app.caching
-        xmlconfig.file(
-            'configure.zcml',
-            plone.app.caching,
-            context=configurationContext,
+        self.loadZCML(
+            name='configure.zcml',
+            package=plone.app.caching,
         )
 
 
