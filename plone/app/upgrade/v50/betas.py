@@ -65,13 +65,17 @@ def upgrade_portal_language(context):
             if site_properties.hasProperty('default_language'):
                 default_lang = site_properties.getProperty('default_language')
     lang_settings.default_language = default_lang
-    if hasattr(portal, 'portal_languages'):
-        portal_languages = getSite().portal_languages
-        for old, new in LANGUAGE_OPTION_MAPPING.items():
-            if hasattr(portal_languages, old):
-                setattr(lang_settings, new, getattr(portal_languages, old))
-        # Remove the old tool
-        portal.manage_delObjects('portal_languages')
+    try:
+        portal_languages = portal.portal_languages
+    except AttributeError:
+        return
+    for old, new in LANGUAGE_OPTION_MAPPING.items():
+        try:
+            setattr(lang_settings, new, getattr(portal_languages, old))
+        except AttributeError:
+            continue
+    # Remove the old tool
+    portal.manage_delObjects('portal_languages')
 
 
 def upgrade_mail_controlpanel_settings(context):
@@ -425,7 +429,7 @@ def to50rc2(context):
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
-            registry['plone.%s' % p] = value
+            registry['plone.{0}'.format(p)] = value
             site_properties._delProperty(p)
 
     if site_properties.hasProperty('allow_external_login_sites'):
@@ -522,10 +526,10 @@ def to50rc3(context):
                 elif value.lower() == 'false':
                     value = False
             try:
-                registry['plone.%s' % p] = value
+                registry['plone.{0}'.format(p)] = value
                 site_properties._delProperty(p)
             except KeyError:
-                logger.warn('could not upgrade %s property' % p)
+                logger.warn('could not upgrade %s property', p)
 
     if site_properties.hasProperty('checkout_workflow_policy'):
         value = site_properties.getProperty('checkout_workflow_policy')
@@ -557,7 +561,7 @@ def to50rc3(context):
         if site_properties.hasProperty(original_id):
             value = site_properties.getProperty(original_id)
             value = [safe_unicode(a) for a in value]
-            registry['plone.%s' % new_id] = value
+            registry['plone.{0}'.format(new_id)] = value
             site_properties._delProperty(original_id)
 
     _migrate_list('typesUseViewActionInListings',

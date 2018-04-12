@@ -21,8 +21,7 @@ def _fix_typo_in_toolbar_less_variable(context):
         logger.warn(
             "Try to migrate registry value 'plone-toolbar-font-secundary' to "
             "'plone-toolbar-font-secondary', but latter already exists. "
-            'Migration to fix the typo is not executed.'
-        )
+            'Migration to fix the typo is not executed.')
         return
     registry[plv]['plone-toolbar-font-secondary'] = value
     del registry[plv]['plone-toolbar-font-secundary']

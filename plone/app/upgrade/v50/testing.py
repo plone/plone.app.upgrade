@@ -5,7 +5,6 @@ from plone.app.upgrade.utils import loadMigrationProfile
 from plone.testing.z2 import FunctionalTesting
 from plone.testing.z2 import login
 from zope.component.hooks import setSite
-from zope.configuration import xmlconfig
 
 import logging
 import os
@@ -22,10 +21,9 @@ class RealUpgradeLayer(PloneSandboxLayer):
         # In 5.0 alpha we install or upgrade plone.app.caching,
         # so it must be available to Zope..
         import plone.app.caching
-        xmlconfig.file(
-            'configure.zcml',
-            plone.app.caching,
-            context=configurationContext
+        self.loadZCML(
+            name='configure.zcml',
+            package=plone.app.caching,
         )
 
     def setUpPloneSite(self, portal):

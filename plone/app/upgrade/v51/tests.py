@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from plone.app.testing import PLONE_INTEGRATION_TESTING
-from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IFilterSchema
 from zope.component import getUtility
@@ -41,9 +40,7 @@ class UpgradeRegistry503to51alpha1Test(unittest.TestCase):
             registry[plv]['plone-toolbar-font-secondary'],
             'Foo',
         )
-        self.assertTrue(
-            'plone-toolbar-font-secundary' not in registry[plv]
-        )
+        self.assertNotIn('plone-toolbar-font-secundary', registry[plv])
 
 
 class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
@@ -75,9 +72,9 @@ def test_suite():
 
     suite = unittest.TestSuite()
     suite.addTest(
-        unittest.makeSuite(UpgradeRegistry503to51alpha1Test)
+        unittest.makeSuite(UpgradeRegistry503to51alpha1Test),
     )
     suite.addTest(
-        unittest.makeSuite(UpgradePortalTransforms51beta4to51beta5Test)
+        unittest.makeSuite(UpgradePortalTransforms51beta4to51beta5Test),
     )
     return suite
