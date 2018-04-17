@@ -1,11 +1,14 @@
-import transaction
+# -*- coding: utf-8 -*-
+from Acquisition import aq_base
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import logger
+from plone.app.upgrade.utils import updateIconsInBrains
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import BLACKLISTED_INTERFACES
+from Products.CMFPlone.utils import safe_hasattr
 from zope.dottedname.resolve import resolve
 
-from plone.app.upgrade.utils import logger
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import updateIconsInBrains
+import transaction
 
 
 def alpha5_beta1(context):
@@ -15,13 +18,18 @@ def alpha5_beta1(context):
 
 
 def repositionRecursiveGroupsPlugin(context):
-    """If the recursive groups plugin is active, make sure it's at the bottom of the active plugins list"""
+    """Reposition recursive groups plugin.
+
+    If the recursive groups plugin is active,
+    make sure it's at the bottom of the active plugins list.
+    """
     from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
     acl = getToolByName(context, 'acl_users')
     plugins = acl.plugins
     existingGroupsPlugins = plugins.listPlugins(IGroupsPlugin)
     if 'recursive_groups' in [a[0] for a in existingGroupsPlugins]:
-        while plugins.getAllPlugins('IGroupsPlugin')['active'].index('recursive_groups') < len(existingGroupsPlugins) - 1:
+        while plugins.getAllPlugins('IGroupsPlugin')['active'].index(
+                'recursive_groups') < len(existingGroupsPlugins) - 1:
             plugins.movePluginsDown(IGroupsPlugin, ['recursive_groups'])
 
 
@@ -33,7 +41,10 @@ def beta1_beta2(context):
 
 
 def updateSafeHTMLConfig(context):
-    """Update the safe_html transform with the new config params, migrating existing config from Kupu."""
+    """Update the safe_html transform with the new config params.
+
+    Migrate existing config from Kupu.
+    """
     transform = getToolByName(context, 'portal_transforms').safe_html
     transform._tr_init(1)  # load new config items
     kupu_tool = getToolByName(context, 'kupu_library_tool', None)
@@ -42,14 +53,15 @@ def updateSafeHTMLConfig(context):
     list_conf = []
     # Kupu sets its attributes on first use, rather than providing class level
     # defaults.
-    if hasattr(kupu_tool.aq_base, 'style_whitelist'):
+    kupu_tool_base = aq_base(kupu_tool)
+    if safe_hasattr(kupu_tool_base, 'style_whitelist'):
         styles = list(kupu_tool.style_whitelist)
         if 'padding-left' not in styles:
             styles.append('padding-left')
         list_conf.append(('style_whitelist', styles))
-    if hasattr(kupu_tool.aq_base, 'class_blacklist'):
+    if safe_hasattr(kupu_tool_base, 'class_blacklist'):
         list_conf.append(('class_blacklist', kupu_tool.class_blacklist))
-    if hasattr(kupu_tool.aq_base, 'html_exclusions'):
+    if safe_hasattr(kupu_tool_base, 'html_exclusions'):
         list_conf.append(
             ('stripped_attributes', kupu_tool.get_stripped_attributes()))
     for k, v in list_conf:
@@ -59,7 +71,7 @@ def updateSafeHTMLConfig(context):
         while tdata:
             tdata.pop()
         tdata.extend(v)
-    if hasattr(kupu_tool.aq_base, 'html_exclusions'):
+    if safe_hasattr(kupu_tool_base, 'html_exclusions'):
         ksc = dict((str(' '.join(k)), str(' '.join(v)))
                    for k, v in kupu_tool.get_stripped_combinations())
         tsc = transform._config['stripped_combinations']
@@ -150,13 +162,13 @@ def convertToBlobs(context):
 
     output = migrateATBlobFiles(context)
     count = len(output.split('\n')) - 1
-    logger.info('Migrated %s files to blobs.' % count)
+    logger.info('Migrated %s files to blobs.', count)
 
     logger.info('Started migration of images to blobs.')
     from plone.app.blob.migrations import migrateATBlobImages
     output = migrateATBlobImages(context)
     count = len(output.split('\n')) - 1
-    logger.info('Migrated %s images to blobs.' % count)
+    logger.info('Migrated %s images to blobs.', count)
     if ori_enable_link_integrity_checks:
         logger.info('Restored original link integrity checking setting')
         sprop.enable_link_integrity_checks = ori_enable_link_integrity_checks
@@ -244,8 +256,9 @@ def fix_cataloged_interface_names(context):
                 new_value = list(sorted((set(value) - delete).union(rename)))
                 if value != new_value:
                     _unindex[docid] = new_value
-                if pos and pos % 10000 == 0:
-                    logger.info('Processed %s items.' % pos)
+                # Note: flake8 erroneously complains about module formatter.
+                if pos and pos % 10000 == 0:  # noqa S001
+                    logger.info('Processed %s items.', pos)
                     transaction.savepoint(optimistic=True)
 
     transaction.savepoint(optimistic=True)

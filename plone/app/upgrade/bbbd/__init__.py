@@ -1,1 +1,2 @@
-from .LanguageTool import LanguageTool
+# -*- coding: utf-8 -*-
+from .LanguageTool import LanguageTool  # noqa F401

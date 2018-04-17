@@ -1,18 +1,9 @@
 # -*- coding: utf-8 -*-
-import logging
-import pkg_resources
-
-from Acquisition import aq_parent, aq_base
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IEditingSchema
-from Products.CMFPlone.interfaces import IMaintenanceSchema
-from Products.CMFPlone.interfaces import INavigationSchema
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import safe_unicode
+from Acquisition import aq_base
+from Acquisition import aq_parent
 from plone.app.theming.interfaces import IThemeSettings
-from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.app.vocabularies.types import BAD_TYPES
 from plone.keyring.interfaces import IKeyManager
@@ -20,12 +11,23 @@ from plone.keyring.keymanager import KeyManager
 from plone.keyring.keyring import Keyring
 from plone.protect.interfaces import IDisableCSRFProtection
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IEditingSchema
+from Products.CMFPlone.interfaces import IMaintenanceSchema
+from Products.CMFPlone.interfaces import INavigationSchema
+from Products.CMFPlone.interfaces import ISearchSchema
+from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component.hooks import getSite
 from zope.globalrequest import getRequest
 from zope.interface import alsoProvides
 from zope.schema.interfaces import ConstraintNotSatisfied
+
+import logging
+import pkg_resources
+
 
 try:
     pkg_resources.get_distribution('plone.app.caching')
@@ -142,7 +144,7 @@ def lowercase_email_login(context):
     ptool = getToolByName(context, 'portal_properties')
     if ptool.site_properties.getProperty('use_email_as_login'):
         # We want the login name to be lowercase here.  This is new in PAS.
-        logger.info("Email is used as login, setting PAS login_transform to "
+        logger.info('Email is used as login, setting PAS login_transform to '
                     "'lower'.")
         # This can take a while for large sites, as it automatically
         # transforms existing login names to lowercase.  It will fail
@@ -235,7 +237,7 @@ def upgrade_editing_controlpanel_settings(context):
        registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
@@ -276,7 +278,7 @@ def upgrade_maintenance_controlpanel_settings(context):
        new registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
@@ -296,10 +298,10 @@ def upgrade_navigation_controlpanel_settings(context):
        new registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     navigation_properties = portal_properties.navtree_properties
-    types_tool = getToolByName(context, "portal_types")
+    types_tool = getToolByName(context, 'portal_types')
     # get the new registry
     registry = getUtility(IRegistry)
     settings = registry.forInterface(
@@ -334,9 +336,9 @@ def upgrade_search_controlpanel_settings(context):
        new registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
-    types_tool = getToolByName(context, "portal_types")
+    types_tool = getToolByName(context, 'portal_types')
     # get the new registry
     registry = getUtility(IRegistry)
     settings = registry.forInterface(
@@ -363,7 +365,7 @@ def upgrade_site_controlpanel_settings(context):
        new registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     portal = getSite()
     # get the new registry

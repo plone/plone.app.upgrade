@@ -1,6 +1,7 @@
-from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.tests.base import MigrationTest
+# -*- coding: utf-8 -*-
 from plone.app.upgrade import utils
+from plone.app.upgrade.tests.base import MigrationTest
+from Products.CMFCore.utils import getToolByName
 
 
 class TestUtils(MigrationTest):
@@ -23,12 +24,16 @@ class TestUtils(MigrationTest):
         # An initial cleanup should do nothing.
         utils.cleanUpSkinsTool(self.portal)
         difference = set(existing) ^ set(skins)
-        self.assertEqual(len(skins.keys()), len(existing),
-                         msg='Skink difference is: {}'.format(list(difference)))
-        difference = set(layers_in_selection(selection)) ^ set(existing_layers_in_selection)
-        self.assertEqual(len(layers_in_selection(selection)),
-                         len(existing_layers_in_selection),
-                         msg='Layer difference is: {}'.format(list(difference)))
+        self.assertEqual(
+            len(skins.keys()),
+            len(existing),
+            msg='Skink difference is: {0}'.format(list(difference)))
+        difference = set(layers_in_selection(selection)) ^ set(
+            existing_layers_in_selection)
+        self.assertEqual(
+            len(layers_in_selection(selection)),
+            len(existing_layers_in_selection),
+            msg='Layer difference is: {0}'.format(list(difference)))
 
         # A second cleanup should also do nothing.  We used to rename
         # plone_styles to classic_styles on the first run, which would get
@@ -50,7 +55,7 @@ class TestUtils(MigrationTest):
         registerDirectory(skin_name, globals(), subdirs=1)
         # Add the DirectoryView object to portal_skins.
         directory_info = DirectoryView(
-            skin_name, reg_key='plone.app.upgrade.tests:%s' % skin_name)
+            skin_name, reg_key='plone.app.upgrade.tests:{0}'.format(skin_name))
         skins._setObject(skin_name, directory_info)
 
         # Add its sub skins to a skin selection.

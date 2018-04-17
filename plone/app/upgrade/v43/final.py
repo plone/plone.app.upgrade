@@ -1,15 +1,15 @@
-import logging
-from Products.CMFCore.utils import getToolByName
-
-from zope.component import getAllUtilitiesRegisteredFor
-from zope.component import queryUtility
-from plone.contentrules.engine.interfaces import IRuleStorage
-from plone.contentrules.engine.assignments import \
-    check_rules_with_dotted_name_moved
-
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
 from plone.app.upgrade.v43.alphas import upgradeTinyMCEAgain
+from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved  # noqa E501
+from plone.contentrules.engine.interfaces import IRuleStorage
+from Products.CMFCore.utils import getToolByName
+from zope.component import getAllUtilitiesRegisteredFor
+from zope.component import queryUtility
+
+import logging
+
 
 # We had our own version of this, but it was just a copy.  We keep a
 # reference here to avoid breakage if someone imports it.
@@ -192,7 +192,7 @@ def markProductsInstalledForUninstallableProfiles(context):
         qi.notifyInstalled(
             product_id,
             locked=False,
-            logmsg="Marked as installed by plone.app.upgrade",
+            logmsg='Marked as installed by plone.app.upgrade',
             settings={},
             installedversion=version,
             status='installed',
@@ -281,7 +281,7 @@ def removeFakeKupu(context):
             elif kupu_id in expression:
                 # We are tempted to remove this, but who knows if the
                 # expression is something like this:
-                # "'kupu_library_tool' not in portal"
+                # ''kupu_library_tool' not in portal'
                 logger.warn('%s in %s has %s in expression. You probably '
                             'want to change the expression or remove the '
                             'resource.', resource_id, tool_id, kupu_id)
@@ -326,7 +326,8 @@ def addSortOnProperty(context):
 
     The default value of this field is relevance.
     """
-    site_properties = getToolByName(context, 'portal_properties').site_properties
+    site_properties = getToolByName(
+        context, 'portal_properties').site_properties
     if not site_properties.hasProperty('sort_on'):
         if 'sort_on' in site_properties.__dict__:
             # fix bug if 4.3.1 pending has been tested

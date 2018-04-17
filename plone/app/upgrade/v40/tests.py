@@ -1,41 +1,39 @@
-import time
-
+# -*- coding: utf-8 -*-
+from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import version_match
+from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
+from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
+from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
+from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
+from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
+from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
+from plone.app.upgrade.v40.alphas import migrateActionIcons
+from plone.app.upgrade.v40.alphas import migrateFolders
+from plone.app.upgrade.v40.alphas import migrateMailHost
+from plone.app.upgrade.v40.alphas import migrateStaticTextPortlets
+from plone.app.upgrade.v40.alphas import migrateTypeIcons
+from plone.app.upgrade.v40.alphas import renameJoinFormFields
+from plone.app.upgrade.v40.alphas import setupReferencebrowser
+from plone.app.upgrade.v40.alphas import updateLargeFolderType
+from plone.app.upgrade.v40.betas import removeLargePloneFolder
+from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
+from plone.app.upgrade.v40.betas import updateIconMetadata
+from plone.portlet.static import static
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.portlets.interfaces import IPortletAssignmentSettings
+from plone.portlets.interfaces import IPortletManager
+from Products.CMFCore.ActionInformation import Action
+from Products.CMFCore.Expression import Expression
+from Products.CMFCore.utils import getToolByName
+from Products.MailHost.interfaces import IMailHost
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
-from Products.CMFCore.ActionInformation import Action
-from Products.CMFCore.Expression import Expression
-from Products.CMFCore.utils import getToolByName
-from Products.MailHost.interfaces import IMailHost
-
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.v40.alphas import _KNOWN_ACTION_ICONS
-from plone.app.upgrade.v40.alphas import migrateActionIcons
-from plone.app.upgrade.v40.alphas import migrateTypeIcons
-from plone.app.upgrade.v40.alphas import addOrReplaceRamCache
-from plone.app.upgrade.v40.alphas import changeWorkflowActorVariableExpression
-from plone.app.upgrade.v40.alphas import changeAuthenticatedResourcesCondition
-from plone.app.upgrade.v40.alphas import setupReferencebrowser
-from plone.app.upgrade.v40.alphas import migrateMailHost
-from plone.app.upgrade.v40.alphas import migrateFolders
-from plone.app.upgrade.v40.alphas import renameJoinFormFields
-from plone.app.upgrade.v40.alphas import updateLargeFolderType
-from plone.app.upgrade.v40.alphas import addRecursiveGroupsPlugin
-from plone.app.upgrade.v40.alphas import cleanUpClassicThemeResources
-from plone.app.upgrade.v40.alphas import migrateStaticTextPortlets
-from plone.app.upgrade.v40.betas import repositionRecursiveGroupsPlugin
-from plone.app.upgrade.v40.betas import updateIconMetadata
-from plone.app.upgrade.v40.betas import removeLargePloneFolder
-from plone.app.upgrade.tests.base import MigrationTest
-from plone.app.upgrade.utils import version_match
-
-from plone.portlet.static import static
-from plone.portlets.interfaces import IPortletAssignmentMapping
-from plone.portlets.interfaces import IPortletAssignmentSettings
-from plone.portlets.interfaces import IPortletManager
+import time
 
 
 class FakeSecureMailHost(object):
@@ -55,7 +53,7 @@ class FakeSecureMailHost(object):
 
 class TestMigrations_v4_0alpha1(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:3-4alpha1"
+    profile = 'profile-plone.app.upgrade.v40:3-4alpha1'
 
     def afterSetUp(self):
         self.atool = getToolByName(self.portal, 'portal_actions')
@@ -160,37 +158,37 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         FTIs should now be using icon_expr instead of content_icon.
         (The former caches the expression object.)
         """
-        tt = getToolByName(self.portal, "portal_types")
+        tt = getToolByName(self.portal, 'portal_types')
         tt.Document.icon_expr = None
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
+                         'string:${portal_url}/document_icon.png')
 
     def testMigrateTypeIcons(self):
         """
         FTIs having content_icon should be upgraded to icon_expr.
         """
-        tt = getToolByName(self.portal, "portal_types")
+        tt = getToolByName(self.portal, 'portal_types')
         del tt.Document.icon_expr
         tt.Document.content_icon = 'document_icon.gif'
         migrateTypeIcons(self.portal)
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.gif")
+                         'string:${portal_url}/document_icon.gif')
         self.assertTrue(hasattr(tt.Document, 'icon_expr_object'))
 
         # Don't upgrade if there is already an icon_expr.
-        tt.Document.icon_expr = "string:${portal_url}/document_icon.png"
+        tt.Document.icon_expr = 'string:${portal_url}/document_icon.png'
         tt.Document.content_icon = 'document_icon.gif'
         migrateTypeIcons(self.portal)
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
+                         'string:${portal_url}/document_icon.png')
 
     def testPngContentIcons(self):
-        tt = getToolByName(self.portal, "portal_types")
-        tt.Document.icon_expr = "string:${portal_url}/document_icon.gif"
+        tt = getToolByName(self.portal, 'portal_types')
+        tt.Document.icon_expr = 'string:${portal_url}/document_icon.gif'
         loadMigrationProfile(self.portal, self.profile, ('typeinfo', ))
         self.assertEqual(tt.Document.icon_expr,
-                         "string:${portal_url}/document_icon.png")
+                         'string:${portal_url}/document_icon.png')
 
     def testAddRAMCache(self):
         # Test it twice
@@ -260,7 +258,7 @@ class TestMigrations_v4_0alpha1(MigrationTest):
     def testAddedUseEmailProperty(self):
         tool = getToolByName(self.portal, 'portal_properties')
         sheet = getattr(tool, 'site_properties')
-        #self.assertEqual(sheet.getProperty('use_email_as_login'), False)
+        # self.assertEqual(sheet.getProperty('use_email_as_login'), False)
         self.removeSiteProperty('use_email_as_login')
         loadMigrationProfile(self.portal, self.profile, ('propertiestool', ))
         self.assertEqual(sheet.getProperty('use_email_as_login'), False)
@@ -345,8 +343,8 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         class HiddenAssignment(static.Assignment):
             hide = True
 
-        self.setRoles(["Manager"])
-        self.portal.invokeFactory('Folder', id="statictest")
+        self.setRoles(['Manager'])
+        self.portal.invokeFactory('Folder', id='statictest')
         folder = self.portal['statictest']
 
         manager = getUtility(
@@ -387,7 +385,7 @@ class TestMigrations_v4_0alpha2(MigrationTest):
 
 class TestMigrations_v4_0alpha3(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha2-4alpha3"
+    profile = 'profile-plone.app.upgrade.v40:4alpha2-4alpha3'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -403,7 +401,7 @@ class TestMigrations_v4_0alpha3(MigrationTest):
 
 class TestMigrations_v4_0alpha5(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha4-4alpha5"
+    profile = 'profile-plone.app.upgrade.v40:4alpha4-4alpha5'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -479,7 +477,7 @@ class TestMigrations_v4_0alpha5(MigrationTest):
 
 class TestMigrations_v4_0beta1(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4alpha5-4beta1"
+    profile = 'profile-plone.app.upgrade.v40:4alpha5-4beta1'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -513,7 +511,7 @@ class TestMigrations_v4_0beta1(MigrationTest):
 
 class TestMigrations_v4_0beta2(MigrationTest):
 
-    profile = "profile-plone.app.upgrade.v40:4beta1-4beta2"
+    profile = 'profile-plone.app.upgrade.v40:4beta1-4beta2'
 
     def testProfile(self):
         # This tests the whole upgrade profile can be loaded
@@ -529,7 +527,7 @@ class TestMigrations_v4_0beta2(MigrationTest):
         front = self.portal['front-page']
         catalog.reindexObject(front)
         old_modified = front.modified()
-        # Make sure the getIcon metadata column shows the "original" value
+        # Make sure the getIcon metadata column shows the 'original' value
         brains = catalog(id='front-page')
         self.assertEqual(brains[0].getIcon, 'document_icon.png')
         # Run the migration

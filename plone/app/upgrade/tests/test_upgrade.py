@@ -1,14 +1,16 @@
-from Products.CMFPlone.factory import _DEFAULT_PROFILE
-from Products.CMFCore.utils import getToolByName
-from plone.app.upgrade.utils import version_match
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.tests.base import MigrationTest
+from plone.app.upgrade.utils import version_match
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.factory import _DEFAULT_PROFILE
+
 import mock
 
 
 class TestUpgrade(MigrationTest):
 
     def afterSetUp(self):
-        self.setup = getToolByName(self.portal, "portal_setup")
+        self.setup = getToolByName(self.portal, 'portal_setup')
 
     def testListUpgradeSteps(self):
         # There should be no upgrade steps from the current version

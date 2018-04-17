@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from plone.app.testing import PLONE_INTEGRATION_TESTING
-from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
-from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IFilterSchema
+from zope.component import getUtility
 
 import unittest
+
 
 try:
     from Products.CMFPlone.factory import _IMREALLYPLONE5
@@ -30,7 +30,7 @@ class UpgradeRegistry503to51alpha1Test(unittest.TestCase):
 
         # set to a defined state
         plv = 'plone.lessvariables'
-        registry[plv]['plone-toolbar-font-secundary'] = "Foo"
+        registry[plv]['plone-toolbar-font-secundary'] = 'Foo'
         if 'plone-toolbar-font-secondary' in registry[plv]:
             del registry[plv]['plone-toolbar-font-secondary']
 
@@ -40,9 +40,7 @@ class UpgradeRegistry503to51alpha1Test(unittest.TestCase):
             registry[plv]['plone-toolbar-font-secondary'],
             'Foo',
         )
-        self.assertTrue(
-            'plone-toolbar-font-secundary' not in registry[plv]
-        )
+        self.assertNotIn('plone-toolbar-font-secundary', registry[plv])
 
 
 class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
@@ -54,7 +52,7 @@ class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
         self.pt = self.portal.portal_transforms
         registry = getUtility(IRegistry)
         self.settings = registry.forInterface(
-            IFilterSchema, prefix="plone")
+            IFilterSchema, prefix='plone')
 
     def test_migrate_safe_html_settings(self):
         from plone.app.upgrade.v51.betas import \
@@ -74,9 +72,9 @@ def test_suite():
 
     suite = unittest.TestSuite()
     suite.addTest(
-        unittest.makeSuite(UpgradeRegistry503to51alpha1Test)
+        unittest.makeSuite(UpgradeRegistry503to51alpha1Test),
     )
     suite.addTest(
-        unittest.makeSuite(UpgradePortalTransforms51beta4to51beta5Test)
+        unittest.makeSuite(UpgradePortalTransforms51beta4to51beta5Test),
     )
     return suite

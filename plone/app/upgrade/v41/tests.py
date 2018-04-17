@@ -1,7 +1,10 @@
-import unittest
+# -*- coding: utf-8 -*-
 from Products.ZCatalog.ZCatalog import ZCatalog
-from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex, PLexicon
 from Products.ZCTextIndex.OkapiIndex import OkapiIndex
+from Products.ZCTextIndex.ZCTextIndex import PLexicon
+from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex
+
+import unittest
 
 
 class MigrationUnitTests(unittest.TestCase):
@@ -16,4 +19,4 @@ class MigrationUnitTests(unittest.TestCase):
 
         from plone.app.upgrade.v41.final import fixOkapiIndexes
         fixOkapiIndexes(catalog)
-        self.assertEqual(0L, catalog.Indexes['test'].index._totaldoclen())
+        self.assertEqual(0, catalog.Indexes['test'].index._totaldoclen())

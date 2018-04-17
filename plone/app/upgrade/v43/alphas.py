@@ -1,11 +1,14 @@
-import logging
-import re
+# -*- coding: utf-8 -*-
 from Acquisition import aq_get
-from Products.CMFCore.utils import getToolByName
-from Products.ZCatalog.ProgressHandler import ZLogHandler
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.ZCatalog.ProgressHandler import ZLogHandler
 from Products.ZCTextIndex.interfaces import IZCTextIndex
+
+import logging
+import re
+
 
 logger = logging.getLogger('plone.app.upgrade')
 num_sort_regex = re.compile('\d+')
@@ -29,10 +32,12 @@ def reindex_sortable_title(context):
     for i, (name, rids) in enumerate(sort_title_index._index.iteritems()):
         pghandler.report(i)
         if len(name) > MAX_SORTABLE_TITLE or num_sort_regex.match(name):
-            if hasattr(rids, 'keys'):
-                change.extend(list(rids.keys()))
-            else:
+            try:
+                keys = rids.keys()
+            except AttributeError:
                 change.append(rids)
+            else:
+                change.extend(list(keys))
     pghandler.finish()
     update_metadata = 'sortable_title' in _catalog.schema
     pghandler = ZLogHandler(1000)
@@ -60,7 +65,7 @@ def upgradeToI18NCaseNormalizer(context):
     for index in catalog.Indexes.objectValues():
         if IZCTextIndex.providedBy(index):
             index_id = index.getId()
-            logger.info("Reindex %s index with I18N Case Normalizer",
+            logger.info('Reindex %s index with I18N Case Normalizer',
                         index_id)
             catalog.manage_clearIndex([index_id])
             catalog.reindexIndex(index_id,
@@ -104,7 +109,8 @@ def upgradePloneAppTheming(context):
         return
 
     portal_setup = getToolByName(context, 'portal_setup')
-    return portal_setup.runAllImportStepsFromProfile('profile-plone.app.theming:default')
+    return portal_setup.runAllImportStepsFromProfile(
+        'profile-plone.app.theming:default')
 
 
 def upgradePloneAppJQuery(context):

@@ -2,20 +2,20 @@
 from os.path import abspath
 from os.path import dirname
 from os.path import join
-from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import FunctionalTesting
-from plone.app.testing.bbb import PTC_FIXTURE
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 from plone.app.testing.bbb import PloneTestCase
+from plone.app.testing.bbb import PTC_FIXTURE
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.context import TarballImportContext
-from zope.configuration import xmlconfig
 from zope.site.hooks import setSite
 
 import transaction
 import warnings
+
 
 #
 # Base TestCase for upgrades
@@ -30,10 +30,9 @@ class UpgradeTestCaseFixture(PloneSandboxLayer):
         # In 5.0 alpha we install or upgrade plone.app.caching,
         # so it must be available to Zope.
         import plone.app.caching
-        xmlconfig.file(
-            'configure.zcml',
-            plone.app.caching,
-            context=configurationContext
+        self.loadZCML(
+            name='configure.zcml',
+            package=plone.app.caching,
         )
 
 
@@ -51,7 +50,7 @@ class MigrationTest(PloneTestCase):
         self,
         action_id,
         category=None,
-        action_provider='portal_actions'
+        action_provider='portal_actions',
     ):
         # Removes an action from portal_actions
         tool = getToolByName(self.portal, action_provider)

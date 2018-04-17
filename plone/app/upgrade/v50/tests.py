@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
@@ -13,6 +12,7 @@ from zope.component import getSiteManager
 from zope.component import getUtility
 
 import unittest
+
 
 try:
     from Products.CMFPlone.factory import _IMREALLYPLONE5
@@ -49,7 +49,7 @@ class PASUpgradeTest(MigrationTest):
         registry = getUtility(IRegistry)
         from Products.CMFPlone.interfaces import ISecuritySchema
         security_settings = registry.forInterface(ISecuritySchema,
-                                                  prefix="plone")
+                                                  prefix='plone')
         security_settings.use_email_as_login = True
 
         # Second call.
@@ -71,7 +71,7 @@ class PASUpgradeTest(MigrationTest):
     def test_footer_viewlets_hidden(self):
 
         storage = getUtility(IViewletSettingsStorage)
-        manager = "plone.portalfooter"
+        manager = 'plone.portalfooter'
         skinname = self.portal.getCurrentSkinName()
 
         hidden_viewlets = storage.getHidden(manager, skinname)
@@ -131,7 +131,6 @@ class VariousTest(MigrationTest):
     def test_fix_double_smaxage(self):
         from plone.registry.interfaces import IRegistry
         from plone.registry.record import Record
-        from plone.registry import field
         from plone.registry import FieldRef
         from plone.app.upgrade.v50.final import fix_double_smaxage
         # Run the upgrade before plone.app.caching is installed,
@@ -144,7 +143,7 @@ class VariousTest(MigrationTest):
         def_smaxage = 'plone.app.caching.strongCaching.smaxage'
         # Install default caching profile.
         portal_setup.runAllImportStepsFromProfile(
-            'plone.app.caching:default'
+            'plone.app.caching:default',
         )
         self.assertTrue(def_maxage in registry)
         self.assertTrue(def_smaxage in registry)
@@ -152,7 +151,7 @@ class VariousTest(MigrationTest):
         fix_double_smaxage(portal_setup)
         # Install the with-caching-proxy settings.
         portal_setup.runAllImportStepsFromProfile(
-            'plone.app.caching:with-caching-proxy'
+            'plone.app.caching:with-caching-proxy',
         )
         # Run upgrade.
         fix_double_smaxage(portal_setup)

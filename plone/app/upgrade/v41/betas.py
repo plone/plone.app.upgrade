@@ -1,22 +1,22 @@
-import transaction
-from Products.CMFCore.utils import getToolByName
-from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
-from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
+# -*- coding: utf-8 -*-
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
-
-from zope.event import notify
-from zope.lifecycleevent import ObjectCreatedEvent
-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.v40.betas import fix_cataloged_interface_names
+from Products.CMFCore.utils import getToolByName
+from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
+from Products.PluginIndexes.DateRangeIndex.DateRangeIndex import DateRangeIndex
+from zope.event import notify
+from zope.lifecycleevent import ObjectCreatedEvent
+
+import transaction
 
 
 def optimize_rangeindex_floor_ceiling(index):
     # respect the new ceiling and floor values
     logger.info('Optimizing range index `%s` to respect floor and ceiling '
-                'dates' % index.getId())
+                'dates', index.getId())
     ceiling_value = index.ceiling_value
     floor_value = index.floor_value
 
@@ -42,8 +42,9 @@ def optimize_rangeindex_floor_ceiling(index):
             # safely iterate over it while modifying it
             _unindex[docid] = (since, until)
             i += 1
-            if i % 10000 == 0:
-                logger.info('Processed %s items.' % i)
+            # Note: flake8 erroneously complains about module formatter.
+            if i % 10000 == 0:  # noqa S001
+                logger.info('Processed %s items.', i)
                 transaction.savepoint(optimistic=True)
 
     transaction.savepoint(optimistic=True)
@@ -52,11 +53,11 @@ def optimize_rangeindex_floor_ceiling(index):
 
 def optimize_rangeindex_int_iiset(index):
     # migrate internal int and IISet to IITreeSet
-    logger.info('Converting to IITreeSet for index `%s`.' % index.getId())
+    logger.info('Converting to IITreeSet for index `%s`.', index.getId())
     for name in ('_since', '_since_only', '_until', '_until_only'):
         tree = getattr(index, name, None)
         if tree is not None:
-            logger.info('Converting tree `%s`.' % name)
+            logger.info('Converting tree `%s`.', name)
             i = 0
             for k, v in tree.items():
                 if isinstance(v, IISet):
@@ -65,9 +66,9 @@ def optimize_rangeindex_int_iiset(index):
                 elif isinstance(v, int):
                     tree[k] = IITreeSet((v, ))
                     i += 1
-                if i and i % 10000 == 0:
+                if i and i % 10000 == 0:  # noqa S001
                     transaction.savepoint(optimistic=True)
-                    logger.info('Processed %s items.' % i)
+                    logger.info('Processed %s items.', i)
 
     transaction.savepoint(optimistic=True)
     logger.info('Finished conversion.')
@@ -77,9 +78,9 @@ def update_boolean_index(index):
     index_length = index._index_length
     if index_length is not None:
         return
-    logger.info('Updating BooleanIndex `%s`.' % index.getId())
+    logger.info('Updating BooleanIndex `%s`.', index.getId())
     index._inline_migration()
-    logger.info('Updated BooleanIndex `%s`.' % index.getId())
+    logger.info('Updated BooleanIndex `%s`.', index.getId())
 
 
 def optimize_indexes(context):

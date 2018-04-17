@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.linkintegrity.upgrades import migrate_linkintegrity_relations
-from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import get_property
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
@@ -58,20 +58,24 @@ def upgrade_portal_language(context):
     portal = getUtility(ISiteRoot)
     default_lang = portal.getProperty('default_language', 'en')
 
-    portal_properties = getToolByName(context, "portal_properties", None)
+    portal_properties = getToolByName(context, 'portal_properties', None)
     if portal_properties is not None:
         site_properties = getattr(portal_properties, 'site_properties', None)
         if site_properties is not None:
             if site_properties.hasProperty('default_language'):
                 default_lang = site_properties.getProperty('default_language')
     lang_settings.default_language = default_lang
-    if hasattr(portal, 'portal_languages'):
-        portal_languages = getSite().portal_languages
-        for old, new in LANGUAGE_OPTION_MAPPING.items():
-            if hasattr(portal_languages, old):
-                setattr(lang_settings, new, getattr(portal_languages, old))
-        # Remove the old tool
-        portal.manage_delObjects('portal_languages')
+    try:
+        portal_languages = portal.portal_languages
+    except AttributeError:
+        return
+    for old, new in LANGUAGE_OPTION_MAPPING.items():
+        try:
+            setattr(lang_settings, new, getattr(portal_languages, old))
+        except AttributeError:
+            continue
+    # Remove the old tool
+    portal.manage_delObjects('portal_languages')
 
 
 def upgrade_mail_controlpanel_settings(context):
@@ -105,7 +109,7 @@ def upgrade_markup_controlpanel_settings(context):
        new registry.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
@@ -147,7 +151,7 @@ def upgrade_security_controlpanel_settings(context):
     # get the old site properties
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
-    portal_properties = getToolByName(portal, "portal_properties")
+    portal_properties = getToolByName(portal, 'portal_properties')
     site_properties = portal_properties.site_properties
 
     # get the new registry
@@ -168,7 +172,8 @@ def upgrade_security_controlpanel_settings(context):
     settings.allow_anon_views_about = site_properties.getProperty(
         'allowAnonymousViewAbout', False)
 
-    # suppress migrating login names while setting use_email_as_login to existing value
+    # suppress migrating login names while setting use_email_as_login to
+    # existing value
     from Products.CMFPlone.controlpanel import events
     migrate_to_email_login = events.migrate_to_email_login
     migrate_from_email_login = events.migrate_from_email_login
@@ -189,7 +194,7 @@ def to50beta2(context):
     portal = getSite()
 
     registry = getUtility(IRegistry)
-    settings = registry.forInterface(IImagingSchema, prefix="plone")
+    settings = registry.forInterface(IImagingSchema, prefix='plone')
 
     try:
         iprops = portal.portal_properties.imaging_properties
@@ -199,6 +204,7 @@ def to50beta2(context):
     except AttributeError:
         # will only be there if from older plone instance
         pass
+
 
 # configlet id -> category
 cp_mapping = {
@@ -251,9 +257,9 @@ def to50beta3(context):
         x for x in configlets
         if x.id == 'TypesSettings'
     ][0]
-    configlet.title = "Content Settings"
+    configlet.title = 'Content Settings'
     configlet.setActionExpression(
-        "string:${portal_url}/@@content-controlpanel")
+        'string:${portal_url}/@@content-controlpanel')
 
 
 def to50beta4(context):
@@ -274,7 +280,7 @@ def upgrade_usergroups_controlpanel_settings(context):
     # get the old site properties
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
-    portal_properties = getToolByName(portal, "portal_properties")
+    portal_properties = getToolByName(portal, 'portal_properties')
     site_properties = portal_properties.site_properties
 
     # get the new registry
@@ -289,7 +295,7 @@ def upgrade_usergroups_controlpanel_settings(context):
 
 
 def migrate_displayPublicationDateInByline(context):
-    """ Migrate the "display publication date" setting to the configuration
+    """ Migrate the 'display publication date' setting to the configuration
     registry
     """
 
@@ -301,7 +307,7 @@ def migrate_displayPublicationDateInByline(context):
     # get the old site properties
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
-    portal_properties = getToolByName(portal, "portal_properties")
+    portal_properties = getToolByName(portal, 'portal_properties')
     site_properties = portal_properties.site_properties
 
     value = site_properties.getProperty('displayPublicationDateInByline',
@@ -423,7 +429,7 @@ def to50rc2(context):
     for p in properties_to_migrate:
         if site_properties.hasProperty(p):
             value = site_properties.getProperty(p)
-            registry['plone.%s' % p] = value
+            registry['plone.{0}'.format(p)] = value
             site_properties._delProperty(p)
 
     if site_properties.hasProperty('allow_external_login_sites'):
@@ -439,7 +445,7 @@ def upgrade_navigation_controlpanel_settings_2(context):
        only missing values not migrated before
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     navigation_properties = portal_properties.navtree_properties
     # get the new registry
     registry = getUtility(IRegistry)
@@ -520,10 +526,10 @@ def to50rc3(context):
                 elif value.lower() == 'false':
                     value = False
             try:
-                registry['plone.%s' % p] = value
+                registry['plone.{0}'.format(p)] = value
                 site_properties._delProperty(p)
             except KeyError:
-                logger.warn('could not upgrade %s property' % p)
+                logger.warn('could not upgrade %s property', p)
 
     if site_properties.hasProperty('checkout_workflow_policy'):
         value = site_properties.getProperty('checkout_workflow_policy')
@@ -555,7 +561,7 @@ def to50rc3(context):
         if site_properties.hasProperty(original_id):
             value = site_properties.getProperty(original_id)
             value = [safe_unicode(a) for a in value]
-            registry['plone.%s' % new_id] = value
+            registry['plone.{0}'.format(new_id)] = value
             site_properties._delProperty(original_id)
 
     _migrate_list('typesUseViewActionInListings',

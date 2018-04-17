@@ -1,12 +1,10 @@
-import logging
-
-import pkg_resources
-import transaction
+# -*- coding: utf-8 -*-
 from BTrees.IIBTree import IIBTree
 from BTrees.IIBTree import IISet
 from BTrees.IIBTree import IITreeSet
-from BTrees.OIBTree import OIBTree
 from BTrees.Length import Length
+from BTrees.OIBTree import OIBTree
+from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.rolemap import RolemapExportConfigurator
 from Products.PluginIndexes.BooleanIndex.BooleanIndex import BooleanIndex
@@ -15,7 +13,10 @@ from Products.PluginIndexes.FieldIndex.FieldIndex import FieldIndex
 from Products.PluginIndexes.KeywordIndex.KeywordIndex import KeywordIndex
 from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
 
-from plone.app.upgrade.utils import loadMigrationProfile
+import logging
+import pkg_resources
+import transaction
+
 
 logger = logging.getLogger('plone.app.upgrade')
 
@@ -40,8 +41,11 @@ def add_siteadmin_role(context):
     uf = getToolByName(context, 'acl_users')
     gtool = getToolByName(context, 'portal_groups')
     if not uf.searchGroups(id='Site Administrators'):
-        gtool.addGroup('Site Administrators', title='Site Administrators', roles=[
-                       'Site Administrator'])
+        gtool.addGroup(
+            'Site Administrators',
+            title='Site Administrators',
+            roles=['Site Administrator'],
+        )
 
     # update rolemap:
     # add Site Administrator role to permissions that have the Manager role,
@@ -156,7 +160,7 @@ def to41alpha2(context):
 def convert_to_booleanindex(catalog, index):
     if isinstance(index, BooleanIndex):
         return
-    logger.info('Converting index `%s` to BooleanIndex.' % index.getId())
+    logger.info('Converting index `%s` to BooleanIndex.', index.getId())
     index.__class__ = BooleanIndex
     index._p_changed = True
     catalog._catalog._p_changed = True
@@ -194,7 +198,7 @@ def convert_to_booleanindex(catalog, index):
 def convert_to_uuidindex(catalog, index):
     if isinstance(index, UUIDIndex):
         return
-    logger.info('Converting index `%s` to UUIDIndex.' % index.getId())
+    logger.info('Converting index `%s` to UUIDIndex.', index.getId())
     index.__class__ = UUIDIndex
     index._p_changed = True
     catalog._catalog._p_changed = True
@@ -217,7 +221,7 @@ def convert_to_uuidindex(catalog, index):
                         if path[:len(shortest)] != shortest:
                             raise ValueError(
                                 'Inconsistent UID index, UID %s is associated '
-                                'with multiple docids: %r' % (k, paths))
+                                'with multiple docids: %r', k, paths)
 
                     # All other docids are sub-paths of another
                     # indicating the UID was just acquired,
@@ -234,12 +238,13 @@ def optimize_dateindex(index):
     if isinstance(old_unindex, IIBTree):
         return
     index._unindex = _unindex = IIBTree()
-    logger.info('Converting to IIBTree for index `%s`.' % index.getId())
+    logger.info('Converting to IIBTree for index `%s`.', index.getId())
     for pos, (k, v) in enumerate(old_unindex.items()):
         _unindex[k] = v
-        if pos and pos % 10000 == 0:
+        # Note: flake8 erroneously complains about module formatter.
+        if pos and pos % 10000 == 0:  # noqa S001
             transaction.savepoint(optimistic=True)
-            logger.info('Processed %s items.' % pos)
+            logger.info('Processed %s items.', pos)
 
     transaction.savepoint(optimistic=True)
     logger.info('Finished conversion.')
@@ -250,15 +255,15 @@ def optimize_unindex(index):
     # allow conflict resolution inside the treeset to happen
     _index = getattr(index, '_index', None)
     if _index is not None:
-        logger.info('Converting to IITreeSet for index `%s`.' % index.getId())
+        logger.info('Converting to IITreeSet for index `%s`.', index.getId())
         i = 0
         for k, v in enumerate(_index.items()):
             if isinstance(v, int):
                 _index[k] = IITreeSet((v, ))
                 i += 1
-                if i % 10000 == 0:
+                if i % 10000 == 0:  # noqa S001
                     transaction.savepoint(optimistic=True)
-                    logger.info('Processed %s items.' % i)
+                    logger.info('Processed %s items.', i)
         transaction.savepoint(optimistic=True)
         logger.info('Finished conversion.')
 

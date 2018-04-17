@@ -2,6 +2,6 @@
 <object name="portal_skins">
  <object name="plone_forms" remove="True"/>
   <skin-path name="*">
-  	<layer name="plone_forms" remove="True"/>
- </skin-path>
+    <layer name="plone_forms" remove="True"/>
+  </skin-path>
 </object>

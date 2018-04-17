@@ -1,9 +1,4 @@
-from zope.component import getAdapters, queryMultiAdapter
-from zope.component import getSiteManager
-from zope.contentprovider.interfaces import IContentProvider
-from zope.interface import implementer
-from zope.viewlet.interfaces import IViewlet
-
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
@@ -11,8 +6,15 @@ from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getFSVersionTuple
 from Products.GenericSetup import profile_registry
 from Products.GenericSetup.interfaces import EXTENSION
+from zope.component import getAdapters
+from zope.component import getSiteManager
+from zope.component import queryMultiAdapter
+from zope.contentprovider.interfaces import IContentProvider
+from zope.interface import implementer
+from zope.viewlet.interfaces import IViewlet
 
 import alphas
+
 
 try:
     from Products.CMFCore.indexing import processQueue
@@ -43,7 +45,8 @@ class TestMigrations_v4_3alpha1(MigrationTest):
             False)
 
     def testUpgradeToI18NCaseNormalizer(self):
-        from Products.CMFPlone.UnicodeSplitter.splitter import Splitter, CaseNormalizer
+        from Products.CMFPlone.UnicodeSplitter.splitter import Splitter
+        from Products.CMFPlone.UnicodeSplitter.splitter import CaseNormalizer
         ctool = self.portal.portal_catalog
         ctool.plone_lexicon._pipeline[1] == (Splitter(), CaseNormalizer())
         alphas.upgradeToI18NCaseNormalizer(self.portal.portal_setup)
@@ -70,11 +73,14 @@ class TestMigrations_v4_3alpha1(MigrationTest):
                 '++resource++tinymce.kss/tinymce.kss' in kssresourceids)
 
         request = self.app.REQUEST
-        plone_view = queryMultiAdapter((self.portal, request), name="plone")
+        plone_view = queryMultiAdapter((self.portal, request), name='plone')
         manager = queryMultiAdapter(
-            (self.portal, request, plone_view), IContentProvider, 'plone.htmlhead')
+            (self.portal, request, plone_view),
+            IContentProvider,
+            'plone.htmlhead')
         viewlets = getAdapters(
-            (manager.context, manager.request, manager.__parent__, manager), IViewlet)
+            (manager.context, manager.request, manager.__parent__, manager),
+            IViewlet)
         self.assertFalse(u'tinymce.configuration' in dict(viewlets))
 
     def testInstallThemingNotPreviouslyInstalled(self):
@@ -102,14 +108,14 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         try:
             registry.forInterface(IThemeSettings)
         except KeyError:
-            self.fail("plone.app.theming not installed")
+            self.fail('plone.app.theming not installed')
 
     def testReindexNumericalTitle(self):
         from Products.CMFCore.utils import getToolByName
 
         # Create 2 pages, one with a numerical title
         portal = self.portal
-        self.setRoles(["Manager"])
+        self.setRoles(['Manager'])
         catalog = getToolByName(portal, 'portal_catalog')
         portal.invokeFactory(
             id='num-title', type_name='Document',
@@ -139,7 +145,7 @@ class TestMigrations_v4_3alpha1(MigrationTest):
         alphas.reindex_sortable_title(portal.portal_setup)
         self.assertEqual(
             catalog(id=portal['num-title'].id)[0].Title,
-            '9 green bottles, hanging on the wall'
+            '9 green bottles, hanging on the wall',
         )
         self.assertEqual(
             catalog(id=portal['accidentally-fall'].id)[0].Title,
@@ -179,7 +185,7 @@ class TestFakeKupuMigration(MigrationTest):
         self.site_properties = pprops.site_properties
         bad_expr = ('python:portal.kupu_library_tool.isKupuEnabled'
                     '(REQUEST=request)')
-        allowed_expr = 'python:"kupu_library_tool" not in portal'
+        allowed_expr = "python:'kupu_library_tool' not in portal"
         # Setup a fake kupu with resources and settings
         self.kupu_id = 'kupu_library_tool'
         portal._setObject(self.kupu_id, PloneKupuLibraryTool(id=self.kupu_id))
