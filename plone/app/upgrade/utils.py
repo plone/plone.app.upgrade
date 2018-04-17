@@ -263,6 +263,47 @@ def unregisterSteps(context, import_steps=None, export_steps=None):
     context._p_changed = True
 
 
+def _types_with_empty_icons(context, typesToUpdate):
+    ttool = getToolByName(context, 'portal_types')
+    empty_icons = []
+    for name in typesToUpdate.keys():
+        fti = ttool.get(name)
+        if fti:
+            icon_expr = fti.getIconExprObject()
+            if not icon_expr:
+                empty_icons.append(name)
+    return empty_icons
+
+
+def _update_icon_in_single_brain(brain, typesToUpdate, getIconPos, metadata):
+    # if the old icon is a standard icon, we assume no customization
+    # has taken place and we can simply empty the getIcon metadata
+    # without loading the object
+    new_value = ''
+    old_icons = typesToUpdate[brain.portal_type]
+    brain_icon = brain.getIcon
+    if brain_icon not in old_icons:
+        # Otherwise we need to ask the object
+        new_value = ''
+        obj = brain.getObject()
+        method = getattr(aq_base(obj), 'getIcon', None)
+        if method is not None:
+            try:
+                new_value = obj.getIcon
+                if callable(new_value):
+                    new_value = new_value()
+            except ConflictError:
+                raise
+            except Exception:
+                new_value = ''
+    if brain_icon != new_value:
+        rid = brain.getRID()
+        record = metadata[rid]
+        new_record = list(record)
+        new_record[getIconPos] = new_value
+        metadata[rid] = tuple(new_record)
+
+
 def updateIconsInBrains(context, typesToUpdate=None):
     """Update getIcon metadata column in given types.
 
@@ -286,15 +327,7 @@ def updateIconsInBrains(context, typesToUpdate=None):
     if _catalog is not None:
         metadata = _catalog.data
         getIconPos = _catalog.schema.get('getIcon', None)
-    ttool = getToolByName(context, 'portal_types')
-    empty_icons = []
-    for name in typesToUpdate.keys():
-        fti = ttool.get(name)
-        if fti:
-            icon_expr = fti.getIconExprObject()
-            if not icon_expr:
-                empty_icons.append(name)
-
+    empty_icons = _types_with_empty_icons(context, typesToUpdate)
     brains = search(portal_type=empty_icons, sort_on='path')
     num_objects = len(brains)
     pghandler = ZLogHandler(1000)
@@ -305,32 +338,9 @@ def updateIconsInBrains(context, typesToUpdate=None):
         brain_icon = brain.getIcon
         if not brain_icon:
             continue
-        old_icons = typesToUpdate[brain.portal_type]
         if getIconPos is not None:
-            # if the old icon is a standard icon, we assume no customization
-            # has taken place and we can simply empty the getIcon metadata
-            # without loading the object
-            new_value = ''
-            if brain_icon not in old_icons:
-                # Otherwise we need to ask the object
-                new_value = ''
-                obj = brain.getObject()
-                method = getattr(aq_base(obj), 'getIcon', None)
-                if method is not None:
-                    try:
-                        new_value = obj.getIcon
-                        if callable(new_value):
-                            new_value = new_value()
-                    except ConflictError:
-                        raise
-                    except Exception:
-                        new_value = ''
-            if brain_icon != new_value:
-                rid = brain.getRID()
-                record = metadata[rid]
-                new_record = list(record)
-                new_record[getIconPos] = new_value
-                metadata[rid] = tuple(new_record)
+            _update_icon_in_single_brain(
+                brain, typesToUpdate, getIconPos, metadata)
         else:
             # If we don't have a standard catalog tool, fall back to the
             # official API

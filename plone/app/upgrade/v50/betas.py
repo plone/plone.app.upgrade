@@ -492,6 +492,47 @@ def upgrade_navigation_controlpanel_settings_2(context):
             navigation_properties._delProperty(p)
 
 
+def _migrate_site_properties(site_properties, registry):
+    properties_to_migrate = [
+        'external_links_open_new_window',
+        'mark_special_links',
+        'calendar_starting_year',
+        'calendar_future_years_available',
+        'redirect_links',
+        'enable_checkout_workflow',
+    ]
+    for p in properties_to_migrate:
+        if site_properties.hasProperty(p):
+            value = site_properties.getProperty(p)
+            if isinstance(value, basestring):
+                if value.lower() == 'true':
+                    value = True
+                elif value.lower() == 'false':
+                    value = False
+            try:
+                registry['plone.{0}'.format(p)] = value
+                site_properties._delProperty(p)
+            except KeyError:
+                logger.warn('could not upgrade %s property', p)
+
+
+def _migrate_lists(site_properties, registry):
+    def _migrate_list(original_id, new_id=None):
+        if new_id is None:
+            new_id = original_id
+        if site_properties.hasProperty(original_id):
+            value = site_properties.getProperty(original_id)
+            value = [safe_unicode(a) for a in value]
+            registry['plone.{0}'.format(new_id)] = value
+            site_properties._delProperty(original_id)
+
+    _migrate_list('typesUseViewActionInListings',
+                  'types_use_view_action_in_listings')
+    _migrate_list('default_page')
+    _migrate_list('parentMetaTypesNotToQuery', 'parent_types_not_to_query')
+    _migrate_list('allowRolesToAddKeywords', 'roles_allowed_to_add_keywords')
+
+
 def to50rc3(context):
     """5.0rc2 -> 5.0rc3"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v50:to50rc3')
@@ -511,25 +552,7 @@ def to50rc3(context):
         if site_properties.hasProperty(p):
             site_properties._delProperty(p)
 
-    properties_to_migrate = ['external_links_open_new_window',
-                             'mark_special_links',
-                             'calendar_starting_year',
-                             'calendar_future_years_available',
-                             'redirect_links',
-                             'enable_checkout_workflow']
-    for p in properties_to_migrate:
-        if site_properties.hasProperty(p):
-            value = site_properties.getProperty(p)
-            if isinstance(value, basestring):
-                if value.lower() == 'true':
-                    value = True
-                elif value.lower() == 'false':
-                    value = False
-            try:
-                registry['plone.{0}'.format(p)] = value
-                site_properties._delProperty(p)
-            except KeyError:
-                logger.warn('could not upgrade %s property', p)
+    _migrate_site_properties(site_properties, registry)
 
     if site_properties.hasProperty('checkout_workflow_policy'):
         value = site_properties.getProperty('checkout_workflow_policy')
@@ -555,20 +578,7 @@ def to50rc3(context):
         registry['plone.sitemap_depth'] = value
         site_properties._delProperty('sitemapDepth')
 
-    def _migrate_list(original_id, new_id=None):
-        if new_id is None:
-            new_id = original_id
-        if site_properties.hasProperty(original_id):
-            value = site_properties.getProperty(original_id)
-            value = [safe_unicode(a) for a in value]
-            registry['plone.{0}'.format(new_id)] = value
-            site_properties._delProperty(original_id)
-
-    _migrate_list('typesUseViewActionInListings',
-                  'types_use_view_action_in_listings')
-    _migrate_list('default_page')
-    _migrate_list('parentMetaTypesNotToQuery', 'parent_types_not_to_query')
-    _migrate_list('allowRolesToAddKeywords', 'roles_allowed_to_add_keywords')
+    _migrate_lists(site_properties, registry)
 
     # migrate navtree properties
     upgrade_navigation_controlpanel_settings_2(context)

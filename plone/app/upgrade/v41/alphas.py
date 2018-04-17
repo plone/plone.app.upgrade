@@ -46,7 +46,12 @@ def add_siteadmin_role(context):
             title='Site Administrators',
             roles=['Site Administrator'],
         )
+    # add_siteadmin_role was too complex, so we split it.
+    _update_rolemap_for_siteadmin_role(portal)
+    _update_workflows_for_siteadmin_role(portal)
 
+
+def _update_rolemap_for_siteadmin_role(portal):
     # update rolemap:
     # add Site Administrator role to permissions that have the Manager role,
     # plus some additional ones that only have Manager as a default role
@@ -97,6 +102,8 @@ def add_siteadmin_role(context):
     for permission_id in extra_permissions:
         portal.manage_permission(permission_id, ['Site Administrator', ], True)
 
+
+def _update_workflows_for_siteadmin_role(portal):
     # update workflows:
     # add Site Administrator role where Manager already is;
     wtool = getToolByName(portal, 'portal_workflow')

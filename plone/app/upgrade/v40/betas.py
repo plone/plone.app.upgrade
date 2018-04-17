@@ -64,6 +64,12 @@ def updateSafeHTMLConfig(context):
     if safe_hasattr(kupu_tool_base, 'html_exclusions'):
         list_conf.append(
             ('stripped_attributes', kupu_tool.get_stripped_attributes()))
+        ksc = dict((str(' '.join(k)), str(' '.join(v)))
+                   for k, v in kupu_tool.get_stripped_combinations())
+        tsc = transform._config['stripped_combinations']
+        if tsc != ksc:
+            tsc.clear()
+            tsc.update(ksc)
     for k, v in list_conf:
         tdata = transform._config[k]
         if tdata == v:
@@ -71,13 +77,6 @@ def updateSafeHTMLConfig(context):
         while tdata:
             tdata.pop()
         tdata.extend(v)
-    if safe_hasattr(kupu_tool_base, 'html_exclusions'):
-        ksc = dict((str(' '.join(k)), str(' '.join(v)))
-                   for k, v in kupu_tool.get_stripped_combinations())
-        tsc = transform._config['stripped_combinations']
-        if tsc != ksc:
-            tsc.clear()
-            tsc.update(ksc)
     transform._p_changed = True
     transform.reload()
 
@@ -224,42 +223,50 @@ def fix_cataloged_interface_names(context):
     # introduced in Plone 4.1 - but it saves us from walking the index twice
     catalog = getToolByName(context, 'portal_catalog')
     index = catalog._catalog.indexes.get('object_provides', None)
-    if index is not None:
-        logger.info('Updating `object_provides` index.')
-        _index = index._index
-        names = list(_index.keys())
-        delete = set()
-        rename = set()
-        for name in names:
-            try:
-                klass = resolve(name)
-            except ImportError:
-                delete.add(name)
-                del _index[name]
-                index._length.change(-1)
-                continue
-            new_name = klass.__identifier__
-            if new_name in BLACKLISTED_INTERFACES:
-                delete.add(name)
-                del _index[name]
-                index._length.change(-1)
-            elif name != new_name:
-                rename.add(new_name)
-                _index[new_name] = _index[name]
-                delete.add(name)
-                del _index[name]
-                index._length.change(-1)
-        if delete or rename:
-            logger.info('Cleaning up `object_provides` _unindex.')
-            _unindex = index._unindex
-            for pos, (docid, value) in enumerate(_unindex.iteritems()):
-                new_value = list(sorted((set(value) - delete).union(rename)))
-                if value != new_value:
-                    _unindex[docid] = new_value
-                # Note: flake8 erroneously complains about module formatter.
-                if pos and pos % 10000 == 0:  # noqa S001
-                    logger.info('Processed %s items.', pos)
-                    transaction.savepoint(optimistic=True)
+    if index is None:
+        return
+    logger.info('Updating `object_provides` index.')
+    _index = index._index
+    names = list(_index.keys())
+    delete = set()
+    rename = set()
+    for name in names:
+        try:
+            klass = resolve(name)
+        except ImportError:
+            delete.add(name)
+            del _index[name]
+            index._length.change(-1)
+            continue
+        new_name = klass.__identifier__
+        if new_name in BLACKLISTED_INTERFACES:
+            delete.add(name)
+            del _index[name]
+            index._length.change(-1)
+        elif name != new_name:
+            rename.add(new_name)
+            _index[new_name] = _index[name]
+            delete.add(name)
+            del _index[name]
+            index._length.change(-1)
+    if not (delete or rename):
+        return
+    # flake8 complained that fix_cataloged_interface_names is too complex (11).
+    # So we split it in two.
+    _cleanup_object_provides_index(index, delete, rename)
+
+
+def _cleanup_object_provides_index(index, delete, rename):
+    logger.info('Cleaning up `object_provides` _unindex.')
+    _unindex = index._unindex
+    for pos, (docid, value) in enumerate(_unindex.iteritems()):
+        new_value = list(sorted((set(value) - delete).union(rename)))
+        if value != new_value:
+            _unindex[docid] = new_value
+        # Note: flake8 erroneously complains about module formatter.
+        if pos and pos % 10000 == 0:  # noqa S001
+            logger.info('Processed %s items.', pos)
+            transaction.savepoint(optimistic=True)
 
     transaction.savepoint(optimistic=True)
     logger.info('Updated `object_provides` index.')

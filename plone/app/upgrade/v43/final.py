@@ -291,6 +291,12 @@ def removeFakeKupu(context):
         # Note that this does nothing when the configlet is not there.
         control_panel.unregisterConfiglet('kupu')
         logger.info('Removed kupu control panel configlet.')
+
+    # The function was too complex, so we split it.
+    _remove_kupu_from_props(portal)
+
+
+def _remove_kupu_from_props(portal):
     # Remove editor from site_properties.
     pprops = getToolByName(portal, 'portal_properties', None)
     available_editors = []
@@ -315,7 +321,7 @@ def removeFakeKupu(context):
     # Remove from portal_memberdata.  Note that you can use
     # collective.setdefaulteditor if you want more options, like
     # updating the chosen editor for all existing members.
-    member_data = getToolByName(context, 'portal_memberdata')
+    member_data = getToolByName(portal, 'portal_memberdata')
     if member_data.getProperty('wysiwyg_editor') == 'Kupu':
         member_data._updateProperty('wysiwyg_editor', '')
         logger.info('Changed new member wysiwyg_editor to site default.')

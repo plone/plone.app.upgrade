@@ -14,6 +14,8 @@ New features:
 
 Bug fixes:
 
+- Made several functions less complex by splitting them.  [maurits]
+
 - Improved code quality.  [maurits]
 
 

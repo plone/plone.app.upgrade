@@ -176,6 +176,26 @@ def setupReferencebrowser(context):
         sels[skinname] = new_layers
 
 
+def _fix_expression(portal, expr):
+    try:
+        expr = str(expr)
+    except UnicodeEncodeError:
+        pass
+    if not expr.endswith('gif'):
+        return expr
+    try:
+        png_expr = expr[:-4] + '.png'
+        portal.restrictedTraverse(png_expr)
+        expr = png_expr
+    except (AttributeError, KeyError, TypeError, NotFound):
+        pass
+    prefix = ''
+    if ':' not in expr:
+        prefix = 'string:$portal_url/'
+    expr = '{0}{1}'.format(prefix, expr)
+    return expr
+
+
 def migrateActionIcons(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     atool = getToolByName(portal, 'portal_actions', None)
@@ -191,27 +211,11 @@ def migrateActionIcons(context):
     for ic in aitool.listActionIcons():
         cat = ic._category
         ident = ic._action_id
-        expr = ic._icon_expr_text
-        try:
-            expr = str(expr)
-        except UnicodeEncodeError:
-            pass
-        if expr.endswith('gif'):
-            try:
-                png_expr = expr[:-4] + '.png'
-                portal.restrictedTraverse(png_expr)
-                expr = png_expr
-            except (AttributeError, KeyError, TypeError, NotFound):
-                pass
-        prefix = ''
-
         if (cat not in _KNOWN_ACTION_ICONS.keys() or
                 ident not in _KNOWN_ACTION_ICONS[cat]):
             continue
-
-        prefix = ''
-        if ':' not in expr:
-            prefix = 'string:$portal_url/'
+        expr = ic._icon_expr_text
+        expr = _fix_expression(portal, expr)
 
         if cat == 'plone':
             new_cat = 'document_actions'
@@ -220,18 +224,15 @@ def migrateActionIcons(context):
         if new_cat in categories:
             # actions tool
             action = atool[new_cat].get(ident)
-            if action is not None:
-                if not action.icon_expr:
-                    action._setPropValue(
-                        'icon_expr', '{0}{1}'.format(prefix, expr))
+            if action is not None and not action.icon_expr:
+                action._setPropValue('icon_expr', expr)
         elif cat == 'controlpanel':
             # control panel tool
             action_infos = [a for a in cptool.listActions()
                             if a.getId() == ident]
             if len(action_infos):
                 if not action_infos[0].getIconExpression():
-                    action_infos[0].setIconExpression(
-                        '{0}{1}'.format(prefix, expr))
+                    action_infos[0].setIconExpression(expr)
 
         # Remove the action icon
         aitool.removeActionIcon(cat, ident)
