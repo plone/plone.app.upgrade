@@ -61,6 +61,7 @@ setup(
         'plone.contentrules',
         'plone.app.iterate',
         'plone.app.viewletmanager',
+        'six',
     ],
     entry_points="""
     [z3c.autoinclude.plugin]
