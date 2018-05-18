@@ -33,7 +33,9 @@ from zope.component import getUtility
 from zope.component import queryUtility
 from zope.ramcache.interfaces.ram import IRAMCache
 
+import six
 import time
+import unittest
 
 
 class FakeSecureMailHost(object):
@@ -668,7 +670,6 @@ class TestMigrations_v4_0_5(MigrationTest):
 
 
 def test_suite():
-    import unittest
-    if not version_match('4.0'):
+    if not six.PY2 or not version_match('4.0'):
         return unittest.TestSuite()
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
