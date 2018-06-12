@@ -13,6 +13,9 @@ New features:
 - Merge plone.login and remove skins folder plone_login.
   [jensens]
 
+- Reload ISecuritySchema to create plone.autologin_after_password_reset key for Plone 5.2.
+  [jensens, agitator]
+
 Bug fixes:
 
 - Made several functions less complex by splitting them.  [maurits]
