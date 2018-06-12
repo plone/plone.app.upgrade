@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Merge plone.login and remove skins folder plone_login.
+  [jensens]
 
 Bug fixes:
 
