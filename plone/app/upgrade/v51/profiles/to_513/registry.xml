@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<registry>
+
+  <!-- remove old resources and update legacy bundle -->
+  <records prefix="plone.resources/resource-plone-app-event-js" remove="True"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+  </records>
+  <records prefix="plone.resources/resource-plone-app-event-css" remove="True"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+  </records>
+
+  <!-- register as resource for legacy bundle -->
+  <records prefix="plone.resources/plone-app-event"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++plone.app.event/event.js</value>
+  </records>
+
+  <records prefix="plone.bundles/plone-legacy"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="resources" purge="False">
+      <element>plone-app-event</element>
+    </value>
+    <value key="last_compilation"></value>
+  </records>
+
+</registry>

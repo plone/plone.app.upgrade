@@ -20,6 +20,8 @@ Bug fixes:
 
 - *add item here*
 
+- Update resources for plone.app.event.  [agitator]
+
 
 2.0.15 (2018-06-21)
 -------------------
