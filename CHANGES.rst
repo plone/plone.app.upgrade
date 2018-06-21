@@ -4,10 +4,6 @@ Changelog
 2.0.15 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Merge plone.login and remove skins folder plone_login.
