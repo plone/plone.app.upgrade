@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Mockup update
+  [frapell]
 
 Bug fixes:
 
