@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add upgrade steps for Datatbles on Plone 5.2
+  [frapell]
 
 Bug fixes:
 
