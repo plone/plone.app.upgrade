@@ -256,6 +256,12 @@ Add image scaling options to image handling control panel.
         destination="5114"
         profile="Products.CMFPlone:plone">
 
+        <gs:upgradeDepends
+            title="Run to514 upgrade profile."
+            description="Update resources for Datatables"
+            import_profile="plone.app.upgrade.v51:to514"
+            />
+
         <gs:upgradeStep
             title="Miscellaneous"
             description=""
