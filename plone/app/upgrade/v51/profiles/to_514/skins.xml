@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+  <object
+      name="plone_ecmascript"
+      meta_type="Filesystem Directory View"
+      directory="Products.CMFPlone:skins/plone_ecmascript"
+      remove="True"/>
+  <skin-path name="*">
+    <layer name="plone_ecmascript" remove="True"/>
+  </skin-path>
+</object>

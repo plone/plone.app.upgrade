@@ -265,7 +265,7 @@ Add image scaling options to image handling control panel.
         <gs:upgradeStep
             title="Miscellaneous"
             description=""
-            handler="..utils.null_upgrade_step"
+            handler=".final.remove_highlightsearchterms"
             />
 
     </gs:upgradeSteps>
