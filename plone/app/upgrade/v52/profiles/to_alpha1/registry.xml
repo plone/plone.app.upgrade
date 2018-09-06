@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<registry>
+
+
+  <records prefix="plone.resources/jquery-highlightsearchterms"
+           interface='Products.CMFPlone.interfaces.IResourceRegistry'
+           remove="True">
+  </records>
+
+  <!-- Update ``last_compilation`` to deliver new bundles -->
+  <records
+      prefix="plone.bundles/plone"
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      purge="False">
+    <value key="last_compilation">2018-09-06 00:00:00</value>
+  </records>
+  <records
+      prefix="plone.bundles/plone-logged-in"
+      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      purge="False">
+    <value key="last_compilation">2018-09-06 00:00:00</value>
+  </records>
+
+</registry>

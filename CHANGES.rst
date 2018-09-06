@@ -13,6 +13,9 @@ New features:
 - Add upgrade steps for Datatbles on Plone 5.1.4
   [frapell]
 
+- Add upgrade step removing the jquery-highlightsearchterms resource
+  and the plone_ecmascript skin layer, on Plone 5.2
+
 Bug fixes:
 
 - *add item here*
