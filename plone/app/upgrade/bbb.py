@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from OFS.SimpleItem import SimpleItem
 from Products.CMFCore.utils import registerToolInterface
 from zope.interface import Interface
@@ -26,6 +27,8 @@ class ICalendarTool(Interface):
 
 class IActionIconsTool(Interface):
     pass
+
+
 registerToolInterface('portal_actionicons', IActionIconsTool)
 
 

@@ -9,6 +9,7 @@ from Products.CMFPlone.interfaces import ISearchSchema
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from zExceptions import NotFound
 from zope.component import getUtility
+
 import logging
 
 
@@ -27,7 +28,7 @@ def addSortOnProperty(context):
     The default value of this field is relevance.
     """
     # get the old site properties
-    portal_properties = getToolByName(context, "portal_properties")
+    portal_properties = getToolByName(context, 'portal_properties')
     site_properties = portal_properties.site_properties
     # get the new registry
     registry = getUtility(IRegistry)
@@ -97,7 +98,7 @@ def remove_displayContentsTab_from_action_expressions(context):
     if not actions:
         return []
     script_name = 'displayContentsTab'
-    text = 'object/{}'.format(script_name)
+    text = 'object/{0}'.format(script_name)
     for ac in actions:
         if script_name not in ac.available_expr:
             continue
@@ -181,7 +182,7 @@ def reindex_mime_type(context):
         catalog.data[brain.getRID()] = tuple(record)
         cnt += 1
     pghandler.finish()
-    logger.info('Reindexed `mime_type` for %s items' % str(cnt))
+    logger.info('Reindexed `mime_type` for %s items', str(cnt))
 
 
 def move_safe_html_settings_to_registry(context):

@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
@@ -20,7 +22,7 @@ _marker = []
 
 logger = logging.getLogger('plone.app.upgrade')
 
-plone_version = pkg_resources.get_distribution("Products.CMFPlone").version
+plone_version = pkg_resources.get_distribution('Products.CMFPlone').version
 
 
 def version_match(target):
@@ -50,15 +52,15 @@ def safeEditProperty(obj, key, value, data_type='string'):
 def addLinesToProperty(obj, key, values):
     if obj.hasProperty(key):
         data = getattr(obj, key)
-        if type(data) is TupleType:
+        if isinstance(data, TupleType):
             data = list(data)
-        if type(values) is ListType:
+        if isinstance(values, ListType):
             data.extend(values)
         else:
             data.append(values)
         obj._updateProperty(key, data)
     else:
-        if type(values) is not ListType:
+        if not isinstance(values, ListType):
             values = [values]
         obj._setProperty(key, values, 'lines')
 
@@ -68,9 +70,10 @@ def saveCloneActions(actionprovider):
         return True, actionprovider._cloneActions()
     except AttributeError:
         # Stumbled across ancient dictionary actions
-        if not hasattr(aq_base(actionprovider), '_convertActions'):
-            return False, ("Can't convert actions of %s! Jumping to next "
-                           "action." % actionprovider.getId(), logging.ERROR)
+        if not base_hasattr(actionprovider, '_convertActions'):
+            return False, (
+                "Can't convert actions of {0}! Jumping to next "
+                'action.'.format(actionprovider.getId()), logging.ERROR)
         else:
             actionprovider._convertActions()
             return True, actionprovider._cloneActions()
@@ -168,27 +171,27 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     if old_qi:
         if not qi.isProductInstalled(product_name):
             qi.installProduct(product_name, hidden=hidden)
-            logger.info("Installed %s" % product_name)
+            logger.info('Installed %s', product_name)
         elif old_qi:
             info = qi._getOb(product_name)
             installed_version = info.getInstalledVersion()
             product_version = qi.getProductVersion(product_name)
             if installed_version != product_version:
                 qi.reinstallProducts([product_name])
-                logger.info("%s is out of date (installed: %s/ "
-                            "filesystem: %s), reinstalled." % (
-                                product_name, installed_version,
-                                product_version))
+                logger.info(
+                    '%s is out of date (installed: %s/ filesystem: %s), '
+                    'reinstalled.',
+                    product_name, installed_version, product_version)
             else:
-                logger.info('%s already installed.' % product_name)
+                logger.info('%s already installed.', product_name)
     else:
         # New QI browser view.
         if not qi.is_product_installed(product_name):
             qi.install_product(product_name, allow_hidden=True)
-            logger.info("Installed %s" % product_name)
+            logger.info('Installed %s', product_name)
         else:
             qi.upgrade_product(product_name)
-            logger.info("Upgraded %s", product_name)
+            logger.info('Upgraded %s', product_name)
     # Refresh skins
     portal.clearCurrentSkin()
     if getattr(portal, 'REQUEST', None):
@@ -197,7 +200,7 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
 
 def loadMigrationProfile(context, profile, steps=_marker):
     if not ISetupTool.providedBy(context):
-        context = getToolByName(context, "portal_setup")
+        context = getToolByName(context, 'portal_setup')
     if steps is _marker:
         context.runAllImportStepsFromProfile(profile, purge_old=False)
     else:
@@ -260,6 +263,47 @@ def unregisterSteps(context, import_steps=None, export_steps=None):
     context._p_changed = True
 
 
+def _types_with_empty_icons(context, typesToUpdate):
+    ttool = getToolByName(context, 'portal_types')
+    empty_icons = []
+    for name in typesToUpdate.keys():
+        fti = ttool.get(name)
+        if fti:
+            icon_expr = fti.getIconExprObject()
+            if not icon_expr:
+                empty_icons.append(name)
+    return empty_icons
+
+
+def _update_icon_in_single_brain(brain, typesToUpdate, getIconPos, metadata):
+    # if the old icon is a standard icon, we assume no customization
+    # has taken place and we can simply empty the getIcon metadata
+    # without loading the object
+    new_value = ''
+    old_icons = typesToUpdate[brain.portal_type]
+    brain_icon = brain.getIcon
+    if brain_icon not in old_icons:
+        # Otherwise we need to ask the object
+        new_value = ''
+        obj = brain.getObject()
+        method = getattr(aq_base(obj), 'getIcon', None)
+        if method is not None:
+            try:
+                new_value = obj.getIcon
+                if callable(new_value):
+                    new_value = new_value()
+            except ConflictError:
+                raise
+            except Exception:
+                new_value = ''
+    if brain_icon != new_value:
+        rid = brain.getRID()
+        record = metadata[rid]
+        new_record = list(record)
+        new_record[getIconPos] = new_value
+        metadata[rid] = tuple(new_record)
+
+
 def updateIconsInBrains(context, typesToUpdate=None):
     """Update getIcon metadata column in given types.
 
@@ -283,16 +327,8 @@ def updateIconsInBrains(context, typesToUpdate=None):
     if _catalog is not None:
         metadata = _catalog.data
         getIconPos = _catalog.schema.get('getIcon', None)
-    ttool = getToolByName(context, 'portal_types')
-    empty_icons = []
-    for name in typesToUpdate.keys():
-        fti = ttool.get(name)
-        if fti:
-            icon_expr = fti.getIconExprObject()
-            if not icon_expr:
-                empty_icons.append(name)
-
-    brains = search(portal_type=empty_icons, sort_on="path")
+    empty_icons = _types_with_empty_icons(context, typesToUpdate)
+    brains = search(portal_type=empty_icons, sort_on='path')
     num_objects = len(brains)
     pghandler = ZLogHandler(1000)
     pghandler.init('Updating getIcon metadata', num_objects)
@@ -302,32 +338,9 @@ def updateIconsInBrains(context, typesToUpdate=None):
         brain_icon = brain.getIcon
         if not brain_icon:
             continue
-        old_icons = typesToUpdate[brain.portal_type]
         if getIconPos is not None:
-            # if the old icon is a standard icon, we assume no customization
-            # has taken place and we can simply empty the getIcon metadata
-            # without loading the object
-            new_value = ''
-            if brain_icon not in old_icons:
-                # Otherwise we need to ask the object
-                new_value = ''
-                obj = brain.getObject()
-                method = getattr(aq_base(obj), 'getIcon', None)
-                if method is not None:
-                    try:
-                        new_value = obj.getIcon
-                        if callable(new_value):
-                            new_value = new_value()
-                    except ConflictError:
-                        raise
-                    except Exception:
-                        new_value = ''
-            if brain_icon != new_value:
-                rid = brain.getRID()
-                record = metadata[rid]
-                new_record = list(record)
-                new_record[getIconPos] = new_value
-                metadata[rid] = tuple(new_record)
+            _update_icon_in_single_brain(
+                brain, typesToUpdate, getIconPos, metadata)
         else:
             # If we don't have a standard catalog tool, fall back to the
             # official API

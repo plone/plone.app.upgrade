@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
+from AccessControl.Permission import Permission
+from plone.app.upgrade.utils import installOrReinstallProduct
+from plone.app.upgrade.utils import loadMigrationProfile
+from Products.CMFCore.utils import getToolByName
+
 import logging
 
-from AccessControl.Permission import Permission
-
-from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.utils import installOrReinstallProduct
-from Products.CMFCore.utils import getToolByName
 
 logger = logging.getLogger('plone.app.upgrade')
 
@@ -16,7 +17,7 @@ def fixOwnerTuples(portal):
         old = obj.getOwnerTuple()
         if old and old[0][-1] == 'portal_memberdata':
             new = (['acl_users'], old[1])
-            logger.info('Repairing %s: %r -> %r' % (path, old, new))
+            logger.info('Repairing %s: %r -> %r', path, old, new)
             obj._owner = new
     portal.ZopeFindAndApply(portal, search_sub=True, apply_func=fixOwnerTuple)
 
@@ -25,7 +26,7 @@ def installPloneAppDiscussion(portal):
     # Make sure plone.app.discussion is properly installed.
     installOrReinstallProduct(
         portal,
-        "plone.app.discussion",
+        'plone.app.discussion',
         out=None,
         hidden=True)
 
@@ -59,7 +60,7 @@ def to42rc1(context):
     """4.2b2 -> 4.2rc1
     """
     try:
-        import plone.app.jquerytools
+        import plone.app.jquerytools  # noqa F401
         loadMigrationProfile(context, 'profile-plone.app.jquery:default')
     except ImportError:
         pass
@@ -74,17 +75,17 @@ def to42rc1_discussion(context):
 
 
 def to42rc1_member_dashboard(context):
-    """Add Member role to "Portlets: View dashboard" permission
+    """Add Member role to 'Portlets: View dashboard' permission
     """
 
     p = 'Portlets: View dashboard'
     portal = getToolByName(context, 'portal_url').getPortalObject()
     roles = Permission(p, (), portal).getRoles(default=[])
-    if not "Member" in roles:
+    if 'Member' not in roles:
         acquire = isinstance(roles, list) and True or False
         roles = list(roles)
-        roles.append("Member")
-        portal.manage_permission("Portlets: View dashboard",
+        roles.append('Member')
+        portal.manage_permission('Portlets: View dashboard',
                                  roles,
                                  acquire,
                                  )

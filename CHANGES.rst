@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.12 (unreleased)
+2.0.16 (unreleased)
 -------------------
 
 Breaking changes:
@@ -11,11 +11,60 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add upgrade steps for Datatbles on Plone 5.1.4
+  [frapell]
 
 Bug fixes:
 
 - *add item here*
+
+
+2.0.15 (2018-06-21)
+-------------------
+
+New features:
+
+- Merge plone.login and remove skins folder plone_login.
+  [jensens]
+
+Bug fixes:
+
+- Made several functions less complex by splitting them.  [maurits]
+
+- Improved code quality.  [maurits]
+
+
+2.0.14 (2018-04-09)
+-------------------
+
+Bug fixes:
+
+- Fix i18n domain for some portal_actions that were on plone.app.event domain.
+  Fixes https://github.com/plone/plone.app.event/pull/204
+  [gforcada]
+
+
+2.0.13 (2018-04-08)
+-------------------
+
+Bug fixes:
+
+- Change in TinyMCE css location so bundles can be built without errors
+  Fixes `issue 2359 <https://github.com/plone/Products.CMFPlone/issues/2359>`_.
+  [frapell]
+
+
+2.0.12 (2018-03-10)
+-------------------
+
+Bug fixes:
+
+- Rename retina_scales to highpixeldensity_scales.
+  Fixes `issue 2331 <https://github.com/plone/Products.CMFPlone/issues/2331>`_.
+  [maurits]
+
+- Hide our 'products' from installation for both CMFQuickInstallerTool and CMFPlone.
+  [maurits]
 
 
 2.0.11 (2018-02-05)

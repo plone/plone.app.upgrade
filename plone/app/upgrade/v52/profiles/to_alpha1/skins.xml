@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+  <object
+      name="plone_login"
+      meta_type="Filesystem Directory View"
+      directory="Products.CMFPlone:skins/plone_login"
+      remove="True"/>
+  <skin-path name="*">
+    <layer name="plone_login" remove="True"/>
+  </skin-path>
+</object>

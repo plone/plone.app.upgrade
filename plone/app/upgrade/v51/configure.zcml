@@ -212,4 +212,69 @@ Add image scaling options to image handling control panel.
             />
 
     </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5110"
+        destination="5111"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to511 upgrade profile."
+            description="Rename retina_scales to highpixeldensity_scales."
+            import_profile="plone.app.upgrade.v51:to511"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5111"
+        destination="5112"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to512 upgrade profile."
+            description="Update css resources for TinyMCE 4.7.6"
+            import_profile="plone.app.upgrade.v51:to512"
+            />
+
+        <gs:upgradeStep
+            title="Update an action i18n domain"
+            handler=".final.fix_i18n_domain"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5112"
+        destination="5113"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5113"
+        destination="5114"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to514 upgrade profile."
+            description="Update resources for Datatables"
+            import_profile="plone.app.upgrade.v51:to514"
+            />
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+
 </configure>

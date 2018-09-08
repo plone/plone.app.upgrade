@@ -1,33 +1,34 @@
-import transaction
-
-from zope.component import queryMultiAdapter
-from zope.component import getUtilitiesFor
-from zope.component import getSiteManager, getUtility
-from zope.ramcache.interfaces.ram import IRAMCache
-from zope.ramcache.ram import RAMCache
-
+# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from Acquisition import aq_get
-from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
-from Products.CMFCore.interfaces import ICachingPolicyManager
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.setuphandlers import addCacheHandlers
-from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
-from Products.MailHost.MailHost import MailHost
-from Products.MailHost.interfaces import IMailHost
-from zExceptions import NotFound
-from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-
 from plone.app.upgrade.utils import cleanUpSkinsTool as generalCleanUpSkinsTool
-from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import unregisterSteps
+from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
 from plone.portlet.static.static import IStaticPortlet
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
-
+# We either get E501 line too long,
+# or I001 isort found an import in the wrong position...
+from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager  # noqa E501
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.interfaces import ICachingPolicyManager
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
+from Products.CMFPlone.setuphandlers import addCacheHandlers
+from Products.MailHost.interfaces import IMailHost
+from Products.MailHost.MailHost import MailHost
+from zExceptions import NotFound
+from zope.component import getSiteManager
+from zope.component import getUtilitiesFor
+from zope.component import getUtility
+from zope.component import queryMultiAdapter
+from zope.ramcache.interfaces.ram import IRAMCache
+from zope.ramcache.ram import RAMCache
+
+import transaction
 
 
 _KNOWN_ACTION_ICONS = {
@@ -82,7 +83,7 @@ def threeX_alpha1(context):
     if qi is not None:
         if 'plonetheme.classic' in qi:
             stool.runAllImportStepsFromProfile(
-                'profile-plonetheme.classic:default'
+                'profile-plonetheme.classic:default',
             )
     else:
         # Plone 5.1 and higher.
@@ -92,8 +93,8 @@ def threeX_alpha1(context):
         # Plone 5, which is fine, but we will try it anyway.
         if qi.is_product_installed('plonetheme.classic'):
             stool.runAllImportStepsFromProfile(
-                'profile-plonetheme.classic:default'
-                )
+                'profile-plonetheme.classic:default',
+            )
     # Install packages that are needed for Plone 4,
     # but don't break on Plone 5 where they are gone
     for profile in ('archetypes.referencebrowserwidget:default',
@@ -112,20 +113,22 @@ def restoreTheme(context):
 
     if old_default_skin == 'Plone Default':
         v_storage = getUtility(IViewletSettingsStorage)
-        uncustomized_layers = ('custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
-                               'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
-                               'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
-                               'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
-                               'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
-                               'plone_images,plone_content,plone_login,plone_deprecated,'
-                               'plone_3rdParty,cmf_legacy')
+        uncustomized_layers = (
+            'custom,tinymce,referencebrowser,LanguageTool,cmfeditions_views,'
+            'CMFEditions,kupu_plone,kupu,kupu_tests,archetypes,archetypes_kss,'
+            'mimetypes_icons,plone_kss,ATContentTypes,PasswordReset,'
+            'plone_ecmascript,plone_wysiwyg,plone_prefs,plone_templates,'
+            'classic_styles,plone_form_scripts,plone_scripts,plone_forms,'
+            'plone_images,plone_content,plone_login,plone_deprecated,'
+            'plone_3rdParty,cmf_legacy')
         if skins.selections.get('Plone Default') == uncustomized_layers:
             # if the old theme's layers hadn't been mucked with, we can just
             # use Plone Classic Theme
             old_default_skin = 'Plone Classic Theme'
         else:
             # otherwise, copy Plone Default to a new theme
-            skins.selections['Old Plone 3 Custom Theme'] = skins.selections.get(
+            skins.selections[
+                'Old Plone 3 Custom Theme'] = skins.selections.get(
                 'Plone Default')
             # copy the viewlet order
             v_storage._order['Old Plone 3 Custom Theme'] = dict(
@@ -173,6 +176,26 @@ def setupReferencebrowser(context):
         sels[skinname] = new_layers
 
 
+def _fix_expression(portal, expr):
+    try:
+        expr = str(expr)
+    except UnicodeEncodeError:
+        pass
+    if not expr.endswith('gif'):
+        return expr
+    try:
+        png_expr = expr[:-4] + '.png'
+        portal.restrictedTraverse(png_expr)
+        expr = png_expr
+    except (AttributeError, KeyError, TypeError, NotFound):
+        pass
+    prefix = ''
+    if ':' not in expr:
+        prefix = 'string:$portal_url/'
+    expr = '{0}{1}'.format(prefix, expr)
+    return expr
+
+
 def migrateActionIcons(context):
     portal = getToolByName(context, 'portal_url').getPortalObject()
     atool = getToolByName(portal, 'portal_actions', None)
@@ -188,27 +211,11 @@ def migrateActionIcons(context):
     for ic in aitool.listActionIcons():
         cat = ic._category
         ident = ic._action_id
-        expr = ic._icon_expr_text
-        try:
-            expr = str(expr)
-        except UnicodeEncodeError:
-            pass
-        if expr.endswith('gif'):
-            try:
-                png_expr = expr[:-4] + '.png'
-                portal.restrictedTraverse(png_expr)
-                expr = png_expr
-            except (AttributeError, KeyError, TypeError, NotFound):
-                pass
-        prefix = ''
-
         if (cat not in _KNOWN_ACTION_ICONS.keys() or
                 ident not in _KNOWN_ACTION_ICONS[cat]):
             continue
-
-        prefix = ''
-        if ':' not in expr:
-            prefix = 'string:$portal_url/'
+        expr = ic._icon_expr_text
+        expr = _fix_expression(portal, expr)
 
         if cat == 'plone':
             new_cat = 'document_actions'
@@ -217,16 +224,15 @@ def migrateActionIcons(context):
         if new_cat in categories:
             # actions tool
             action = atool[new_cat].get(ident)
-            if action is not None:
-                if not action.icon_expr:
-                    action._setPropValue('icon_expr', '%s%s' % (prefix, expr))
+            if action is not None and not action.icon_expr:
+                action._setPropValue('icon_expr', expr)
         elif cat == 'controlpanel':
             # control panel tool
             action_infos = [a for a in cptool.listActions()
                             if a.getId() == ident]
             if len(action_infos):
                 if not action_infos[0].getIconExpression():
-                    action_infos[0].setIconExpression('%s%s' % (prefix, expr))
+                    action_infos[0].setIconExpression(expr)
 
         # Remove the action icon
         aitool.removeActionIcon(cat, ident)
@@ -267,9 +273,16 @@ def changeAuthenticatedResourcesCondition(context):
     """
     resources = {
         'portal_css': ('member.css', ),
-        'portal_javascripts': ('dropdown.js', 'table_sorter.js',
-                               'calendar_formfield.js', 'calendarpopup.js', 'formUnload.js',
-                               'formsubmithelpers.js', 'unlockOnFormUnload.js')}
+        'portal_javascripts': (
+            'dropdown.js',
+            'table_sorter.js',
+            'calendar_formfield.js',
+            'calendarpopup.js',
+            'formUnload.js',
+            'formsubmithelpers.js',
+            'unlockOnFormUnload.js',
+        ),
+    }
     ANON = ('not: portal/portal_membership/isAnonymousUser',
             'not:portal/portal_membership/isAnonymousUser', )
     for tool_id, resource_ids in resources.items():
@@ -422,7 +435,7 @@ def migrateStaticTextPortlets(context):
                 if IStaticPortlet.providedBy(portlet) and \
                         getattr(portlet, 'hide', False):
                     logger.info(
-                        'Found hidden static text portlet %s at %s' %
+                        'Found hidden static text portlet %s at %s',
                         (portlet_id, path))
                     settings = IPortletAssignmentSettings(portlet)
                     settings['visible'] = False
@@ -535,12 +548,15 @@ def updateLargeFolderType(context):
         update(brain)
     for brain in search(Type='Large Folder'):   # just to make sure...
         update(brain)
-    logger.info('Updated `portal_type` for former "Large Folder" content')
+    logger.info("Updated `portal_type` for former 'Large Folder' content")
 
 
 def addRecursiveGroupsPlugin(context):
     """Add a recursive groups plugin to acl_users"""
-    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import addRecursiveGroupsPlugin, IRecursiveGroupsPlugin
+    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import (
+        addRecursiveGroupsPlugin)
+    from Products.PluggableAuthService.plugins.RecursiveGroupsPlugin import (
+        IRecursiveGroupsPlugin)
     from Products.PluggableAuthService.interfaces.plugins import IGroupsPlugin
     acl = getToolByName(context, 'acl_users')
     plugins = acl.plugins
@@ -551,11 +567,12 @@ def addRecursiveGroupsPlugin(context):
             if IRecursiveGroupsPlugin.providedBy(p):
                 plugins.deactivatePlugin(IGroupsPlugin, id)
                 logger.warn(
-                    'Found an existing Recursive Groups plugin, %s, in acl_users, deactivating.' % id)
+                    'Found an existing Recursive Groups plugin, %s, '
+                    'in acl_users, deactivating.', id)
 
-    if not 'recursive_groups' in acl:
+    if 'recursive_groups' not in acl:
         addRecursiveGroupsPlugin(
-            acl, 'recursive_groups', "Recursive Groups Plugin")
+            acl, 'recursive_groups', 'Recursive Groups Plugin')
 
 
 def cleanUpClassicThemeResources(context):
@@ -568,7 +585,8 @@ def cleanUpClassicThemeResources(context):
     qi = getToolByName(context, 'portal_quickinstaller', None)
     if qi is not None and 'plonetheme.classic' in qi:
         classictheme = qi['plonetheme.classic']
-        classictheme.resources_css = []  # empty the list of installed resources
+        # empty the list of installed resources
+        classictheme.resources_css = []
 
 
 def migrateTypeIcons(context):
@@ -581,7 +599,8 @@ def migrateTypeIcons(context):
         if 'content_icon' in type.__dict__:
             icon = type.content_icon
             if icon and not getattr(type, 'icon_expr', False):
-                type.icon_expr = "string:${portal_url}/%s" % icon
+                # Replacing %s with .format would give a KeyError portal_url.
+                type.icon_expr = 'string:${portal_url}/%s' % icon  # noqa S001
                 type.icon_expr_object = Expression(type.icon_expr)
                 del type.content_icon
 

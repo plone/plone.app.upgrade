@@ -1,10 +1,12 @@
-import logging
-
-from plone.app.upgrade.utils import loadMigrationProfile
+# -*- coding: utf-8 -*-
+from BTrees.Length import Length
 from plone.app.upgrade.utils import installOrReinstallProduct
+from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 from Products.ZCTextIndex.OkapiIndex import OkapiIndex
-from BTrees.Length import Length
+
+import logging
+
 
 logger = logging.getLogger('plone.app.upgrade')
 
@@ -25,7 +27,7 @@ def fixOwnerTuples(portal):
         old = obj.getOwnerTuple()
         if old and old[0][-1] == 'portal_memberdata':
             new = (['acl_users'], old[1])
-            logger.info('Repairing %s: %r -> %r' % (path, old, new))
+            logger.info('Repairing %s: %r -> %r', path, old, new)
             obj._owner = new
     portal.ZopeFindAndApply(portal, search_sub=True, apply_func=fixOwnerTuple)
 
@@ -34,7 +36,7 @@ def installPloneAppDiscussion(portal):
     # Make sure plone.app.discussion is properly installed.
     installOrReinstallProduct(
         portal,
-        "plone.app.discussion",
+        'plone.app.discussion',
         out=None,
         hidden=True)
 

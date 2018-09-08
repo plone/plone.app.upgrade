@@ -1,15 +1,15 @@
-import logging
-from Products.CMFCore.utils import getToolByName
-
-from zope.component import getAllUtilitiesRegisteredFor
-from zope.component import queryUtility
-from plone.contentrules.engine.interfaces import IRuleStorage
-from plone.contentrules.engine.assignments import \
-    check_rules_with_dotted_name_moved
-
+# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import unregisterSteps
 from plone.app.upgrade.v43.alphas import upgradeTinyMCEAgain
+from plone.contentrules.engine.assignments import check_rules_with_dotted_name_moved  # noqa E501
+from plone.contentrules.engine.interfaces import IRuleStorage
+from Products.CMFCore.utils import getToolByName
+from zope.component import getAllUtilitiesRegisteredFor
+from zope.component import queryUtility
+
+import logging
+
 
 # We had our own version of this, but it was just a copy.  We keep a
 # reference here to avoid breakage if someone imports it.
@@ -192,7 +192,7 @@ def markProductsInstalledForUninstallableProfiles(context):
         qi.notifyInstalled(
             product_id,
             locked=False,
-            logmsg="Marked as installed by plone.app.upgrade",
+            logmsg='Marked as installed by plone.app.upgrade',
             settings={},
             installedversion=version,
             status='installed',
@@ -281,7 +281,7 @@ def removeFakeKupu(context):
             elif kupu_id in expression:
                 # We are tempted to remove this, but who knows if the
                 # expression is something like this:
-                # "'kupu_library_tool' not in portal"
+                # ''kupu_library_tool' not in portal'
                 logger.warn('%s in %s has %s in expression. You probably '
                             'want to change the expression or remove the '
                             'resource.', resource_id, tool_id, kupu_id)
@@ -291,6 +291,12 @@ def removeFakeKupu(context):
         # Note that this does nothing when the configlet is not there.
         control_panel.unregisterConfiglet('kupu')
         logger.info('Removed kupu control panel configlet.')
+
+    # The function was too complex, so we split it.
+    _remove_kupu_from_props(portal)
+
+
+def _remove_kupu_from_props(portal):
     # Remove editor from site_properties.
     pprops = getToolByName(portal, 'portal_properties', None)
     available_editors = []
@@ -315,7 +321,7 @@ def removeFakeKupu(context):
     # Remove from portal_memberdata.  Note that you can use
     # collective.setdefaulteditor if you want more options, like
     # updating the chosen editor for all existing members.
-    member_data = getToolByName(context, 'portal_memberdata')
+    member_data = getToolByName(portal, 'portal_memberdata')
     if member_data.getProperty('wysiwyg_editor') == 'Kupu':
         member_data._updateProperty('wysiwyg_editor', '')
         logger.info('Changed new member wysiwyg_editor to site default.')
@@ -326,7 +332,8 @@ def addSortOnProperty(context):
 
     The default value of this field is relevance.
     """
-    site_properties = getToolByName(context, 'portal_properties').site_properties
+    site_properties = getToolByName(
+        context, 'portal_properties').site_properties
     if not site_properties.hasProperty('sort_on'):
         if 'sort_on' in site_properties.__dict__:
             # fix bug if 4.3.1 pending has been tested
