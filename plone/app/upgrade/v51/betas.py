@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import cleanUpSkinsTool
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IFilterSchema
@@ -229,23 +228,6 @@ def remove_duplicate_iterate_settings(context):
         registry.registerInterface(IIterateSettings)
 
 
-def remove_portal_tools(context):
-    """Remove some portal tools."""
-    portal_url = getToolByName(context, 'portal_url')
-    portal = portal_url.getPortalObject()
-
-    tools_to_remove = [
-        'portal_css',
-        'portal_javascripts',
-    ]
-
-    # remove obsolete tools
-    tools = [t for t in tools_to_remove if t in portal]
-    portal.manage_delObjects(tools)
-
-    cleanUpToolRegistry(context)
-
-    
 def cleanup_import_steps(context):
     """Remove registration of old GS-import_steps since they were transformed
     into post_handlers. Otherwise the registered methods would run for each

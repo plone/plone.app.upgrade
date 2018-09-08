@@ -17,6 +17,12 @@
            handler=".alphas.to52alpha1"
            />
 
+      <gs:upgradeStep
+          title="Remove portal tools"
+          description="Remove deprecated portal tools."
+          handler=".alphas.remove_portal_tools"
+          />
+
     </gs:upgradeSteps>
 
 

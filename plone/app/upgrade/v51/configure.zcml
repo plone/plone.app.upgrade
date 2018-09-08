@@ -205,12 +205,6 @@ Add image scaling options to image handling control panel.
             handler="..utils.null_upgrade_step"
             />
 
-        <gs:upgradeStep
-            title="Remove portal tools"
-            description="Remove deprecated portal tools."
-            handler=".betas.remove_portal_tools"
-            />
-
     </gs:upgradeSteps>
 
     <gs:upgradeSteps

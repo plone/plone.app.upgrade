@@ -80,10 +80,6 @@ class TestFunctionalMigrations(unittest.TestCase):
         browser.open('http://nohost/test')
         self.assertTrue('Welcome' in browser.contents)
 
-    def testToolsAreRemoved(self):
-        self.assertFalse('portal_css' in self.portal)
-        self.assertFalse('portal_javascripts' in self.portal)
-
 
 def test_suite():
     # Skip these tests on Plone 4
