@@ -124,4 +124,10 @@
     <value key="last_compilation">2018-09-06 00:00:00</value>
   </records>
 
+  <!-- Update legacy bundle -->
+  <records prefix="plone.bundles/plone-legacy"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="last_compilation"></value>
+  </records>
+
 </registry>

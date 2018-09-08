@@ -7,18 +7,10 @@
            remove="True">
   </records>
 
-  <!-- Update ``last_compilation`` to deliver new bundles -->
-  <records
-      prefix="plone.bundles/plone"
-      interface="Products.CMFPlone.interfaces.IBundleRegistry"
-      purge="False">
-    <value key="last_compilation">2018-09-06 00:00:00</value>
-  </records>
-  <records
-      prefix="plone.bundles/plone-logged-in"
-      interface="Products.CMFPlone.interfaces.IBundleRegistry"
-      purge="False">
-    <value key="last_compilation">2018-09-06 00:00:00</value>
+  <!-- Update legacy bundle -->
+  <records prefix="plone.bundles/plone-legacy"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="last_compilation"></value>
   </records>
 
 </registry>
