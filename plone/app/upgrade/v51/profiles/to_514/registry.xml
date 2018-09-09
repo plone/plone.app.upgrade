@@ -105,18 +105,29 @@
       <value key="js">++plone++static/components/datatables.net-select/js/dataTables.select.min.js</value>
   </records>
 
+  <records prefix="plone.resources/jquery-highlightsearchterms"
+           interface='Products.CMFPlone.interfaces.IResourceRegistry'
+           remove="True">
+  </records>
+
   <!-- Update ``last_compilation`` to deliver new bundles -->
   <records
       prefix="plone.bundles/plone"
       interface="Products.CMFPlone.interfaces.IBundleRegistry"
       purge="False">
-    <value key="last_compilation">2018-07-10 00:00:00</value>
+    <value key="last_compilation">2018-09-06 00:00:00</value>
   </records>
   <records
       prefix="plone.bundles/plone-logged-in"
       interface="Products.CMFPlone.interfaces.IBundleRegistry"
       purge="False">
-    <value key="last_compilation">2018-07-10 00:00:00</value>
+    <value key="last_compilation">2018-09-06 00:00:00</value>
+  </records>
+
+  <!-- Update legacy bundle -->
+  <records prefix="plone.bundles/plone-legacy"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="last_compilation"></value>
   </records>
 
 </registry>
