@@ -57,6 +57,8 @@ def remove_highlightsearchterms(context):
 def remove_old_PAE_rescources(context):  # noqa
     """FORCE remove old p.a.event resources"""
     registry = getUtility(IRegistry)
-    plone_legacy = registry.records['plone.bundles/plone-legacy.resources']
-    plone_legacy.value.remove('resource-plone-app-event-event-js')
-    plone_legacy.value.remove('resource-plone-app-event-event-css')
+    resources = registry.records['plone.bundles/plone-legacy.resources']
+    if u'resource-plone-app-event-event-js' in resources.value:
+        resources.value.remove('resource-plone-app-event-event-js')
+    if u'resource-plone-app-event-event-css' in resources.value:
+        resources.value.remove('resource-plone-app-event-event-css')
