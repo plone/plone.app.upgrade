@@ -74,6 +74,8 @@ def to50alpha1(context):
         qi = getToolByName(portal, 'portal_quickinstaller')
     else:
         qi = get_installer(portal)
+    if not qi.isProductInstalled('plone.resource'):
+        qi.installProduct('plone.resource')
     if not qi.isProductInstalled('plone.app.event'):
         qi.installProduct('plone.app.event')
 
