@@ -52,3 +52,13 @@ def remove_highlightsearchterms(context):
     resources = registry.records[record]
     if u'jquery-highlightsearchterms' in resources.value:
         resources.value.remove(u'jquery-highlightsearchterms')
+
+
+def remove_old_PAE_rescources(context):  # noqa
+    """FORCE remove old p.a.event resources"""
+    registry = getUtility(IRegistry)
+    resources = registry.records['plone.bundles/plone-legacy.resources']
+    if u'resource-plone-app-event-event-js' in resources.value:
+        resources.value.remove('resource-plone-app-event-event-js')
+    if u'resource-plone-app-event-event-css' in resources.value:
+        resources.value.remove('resource-plone-app-event-event-css')
