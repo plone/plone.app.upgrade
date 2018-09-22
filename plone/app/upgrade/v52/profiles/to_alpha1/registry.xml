@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<registry>
+
+
+  <records prefix="plone.resources/jquery-highlightsearchterms"
+           interface='Products.CMFPlone.interfaces.IResourceRegistry'
+           remove="True">
+  </records>
+
+  <!-- Update legacy bundle -->
+  <records prefix="plone.bundles/plone-legacy"
+            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="last_compilation"></value>
+  </records>
+
+</registry>

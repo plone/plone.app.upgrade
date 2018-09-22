@@ -243,12 +243,38 @@ Add image scaling options to image handling control panel.
         destination="5113"
         profile="Products.CMFPlone:plone">
 
+        <gs:upgradeDepends
+            title="Run to513 upgrade profile."
+            description="Update resources for plone.app.event"
+            import_profile="plone.app.upgrade.v51:to513"
+            />
+
+        <gs:upgradeStep
+            title="Force remove old p.a.event resources"
+            handler=".final.remove_old_PAE_rescources"
+            />
+
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5113"
+        destination="5114"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeDepends
+            title="Run to514 upgrade profile."
+            description="Update resources for Datatables"
+            import_profile="plone.app.upgrade.v51:to514"
+            />
+
         <gs:upgradeStep
             title="Miscellaneous"
             description=""
-            handler="..utils.null_upgrade_step"
+            handler=".final.remove_highlightsearchterms"
             />
 
     </gs:upgradeSteps>
+
 
 </configure>
