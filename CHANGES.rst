@@ -18,7 +18,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Require plone.app.imaging because an upgrade profile depends on it
+  [ale-rt]
 
 - Update resources for plone.app.event.  [agitator]
 

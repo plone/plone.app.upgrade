@@ -45,6 +45,7 @@ setup(
         'setuptools',
         'plone.portlets',
         'plone.app.folder',
+        'plone.app.imaging',
         'transaction',
         'zope.component',
         'zope.interface',
