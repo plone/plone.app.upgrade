@@ -18,7 +18,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Prepare for Python 2 / 3 compatibility
+  [ale-rt, pbauer, tlotze]
 
 - Update resources for plone.app.event.  [agitator]
 
