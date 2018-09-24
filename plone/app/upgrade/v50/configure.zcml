@@ -381,5 +381,9 @@
             handler=".final.to5010"
             />
 
+        <gs:upgradeDepends
+            title="Run to5010 upgrade profile."
+            import_profile="plone.app.upgrade.v50:to5010"
+            />
     </gs:upgradeSteps>
 </configure>
