@@ -7,12 +7,10 @@ from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
 from Products.ZCatalog.ProgressHandler import ZLogHandler
-from types import ListType
-from types import TupleType
+from types import ModuleType
 from ZODB.POSException import ConflictError
 
 import logging
-import new
 import pkg_resources
 import sys
 import transaction
@@ -52,15 +50,15 @@ def safeEditProperty(obj, key, value, data_type='string'):
 def addLinesToProperty(obj, key, values):
     if obj.hasProperty(key):
         data = getattr(obj, key)
-        if isinstance(data, TupleType):
+        if isinstance(data, tuple):
             data = list(data)
-        if isinstance(values, ListType):
+        if isinstance(values, list):
             data.extend(values)
         else:
             data.append(values)
         obj._updateProperty(key, data)
     else:
-        if not isinstance(values, ListType):
+        if not isinstance(values, list):
             values = [values]
         obj._setProperty(key, values, 'lines')
 
@@ -221,7 +219,7 @@ def alias_module(name, target):
         try:
             __import__(module_name)
         except ImportError:
-            new_module = new.module(module_name)
+            new_module = ModuleType(module_name)
             sys.modules[module_name] = new_module
             if module is not None:
                 setattr(module, parts[i - 1], new_module)

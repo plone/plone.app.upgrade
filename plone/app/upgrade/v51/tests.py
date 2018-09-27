@@ -3,7 +3,7 @@ from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IFilterSchema
 from zope.component import getUtility
-
+import six
 import unittest
 
 
@@ -67,7 +67,7 @@ class UpgradePortalTransforms51beta4to51beta5Test(unittest.TestCase):
 
 def test_suite():
     # Skip these tests on Plone 4
-    if not PLONE_5:
+    if not six.PY2 or not PLONE_5:
         return unittest.TestSuite()
 
     suite = unittest.TestSuite()

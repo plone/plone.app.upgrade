@@ -20,8 +20,9 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        'Programming Language :: Python :: 2.6',
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
     keywords='Plone upgrade migration',
     author='Plone Foundation',
@@ -61,6 +62,7 @@ setup(
         'plone.contentrules',
         'plone.app.iterate',
         'plone.app.viewletmanager',
+        'six',
     ],
     entry_points="""
     [z3c.autoinclude.plugin]
