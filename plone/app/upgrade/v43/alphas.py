@@ -203,10 +203,11 @@ def _update_syndication_info(portal):
     from Products.CMFPlone.interfaces.syndication import ISyndicatable
     catalog = getToolByName(portal, 'portal_catalog')
     # get all folder types from portal_types
-    at_tool = getToolByName(portal, 'archetype_tool')
+    at_tool = getToolByName(portal, 'archetype_tool', None)
     folder_types = set([])
-    for _type in at_tool.listPortalTypesWithInterfaces([ISyndicatable]):
-        folder_types.add(_type.getId())
+    if at_tool is not None:
+        for _type in at_tool.listPortalTypesWithInterfaces([ISyndicatable]):
+            folder_types.add(_type.getId())
     folder_types = folder_types | _getDexterityFolderTypes(portal)
     for brain in catalog(portal_type=tuple(folder_types)):
         try:
