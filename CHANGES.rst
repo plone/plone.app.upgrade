@@ -10,6 +10,9 @@ Breaking changes:
 
 New features:
 
+- Added upgrade for TinyMCE 4.7.13 on Plone 5.0.10
+  [obct537]
+
 - Add upgrade steps for Datatbles on Plone 5.1.4
   [frapell]
 
