@@ -477,7 +477,10 @@ def migrateMailHost(context):
 
 
 def migrateFolders(context):
-    from plone.app.folder.migration import BTreeMigrationView
+    try:
+        from plone.app.folder.migration import BTreeMigrationView
+    except ImportError:
+        return
 
     class MigrationView(BTreeMigrationView):
 

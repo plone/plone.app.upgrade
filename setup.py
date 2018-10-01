@@ -46,7 +46,6 @@ setup(
     install_requires=[
         'setuptools',
         'plone.portlets',
-        'plone.app.folder',
         'transaction',
         'zope.component',
         'zope.interface',
