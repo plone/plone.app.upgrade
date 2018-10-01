@@ -1,34 +1,12 @@
 Changelog
 =========
 
-2.0.16 (unreleased)
--------------------
+.. You should *NOT* be adding new change log entries to this file.
+   You should create a file in the news directory instead.
+   For helpful instructions, please see:
+   https://github.com/plone/plone.releaser/blob/master/ADD-A-NEWS-ITEM.rst
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- Added upgrade for TinyMCE 4.7.13 on Plone 5.0.10
-  [obct537]
-
-- Add upgrade steps for Datatbles on Plone 5.1.4
-  [frapell]
-
-- Add upgrade step removing the jquery-highlightsearchterms resource
-  and the plone_ecmascript skin layer, on Plone 5.2 and 5.1.4
-  [sunew]
-
-- Update bundle dates after recompilation in CMFPlone
-  [sunew]
-
-Bug fixes:
-
-- Prepare for Python 2 / 3 compatibility
-  [ale-rt, pbauer, tlotze]
-
-- Update resources for plone.app.event.  [agitator]
+.. towncrier release notes start
 
 
 2.0.15 (2018-06-21)
