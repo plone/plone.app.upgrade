@@ -327,9 +327,13 @@ class TestMigrations_v4_0alpha1(MigrationTest):
         self.assertEqual(new_mh.force_tls, False)
 
     def testFolderMigration(self):
-        from plone.app.folder.tests.content import create
-        from plone.app.folder.tests.test_migration import reverseMigrate
-        from plone.app.folder.tests.test_migration import isSaneBTreeFolder
+        try:
+            from plone.app.folder.tests.content import create
+            from plone.app.folder.tests.test_migration import reverseMigrate
+            from plone.app.folder.tests.test_migration import isSaneBTreeFolder
+        except ImportError:
+            return
+
         # create a folder in an unmigrated state & check it's broken...
         folder = create('Folder', self.portal, 'foo', title='Foo')
         reverseMigrate(self.portal)
@@ -458,7 +462,10 @@ class TestMigrations_v4_0alpha5(MigrationTest):
         self.assertEqual(classictheme.resources_css, [])
 
     def testGetObjPositionInParentIndex(self):
-        from plone.app.folder.nogopip import GopipIndex
+        try:
+            from plone.app.folder.nogopip import GopipIndex
+        except ImportError:
+            return
         catalog = self.portal.portal_catalog
         catalog.delIndex('getObjPositionInParent')
         catalog.addIndex('getObjPositionInParent', 'FieldIndex')
