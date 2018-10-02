@@ -1,6 +1,0 @@
-fix tests in Plone >= 5.2 and python 3.
-As discussed with jensens and mauritsvanrees
-we start migration tests beginning from 4.0 final 
-due to portal_factory property errors.
-
-[petschki]

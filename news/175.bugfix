@@ -1,3 +1,0 @@
-make `plone.app.folder` import conditional, because the package is gone in Plone >= 5.2
-
-[petschki]

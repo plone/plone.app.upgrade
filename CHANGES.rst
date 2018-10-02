@@ -8,6 +8,30 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.16 (2018-10-01)
+-------------------
+
+New features:
+
+
+- Add upgrade steps for Datatables on Plone 5.1.4. [frapell] (#168)
+- Add upgrade step removing the jquery-highlightsearchterms resource and the
+  plone_ecmascript skin layer, on Plone 5.2 and 5.1.4 [sunew] (#170)
+- Update bundle dates after recompilation in CMFPlone. [sunew] (#171)
+- Added upgrade for TinyMCE 4.7.13 on Plone 5.0.10. [obct537] (#174)
+
+
+Bug fixes:
+
+
+- Update resources for plone.app.event. [agitator] (#166)
+- Prepare for Python 2 / 3 compatibility [ale-rt, pbauer, tlotze] (#173)
+- make `plone.app.folder` import conditional, because the package is gone in
+  Plone >= 5.2 [petschki] (#175)
+- fix tests in Plone >= 5.2 and python 3. As discussed with jensens and
+  mauritsvanrees we start migration tests beginning from 4.0 final due to
+  portal_factory property errors. [petschki] (#176)
+
 
 2.0.15 (2018-06-21)
 -------------------
