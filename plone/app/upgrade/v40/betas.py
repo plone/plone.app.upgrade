@@ -143,7 +143,9 @@ def removeLargePloneFolder(context):
     """Complete removal of Large Plone Folder
     (Most of it is accomplished by the profile.)
     """
-    ftool = getToolByName(context, 'portal_factory')
+    ftool = getToolByName(context, 'portal_factory', None)
+    if not ftool:
+        return
     l = set(ftool.getFactoryTypes())
     if 'Large Plone Folder' in l:
         l.remove('Large Plone Folder')
