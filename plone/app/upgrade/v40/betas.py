@@ -3,6 +3,7 @@ from Acquisition import aq_base
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import updateIconsInBrains
+from plone.dexterity.fti import DexterityFTI
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import BLACKLISTED_INTERFACES
 from Products.CMFPlone.utils import safe_hasattr
@@ -108,6 +109,15 @@ def beta3_beta4(context):
     """
     loadMigrationProfile(
         context, 'profile-plone.app.upgrade.v40:4beta3-4beta4')
+
+    # Prepare for blob support
+    pt = getToolByName(context, 'portal_types')
+    for portal_type in ('Image', 'File'):
+        fti = pt.get(portal_type)
+        if fti and not isinstance(fti, DexterityFTI):
+            fti.content_meta_type = 'ATBlob'
+            fti.product = 'plone.app.blob'
+            fti.factory = 'addATBlob{}'.format(portal_type)
 
     pprop = getToolByName(context, 'portal_properties')
     site_properties = pprop.site_properties
