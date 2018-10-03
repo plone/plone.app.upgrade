@@ -3,6 +3,7 @@ from Acquisition import aq_base
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.utils import logger
 from plone.app.upgrade.utils import updateIconsInBrains
+from plone.dexterity.fti import DexterityFTI
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import BLACKLISTED_INTERFACES
 from Products.CMFPlone.utils import safe_hasattr
@@ -109,6 +110,15 @@ def beta3_beta4(context):
     loadMigrationProfile(
         context, 'profile-plone.app.upgrade.v40:4beta3-4beta4')
 
+    # Prepare for blob support
+    pt = getToolByName(context, 'portal_types')
+    for portal_type in ('Image', 'File'):
+        fti = pt.get(portal_type)
+        if fti and not isinstance(fti, DexterityFTI):
+            fti.content_meta_type = 'ATBlob'
+            fti.product = 'plone.app.blob'
+            fti.factory = 'addATBlob{}'.format(portal_type)
+
     pprop = getToolByName(context, 'portal_properties')
     site_properties = pprop.site_properties
     if site_properties.hasProperty('typesLinkToFolderContentsInFC'):
@@ -133,7 +143,9 @@ def removeLargePloneFolder(context):
     """Complete removal of Large Plone Folder
     (Most of it is accomplished by the profile.)
     """
-    ftool = getToolByName(context, 'portal_factory')
+    ftool = getToolByName(context, 'portal_factory', None)
+    if not ftool:
+        return
     l = set(ftool.getFactoryTypes())
     if 'Large Plone Folder' in l:
         l.remove('Large Plone Folder')
@@ -147,8 +159,14 @@ def convertToBlobs(context):
     removes objects to recreate them fresh, so in the end nothing is
     permanently removed.
     """
+    try:
+        from plone.app.blob.migrations import migrateATBlobFiles
+    except ImportError:
+        logger.info(
+            'Cannot migrate files to blobs because plone.app.blob is missing.'
+        )
+        return
     logger.info('Started migration of files to blobs.')
-    from plone.app.blob.migrations import migrateATBlobFiles
     sprop = getToolByName(context, 'portal_properties').site_properties
     if sprop.hasProperty('enable_link_integrity_checks'):
         ori_enable_link_integrity_checks = sprop.getProperty(
