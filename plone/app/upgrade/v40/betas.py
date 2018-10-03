@@ -159,8 +159,14 @@ def convertToBlobs(context):
     removes objects to recreate them fresh, so in the end nothing is
     permanently removed.
     """
+    try:
+        from plone.app.blob.migrations import migrateATBlobFiles
+    except ImportError:
+        logger.info(
+            'Cannot migrate files to blobs because plone.app.blob is missing.'
+        )
+        return
     logger.info('Started migration of files to blobs.')
-    from plone.app.blob.migrations import migrateATBlobFiles
     sprop = getToolByName(context, 'portal_properties').site_properties
     if sprop.hasProperty('enable_link_integrity_checks'):
         ori_enable_link_integrity_checks = sprop.getProperty(
