@@ -8,6 +8,12 @@ import sys
 
 
 try:
+    from Products.ResourceRegistries import JSRegistry
+    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = True
+except ImportError:
+    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = False
+
+try:
     from zope.app.cache.interfaces.ram import IRAMCache  # noqa F401
 except ImportError:
     import zope.ramcache.interfaces.ram
