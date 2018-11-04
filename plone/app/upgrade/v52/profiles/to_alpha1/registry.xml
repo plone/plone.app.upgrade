@@ -26,17 +26,54 @@
       purge="False">
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
-  <records
-      prefix="plone.bundles/thememapper"
-      interface='Products.CMFPlone.interfaces.IBundleRegistry'
-      purge="False">
-    <value key="last_compilation">2018-09-16 16:00:00</value>
-  </records>
 
   <!-- Update legacy bundle -->
   <records prefix="plone.bundles/plone-legacy"
             interface='Products.CMFPlone.interfaces.IBundleRegistry'>
     <value key="last_compilation"></value>
+  </records>
+
+
+  <!-- changes from PLIP 1653 - restructure static resources -->
+  <records remove="True" prefix="plone.resources/expect" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/js-shortcuts" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/marked" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/rjs" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/react" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/JSXTransformer" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/sinon" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+
+  <records
+      prefix="plone.resources/plone-patterns-toolbar"
+      interface='Products.CMFPlone.interfaces.IResourceRegistry'
+      purge="False">
+    <value key="js">++resource++mockup/toolbar/pattern.js</value>
+    <value key="css">
+      <element>++resource++mockup/toolbar/pattern.toolbar.less</element>
+    </value>
+  </records>
+
+  <records
+      prefix="plone.resources/thememapper"
+      interface='Products.CMFPlone.interfaces.IResourceRegistry'
+      purge="False">
+    <value key="js">++plone++static/thememapper.js</value>
+    <value key="css">
+      <element>++plone++static/thememapper.less</element>
+    </value>
+  </records>
+
+  <records
+      prefix="plone.bundles/thememapper"
+      interface='Products.CMFPlone.interfaces.IBundleRegistry'
+      purge="False">
+    <value key="resources">
+      <element>thememapper</element>
+    </value>
+    <value key="enabled">False</value>
+    <value key="jscompilation">++plone++static/thememapper-compiled.min.js</value>
+    <value key="csscompilation">++plone++static/thememapper-compiled.css</value>
+    <value key="last_compilation">2018-10-01 23:00:00</value>
   </records>
 
 </registry>
