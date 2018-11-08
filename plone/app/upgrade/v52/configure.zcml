@@ -17,6 +17,12 @@
            handler=".alphas.to52alpha1"
            />
 
+      <gs:upgradeStep
+           title="Run to52alpha2 upgrade profile."
+           description=""
+           handler=".alphas.to52alpha2"
+           />
+
     </gs:upgradeSteps>
 
 
