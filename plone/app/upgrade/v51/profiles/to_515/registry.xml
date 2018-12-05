@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<registry>
+
+  <records
+      prefix="plone.bundles/resourceregistry"
+      interface='Products.CMFPlone.interfaces.IBundleRegistry'
+      purge="False">
+    <value key="last_compilation">2018-12-05 01:36:00</value>
+  </records>
+
+</registry>
