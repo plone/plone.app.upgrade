@@ -8,6 +8,19 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.19 (2018-12-10)
+-------------------
+
+Bug fixes:
+
+
+- migrate GopipIndex which has moved from p.a.folder to p.folder [petschki]
+  (#177)
+- Do not break if archetypes related code is not available [ale-rt, pbauer]
+  (#178)
+- tolerate lack of legacy resource registry [ksuess] (#182)
+
+
 2.0.16 (2018-10-01)
 -------------------
 
