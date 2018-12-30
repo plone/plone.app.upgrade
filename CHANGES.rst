@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.20 (2018-12-30)
+-------------------
+
+Bug fixes:
+
+
+- Plone 5.1.5: Update resource registry ``last_compilation`` date. [thet]
+  (#186)
+
+
 2.0.19 (2018-12-10)
 -------------------
 
