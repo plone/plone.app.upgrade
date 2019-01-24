@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<repositorytool>
+ <policies purge="true">
+  <policy name="at_edit_autoversion"
+     title="Create version on edit (AT objects only)"
+     class="Products.CMFEditions.VersionPolicies.ATVersionOnEditPolicy"/>
+  <policy name="version_on_revert" title="Create version on version revert"/>
+ </policies>
+ <policymap purge="true">
+  <type name="ATDocument">
+   <policy name="at_edit_autoversion"/>
+   <policy name="version_on_revert"/>
+  </type>
+  <type name="ATNewsItem">
+   <policy name="at_edit_autoversion"/>
+   <policy name="version_on_revert"/>
+  </type>
+  <type name="Document">
+   <policy name="at_edit_autoversion"/>
+   <policy name="version_on_revert"/>
+  </type>
+  <type name="Event">
+   <policy name="at_edit_autoversion"/>
+   <policy name="version_on_revert"/>
+  </type>
+  <type name="Link">
+   <policy name="at_edit_autoversion"/>
+   <policy name="version_on_revert"/>
+  </type>
+  <type name="News Item">
+   <policy name="at_edit_autoversion"/>
+   <policy name="version_on_revert"/>
+  </type>
+ </policymap>
+</repositorytool>
