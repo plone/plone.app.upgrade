@@ -29,23 +29,6 @@ def migrate_gopipindex(context):
     manage_addGopipIndex(catalog, 'getObjPositionInParent')
 
 
-def add_exclude_from_nav_index(context):
-    """Add exclude_from_nav index to the portal_catalog.
-    """
-    name = 'exclude_from_nav'
-    meta_type = 'BooleanIndex'
-    catalog = getToolByName(context, 'portal_catalog')
-    indexes = catalog.indexes()
-    indexables = []
-    if 'name' not in indexes:
-        catalog.addIndex(name, meta_type)
-        indexables.append(name)
-        logger.info('Added %s for field %s.', meta_type, name)
-    if len(indexables) > 0:
-        logger.info('Indexing new indexes %s.', ', '.join(indexables))
-        catalog.manage_reindexIndex(ids=indexables)
-
-
 def to52alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha1')
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -53,7 +36,6 @@ def to52alpha1(context):
 
     cleanup_resources()
     migrate_gopipindex(context)
-    add_exclude_from_nav_index(context)
 
 
 def to52alpha2(context):

@@ -25,7 +25,6 @@
 
     </gs:upgradeSteps>
 
-
     <gs:upgradeSteps
         source="5200"
         destination="5201"
@@ -36,6 +35,19 @@
             description=""
             handler="..utils.null_upgrade_step"
             />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5201"
+        destination="5202"
+        profile="Products.CMFPlone:plone">
+
+      <gs:upgradeStep
+           title="Run to52beta1 upgrade profile."
+           description=""
+           handler=".betas.to52beta1"
+           />
 
     </gs:upgradeSteps>
 
