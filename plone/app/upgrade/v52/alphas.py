@@ -36,7 +36,3 @@ def to52alpha1(context):
 
     cleanup_resources()
     migrate_gopipindex(context)
-
-
-def to52alpha2(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha2')
