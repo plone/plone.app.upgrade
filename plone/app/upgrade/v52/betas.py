@@ -16,7 +16,7 @@ def add_exclude_from_nav_index(context):
     catalog = getToolByName(context, 'portal_catalog')
     indexes = catalog.indexes()
     indexables = []
-    if 'name' not in indexes:
+    if name not in indexes:
         catalog.addIndex(name, meta_type)
         indexables.append(name)
         logger.info('Added %s for field %s.', meta_type, name)
