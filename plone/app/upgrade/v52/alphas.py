@@ -16,7 +16,7 @@ def cleanup_resources():
     registry = getUtility(IRegistry)
     record = 'plone.bundles/plone-legacy.resources'
     resources = registry.records[record]
-    
+
     if u'jquery-highlightsearchterms' in resources.value:
         resources.value.remove(u'jquery-highlightsearchterms')
 
