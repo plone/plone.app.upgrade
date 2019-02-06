@@ -4,6 +4,7 @@ from Products.ZCTextIndex.OkapiIndex import OkapiIndex
 from Products.ZCTextIndex.ZCTextIndex import PLexicon
 from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex
 
+import six
 import unittest
 
 
@@ -20,3 +21,8 @@ class MigrationUnitTests(unittest.TestCase):
         from plone.app.upgrade.v41.final import fixOkapiIndexes
         fixOkapiIndexes(catalog)
         self.assertEqual(0, catalog.Indexes['test'].index._totaldoclen())
+
+
+if not six.PY2:
+    def test_suite():
+        return unittest.TestSuite()

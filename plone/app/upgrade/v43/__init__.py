@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import alphas  # noqa F401
+from . import alphas  # noqa F401

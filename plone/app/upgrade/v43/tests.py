@@ -12,8 +12,10 @@ from zope.component import queryMultiAdapter
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
+from . import alphas
 
-import alphas
+import six
+import unittest
 
 
 try:
@@ -401,3 +403,8 @@ class TestQIandGS(MigrationTest):
         profile_registry.unregisterProfile('default', 'newproduct')
         profile_registry.unregisterProfile('default', 'installed')
         profile_registry.unregisterProfile('default', 'uninstalled')
+
+
+if not six.PY2:
+    def test_suite():
+        return unittest.TestSuite()

@@ -84,7 +84,7 @@ def upgrade_mail_controlpanel_settings(context):
     portal = getSite()
 
     smtp_host = getattr(portal.MailHost, 'smtp_host', '')
-    mail_settings.smtp_host = unicode(smtp_host)
+    mail_settings.smtp_host = safe_unicode(smtp_host)
 
     smtp_port = getattr(portal.MailHost, 'smtp_port', 25)
     # It may happen that smtp_port is a string, maybe empty,

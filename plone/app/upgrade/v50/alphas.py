@@ -74,6 +74,8 @@ def to50alpha1(context):
         qi = getToolByName(portal, 'portal_quickinstaller')
     else:
         qi = get_installer(portal)
+    if not qi.isProductInstalled('plone.resource'):
+        qi.installProduct('plone.resource')
     if not qi.isProductInstalled('plone.app.event'):
         qi.installProduct('plone.app.event')
 
@@ -157,9 +159,9 @@ def migrate_registry_settings(portal):
     site_props = portal.portal_properties.site_properties
     registry = portal.portal_registry
     portal_types = portal.portal_types
-    registry['plone.site_title'] = portal.title.decode('utf8')
+    registry['plone.site_title'] = safe_unicode(portal.title)
     if site_props.hasProperty('webstats_js'):
-        registry['plone.webstats_js'] = site_props.webstats_js.decode('utf8')
+        registry['plone.webstats_js'] = safe_unicode(site_props.webstats_js)
     if site_props.hasProperty('enable_sitemap'):
         registry['plone.enable_sitemap'] = site_props.enable_sitemap
 
@@ -262,8 +264,12 @@ def upgrade_editing_controlpanel_settings(context):
         IEditingSchema['default_editor'].validate(
             site_properties.default_editor)
     except ConstraintNotSatisfied:
-        logger.warn('Ignoring invalid site_properties.default_editor %r.',
-                    site_properties.default_editor)
+        logger.warning(
+            'Ignoring invalid site_properties.default_editor %r.',
+            site_properties.default_editor)
+    except AttributeError:
+        logger.warning(
+            'Ignoring non existing attribute site_properties.default_editor.')
     else:
         settings.default_editor = site_properties.default_editor
     settings.lock_on_ttw_edit = get_property(

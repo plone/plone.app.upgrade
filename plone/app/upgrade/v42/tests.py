@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
+from . import betas
 
-import betas
+import six
+import unittest
 
 
 class TestMigrations_v4_2beta1(MigrationTest):
@@ -24,3 +26,8 @@ class TestMigrations_v4_2beta1(MigrationTest):
         betas.to42beta1(self.portal.portal_setup)
         roles = site_props.allowRolesToAddKeywords
         self.assertEqual(roles, ('Manager', 'Reviewer', 'Site Administrator'))
+
+
+if not six.PY2:
+    def test_suite():
+        return unittest.TestSuite()

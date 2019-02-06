@@ -100,7 +100,10 @@ def _update_rolemap_for_siteadmin_role(portal):
                                      roles,
                                      permission_info['acquire'])
     for permission_id in extra_permissions:
-        portal.manage_permission(permission_id, ['Site Administrator', ], True)
+        try:
+            portal.manage_permission(permission_id, ['Site Administrator', ], True)
+        except ValueError:
+            continue
 
 
 def _update_workflows_for_siteadmin_role(portal):

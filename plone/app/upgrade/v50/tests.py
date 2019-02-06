@@ -10,7 +10,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.component import getMultiAdapter
 from zope.component import getSiteManager
 from zope.component import getUtility
-
+import six
 import unittest
 
 
@@ -181,7 +181,7 @@ class VariousTest(MigrationTest):
 def test_suite():
     # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
-    if not PLONE_5:
+    if not six.PY2 or not PLONE_5:
         return TestSuite()
     else:
         suite = TestSuite()

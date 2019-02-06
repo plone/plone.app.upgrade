@@ -39,8 +39,8 @@ class TestUpgrade(MigrationTest):
 
     def testDoUpgrades(self):
         self.setRoles(['Manager'])
-
-        self.setup.setLastVersionForProfile(_DEFAULT_PROFILE, '2.5')
+        
+        self.setup.setLastVersionForProfile(_DEFAULT_PROFILE, '4013')
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
         self.assertTrue(len(upgrades) > 0)
 

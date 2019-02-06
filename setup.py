@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = '2.0.15.dev0'
+version = '2.0.21.dev0'
 
 setup(
     name='plone.app.upgrade',
@@ -13,22 +13,24 @@ setup(
     classifiers=[
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 4.3",
         "Framework :: Plone :: 5.0",
         "Framework :: Plone :: 5.1",
+        "Framework :: Plone :: 5.2",
         "Framework :: Zope2",
+        "Framework :: Zope :: 4",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        'Programming Language :: Python :: 2.6',
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
     keywords='Plone upgrade migration',
     author='Plone Foundation',
     author_email='plone-developers@lists.sourceforge.net',
-    url='https://pypi.python.org/pypi/plone.app.upgrade',
+    url='https://pypi.org/project/plone.app.upgrade',
     license='GPL version 2',
-    packages=find_packages(exclude=['ez_setup']),
+    packages=find_packages(),
     namespace_packages=['plone', 'plone.app'],
     include_package_data=True,
     zip_safe=False,
@@ -44,7 +46,6 @@ setup(
     install_requires=[
         'setuptools',
         'plone.portlets',
-        'plone.app.folder',
         'transaction',
         'zope.component',
         'zope.interface',
@@ -61,6 +62,7 @@ setup(
         'plone.contentrules',
         'plone.app.iterate',
         'plone.app.viewletmanager',
+        'six',
     ],
     entry_points="""
     [z3c.autoinclude.plugin]

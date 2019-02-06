@@ -17,7 +17,7 @@ def fixOkapiIndexes(catalog):
     for index in catalog.getIndexObjects():
         index = getattr(index, 'index', index)
         if isinstance(index, OkapiIndex):
-            index._totaldoclen = Length(long(sum(index._docweight.values())))
+            index._totaldoclen = Length(int(sum(index._docweight.values())))
 
 
 def fixOwnerTuples(portal):

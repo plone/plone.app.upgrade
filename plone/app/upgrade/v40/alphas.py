@@ -75,7 +75,14 @@ def threeX_alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v40:3-4alpha1')
     loadMigrationProfile(
         context, 'profile-Products.CMFPlone:dependencies',
-        steps=('controlpanel', 'jsregistry'))
+        steps=('controlpanel',))
+    try:
+        loadMigrationProfile(
+            context, 'profile-Products.CMFPlone:dependencies',
+            steps=('jsregistry',))
+    except ValueError as err:
+        # portal_javascripts is replaced by new resource registry
+        pass
     # Install plonetheme.classic profile
     # (if, installed, it will be removed in Plone 5)
     qi = getToolByName(context, 'portal_quickinstaller', None)
@@ -477,7 +484,10 @@ def migrateMailHost(context):
 
 
 def migrateFolders(context):
-    from plone.app.folder.migration import BTreeMigrationView
+    try:
+        from plone.app.folder.migration import BTreeMigrationView
+    except ImportError:
+        return
 
     class MigrationView(BTreeMigrationView):
 

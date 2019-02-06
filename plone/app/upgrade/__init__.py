@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import alias_module
 
-import bbb
-import bbbd
+from . import bbb
+from . import bbbd
 import pkg_resources
 import sys
 
@@ -16,7 +16,7 @@ except ImportError:
     alias_module('zope.app.cache.ram', zope.ramcache.ram)
 
 if 'products.kupu' not in pkg_resources.working_set.by_key:
-    import kupu_bbb
+    from . import kupu_bbb
     alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
 
 try:
