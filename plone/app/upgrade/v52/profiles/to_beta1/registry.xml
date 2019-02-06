@@ -5,4 +5,7 @@
     <value key="navigation_depth">1</value>
   </records>
 
+  <records interface="Products.CMFPlone.interfaces.ISecuritySchema"
+           prefix="plone" />
+
 </registry>
