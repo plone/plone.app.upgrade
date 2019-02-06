@@ -37,7 +37,6 @@ Bug fixes:
 New features:
 
 
-- Add upgrade steps for PLIP 1653 - restructure static resources. [thet] (#184)
 - Add upgrade steps for Datatables on Plone 5.1.4. [frapell] (#168)
 - Add upgrade step removing the jquery-highlightsearchterms resource and the
   plone_ecmascript skin layer, on Plone 5.2 and 5.1.4 [sunew] (#170)
