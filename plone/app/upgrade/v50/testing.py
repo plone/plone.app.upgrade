@@ -41,14 +41,12 @@ class RealUpgradeLayer(PloneSandboxLayer):
             # run upgrades
             self['portal'] = portal = app.test
             setSite(portal)
-            try:
+            if get_distribution('Products.CMFPlone').version >= '5.2':
                 # for 5.2 we need tools as utilities
                 loadMigrationProfile(
                     portal.portal_setup,
                     'profile-plone.app.upgrade.v52:to52alpha1',
                     steps=['componentregistry'])
-            except KeyError:
-                pass
             portal.portal_migration.upgrade(swallow_errors=False)
             setSite(None)
 
