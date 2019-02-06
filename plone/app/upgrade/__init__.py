@@ -144,6 +144,14 @@ except ImportError:
     sys.modules['Products.PasswordResetTool.PasswordResetTool'] = bbb
 
 
+try:
+    from plone.app.folder.nogopip import GopipIndex
+    GopipIndex  # pyflakes
+except ImportError:
+    from plone.folder.nogopip import GopipIndex
+    alias_module('plone.app.folder.nogopip.GopipIndex', GopipIndex)
+
+
 class HiddenProducts(object):
     """This hides the upgrade profiles from the quick installer tool."""
 
