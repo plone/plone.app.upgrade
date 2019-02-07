@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel" meta_type="Plone Control Panel Tool"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+   i18n:domain="plone">
+ <configlet title="URL Management" action_id="RedirectionTool"
+    icon_expr="string:$portal_url/action_icon.png"
+    appId="Plone" category="plone-general"
+    condition_expr=""
+    url_expr="string:${portal_url}/@@redirection-controlpanel"
+    visible="True"
+    i18n:attributes="title">
+  <permission>Manage Portal Aliases</permission>
+ </configlet>
+</object>
