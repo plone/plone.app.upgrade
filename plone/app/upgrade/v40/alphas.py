@@ -385,7 +385,8 @@ def cleanUpToolRegistry(context):
     required = toolset._required.copy()
     existing = portal.keys()
     changed = False
-    for name, info in required.items():
+    items = list(required.items())
+    for name, info in items:
         if name not in existing:
             del required[name]
             changed = True

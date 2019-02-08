@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
+from plone.app.upgrade.v52.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.testing.z2 import Browser
 from pkg_resources import get_distribution
 
 import unittest
 
-PLONE_52 = get_distribution('Products.CMFPlone').version >= '5.2'
+PLONE_51 = get_distribution('Products.CMFPlone').version >= '5.1'
 
 
 class TestFunctionalMigrations(unittest.TestCase):
@@ -17,15 +17,16 @@ class TestFunctionalMigrations(unittest.TestCase):
     layer = REAL_UPGRADE_FUNCTIONAL
 
     def setUp(self):
-        self.portal = self.layer['app'].test
+        self.portal = self.layer['app'].plone
 
     def testFullyUpgraded(self):
         self.assertFalse(self.portal.portal_migration.needUpgrading())
 
     def testCanRenderHomepage(self):
         browser = Browser(self.layer['app'])
-        browser.open('http://nohost/test')
-        self.assertTrue('Welcome' in browser.contents)
+        portalURL = self.portal.absolute_url()
+        browser.open(portalURL)
+        self.assertTrue('Plone' in browser.contents)
 
     def testToolsAreRemoved(self):
         self.assertFalse('portal_css' in self.portal)
@@ -33,11 +34,8 @@ class TestFunctionalMigrations(unittest.TestCase):
 
 
 def test_suite():
-    # Skip these tests on Plone < 5.2
-
-    print("PLONE_52 {}").format(PLONE_52)  # debug
-    import pdb; pdb.set_trace()
-    if not PLONE_52:
+    # Skip these tests on Plone < 5.1
+    if not PLONE_51:
         return unittest.TestSuite()
 
     suite = unittest.TestSuite()

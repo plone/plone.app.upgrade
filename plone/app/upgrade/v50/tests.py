@@ -13,7 +13,6 @@ from zope.component import getUtility
 import six
 import unittest
 
-
 try:
     from Products.CMFPlone.factory import _IMREALLYPLONE5
     _IMREALLYPLONE5  # pyflakes
@@ -179,7 +178,7 @@ class VariousTest(MigrationTest):
 
 
 def test_suite():
-    # Skip these tests on Plone 4
+    # Skip these tests if not Plone 5.0 or 5.1
     from unittest import TestSuite, makeSuite
     if not six.PY2 or not PLONE_5:
         return TestSuite()

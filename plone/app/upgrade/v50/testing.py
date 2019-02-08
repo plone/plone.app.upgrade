@@ -29,14 +29,13 @@ class RealUpgradeLayer(PloneSandboxLayer):
     def setUpPloneSite(self, portal):
         app = portal.aq_parent
         login(app['acl_users'], 'admin')
-
         # import old ZEXP
         try:
             path = os.path.join(os.path.abspath(
                 os.path.dirname(__file__)), 'data', 'test-full.zexp')
             app._importObjectFromFile(path, verify=0)
-        except BaseException:
-            logger.exception('Failed to import ZEXP from old site.')
+        except Exception as e:
+            logger.exception('Failed to import ZEXP from old site. ({})'.format(e))
         else:
             # run upgrades
             self['portal'] = portal = app.test
