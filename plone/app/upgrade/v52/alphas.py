@@ -96,7 +96,8 @@ def remove_legacy_resource_registries(context):
 
     # remove obsolete tools
     tools = [t for t in tools_to_remove if t in portal]
-    portal.manage_delObjects(tools)
+    if tools:
+        portal.manage_delObjects(tools)
 
     cleanUpToolRegistry(context)
 
@@ -104,6 +105,7 @@ def remove_legacy_resource_registries(context):
 def to52alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha1')
     portal = getToolByName(context, 'portal_url').getPortalObject()
+
     cleanUpSkinsTool(portal)
 
     cleanup_resources()
