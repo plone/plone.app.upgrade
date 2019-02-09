@@ -35,8 +35,8 @@ class RealUpgradeLayer(PloneSandboxLayer):
             path = os.path.join(os.path.abspath(
                 os.path.dirname(__file__)), 'data', 'test-full.zexp')
             app._importObjectFromFile(path, verify=0)
-        except Exception as e:
-            logger.exception('Failed to import ZEXP from old site. ({})'.format(e))
+        except Exception:
+            logger.exception('Failed to import ZEXP from old site.')
         else:
             # run upgrades
             self['portal'] = portal = app.test

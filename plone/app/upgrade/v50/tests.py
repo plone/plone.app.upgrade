@@ -177,14 +177,13 @@ class VariousTest(MigrationTest):
         self.assertEqual(registry[maxage], 999)
 
 
+@unittest.skipIf(
+    not six.PY2 or not PLONE_5,
+    "not Plone 5.0, 5.1 or 5.2 / Python 2")
 def test_suite():
-    # Skip these tests if not Plone 5.0 or 5.1
     from unittest import TestSuite, makeSuite
-    if not six.PY2 or not PLONE_5:
-        return TestSuite()
-    else:
-        suite = TestSuite()
-        suite.addTest(makeSuite(PASUpgradeTest))
-        suite.addTest(makeSuite(TestFunctionalMigrations))
-        suite.addTest(makeSuite(VariousTest))
-        return suite
+    suite = TestSuite()
+    suite.addTest(makeSuite(PASUpgradeTest))
+    suite.addTest(makeSuite(TestFunctionalMigrations))
+    suite.addTest(makeSuite(VariousTest))
+    return suite
