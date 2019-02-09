@@ -33,23 +33,6 @@ def migrate_gopipindex(context):
     manage_addGopipIndex(catalog, 'getObjPositionInParent')
 
 
-def remove_legacy_resource_registries(context):
-    """Remove portal_css and portal_javascripts."""
-    portal_url = getToolByName(context, 'portal_url')
-    portal = portal_url.getPortalObject()
-
-    tools_to_remove = [
-        'portal_css',
-        'portal_javascripts',
-    ]
-
-    # remove obsolete tools
-    tools = [t for t in tools_to_remove if t in portal]
-    portal.manage_delObjects(tools)
-
-    cleanUpToolRegistry(context)
-
-
 def rebuild_memberdata(context):
     # MemberData has changed radically, see plone/Products.PlonePAS#24
     # This results in a bug in upgraded sites: plone/Products.CMFPlone#2722
@@ -101,8 +84,8 @@ def fix_core_behaviors_in_ftis(context):
             fti.behaviors = tuple(behaviors)
 
 
-def remove_portal_tools(context):
-    """Remove some portal tools."""
+def remove_legacy_resource_registries(context):
+    """Remove portal_css and portal_javascripts."""
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
 
@@ -125,7 +108,6 @@ def to52alpha1(context):
 
     cleanup_resources()
     migrate_gopipindex(context)
-    remove_legacy_resource_registries(context)
     rebuild_memberdata(context)
     fix_core_behaviors_in_ftis(context)
-    remove_portal_tools(context)
+    remove_legacy_resource_registries(context)

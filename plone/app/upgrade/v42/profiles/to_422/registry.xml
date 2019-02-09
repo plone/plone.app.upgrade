@@ -1,8 +1,7 @@
 <registry>
     <record
         interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
-        field="resourceBundlesForThemes"
-        condition="installed Products.ResourceRegistries">
+        field="resourceBundlesForThemes">
         <value purge="false">
             <element key="(default)">
                 <element>jquery</element>

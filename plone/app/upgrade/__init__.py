@@ -8,10 +8,11 @@ import sys
 
 
 try:
-    from Products.ResourceRegistries import JSRegistry
-    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = True
-except ImportError:
+    pkg_resources.get_distribution('Products.ResourceRegistries')
+except pkg_resources.DistributionNotFound:
     IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = False
+else:
+    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = True
 
 try:
     from zope.app.cache.interfaces.ram import IRAMCache  # noqa F401
