@@ -2,6 +2,7 @@
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import plone_version
 from plone.testing.z2 import FunctionalTesting
 from plone.testing.z2 import login
 from zope.component.hooks import setSite
@@ -40,7 +41,7 @@ class RealUpgradeLayer(PloneSandboxLayer):
             # run upgrades
             self['portal'] = portal = app.test
             setSite(portal)
-            if get_distribution('Products.CMFPlone').version >= '5.2':
+            if plone_version >= '5.2':
                 # for 5.2 we need tools as utilities
                 loadMigrationProfile(
                     portal.portal_setup,
