@@ -86,6 +86,7 @@ def fix_core_behaviors_in_ftis(context):
 def to52alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha1')
     portal = getToolByName(context, 'portal_url').getPortalObject()
+
     cleanUpSkinsTool(portal)
 
     cleanup_resources()

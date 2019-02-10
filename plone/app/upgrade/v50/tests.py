@@ -13,7 +13,6 @@ from zope.component import getUtility
 import six
 import unittest
 
-
 try:
     from Products.CMFPlone.factory import _IMREALLYPLONE5
     _IMREALLYPLONE5  # pyflakes
@@ -92,6 +91,9 @@ class PASUpgradeTest(MigrationTest):
         self.assertEqual(members.getLayout(), '@@member-search')
 
 
+@unittest.skipIf(
+    not six.PY2 or not PLONE_5,
+    "not Plone 5.0, 5.1 or 5.2 / Python 2")
 class TestFunctionalMigrations(unittest.TestCase):
     """Run an upgrade from a real Plone 4.0 ZEXP dump.
 
@@ -179,13 +181,12 @@ class VariousTest(MigrationTest):
 
 
 def test_suite():
-    # Skip these tests on Plone 4
     from unittest import TestSuite, makeSuite
+    suite = TestSuite()
+    suite.addTest(makeSuite(PASUpgradeTest))
+    suite.addTest(makeSuite(VariousTest))
     if not six.PY2 or not PLONE_5:
         return TestSuite()
     else:
-        suite = TestSuite()
-        suite.addTest(makeSuite(PASUpgradeTest))
         suite.addTest(makeSuite(TestFunctionalMigrations))
-        suite.addTest(makeSuite(VariousTest))
-        return suite
+    return suite

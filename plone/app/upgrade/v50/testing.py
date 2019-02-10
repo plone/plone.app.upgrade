@@ -2,6 +2,7 @@
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import plone_version
 from plone.testing.z2 import FunctionalTesting
 from plone.testing.z2 import login
 from zope.component.hooks import setSite
@@ -29,26 +30,23 @@ class RealUpgradeLayer(PloneSandboxLayer):
     def setUpPloneSite(self, portal):
         app = portal.aq_parent
         login(app['acl_users'], 'admin')
-
         # import old ZEXP
         try:
             path = os.path.join(os.path.abspath(
                 os.path.dirname(__file__)), 'data', 'test-full.zexp')
             app._importObjectFromFile(path, verify=0)
-        except BaseException:
+        except Exception:
             logger.exception('Failed to import ZEXP from old site.')
         else:
             # run upgrades
             self['portal'] = portal = app.test
             setSite(portal)
-            try:
+            if plone_version >= '5.2':
                 # for 5.2 we need tools as utilities
                 loadMigrationProfile(
                     portal.portal_setup,
                     'profile-plone.app.upgrade.v52:to52alpha1',
                     steps=['componentregistry'])
-            except KeyError:
-                pass
             portal.portal_migration.upgrade(swallow_errors=False)
             setSite(None)
 

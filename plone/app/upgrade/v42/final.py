@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.app.upgrade import IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED
 from plone.app.upgrade.utils import loadMigrationProfile
 from Products.CMFCore.utils import getToolByName
 
@@ -34,7 +35,8 @@ def to421(context):
 def to422(context):
     """4.2.1 -> 4.2.2
     """
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to422')
+    if IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
+        loadMigrationProfile(context, 'profile-plone.app.upgrade.v42:to422')
 
 
 def to423(context):

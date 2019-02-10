@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import plone_version
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonInstallable
 from Products.CMFPlone.utils import getFSVersionTuple
@@ -174,7 +175,7 @@ class TestMigrations_v4_3final_to4308(MigrationTest):
         # now it has been added...
         self.assertTrue('password_policy' in portal.acl_users.objectIds())
 
-
+@unittest.skipIf(plone_version >= '5.2', 'Plone >=5.2')
 class TestFakeKupuMigration(MigrationTest):
 
     def afterSetUp(self):

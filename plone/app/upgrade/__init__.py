@@ -8,6 +8,13 @@ import sys
 
 
 try:
+    pkg_resources.get_distribution('Products.ResourceRegistries')
+except pkg_resources.DistributionNotFound:
+    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = False
+else:
+    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = True
+
+try:
     from zope.app.cache.interfaces.ram import IRAMCache  # noqa F401
 except ImportError:
     import zope.ramcache.interfaces.ram

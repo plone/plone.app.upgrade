@@ -2,7 +2,8 @@
 <registry>
   <records
       interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
-      prefix="plone">
+      prefix="plone"
+      condition="installed Products.ResourceRegistries">
     <value
         key="lessvariables"
         purge="False">

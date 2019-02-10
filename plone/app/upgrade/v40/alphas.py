@@ -16,7 +16,6 @@ from Products.CMFCore.CachingPolicyManager import manage_addCachingPolicyManager
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.interfaces import ICachingPolicyManager
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
 from Products.CMFPlone.setuphandlers import addCacheHandlers
 from Products.MailHost.interfaces import IMailHost
 from Products.MailHost.MailHost import MailHost
@@ -352,7 +351,12 @@ def removeBrokenCacheFu(context):
         transaction.savepoint(optimistic=True)
         manage_addCachingPolicyManager(portal)
         addCacheHandlers(portal)
-        addCacheForResourceRegistry(portal)
+        try:
+            from Products.CMFPlone.setuphandlers import addCacheForResourceRegistry
+            addCacheForResourceRegistry(portal)
+        except:
+            # legacy resource registries replaced by new type
+            pass
         logger.info('Removed CacheSetup tools.')
 
 
@@ -381,7 +385,8 @@ def cleanUpToolRegistry(context):
     required = toolset._required.copy()
     existing = portal.keys()
     changed = False
-    for name, info in required.items():
+    items = list(required.items())
+    for name, info in items:
         if name not in existing:
             del required[name]
             changed = True

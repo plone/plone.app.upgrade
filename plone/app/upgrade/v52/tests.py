@@ -1,20 +1,14 @@
 # -*- coding: utf-8 -*-
+
+from plone.app.upgrade.utils import plone_version
+from plone.testing.z2 import Browser
+
 import unittest
-
-
-try:
-    from Products.CMFPlone.factory import _IMREALLYPLONE5
-    _IMREALLYPLONE5  # pyflakes
-except ImportError:
-    PLONE_5 = False
-else:
-    PLONE_5 = True
 
 
 def test_suite():
     # Skip these tests on Plone 4
-    if not PLONE_5:
+    if plone_version <= '5.0':
         return unittest.TestSuite()
-
     suite = unittest.TestSuite()
     return suite
