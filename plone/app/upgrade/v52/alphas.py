@@ -3,7 +3,6 @@ from BTrees.OOBTree import OOBTree
 from plone.app.upgrade.utils import cleanUpSkinsTool
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.dexterity.interfaces import IDexterityFTI
-from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from plone.folder.nogopip import manage_addGopipIndex
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -84,24 +83,6 @@ def fix_core_behaviors_in_ftis(context):
             fti.behaviors = tuple(behaviors)
 
 
-def remove_legacy_resource_registries(context):
-    """Remove portal_css and portal_javascripts."""
-    portal_url = getToolByName(context, 'portal_url')
-    portal = portal_url.getPortalObject()
-
-    tools_to_remove = [
-        'portal_css',
-        'portal_javascripts',
-    ]
-
-    # remove obsolete tools
-    tools = [t for t in tools_to_remove if t in portal]
-    if tools:
-        portal.manage_delObjects(tools)
-
-    cleanUpToolRegistry(context)
-
-
 def to52alpha1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha1')
     portal = getToolByName(context, 'portal_url').getPortalObject()
@@ -112,4 +93,3 @@ def to52alpha1(context):
     migrate_gopipindex(context)
     rebuild_memberdata(context)
     fix_core_behaviors_in_ftis(context)
-    remove_legacy_resource_registries(context)

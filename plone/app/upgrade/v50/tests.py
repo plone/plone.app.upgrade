@@ -90,6 +90,7 @@ class PASUpgradeTest(MigrationTest):
         self.assertIsNone(members.get('index_html', None))
         self.assertEqual(members.getLayout(), '@@member-search')
 
+
 @unittest.skipIf(
     not six.PY2 or not PLONE_5,
     "not Plone 5.0, 5.1 or 5.2 / Python 2")
@@ -183,6 +184,9 @@ def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(PASUpgradeTest))
-    suite.addTest(makeSuite(TestFunctionalMigrations))
     suite.addTest(makeSuite(VariousTest))
+    if not six.PY2 or not PLONE_5:
+        return TestSuite()
+    else:
+        suite.addTest(makeSuite(TestFunctionalMigrations))
     return suite
