@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.utils import getToolByName
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
+from Products.CMFCore.utils import getToolByName
+from types import ModuleType
 from zc.relation.interfaces import ICatalog
 from zope import component
+from zope.interface import Interface
 from zope.intid.interfaces import IntIdMissingError
 
 import logging
+import sys
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -45,8 +48,8 @@ def remove_legacy_resource_registries(context):
         portal.manage_delObjects(tools)
 
     cleanUpToolRegistry(context)
-    
-    
+
+
 def remove_interface_indexes_from_relations_catalog():
     """ remove unused interface indexes from relations catalog """
     catalog = component.queryUtility(ICatalog)
@@ -66,8 +69,35 @@ def remove_interface_indexes_from_relations_catalog():
             logger.warn('Broken relation removed.')
 
 
+class IResourceRegistriesSettings(Interface):
+    """fake/mock interface to be able to remove non existing dotted path
+    """
+    pass
+
+
+FAKE_RR_PATH = "Products.ResourceRegistries.interfaces.settings." \
+               "IResourceRegistriesSettings"
+
+
 def to52beta1(context):
+    # fake the old ResourceRegistries interface:
+    fake_mods = FAKE_RR_PATH.split('.')[:-1]
+    parent = sys.modules[fake_mods[0]]
+    for idx in range(1, len(fake_mods)):
+        mod_name = '.'.join(fake_mods[:idx + 1])
+        mod_inst = ModuleType(mod_name)
+        if parent:
+            setattr(parent, fake_mods[idx], mod_inst)
+        sys.modules[mod_name] = parent = mod_inst
+    sys.modules[FAKE_RR_PATH] = IResourceRegistriesSettings
+    setattr(parent, 'IResourceRegistriesSettings', IResourceRegistriesSettings)
+    sys.modules[FAKE_RR_PATH]
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52beta1')
+    for idx in range(1, len(fake_mods)):
+        mod_name = '.'.join(fake_mods[:idx + 1])
+        del sys.modules[mod_name]
+    del sys.modules[FAKE_RR_PATH]
+    delattr(sys.modules[fake_mods[0]], fake_mods[1])
     add_exclude_from_nav_index(context)
     remove_legacy_resource_registries(context)
     remove_interface_indexes_from_relations_catalog()
