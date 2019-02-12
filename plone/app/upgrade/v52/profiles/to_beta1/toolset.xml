@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<tool-setup>
+  <!-- Remove old tool with class Products.RedirectionTool.RedirectionTool.RedirectionTool -->
+ <forbidden tool_id="portal_redirection" />
+</tool-setup>
