@@ -43,9 +43,10 @@ def remove_legacy_resource_registries(context):
     ]
 
     # remove obsolete tools
-    tools = [t for t in tools_to_remove if t in portal]
-    if tools:
-        portal.manage_delObjects(tools)
+    for tool in tools_to_remove:
+        if tool not in portal:
+            continue
+        portal._delObject(tool)
 
     cleanUpToolRegistry(context)
 
