@@ -97,7 +97,7 @@ class PASUpgradeTest(MigrationTest):
 
 
 @unittest.skipIf(
-    PLONE_5 and not PLONE_52, "Only test in Plone 5.0 and 5.1")
+    PLONE_52 or not PLONE_5, "Only test in Plone 5.0 and 5.1")
 class TestFunctionalMigrations(unittest.TestCase):
     """Run an upgrade from a real Plone 4.0 ZEXP dump.
 
