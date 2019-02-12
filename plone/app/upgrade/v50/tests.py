@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from pkg_resources import get_distribution
+from pkg_resources import parse_version
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.v50.testing import REAL_UPGRADE_FUNCTIONAL
 from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
@@ -23,6 +25,9 @@ else:
 
 if PLONE_5:
     from plone.app.upgrade.v50 import alphas
+
+plone_version = get_distribution('Products.CMFPlone').version
+PLONE_52 = parse_version(plone_version) >= parse_version('5.2a1')
 
 
 class PASUpgradeTest(MigrationTest):
@@ -92,8 +97,7 @@ class PASUpgradeTest(MigrationTest):
 
 
 @unittest.skipIf(
-    not six.PY2 or not PLONE_5,
-    "not Plone 5.0, 5.1 or 5.2 / Python 2")
+    PLONE_5 and not PLONE_52, "Only test in Plone 5.0 and 5.1")
 class TestFunctionalMigrations(unittest.TestCase):
     """Run an upgrade from a real Plone 4.0 ZEXP dump.
 
