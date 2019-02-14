@@ -8,6 +8,27 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.21 (2019-02-13)
+-------------------
+
+New features:
+
+
+- Added URL Management controlpanel and object_button action. [maurits] (#1486)
+
+
+Bug fixes:
+
+
+- Tolerate lack of legacy resource registry [ksuess] (#183)
+- Add missing upgrade step for CMFEditions [MrTango] (#188)
+- Provide upgrade step that purges and rebuild the _members data structure in
+  portal_memberdata [pysailor] (#190)
+- Update all FTIs that use the RichText or LeadImage behaviors (#192)
+- Add alias for GopipIndex to fix migrations to 5.2 (#193)
+- Remove interface indexes from relation catalog [jmevissen] (#195)
+
+
 2.0.20 (2018-12-30)
 -------------------
 
