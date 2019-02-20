@@ -43,6 +43,11 @@
            handler=".betas.to52beta1"
            />
 
+      <gs:upgradeStep
+           title="Run to52beta2 upgrade profile."
+           description=""
+           handler=".betas.to52beta2"
+           />
     </gs:upgradeSteps>
 
 </configure>

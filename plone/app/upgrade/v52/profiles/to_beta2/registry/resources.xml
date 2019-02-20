@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<registry>
+
+  <records prefix="plone.resources/moment"
+            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+      <value key="js">++plone++static/components/moment/min/moment.min.js</value>
+      <value key="url">++plone++static/components/moment/locale</value>
+  </records>
+
+</registry>
