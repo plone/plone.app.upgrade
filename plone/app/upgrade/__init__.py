@@ -159,6 +159,11 @@ except ImportError:
     alias_module('plone.app.folder.nogopip.GopipIndex', GopipIndex)
 
 
+if not IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
+    sys.modules['Products.ResourceRegistries.tools.CSSRegistry'] = bbb
+    sys.modules['Products.ResourceRegistries.tools.JSRegistry'] = bbb
+
+
 class HiddenProducts(object):
     """This hides the upgrade profiles from the quick installer tool."""
 

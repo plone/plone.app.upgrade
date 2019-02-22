@@ -11,6 +11,8 @@ SyndicationTool = SimpleItem
 UndoTool = SimpleItem
 TinyMCE = SimpleItem
 PasswordResetTool = SimpleItem
+CSSRegistryTool = SimpleItem
+JSRegistryTool = SimpleItem
 
 
 class ILanguageTool(Interface):
