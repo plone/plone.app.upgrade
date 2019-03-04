@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.22 (2019-03-04)
+-------------------
+
+Bug fixes:
+
+
+- Fixed permission error while removing old resource registries. [maurits]
+  (#197)
+- Add bbb for CSSRegistryTool and JSRegistryTool to fix upgrade from 5.0 to 5.2
+  (#200)
+
+
 2.0.21 (2019-02-13)
 -------------------
 
