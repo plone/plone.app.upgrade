@@ -104,5 +104,5 @@ def to52beta1(context):
     remove_interface_indexes_from_relations_catalog()
 
 
-def to52beta2(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52beta2')
+def to52rc1(context):
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52rc1')

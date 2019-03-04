@@ -22,10 +22,10 @@
       />
 
   <genericsetup:registerProfile
-      name="to52beta2"
-      title="Upgrade profile for Plone 5.2beta1 to Plone 5.2beta2"
+      name="to52rc1"
+      title="Upgrade profile for Plone 5.2beta1 to Plone 5.2rc1"
       description=""
-      directory="profiles/to_beta2"
+      directory="profiles/to_rc1"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
