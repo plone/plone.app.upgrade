@@ -20,7 +20,7 @@ class UpgradeMemberData51to52Test(unittest.TestCase):
 
 
 def test_suite():
-    # Skip these tests on Plone > 5.2a1
+    # Skip these tests on Plone < 5.2a1
     plone_version = get_distribution('Products.CMFPlone').version
     if not parse_version(plone_version) >= parse_version('5.2a1'):
         return unittest.TestSuite()
