@@ -62,7 +62,13 @@ def remove_interface_indexes_from_relations_catalog():
         if index_to_remove in catalog._name_TO_mapping:
             catalog.removeValueIndex(index_to_remove)
 
-    for rel in catalog:
+    # Avoid RuntimeError: the bucket being iterated changed size by first
+    # getting all relations. This might need lots of RAM on large databases
+    relations = [rel for rel in catalog]
+
+    # get rid of broken relations, where inid no longer exists
+    # those broken need to be removed for a later zodbupdate
+    for rel in relations:
         catalog.unindex(rel)
         try:
             catalog.index(rel)
