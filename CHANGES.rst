@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.23 (2019-03-21)
+-------------------
+
+Bug fixes:
+
+
+- Add upgrade steps for PLIP 1653. [thet] (#184)
+- Add upgrade profile for Plone 5.2beta2
+  [davilima6]
+
+  Add upgrade step for loading Moments.js without locales, which are now lazy loaded
+  [davilima6] (#199)
+- Fix changing bucket size while reindexing relation catalog.
+  [jensens] (#201)
+
+
 2.0.22 (2019-03-04)
 -------------------
 

@@ -1,5 +1,0 @@
-Add upgrade profile for Plone 5.2beta2
-[davilima6]
-
-Add upgrade step for loading Moments.js without locales, which are now lazy loaded
-[davilima6]
