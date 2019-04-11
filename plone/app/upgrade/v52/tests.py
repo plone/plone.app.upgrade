@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from DateTime import DateTime
 from pkg_resources import get_distribution
 from pkg_resources import parse_version
 from plone.app.testing import PLONE_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
+from zope.component import getUtility
 
 import unittest
 
@@ -13,10 +15,54 @@ class UpgradeMemberData51to52Test(unittest.TestCase):
     def test_rebuild_member_data(self):
         portal = self.layer['portal']
         from plone.app.upgrade.v52.alphas import rebuild_memberdata
+
         rebuild_memberdata(portal)
         tool = getToolByName(portal, 'portal_memberdata')
-        self.assertIn(
-            'test_user_1_', tool._members.keys())
+        self.assertIn('test_user_1_', tool._members.keys())
+
+
+class Various52Test(unittest.TestCase):
+    layer = PLONE_INTEGRATION_TESTING
+
+    def test_rebuild_redirections(self):
+        # Until at least 5.2rc1, redirection values were simple paths,
+        # now they are tuples.  The upgrade step rebuilds the information.
+        # (The code can at the moment handle old-style and new-style,
+        # but rebuilding is still good.)
+        from plone.app.redirector.interfaces import IRedirectionStorage
+        from plone.app.upgrade.v52.final import rebuild_redirections
+
+        storage = getUtility(IRedirectionStorage)
+        # add old-style redirect directly in internal structure:
+        old = '/plone/old'
+        new = '/plone/new'
+        storage._paths[old] = new
+        # get_full mocks a new-style redirect,
+        # though with None instead of a DateTime, and manual always True.
+        self.assertTupleEqual(storage.get_full(old), (new, None, True))
+        portal = self.layer['portal']
+        # Run the rebuild, and keep track of time before and after.
+        time1 = DateTime()
+        rebuild_redirections(portal.portal_setup)
+        time2 = DateTime()
+        # The basic information and usage has not changed:
+        self.assertIn(old, storage)
+        self.assertListEqual(storage.redirects(new), [old])
+        self.assertEqual(storage.get(old), new)
+        self.assertEqual(storage[old], new)
+        # The internal structure is now a tuple:
+        redirect = storage._paths[old]
+        self.assertIsInstance(redirect, tuple)
+        # The first item in the tuple is the target path.
+        self.assertEqual(redirect[0], new)
+        # The current DateTime is set as the creation time of the redirect.
+        self.assertIsInstance(redirect[1], DateTime)
+        self.assertTrue(time1 < redirect[1] < time2)
+        # Existing migrations are marked as manual,
+        # because we have no way of knowing if it is automatic or nor.
+        self.assertEqual(redirect[2], True)
+        # get_full now returns the real information
+        self.assertTupleEqual(storage.get_full(old), redirect)
 
 
 def test_suite():
@@ -26,7 +72,6 @@ def test_suite():
         return unittest.TestSuite()
 
     suite = unittest.TestSuite()
-    suite.addTest(
-        unittest.makeSuite(UpgradeMemberData51to52Test),
-    )
+    suite.addTest(unittest.makeSuite(UpgradeMemberData51to52Test))
+    suite.addTest(unittest.makeSuite(Various52Test))
     return suite
