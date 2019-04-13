@@ -163,6 +163,13 @@ if not IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
     sys.modules['Products.ResourceRegistries.tools.CSSRegistry'] = bbb
     sys.modules['Products.ResourceRegistries.tools.JSRegistry'] = bbb
 
+try:
+    from webdav.LockItem import LockItem
+    LockItem  # pyflakes
+except ImportError:
+    from OFS.LockItem import LockItem
+    alias_module('webdav.LockItem.LockItem', LockItem)
+
 
 class HiddenProducts(object):
     """This hides the upgrade profiles from the quick installer tool."""
