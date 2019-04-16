@@ -1,0 +1,2 @@
+Add alias for webdav.LockItem.LockItem. Fixes https://github.com/plone/Products.CMFPlone/issues/2800
+[pbauer]
