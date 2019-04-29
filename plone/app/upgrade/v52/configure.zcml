@@ -61,6 +61,12 @@
             handler=".final.rebuild_redirections"
             />
 
+        <gs:upgradeStep
+            title="Move from dotted behaviors to named behaviors."
+            description=""
+            handler=".final.move_dotted_to_named_behaviors"
+            />
+
     </gs:upgradeSteps>
 
 </configure>
