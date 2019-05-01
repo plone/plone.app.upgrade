@@ -43,15 +43,26 @@ def move_dotted_to_named_behaviors(context):
         behaviors = []
         for behavior in fti.behaviors:
             behavior_registration = lookup_behavior_registration(behavior)
-            behaviors.append(behavior_registration.name)
-            logger.info(
-                'moved "{dotted}" to "{named}"'.format(
-                    dotted=behavior,
-                    named=behavior_registration.name,
-                ))
+            named_behavior = behavior_registration.name
+            if named_behavior:
+                behaviors.append(behavior_registration.name)
+                logger.info(
+                    'Moved "{dotted}" to "{named}"'.format(
+                        dotted=behavior,
+                        named=behavior_registration.name,
+                    ),
+                )
+            else:
+                behaviors.append(behavior)
+                logger.info(
+                    '"{dotted}" has no name registered. '
+                    'kept it dotted.'.format(
+                        dotted=behavior,
+                    ),
+                )
         fti.behaviors = tuple(behaviors)
         logger.info(
-            'converted dotted behaviors of {ct} to named behaviors.'.format(
+            'Converted dotted behaviors of {ct} to named behaviors.'.format(
                 ct=fti.title,
             ),
         )
