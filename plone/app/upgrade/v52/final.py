@@ -45,11 +45,11 @@ def move_dotted_to_named_behaviors(context):
             behavior_registration = lookup_behavior_registration(behavior)
             named_behavior = behavior_registration.name
             if named_behavior:
-                behaviors.append(behavior_registration.name)
+                behaviors.append(named_behavior)
                 logger.info(
                     'Moved "{dotted}" to "{named}"'.format(
                         dotted=behavior,
-                        named=behavior_registration.name,
+                        named=named_behavior,
                     ),
                 )
             else:
