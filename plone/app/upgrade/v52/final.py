@@ -46,12 +46,19 @@ def move_dotted_to_named_behaviors(context):
             named_behavior = behavior_registration.name
             if named_behavior:
                 behaviors.append(named_behavior)
-                logger.info(
-                    'Moved "{dotted}" to "{named}"'.format(
-                        dotted=behavior,
-                        named=named_behavior,
-                    ),
-                )
+                if named_behavior == behavior:
+                    logger.info(
+                        'Behavior "{behavior}" already named.'.format(
+                            behavior=behavior,
+                        ),
+                    )
+                else:
+                    logger.info(
+                        'Moved "{dotted}" to "{named}"'.format(
+                            dotted=behavior,
+                            named=named_behavior,
+                        ),
+                    )
             else:
                 behaviors.append(behavior)
                 logger.info(
