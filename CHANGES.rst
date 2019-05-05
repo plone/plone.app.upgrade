@@ -8,6 +8,27 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.24 (2019-05-04)
+-------------------
+
+New features:
+
+
+- Added upgrade step to initialize the date and manual information for redirects.
+  [maurits] (#2799)
+
+
+Bug fixes:
+
+
+- Fix changing bucket size while reindexing relation catalog.
+  [jensens] (#201)
+- Add alias for webdav.LockItem.LockItem. Fixes https://github.com/plone/Products.CMFPlone/issues/2800
+  [pbauer] (#203)
+- Moved dotted named behaviors to named behaviors.
+  [iham] (#204)
+
+
 2.0.23 (2019-03-21)
 -------------------
 
