@@ -56,6 +56,19 @@
         profile="Products.CMFPlone:plone">
 
         <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5203"
+        destination="5204"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
             title="Rebuild the plone.app.redirector information."
             description="This initializes the date and manual information."
             handler=".final.rebuild_redirections"
