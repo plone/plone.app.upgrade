@@ -1,0 +1,2 @@
+Reload ISecuritySchema to create plone.autologin_after_password_reset key for Plone 5.2.
+[jensens, agitator, maurits]
