@@ -87,10 +87,9 @@
         destination="5205"
         profile="Products.CMFPlone:plone">
 
-        <gs:upgradeStep
+        <gs:upgradeDepends
             title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
+            import_profile="plone.app.upgrade.v52:to52rc4"
             />
 
     </gs:upgradeSteps>

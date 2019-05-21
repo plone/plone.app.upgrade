@@ -29,4 +29,14 @@
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <genericsetup:registerProfile
+      name="to52rc4"
+      title="Upgrade profile for Plone 5.2rc3 to Plone 5.2rc4"
+      description=""
+      directory="profiles/to_rc4"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>
