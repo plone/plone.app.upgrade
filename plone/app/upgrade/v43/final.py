@@ -272,7 +272,10 @@ def removeFakeKupu(context):
         tool = getToolByName(portal, tool_id, None)
         if tool is None:
             continue
-        resources = tool.getResourcesDict()
+        try:
+            resources = tool.getResourcesDict()
+        except AttributeError:
+            continue
         for resource_id, resource in resources.items():
             expression = resource.getExpression()
             if expression.startswith(bad_expr):
