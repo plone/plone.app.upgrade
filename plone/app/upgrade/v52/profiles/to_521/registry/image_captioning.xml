@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<registry>
+  <record name="plone.valid_tags">
+    <value purge="false">
+      <element>figcaption</element>
+    </value>
+  </record>
+  <record name="plone.image_captioning" interface="Products.CMFPlone.interfaces.controlpanel.IImagingSchema" field="image_captioning">
+    <field type="plone.registry.field.Bool">
+    </field>
+    <value>False</value>
+  </record>
+</registry>
