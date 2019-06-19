@@ -91,6 +91,11 @@
             title="Miscellaneous"
             import_profile="plone.app.upgrade.v52:to52rc4"
             />
+        <gs:upgradeStep
+            title="Move registry fields interfaceName for ILanguageSchema"
+            description="old: Products.CMFPlone, new: plone.i18n"
+            handler=".final.change_interface_on_lang_registry_records"
+            />
 
     </gs:upgradeSteps>
 

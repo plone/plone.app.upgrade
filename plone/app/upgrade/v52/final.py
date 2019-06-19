@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
 import logging
@@ -75,3 +76,38 @@ def move_dotted_to_named_behaviors(context):
         )
 
     logger.info('Done moving dotted to named behaviors.')
+
+
+KEYS_TO_CHANGE = [
+    "plone.always_show_selector",
+    "plone.authenticated_users_only",
+    "plone.available_languages",
+    "plone.default_language",
+    "plone.display_flags",
+    "plone.set_cookie_always",
+    "plone.use_cctld_negotiation",
+    "plone.use_combined_language_codes",
+    "plone.use_content_negotiation",
+    "plone.use_cookie_negotiation",
+    "plone.use_path_negotiation",
+    "plone.use_request_negotiation",
+    "plone.use_subdomain_negotiation",
+]
+_marker = dict()
+OLD_PREFIX = "Products.CMFPlone.interfaces.ILanguageSchema"
+NEW_PREFIX = "plone.i18n.interfaces.ILanguageSchema"
+
+
+def change_interface_on_lang_registry_records(context):
+    """Interface Products.CMFPlone.interfaces.ILanguageSchema was moved to
+    plone.i18n.interfaces."""
+    registry = getUtility(IRegistry)
+    for postfix in KEYS_TO_CHANGE:
+        old_key = OLD_PREFIX + "." + postfix
+        record = registry.records.get(old_key, _marker)
+        if record is _marker:
+            continue
+        logger.info(
+            "Change registry key '{0}' to new interface.".format(old_key)
+        )
+        record.field.interfaceName = NEW_PREFIX
