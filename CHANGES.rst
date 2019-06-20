@@ -8,6 +8,27 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.25 (2019-06-19)
+-------------------
+
+New features:
+
+
+- Upgrade step for optional async loading
+  [agitator] (#208)
+- In registry move all interface prefixes for ``ILanguageSchema`` from old place in Products.CMFPlone to plone.i18n.
+  [jensens] (#210)
+
+
+Bug fixes:
+
+
+- Fix upgrades from Plone 4.3 to 5.2.
+  [pbauer] (#207)
+- Reload ISecuritySchema to create plone.autologin_after_password_reset key for Plone 5.2.
+  [jensens, agitator, maurits] (#2440)
+
+
 2.0.24 (2019-05-04)
 -------------------
 
