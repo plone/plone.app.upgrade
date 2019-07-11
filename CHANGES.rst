@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.27 (2019-07-10)
+-------------------
+
+Bug fixes:
+
+
+- Add upgrade step for Plone 5.2 final
+  [esteele] (#213)
+
+
 2.0.26 (2019-06-27)
 -------------------
 
