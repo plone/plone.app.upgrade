@@ -11,6 +11,7 @@ setup(
     long_description=(open("README.rst").read() + "\n" +
                       open("CHANGES.rst").read()),
     classifiers=[
+        "Development Status :: 6 - Mature",
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: 5.0",
@@ -28,7 +29,7 @@ setup(
     keywords='Plone upgrade migration',
     author='Plone Foundation',
     author_email='plone-developers@lists.sourceforge.net',
-    url='https://pypi.org/project/plone.app.upgrade',
+    url='https://pypi.org/project/plone.app.upgrade/',
     license='GPL version 2',
     packages=find_packages(),
     namespace_packages=['plone', 'plone.app'],
