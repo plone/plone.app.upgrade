@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+1.4.6 (2019-09-09)
+------------------
+
+Bug fixes:
+
+
+- Add null upgrade step for Plone 4.3.19
+  [esteele] (#215)
+
+
 1.4.5 (2018-05-29)
 ------------------
 
