@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import cleanUpSkinsTool
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zExceptions import BadRequest
@@ -62,3 +63,8 @@ def remove_old_PAE_rescources(context):  # noqa
         resources.value.remove('resource-plone-app-event-event-js')
     if u'resource-plone-app-event-event-css' in resources.value:
         resources.value.remove('resource-plone-app-event-event-css')
+
+
+def to517(context):
+    """5.1.6 -> 5.1.7"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v51:to517')
