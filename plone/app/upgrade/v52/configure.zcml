@@ -133,7 +133,7 @@
         <gs:upgradeStep
             title="Miscellaneous"
             description=""
-            handler="..utils.null_upgrade_step"
+            handler=".final.to_521"
             />
 
     </gs:upgradeSteps>
