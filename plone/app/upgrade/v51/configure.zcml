@@ -297,7 +297,7 @@ Add image scaling options to image handling control panel.
         <gs:upgradeStep
             title="Miscellaneous"
             description=""
-            handler=".final.to_517"
+            handler=".final.to517"
             />
 
     </gs:upgradeSteps>

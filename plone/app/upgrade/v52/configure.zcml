@@ -133,7 +133,7 @@
         <gs:upgradeStep
             title="Miscellaneous"
             description=""
-            handler=".final.to_521"
+            handler=".final.to521"
             />
 
     </gs:upgradeSteps>
