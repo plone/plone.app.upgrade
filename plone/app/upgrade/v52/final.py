@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -111,3 +112,7 @@ def change_interface_on_lang_registry_records(context):
             "Change registry key '{0}' to new interface.".format(old_key)
         )
         record.field.interfaceName = NEW_PREFIX
+
+def to521(context):
+    """5.2.0 -> 5.2.1"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to521')
