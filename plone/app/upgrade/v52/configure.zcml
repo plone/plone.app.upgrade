@@ -135,6 +135,11 @@
             description=""
             handler=".final.to521"
             />
+        <gs:upgradeStep
+            title="Upgrade static resources"
+            description=""
+            handler="..utils.upgrade_static_resources"
+            />
 
     </gs:upgradeSteps>
 
