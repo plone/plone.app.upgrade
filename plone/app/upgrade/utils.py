@@ -39,6 +39,11 @@ def null_upgrade_step(tool):
     pass
 
 
+def upgrade_static_resources(tool):
+    """ Upgrades all pending plone.staticresources upgrade steps """
+    tool.upgradeProfile('plone.staticresources:default')
+
+
 def safeEditProperty(obj, key, value, data_type='string'):
     """ An add or edit function, surprisingly useful :) """
     if obj.hasProperty(key):
