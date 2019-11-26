@@ -6,6 +6,7 @@ from types import ModuleType
 from zc.relation.interfaces import ICatalog
 from zope import component
 from zope.interface import Interface
+from zope.intid.interfaces import IIntIds
 from zope.intid.interfaces import IntIdMissingError
 
 import logging
@@ -62,18 +63,37 @@ def remove_interface_indexes_from_relations_catalog():
         if index_to_remove in catalog._name_TO_mapping:
             catalog.removeValueIndex(index_to_remove)
 
-    # Avoid RuntimeError: the bucket being iterated changed size by first
-    # getting all relations. This might need lots of RAM on large databases
-    relations = [rel for rel in catalog]
+    # Avoid "RuntimeError: the bucket being iterated changed size" by first
+    # getting all tokens. This might need lots of RAM on large databases
+    tokens = [token for token in catalog._relTokens]
+    empty = 0
+    for token in tokens:
+        relation = catalog.resolveRelationToken(token)
+        if relation.from_object is not None or relation.to_object is not None:
+            continue
+        catalog.unindex_doc(token)
+        empty += 1
+    if empty:
+        logger.warning('Removed %s empty relations.', empty)
 
-    # get rid of broken relations, where inid no longer exists
-    # those broken need to be removed for a later zodbupdate
+    # Get rid of broken relations, where intid no longer exists.
+    # Those broken need to be removed for a later zodbupdate.
+    relations = [rel for rel in catalog]
+    intids = component.getUtility(IIntIds)
+    added_rel_intids = 0
     for rel in relations:
+        try:
+            intids.getId(rel)
+        except KeyError:
+            intids.register(rel)
+            added_rel_intids += 1
         catalog.unindex(rel)
         try:
             catalog.index(rel)
         except IntIdMissingError:
-            logger.warn('Broken relation removed.')
+            logger.warning('Broken relation removed.')
+    if added_rel_intids:
+        logger.info('Registered %s extra relations in the intid utility.', added_rel_intids)
 
 
 class IResourceRegistriesSettings(Interface):
