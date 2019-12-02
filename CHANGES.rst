@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.29 (2019-12-02)
+-------------------
+
+Bug fixes:
+
+
+- Add Collection to the default_page_types setting
+  [erral] (#216)
+
+
 2.0.28 (2019-09-03)
 -------------------
 
