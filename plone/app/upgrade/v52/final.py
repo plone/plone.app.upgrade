@@ -116,3 +116,5 @@ def change_interface_on_lang_registry_records(context):
 def to521(context):
     """5.2.0 -> 5.2.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to521')
+    loadMigrationProfile(context, 'profile-plone.staticresources.upgrades:2')
+    loadMigrationProfile(context, 'profile-plone.staticresources.upgrades:3')
