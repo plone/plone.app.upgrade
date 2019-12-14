@@ -77,6 +77,11 @@ def move_dotted_to_named_behaviors(context):
         )
 
     logger.info('Done moving dotted to named behaviors.')
+    # Make sure plone.staticresources is installed
+    from Products.CMFPlone.utils import get_installer
+    qi = get_installer(context)
+    if not qi.is_product_installed('plone.staticresources'):
+        qi.install_product('plone.staticresources')
 
 
 KEYS_TO_CHANGE = [
@@ -116,3 +121,8 @@ def change_interface_on_lang_registry_records(context):
 def to521(context):
     """5.2.0 -> 5.2.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to521')
+    # Make sure plone.staticresources is installed
+    from Products.CMFPlone.utils import get_installer
+    qi = get_installer(context)
+    if not qi.is_product_installed('plone.staticresources'):
+        qi.install_product('plone.staticresources')
