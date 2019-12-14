@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.30 (2019-12-13)
+-------------------
+
+Bug fixes:
+
+
+- Fixed error when upgrading relations.
+  [maurits] (#220)
+
+
 2.0.29 (2019-12-02)
 -------------------
 
