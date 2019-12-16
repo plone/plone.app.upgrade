@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.31 (2019-12-15)
+-------------------
+
+Bug fixes:
+
+
+- Make sure plone.staticresources is installed to fix issues with site migrated from 5.0 or 5.1 to 5.2.1.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2996
+  [pbauer] (#223)
+
+
 2.0.30 (2019-12-13)
 -------------------
 
