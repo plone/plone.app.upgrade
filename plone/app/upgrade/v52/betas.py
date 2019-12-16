@@ -128,7 +128,17 @@ def to52beta1(context):
     add_exclude_from_nav_index(context)
     remove_legacy_resource_registries(context)
     remove_interface_indexes_from_relations_catalog()
+    # Make sure plone.staticresources is installed
+    from Products.CMFPlone.utils import get_installer
+    qi = get_installer(context)
+    if not qi.is_product_installed('plone.staticresources'):
+        qi.install_product('plone.staticresources')
 
 
 def to52rc1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52rc1')
+    # Make sure plone.staticresources is installed
+    from Products.CMFPlone.utils import get_installer
+    qi = get_installer(context)
+    if not qi.is_product_installed('plone.staticresources'):
+        qi.install_product('plone.staticresources')
