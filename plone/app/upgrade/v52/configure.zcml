@@ -138,17 +138,4 @@
 
     </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5208"
-        destination="5209"
-        profile="Products.CMFPlone:plone">
-
-        <gs:upgradeStep
-            title="Extended review workflow with states pending, published and new: rejected and spam"
-            description="Additional states allows moderator to review history of publishing and rejection"
-            handler="plone.app.discussion.upgrades.extend_review_workflow"
-            />
-
-    </gs:upgradeSteps>
-
 </configure>
