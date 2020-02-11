@@ -8,7 +8,7 @@ from zope import component
 from zope.interface import Interface
 from zope.intid.interfaces import IIntIds
 from zope.intid.interfaces import IntIdMissingError
-
+from zope.intid.interfaces import ObjectMissingError
 import logging
 import sys
 
@@ -68,7 +68,13 @@ def remove_interface_indexes_from_relations_catalog():
     tokens = [token for token in catalog._relTokens]
     empty = 0
     for token in tokens:
-        relation = catalog.resolveRelationToken(token)
+        try:
+            relation = catalog.resolveRelationToken(token)
+        except ObjectMissingError:
+            logger.warning('Removed token with missing object.')
+            catalog._relTokens.remove(token)
+            continue
+
         if relation.from_object is not None or relation.to_object is not None:
             continue
         catalog.unindex_doc(token)
