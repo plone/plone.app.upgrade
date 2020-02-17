@@ -138,4 +138,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5208"
+        destination="5209"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler=".final.to522"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>

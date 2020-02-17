@@ -118,6 +118,7 @@ def change_interface_on_lang_registry_records(context):
         )
         record.field.interfaceName = NEW_PREFIX
 
+
 def to521(context):
     """5.2.0 -> 5.2.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to521')
@@ -126,3 +127,8 @@ def to521(context):
     qi = get_installer(context)
     if not qi.is_product_installed('plone.staticresources'):
         qi.install_product('plone.staticresources')
+
+
+def to522(context):
+    """5.2.1 -> 5.2.2"""
+    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to522')
