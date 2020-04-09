@@ -3,7 +3,9 @@ from DateTime import DateTime
 from pkg_resources import get_distribution
 from pkg_resources import parse_version
 from plone.app.testing import PLONE_INTEGRATION_TESTING
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IMarkupSchema
 from zope.component import getUtility
 
 import unittest
@@ -65,6 +67,36 @@ class Various52Test(unittest.TestCase):
         self.assertTupleEqual(storage.get_full(old), redirect)
 
 
+class UpgradePortalTransforms521to522Test(unittest.TestCase):
+    layer = PLONE_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+        self.pt = self.portal.portal_transforms
+        registry = getUtility(IRegistry)
+        self.settings = registry.forInterface(IMarkupSchema, prefix='plone')
+
+    def test_migrate_markup_settings(self):
+        from plone.app.upgrade.v52.final import \
+            move_markdown_transform_settings_to_registry
+        self.pt.markdown_to_html._config['enabled_extensions'] = [
+            'markdown.extensions.fenced_code',
+            'markdown.extensions.nl2br',
+            'markdown.extensions.extra',
+        ]
+        move_markdown_transform_settings_to_registry(self.portal)
+        if getattr(self.settings, 'markdown_extensions', None):
+            self.assertEqual(
+                self.settings.markdown_extensions,
+                [
+                    'markdown.extensions.fenced_code',
+                    'markdown.extensions.nl2br',
+                    'markdown.extensions.extra',
+                ]
+            )
+
+
 def test_suite():
     # Skip these tests on Plone < 5.2a1
     plone_version = get_distribution('Products.CMFPlone').version
@@ -74,4 +106,5 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(UpgradeMemberData51to52Test))
     suite.addTest(unittest.makeSuite(Various52Test))
+    suite.addTest(unittest.makeSuite(UpgradePortalTransforms521to522Test))
     return suite

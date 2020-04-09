@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IMarkupSchema
+from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
 import logging
@@ -132,3 +135,19 @@ def to521(context):
 def to522(context):
     """5.2.1 -> 5.2.2"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to522')
+
+
+def move_markdown_transform_settings_to_registry(context):
+    """Move markdown settings from portal_transforms to Plone registry.
+    """
+    registry = getUtility(IRegistry)
+    try:
+        settings = registry.forInterface(IMarkupSchema, prefix='plone')
+    except KeyError:
+        # Catch case where markdown_extensions is not yet registered
+        registry.registerInterface(IMarkupSchema, prefix='plone')
+        settings = registry.forInterface(IMarkupSchema, prefix='plone')
+    pt = getToolByName(context, 'portal_transforms')
+    extensions = pt.markdown_to_html._config.get('enabled_extensions') or []
+    extensions = [safe_unicode(ext) for ext in extensions]
+    settings.markdown_extensions = extensions
