@@ -149,6 +149,11 @@
             handler=".final.to522"
             />
 
+        <gs:upgradeStep
+            title="Move markdown settings from portal_transforms to Plone registry"
+            handler=".final.move_markdown_transform_settings_to_registry"
+            />
+
     </gs:upgradeSteps>
 
 </configure>
