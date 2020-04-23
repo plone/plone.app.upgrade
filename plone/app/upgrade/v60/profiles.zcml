@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone">
+
+  <genericsetup:registerProfile
+      name="to60alpha1"
+      title="Upgrade profile for Plone 5.2.x to Plone 6.0alpha1"
+      description=""
+      directory="profiles/to_alpha1"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>
