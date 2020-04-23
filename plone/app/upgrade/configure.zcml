@@ -11,6 +11,7 @@
     <include package=".v50" zcml:condition="have plone-5" />
     <include package=".v51" zcml:condition="have plone-51" />
     <include package=".v52" zcml:condition="have plone-52" />
+    <include package=".v60" zcml:condition="have plone-60" />
 
     <utility
         zcml:condition="have plone-51"
