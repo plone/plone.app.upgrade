@@ -183,6 +183,7 @@ try:
     pkg_resources.get_distribution('Products.CMFQuickInstallerTool')
 except pkg_resources.DistributionNotFound:
     alias_module('Products.CMFQuickInstallerTool', bbb_qi)
+    alias_module('Products.CMFPlone.QuickInstallerTool', bbb_qi)
 
 
 class HiddenProducts(object):
