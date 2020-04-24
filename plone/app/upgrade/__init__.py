@@ -2,6 +2,7 @@
 from plone.app.upgrade.utils import alias_module
 
 from . import bbb
+from . import bbb_qi
 from . import bbbd
 import pkg_resources
 import sys
@@ -177,6 +178,11 @@ try:
 except ImportError:
     from OFS.LockItem import LockItem
     alias_module('webdav.LockItem.LockItem', LockItem)
+
+try:
+    pkg_resources.get_distribution('Products.CMFQuickInstallerTool')
+except pkg_resources.DistributionNotFound:
+    alias_module('Products.CMFQuickInstallerTool', bbb_qi)
 
 
 class HiddenProducts(object):
