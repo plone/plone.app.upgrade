@@ -124,10 +124,12 @@ class MigrationTest(PloneTestCase):
             qi = getToolByName(self.portal, 'portal_quickinstaller', None)
             if qi is None:
                 return
+            if qi.isProductInstalled(product_name):
+                qi.uninstallProducts([product_name])
         else:
             qi = get_installer(self.portal)
-        if qi.isProductInstalled(product_name):
-            qi.uninstallProducts([product_name])
+            if qi.is_product_installed(product_name):
+                qi.uninstall_product(product_name)
 
     def addSkinLayer(self, layer, skin='Plone Default', pos=None):
         # Adds a skin layer at pos. If pos is None, the layer is appended
