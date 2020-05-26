@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <registry>
-  <records interface="Products.CMFPlone.interfaces.controlpanel.ITypesSchema" prefix="plone">
-    <value key="default_page_types" purge="false">
-      <element>Collection</element>
-    </value>
-  </records>
-
   <records interface="Products.CMFPlone.interfaces.controlpanel.IFilterSchema" prefix="plone">
     <value key="valid_tags" purge="false">
       <element>hr</element>
