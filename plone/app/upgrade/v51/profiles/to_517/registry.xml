@@ -6,9 +6,16 @@
     </value>
   </records>
 
-  <records
-      prefix="plone.bundles/plone-logged-in"
-      interface="Products.CMFPlone.interfaces.IBundleRegistry">
+  <records interface="Products.CMFPlone.interfaces.controlpanel.IFilterSchema" prefix="plone">
+    <value key="valid_tags" purge="false">
+      <element>hr</element>
+    </value>
+    <value key="custom_attributes" purge="false">
+      <element>style</element>
+    </value>
+  </records>
+
+  <records interface="Products.CMFPlone.interfaces.IBundleRegistry" prefix="plone.bundles/plone-logged-in">
     <value key="last_compilation">2020-05-21 21:00:00</value>
   </records>
 </registry>
