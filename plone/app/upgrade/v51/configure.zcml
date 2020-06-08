@@ -300,12 +300,6 @@ Add image scaling options to image handling control panel.
             handler=".final.to517"
             />
 
-        <gs:upgradeDepends
-            title="Run to51beta4 upgrade profile."
-            description="Fixup image caption TinyMCE.
-                         Update plone-logged-in bundle"
-            import_profile="plone.app.upgrade.v51:to517"
-            />
     </gs:upgradeSteps>
 
 </configure>
