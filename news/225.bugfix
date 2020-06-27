@@ -1,4 +1,0 @@
-Fix problem in step to 5.2 beta 1 `remove_interface_indexes_from_relations_catalog`.
-While upgrading the relation-catalog in some real world databases some of the iterated tokens are orphaned.
-Remove them to have a clean relation-catalog afterwards and log a warning.
-[jensens]

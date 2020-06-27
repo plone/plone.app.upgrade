@@ -8,6 +8,36 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.32 (2020-06-28)
+-------------------
+
+New features:
+
+
+- Add upgrade step for Plone 5.2.2.
+  [thet]
+
+  Image caption support
+  Allow ``figcaption`` in rich text editor as a valid tag.
+  Add registry setting for plone.image_caption outputfilter transform.
+  [thet] (#209)
+- Add upgrade step to migrate markdown tranform settings to markup control panel.
+  [thomasmassmann] (#228)
+- Add upgrade profiles for v60, including a upgrade step for #3086 (custom.css view)
+  [MrTango] (#3086)
+
+
+Bug fixes:
+
+
+- Fix problem in step to 5.2 beta 1 `remove_interface_indexes_from_relations_catalog`.
+  While upgrading the relation-catalog in some real world databases some of the iterated tokens are orphaned.
+  Remove them to have a clean relation-catalog afterwards and log a warning.
+  [jensens] (#225)
+- add upgrade steps for HTMLFilter defaults.
+  [petschki] (#233)
+
+
 2.0.31 (2019-12-15)
 -------------------
 
