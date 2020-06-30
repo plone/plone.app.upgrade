@@ -54,6 +54,7 @@ def remove_legacy_resource_registries(context):
 
 def remove_interface_indexes_from_relations_catalog():
     """ remove unused interface indexes from relations catalog """
+    logger.info('Removing unused interface indexes from relations catalog.')
     catalog = component.queryUtility(ICatalog)
     indexes_to_remove = [
         'from_interfaces_flattened',

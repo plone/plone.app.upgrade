@@ -49,8 +49,10 @@ def rebuild_memberdata(context):
     for member in ms_tool.searchForMembers():
         try:
             md = MemberData(member, md_tool)
+            logger.info(u'Updated memberdata for {}'.format(member))
         # If we can't create a MemberData record for this member, skip it
-        except:
+        except Exception as e:
+            logger.info(u'Skip broken memberdata for {}: {}'.format(member, e))
             continue
         md_tool.registerMemberData(md._md, md.getId())
 
