@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.33 (2020-06-30)
+-------------------
+
+Bug fixes:
+
+
+- Fix UnicodeDecodeError in move_dotted_to_named_behaviors when migrating behaviors for content_types where the fti has a special character.
+  [pbauer] (#235)
+
+
 2.0.32 (2020-06-28)
 -------------------
 
