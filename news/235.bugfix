@@ -1,0 +1,2 @@
+Fix UnicodeDecodeError in move_dotted_to_named_behaviors when migrating behaviors for content_types where the fti has a special character.
+[pbauer]

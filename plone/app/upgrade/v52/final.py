@@ -74,8 +74,8 @@ def move_dotted_to_named_behaviors(context):
                 )
         fti.behaviors = tuple(behaviors)
         logger.info(
-            'Converted dotted behaviors of {ct} to named behaviors.'.format(
-                ct=fti.title,
+            u'Converted dotted behaviors of {ct} to named behaviors.'.format(
+                ct=safe_unicode(fti.title),
             ),
         )
 
