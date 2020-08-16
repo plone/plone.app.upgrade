@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.34 (2020-08-16)
+-------------------
+
+Bug fixes:
+
+
+- Plone 5.1.7: Update resource registry ``last_compilation`` date.
+  [vincentfretin] (#236)
+
+
 2.0.33 (2020-06-30)
 -------------------
 
