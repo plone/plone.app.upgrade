@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+1.4.7 (2020-08-19)
+------------------
+
+Bug fixes:
+
+
+- Added null upgrade step to 4322, the metadata version of Plone 4.3.20.
+  [maurits] (#3166)
+
+
 1.4.6 (2019-09-09)
 ------------------
 
