@@ -156,4 +156,17 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5209"
+        destination="5210"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
