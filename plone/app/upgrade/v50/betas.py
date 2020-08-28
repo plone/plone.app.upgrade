@@ -5,7 +5,6 @@ from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ILanguageSchema
 from Products.CMFPlone.interfaces import IMailSchema
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import INavigationSchema
@@ -21,6 +20,18 @@ from zope.schema._bootstrapinterfaces import WrongType
 
 import logging
 import pkg_resources
+import warnings
+
+
+try:
+    with warnings.catch_warnings():
+        # Catch DeprecationWarning:
+        # "ILanguageSchema is deprecated. It has been moved to plone.i18n.interfaces, import from there instead."
+        warnings.simplefilter("ignore")
+        from Products.CMFPlone.interfaces import ILanguageSchema
+except ImportError:
+    # Plone 5.2+
+    from plone.i18n.interfaces import ILanguageSchema
 
 
 logger = logging.getLogger('plone.app.upgrade')

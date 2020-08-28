@@ -5,6 +5,7 @@ from . import bbb
 from . import bbbd
 import pkg_resources
 import sys
+import warnings
 
 
 try:
@@ -163,9 +164,16 @@ if not IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
     sys.modules['Products.ResourceRegistries.tools.CSSRegistry'] = bbb
     sys.modules['Products.ResourceRegistries.tools.JSRegistry'] = bbb
 
+
 try:
-    from webdav.LockItem import LockItem
-    LockItem  # pyflakes
+    with warnings.catch_warnings():
+        # Catch DeprecationWarning:
+        # "LockItem is deprecated. Please import from OFS.LockItem."
+        # Depending on which Plone/Zope version we have, webdav may be gone or re-added.
+        # Anyway, if the import fails, we want to create an alias module.
+        warnings.simplefilter("ignore")
+        from webdav.LockItem import LockItem
+        LockItem  # pyflakes
 except ImportError:
     from OFS.LockItem import LockItem
     alias_module('webdav.LockItem.LockItem', LockItem)
