@@ -11,7 +11,7 @@ from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.context import TarballImportContext
-from zope.site.hooks import setSite
+from zope.component.hooks import setSite
 
 import transaction
 import warnings
