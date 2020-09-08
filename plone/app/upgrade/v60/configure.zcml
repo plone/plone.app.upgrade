@@ -12,6 +12,12 @@
         profile="Products.CMFPlone:plone">
 
       <gs:upgradeStep
+           title="Remove temp_folder if broken."
+           description=""
+           handler=".alphas.remove_temp_folder"
+           />
+
+      <gs:upgradeStep
            title="Run to60alpha1 upgrade profile."
            description=""
            handler=".alphas.to60alpha1"
