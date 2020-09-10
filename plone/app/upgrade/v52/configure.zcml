@@ -162,9 +162,9 @@
         profile="Products.CMFPlone:plone">
 
         <gs:upgradeStep
-            title="Miscellaneous"
+            title="Migrate site logo from native string to bytes"
             description=""
-            handler="..utils.null_upgrade_step"
+            handler=".final.migrate_site_logo_from_ascii_to_bytes"
             />
 
     </gs:upgradeSteps>

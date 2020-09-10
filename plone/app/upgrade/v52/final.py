@@ -3,10 +3,12 @@ from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
+from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
 import logging
+import six
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -151,3 +153,48 @@ def move_markdown_transform_settings_to_registry(context):
     extensions = pt.markdown_to_html._config.get('enabled_extensions') or []
     extensions = [safe_unicode(ext) for ext in extensions]
     settings.markdown_extensions = extensions
+
+
+def migrate_site_logo_from_ascii_to_bytes(context):
+    """Site logo was ASCII field in 5.1, and Bytes field in 5.2.
+
+    zope.schema.ASCII inherits from NativeString.
+    With Python 2 this is the same as Bytes, but with Python 3 not:
+    you get a WrongType error when saving the site-controlpanel.
+    """
+    from plone.registry import field
+    from plone.registry import Record
+
+    registry = getUtility(IRegistry)
+    record = registry.records['plone.site_logo']
+    if not isinstance(record.field, field.ASCII):
+        # All is well.
+        # Actually, we might as well register the interface again for good measure.
+        # I have seen a missing site_title field.
+        registry.registerInterface(ISiteSchema, prefix="plone")
+        return
+    # Keep the original value so we can restore it.
+    original_value = record.value
+    # Delete the bad record.
+    del registry.records['plone.site_logo']
+    # Make sure the site schema is fully registered again.
+    # This should recreate the field correctly.
+    # Note: if you do this when the site logo is still an ASCII field,
+    # the record will get replaced and the logo is gone!
+    registry.registerInterface(ISiteSchema, prefix="plone")
+    if original_value is None:
+        # Nothing left to do.
+        return
+    new_record = registry.records['plone.site_logo']
+    if isinstance(original_value, six.text_type):
+        # fromUnicode could be called from Text in Python 3.
+        new_value = new_record.field.fromUnicode(original_value)
+    elif isinstance(original_value, bytes):
+        # Unlikely, but let's be careful.
+        new_value = original_value
+    else:
+        # Anything else is broken.
+        return
+    # Save the new value.
+    new_record.value = new_value
+    logger.info("Replaced site_logo ASCII (native string) field with Bytes field.")
