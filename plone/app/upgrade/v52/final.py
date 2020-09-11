@@ -163,10 +163,13 @@ def migrate_site_logo_from_ascii_to_bytes(context):
     you get a WrongType error when saving the site-controlpanel.
     """
     from plone.registry import field
-    from plone.registry import Record
 
     registry = getUtility(IRegistry)
-    record = registry.records['plone.site_logo']
+    record = registry.records.get('plone.site_logo', None)
+    if record is None:
+        # Unexpected.  Registering the interface fixes this.
+        registry.registerInterface(ISiteSchema, prefix="plone")
+        return
     if not isinstance(record.field, field.ASCII):
         # All is well.
         # Actually, we might as well register the interface again for good measure.
