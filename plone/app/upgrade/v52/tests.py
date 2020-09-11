@@ -84,15 +84,17 @@ class SiteLogoTest(unittest.TestCase):
     We have several situations that should result in the fix being applied:
 
     1. Migration from Plone 5.1 to 5.2 on Python 2.7.
-    2. Migration from Plone 5.2.2 to 5.2.3 (which contains this upgrade step) on Python 2.7.
-    3. Migration from Plone 5.2.2 to 5.2.3 (which contains this upgrade step) on Python 3.
+    2. Migration from Plone 5.2.2 on Python 2.7 (where the logo is technically broken, but still works)
+       to 5.2.3 (which contains this upgrade step) on Python 2.7.
+       This is in fact the same as situation 1.
+    3. Migration from Plone 5.2.2 on Python 3 (where the logo is really broken, at least for writing)
+       to 5.2.3 (which contains this upgrade step).
 
     On Python 3 there is a definite difference between the two types of field.
     Tricky here may be that we should make sure that the fix is also applied on Python 2,
     where ASCII and Bytes are still the same.
-
-    Let's duplicate some tests and adapt them slightly to Python 2 and 3,
-    and skip them if the current Python version is different.
+    Ah, no problem after all: zope.schema.ASCII/Bytes may be the same,
+    but plone.registry.fields.ASCII/Bytes are always different.
     """
     layer = PLONE_INTEGRATION_TESTING
 
@@ -127,7 +129,6 @@ class SiteLogoTest(unittest.TestCase):
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsNone(record.value)
 
-    @unittest.skipIf(six.PY2, "Only test on Python 3")
     def test_site_logo_empty(self):
         del self.registry.records['plone.site_logo']
         record_51 = Record(field.ASCII())
@@ -138,7 +139,6 @@ class SiteLogoTest(unittest.TestCase):
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsNone(record.value)
 
-    @unittest.skipIf(six.PY2, "Only test on Python 3")
     def test_site_logo_text(self):
         del self.registry.records['plone.site_logo']
         record_51 = Record(field.ASCII())

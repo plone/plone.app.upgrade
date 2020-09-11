@@ -190,13 +190,14 @@ def migrate_site_logo_from_ascii_to_bytes(context):
         return
     new_record = registry.records['plone.site_logo']
     if isinstance(original_value, six.text_type):
-        # fromUnicode could be called from Text in Python 3.
+        # This is what we expect in Python 3.
+        # fromUnicode could be called fromText in Python 3.
         new_value = new_record.field.fromUnicode(original_value)
     elif isinstance(original_value, bytes):
-        # Unlikely, but let's be careful.
+        # This is what we expect in Python 2.
         new_value = original_value
     else:
-        # Anything else is broken.
+        # Seems impossible, but I like to be careful.
         return
     # Save the new value.
     new_record.value = new_value
