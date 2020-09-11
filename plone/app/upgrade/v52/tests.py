@@ -151,6 +151,65 @@ class SiteLogoTest(unittest.TestCase):
         self.assertIsInstance(record.field, field.Bytes)
         self.assertEqual(record.value, b"native string")
 
+    def test_migrate_record_from_ascii_to_bytes_with_prefix(self):
+        # This is the more general fixer from ASCII to Bytes.
+        from plone.app.upgrade.v52.final import migrate_record_from_ascii_to_bytes
+        from zope.interface import Interface
+        from zope import schema
+
+        class ITest(Interface):
+            testfield = schema.ASCII()
+
+        self.registry.registerInterface(ITest, prefix="testing")
+        record = self.registry.records["testing.testfield"]
+        record.value = "native string"
+        self.assertIsInstance(record.field, field.ASCII)
+
+        # Now change the field definition to Bytes.
+        # It is not enough to override the field, we must recreate the interface.
+        # ITest.testfield = schema.Bytes()
+
+        class ITest(Interface):
+            testfield = schema.Bytes()
+
+        # These variations all seem to work:
+        migrate_record_from_ascii_to_bytes("testing.testfield", ITest, prefix="testing")
+        # migrate_record_from_ascii_to_bytes("testfield", ITest, prefix="testing")
+        record = self.registry.records["testing.testfield"]
+        self.assertIsInstance(record.field, field.Bytes)
+        self.assertEqual(record.value, b"native string")
+
+    def test_migrate_record_from_ascii_to_bytes_without_prefix(self):
+        # This is the more general fixer from ASCII to Bytes.
+        from plone.app.upgrade.v52.final import migrate_record_from_ascii_to_bytes
+        from zope.interface import Interface
+        from zope import schema
+
+        class ITest(Interface):
+            testfield = schema.ASCII()
+
+        self.registry.registerInterface(ITest)
+        record_name = "{}.testfield".format(ITest.__identifier__)
+        record = self.registry.records[record_name]
+        record.value = "native string"
+        self.assertIsInstance(record.field, field.ASCII)
+
+        # Now change the field definition to Bytes.
+        # It is not enough to override the field, we must recreate the interface.
+        # ITest.testfield = schema.Bytes()
+
+        class ITest(Interface):
+            testfield = schema.Bytes()
+
+        # These variations all seem to work:
+        migrate_record_from_ascii_to_bytes("testfield", ITest)
+        # migrate_record_from_ascii_to_bytes(record_name, ITest)
+        # migrate_record_from_ascii_to_bytes(record_name, ITest, prefix=ITest.__identifier__)
+        # migrate_record_from_ascii_to_bytes("testfield", ITest, prefix=ITest.__identifier__)
+        record = self.registry.records[record_name]
+        self.assertIsInstance(record.field, field.Bytes)
+        self.assertEqual(record.value, b"native string")
+
 
 class UpgradePortalTransforms521to522Test(unittest.TestCase):
     layer = PLONE_INTEGRATION_TESTING
