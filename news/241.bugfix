@@ -1,0 +1,2 @@
+Replaced import of plone.api, which should not be used by core.
+[maurits]
