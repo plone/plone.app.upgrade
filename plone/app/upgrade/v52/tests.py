@@ -3,6 +3,8 @@ from DateTime import DateTime
 from pkg_resources import get_distribution
 from pkg_resources import parse_version
 from plone.app.testing import PLONE_INTEGRATION_TESTING
+from plone.registry import field
+from plone.registry import Record
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
@@ -68,12 +70,6 @@ class Various52Test(unittest.TestCase):
         self.assertTupleEqual(storage.get_full(old), redirect)
 
 
-from plone.registry import field
-from plone.registry import Record
-from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
-from zope.schema.interfaces import WrongType
-
-
 class SiteLogoTest(unittest.TestCase):
     """Site logo was ASCII field in 5.1, and is Bytes field in 5.2.
 
@@ -105,6 +101,7 @@ class SiteLogoTest(unittest.TestCase):
     def test_current_site_logo(self):
         # Check that we understand the current situation correctly.
         from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
+        from zope.schema.interfaces import WrongType
 
         record = self.registry.records['plone.site_logo']
         self.assertIsInstance(record.field, field.Bytes)
@@ -130,6 +127,8 @@ class SiteLogoTest(unittest.TestCase):
         self.assertIsNone(record.value)
 
     def test_site_logo_empty(self):
+        from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
+
         del self.registry.records['plone.site_logo']
         record_51 = Record(field.ASCII())
         self.registry.records['plone.site_logo'] = record_51
@@ -140,6 +139,8 @@ class SiteLogoTest(unittest.TestCase):
         self.assertIsNone(record.value)
 
     def test_site_logo_text(self):
+        from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
+
         del self.registry.records['plone.site_logo']
         record_51 = Record(field.ASCII())
         record_51.value = "native string"
