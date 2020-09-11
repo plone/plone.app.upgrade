@@ -165,6 +165,8 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
 
     from Products.CMFPlone.interfaces import ISiteSchema
     migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
+    or:
+    migrate_record_from_ascii_to_bytes("site_logo", ISiteSchema, prefix="plone")
 
     The interface is reregistered to get the new field definition.
     Note: this only works well if you have only *one* field that needs fixing.
@@ -173,10 +175,17 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
     On Python 2 the full name is less needed, but on Python 3 it is.
     If you are not using a prefix when registering your interface,
     then automatically the identifier of your interface is used as prefix.
-    In that case, use:
+    In that case, you can use both of these:
 
+    migrate_record_from_ascii_to_bytes("field_name", IMy)
     migrate_record_from_ascii_to_bytes(IMy.__identifier__ + ".field_name", IMy)
     """
+    if prefix is None:
+        prefix = iface.__identifier__
+    if not prefix.endswith("."):
+        prefix += '.'
+    if not field_name.startswith(prefix):
+        field_name = prefix + field_name
     registry = getUtility(IRegistry)
     record = registry.records.get(field_name, None)
     if record is None:
@@ -225,6 +234,4 @@ def migrate_site_logo_from_ascii_to_bytes(context):
     With Python 2 this is the same as Bytes, but with Python 3 not:
     you get a WrongType error when saving the site-controlpanel.
     """
-    # Note: on Python 2 passing "site_logo" as field name is enough,
-    # but on Python 3 the full "plone.site_logo" is needed.
     migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
