@@ -2,4 +2,5 @@ Catch deprecation warnings for ``webdav.LockItem.LockItem`` and ``CMFPlone.inter
 The first has been moved to ``OFS.LockItem``, the second to ``plone.i18n.interfaces``.
 In older upgrade code, we should still try the old import first.
 Fixed deprecation warning for zope.site.hooks.
+Fixed invalid escape sequence.
 [maurits]
