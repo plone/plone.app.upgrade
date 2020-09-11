@@ -201,11 +201,12 @@ class SiteLogoTest(unittest.TestCase):
         class ITest(Interface):
             testfield = schema.Bytes()
 
-        # These variations all seem to work:
-        migrate_record_from_ascii_to_bytes("testfield", ITest)
-        # migrate_record_from_ascii_to_bytes(record_name, ITest)
-        # migrate_record_from_ascii_to_bytes(record_name, ITest, prefix=ITest.__identifier__)
+        # These variations all seem to work on Python 2, but the first two fail on Python 3,
+        # leading to a record.value of None.
+        # migrate_record_from_ascii_to_bytes("testfield", ITest)
         # migrate_record_from_ascii_to_bytes("testfield", ITest, prefix=ITest.__identifier__)
+        migrate_record_from_ascii_to_bytes(record_name, ITest)
+        # migrate_record_from_ascii_to_bytes(record_name, ITest, prefix=ITest.__identifier__)
         record = self.registry.records[record_name]
         self.assertIsInstance(record.field, field.Bytes)
         self.assertEqual(record.value, b"native string")

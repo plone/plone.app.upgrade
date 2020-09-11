@@ -168,6 +168,14 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
 
     The interface is reregistered to get the new field definition.
     Note: this only works well if you have only *one* field that needs fixing.
+
+    For the field name, using the full name including prefix is recommended.
+    On Python 2 the full name is less needed, but on Python 3 it is.
+    If you are not using a prefix when registering your interface,
+    then automatically the identifier of your interface is used as prefix.
+    In that case, use:
+
+    migrate_record_from_ascii_to_bytes(IMy.__identifier__ + ".field_name", IMy)
     """
     registry = getUtility(IRegistry)
     record = registry.records.get(field_name, None)
@@ -217,4 +225,6 @@ def migrate_site_logo_from_ascii_to_bytes(context):
     With Python 2 this is the same as Bytes, but with Python 3 not:
     you get a WrongType error when saving the site-controlpanel.
     """
-    migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, "plone")
+    # Note: on Python 2 passing "site_logo" as field name is enough,
+    # but on Python 3 the full "plone.site_logo" is needed.
+    migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
