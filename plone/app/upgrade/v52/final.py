@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
@@ -155,40 +156,45 @@ def move_markdown_transform_settings_to_registry(context):
     settings.markdown_extensions = extensions
 
 
-def migrate_site_logo_from_ascii_to_bytes(context):
-    """Site logo was ASCII field in 5.1, and Bytes field in 5.2.
+def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
+    """Migrate a configuration registry record from ASCII to Bytes.
 
-    zope.schema.ASCII inherits from NativeString.
-    With Python 2 this is the same as Bytes, but with Python 3 not:
-    you get a WrongType error when saving the site-controlpanel.
+    Note: this is intended as a utility method that third party code can use.
+
+    Sample use:
+
+    from Products.CMFPlone.interfaces import ISiteSchema
+    migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
+
+    The interface is reregistered to get the new field definition.
+    Note: this only works well if you have only *one* field that needs fixing.
     """
-    from plone.registry import field
-
     registry = getUtility(IRegistry)
-    record = registry.records.get('plone.site_logo', None)
+    record = registry.records.get(field_name, None)
     if record is None:
         # Unexpected.  Registering the interface fixes this.
-        registry.registerInterface(ISiteSchema, prefix="plone")
+        registry.registerInterface(iface, prefix=prefix)
         return
     if not isinstance(record.field, field.ASCII):
         # All is well.
         # Actually, we might as well register the interface again for good measure.
-        # I have seen a missing site_title field.
-        registry.registerInterface(ISiteSchema, prefix="plone")
+        # For ISiteSchema I have seen a missing site_title field.
+        registry.registerInterface(iface, prefix=prefix)
         return
     # Keep the original value so we can restore it.
     original_value = record.value
     # Delete the bad record.
-    del registry.records['plone.site_logo']
-    # Make sure the site schema is fully registered again.
+    del registry.records[field_name]
+    # Make sure the interface is fully registered again.
     # This should recreate the field correctly.
     # Note: if you do this when the site logo is still an ASCII field,
     # the record will get replaced and the logo is gone!
-    registry.registerInterface(ISiteSchema, prefix="plone")
+    registry.registerInterface(iface, prefix=prefix)
     if original_value is None:
         # Nothing left to do.
+        logger.info("Replaced empty %s ASCII (native string) field with Bytes field.", field_name)
         return
-    new_record = registry.records['plone.site_logo']
+    new_record = registry.records[field_name]
     if isinstance(original_value, six.text_type):
         # This is what we expect in Python 3.
         # fromUnicode could be called fromText in Python 3.
@@ -201,4 +207,14 @@ def migrate_site_logo_from_ascii_to_bytes(context):
         return
     # Save the new value.
     new_record.value = new_value
-    logger.info("Replaced site_logo ASCII (native string) field with Bytes field.")
+    logger.info("Replaced %s ASCII (native string) field with Bytes field.", field_name)
+
+
+def migrate_site_logo_from_ascii_to_bytes(context):
+    """Site logo was ASCII field in 5.1, and Bytes field in 5.2.
+
+    zope.schema.ASCII inherits from NativeString.
+    With Python 2 this is the same as Bytes, but with Python 3 not:
+    you get a WrongType error when saving the site-controlpanel.
+    """
+    migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, "plone")
