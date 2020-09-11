@@ -20,19 +20,19 @@
       prefix="plone.bundles/plone"
       interface="Products.CMFPlone.interfaces.IBundleRegistry"
       purge="False">
-    <value key="last_compilation">2020-08-03 13:00:00</value>
+    <value key="last_compilation">2020-09-08 09:00:00</value>
   </records>
   <records
       prefix="plone.bundles/plone-logged-in"
       interface="Products.CMFPlone.interfaces.IBundleRegistry"
       purge="False">
-    <value key="last_compilation">2020-08-03 13:00:00</value>
+    <value key="last_compilation">2020-09-08 09:00:00</value>
   </records>
   <records
       prefix="plone.bundles/resourceregistry"
       interface='Products.CMFPlone.interfaces.IBundleRegistry'
       purge="False">
-    <value key="last_compilation">2020-08-03 13:00:00</value>
+    <value key="last_compilation">2020-09-08 09:00:00</value>
   </records>
 
 </registry>
