@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
+from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
 import logging
+import six
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -151,3 +154,84 @@ def move_markdown_transform_settings_to_registry(context):
     extensions = pt.markdown_to_html._config.get('enabled_extensions') or []
     extensions = [safe_unicode(ext) for ext in extensions]
     settings.markdown_extensions = extensions
+
+
+def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
+    """Migrate a configuration registry record from ASCII to Bytes.
+
+    Note: this is intended as a utility method that third party code can use.
+
+    Sample use:
+
+    from Products.CMFPlone.interfaces import ISiteSchema
+    migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
+    or:
+    migrate_record_from_ascii_to_bytes("site_logo", ISiteSchema, prefix="plone")
+
+    The interface is reregistered to get the new field definition.
+    Note: this only works well if you have only *one* field that needs fixing.
+
+    For the field name, using the full name including prefix is recommended.
+    On Python 2 the full name is less needed, but on Python 3 it is.
+    If you are not using a prefix when registering your interface,
+    then automatically the identifier of your interface is used as prefix.
+    In that case, you can use both of these:
+
+    migrate_record_from_ascii_to_bytes("field_name", IMy)
+    migrate_record_from_ascii_to_bytes(IMy.__identifier__ + ".field_name", IMy)
+    """
+    if prefix is None:
+        prefix = iface.__identifier__
+    if not prefix.endswith("."):
+        prefix += '.'
+    if not field_name.startswith(prefix):
+        field_name = prefix + field_name
+    registry = getUtility(IRegistry)
+    record = registry.records.get(field_name, None)
+    if record is None:
+        # Unexpected.  Registering the interface fixes this.
+        registry.registerInterface(iface, prefix=prefix)
+        return
+    if not isinstance(record.field, field.ASCII):
+        # All is well.
+        # Actually, we might as well register the interface again for good measure.
+        # For ISiteSchema I have seen a missing site_title field.
+        registry.registerInterface(iface, prefix=prefix)
+        return
+    # Keep the original value so we can restore it.
+    original_value = record.value
+    # Delete the bad record.
+    del registry.records[field_name]
+    # Make sure the interface is fully registered again.
+    # This should recreate the field correctly.
+    # Note: if you do this when the site logo is still an ASCII field,
+    # the record will get replaced and the logo is gone!
+    registry.registerInterface(iface, prefix=prefix)
+    if original_value is None:
+        # Nothing left to do.
+        logger.info("Replaced empty %s ASCII (native string) field with Bytes field.", field_name)
+        return
+    new_record = registry.records[field_name]
+    if isinstance(original_value, six.text_type):
+        # This is what we expect in Python 3.
+        # fromUnicode could be called fromText in Python 3.
+        new_value = new_record.field.fromUnicode(original_value)
+    elif isinstance(original_value, bytes):
+        # This is what we expect in Python 2.
+        new_value = original_value
+    else:
+        # Seems impossible, but I like to be careful.
+        return
+    # Save the new value.
+    new_record.value = new_value
+    logger.info("Replaced %s ASCII (native string) field with Bytes field.", field_name)
+
+
+def migrate_site_logo_from_ascii_to_bytes(context):
+    """Site logo was ASCII field in 5.1, and Bytes field in 5.2.
+
+    zope.schema.ASCII inherits from NativeString.
+    With Python 2 this is the same as Bytes, but with Python 3 not:
+    you get a WrongType error when saving the site-controlpanel.
+    """
+    migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
