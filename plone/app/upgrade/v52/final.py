@@ -39,11 +39,10 @@ def rebuild_redirections(context):
 
 def move_dotted_to_named_behaviors(context):
     """named behaviors are better then dotted behaviors > let's move them."""
-    from plone import api
     from plone.behavior.registration import lookup_behavior_registration
     from plone.dexterity.interfaces import IDexterityFTI
 
-    ptt = api.portal.get_tool('portal_types')
+    ptt = getToolByName(context, 'portal_types')
 
     ftis = [fti for fti in ptt.objectValues() if IDexterityFTI.providedBy(fti)]
 
