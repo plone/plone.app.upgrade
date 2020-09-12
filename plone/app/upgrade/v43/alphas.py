@@ -11,7 +11,7 @@ import re
 
 
 logger = logging.getLogger('plone.app.upgrade')
-num_sort_regex = re.compile('\d+')
+num_sort_regex = re.compile(r'\d+')
 
 
 def reindex_sortable_title(context):
