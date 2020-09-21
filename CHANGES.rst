@@ -8,6 +8,30 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.35 (2020-09-21)
+-------------------
+
+Bug fixes:
+
+
+- Replaced import of plone.api, which should not be used by core.
+  [maurits] (#241)
+- Fixes a rare case in v52/betas while migration of relations: Missing attributes on cataloged relations are safely ignored.
+  [jensens] (#244)
+- Plone 5.1.7: Update resource registry ``last_compilation`` date.
+  [maurits] (#1006)
+- Catch deprecation warnings for ``webdav.LockItem.LockItem`` and ``CMFPlone.interfaces.ILanguageSchema``.
+  The first has been moved to ``OFS.LockItem``, the second to ``plone.i18n.interfaces``.
+  In older upgrade code, we should still try the old import first.
+  Fixed deprecation warning for zope.site.hooks.
+  Fixed invalid escape sequence.
+  [maurits] (#3130)
+- Migrate the ``plone.site_logo`` field from ASCII (native string) to Bytes.
+  Otherwise saving the site-controlpanel can fail with a WrongType error
+  Fixes `issue 3172 <https://github.com/plone/Products.CMFPlone/issues/3172>`_.
+  [maurits] (#3172)
+
+
 2.0.34 (2020-08-16)
 -------------------
 

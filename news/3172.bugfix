@@ -1,4 +1,0 @@
-Migrate the ``plone.site_logo`` field from ASCII (native string) to Bytes.
-Otherwise saving the site-controlpanel can fail with a WrongType error
-Fixes `issue 3172 <https://github.com/plone/Products.CMFPlone/issues/3172>`_.
-[maurits]
