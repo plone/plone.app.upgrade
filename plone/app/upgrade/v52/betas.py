@@ -94,7 +94,13 @@ def remove_interface_indexes_from_relations_catalog():
         except KeyError:
             intids.register(rel)
             added_rel_intids += 1
-        catalog.unindex(rel)
+        try:
+            catalog.unindex(rel)
+        except KeyError:
+            logger.warning("Broken relation ignored due to impossible unindex")
+            # there are rare cases with broken relations where the attributes
+            # are not complete, those can be ignored
+            continue
         try:
             catalog.index(rel)
         except IntIdMissingError:

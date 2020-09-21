@@ -1,0 +1,2 @@
+Fixes a rare case in v52/betas while migration of relations: Missing attributes on cataloged relations are safely ignored.
+[jensens]
