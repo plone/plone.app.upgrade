@@ -323,7 +323,7 @@ def removeFakeKupu(context):
 
 def addSortOnProperty(context):
     """Add sort_on field to search controlpanel.
-    
+
     The default value of this field is relevance.
     """
     site_properties = getToolByName(context, 'portal_properties').site_properties
@@ -355,7 +355,8 @@ def fix_double_smaxage(context):
     for name in (maxage, def_maxage, def_smaxage):
         if name not in registry:
             return
-    if registry.records[maxage].field.recordName != def_smaxage:
+    field = registry.records[maxage].field
+    if isinstance(field, FieldRef) and field.recordName != def_smaxage:
         # no fix needed
         return
     field_ref = FieldRef(def_maxage, registry.records[def_maxage].field)
