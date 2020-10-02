@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 
 import mock
+import sys
 
 
 class TestUpgrade(MigrationTest):
@@ -39,8 +40,14 @@ class TestUpgrade(MigrationTest):
 
     def testDoUpgrades(self):
         self.setRoles(['Manager'])
-        
-        self.setup.setLastVersionForProfile(_DEFAULT_PROFILE, '4013')
+
+        if sys.version_info.major == 2:
+            start_profile = '4013'
+        else:
+            # Python 3 is only supported on 5.2+.
+            # This means you can not upgrade from 5.1 or earlier.
+            start_profile = '5200'
+        self.setup.setLastVersionForProfile(_DEFAULT_PROFILE, start_profile)
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
         self.assertTrue(len(upgrades) > 0)
 
