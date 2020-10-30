@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.36 (2020-10-30)
+-------------------
+
+Breaking changes:
+
+
+- 6.0 alpha 1: remove the portal_quickinstaller tool.
+  See `PLIP 1775 <https://github.com/plone/Products.CMFPlone/issues/1775>`_.
+  [maurits] (#1775)
+
+
 2.0.35 (2020-09-21)
 -------------------
 
