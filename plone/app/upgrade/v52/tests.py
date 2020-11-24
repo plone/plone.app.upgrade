@@ -114,6 +114,7 @@ class SiteLogoTest(unittest.TestCase):
         migrate_site_logo_from_ascii_to_bytes(self.portal)
         record = self.registry.records['plone.site_logo']
         self.assertIsInstance(record.field, field.Bytes)
+        self.assertIsInstance(record.value, bytes)
         self.assertEqual(record.value, b"ABC")
 
     def test_missing_site_logo_record(self):
@@ -149,6 +150,23 @@ class SiteLogoTest(unittest.TestCase):
         migrate_site_logo_from_ascii_to_bytes(self.portal)
         record = self.registry.records['plone.site_logo']
         self.assertIsInstance(record.field, field.Bytes)
+        self.assertIsInstance(record.value, bytes)
+        self.assertEqual(record.value, b"native string")
+
+    @unittest.skipIf(six.PY3, 'Only test on Python 2')
+    def test_site_logo_field_bytes_value_text(self):
+        from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
+
+        del self.registry.records['plone.site_logo']
+        record_51 = Record(field.Bytes())
+        # This would give a WrongType error on Python 3:
+        record_51.value = "native string"
+        self.registry.records['plone.site_logo'] = record_51
+        # Migrate.
+        migrate_site_logo_from_ascii_to_bytes(self.portal)
+        record = self.registry.records['plone.site_logo']
+        self.assertIsInstance(record.field, field.Bytes)
+        self.assertIsInstance(record.value, bytes)
         self.assertEqual(record.value, b"native string")
 
     def test_migrate_record_from_ascii_to_bytes_with_prefix(self):
@@ -177,6 +195,7 @@ class SiteLogoTest(unittest.TestCase):
         # migrate_record_from_ascii_to_bytes("testfield", ITest, prefix="testing")
         record = self.registry.records["testing.testfield"]
         self.assertIsInstance(record.field, field.Bytes)
+        self.assertIsInstance(record.value, bytes)
         self.assertEqual(record.value, b"native string")
 
     def test_migrate_record_from_ascii_to_bytes_without_prefix(self):
@@ -208,6 +227,7 @@ class SiteLogoTest(unittest.TestCase):
         # migrate_record_from_ascii_to_bytes(record_name, ITest, prefix=ITest.__identifier__)
         record = self.registry.records[record_name]
         self.assertIsInstance(record.field, field.Bytes)
+        self.assertIsInstance(record.value, bytes)
         self.assertEqual(record.value, b"native string")
 
 

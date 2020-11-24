@@ -1,0 +1,4 @@
+Improved upgrade step for site_logo from ASCII to Bytes.
+The previous upgrade was incomplete and could remove the logo when called twice.
+See `comment on issue 3172 <https://github.com/plone/Products.CMFPlone/issues/3172#issuecomment-733085519>`_.
+[maurits]
