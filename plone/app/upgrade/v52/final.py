@@ -191,15 +191,19 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
         # Unexpected.  Registering the interface fixes this.
         registry.registerInterface(iface, prefix=prefix)
         return
-    if not isinstance(record.field, field.ASCII):
+    # Keep the original value so we can restore it.
+    original_value = record.value
+    if not isinstance(record.field, field.ASCII) and (
+        original_value is None or isinstance(original_value, bytes)
+    ):
         # All is well.
         # Actually, we might as well register the interface again for good measure.
         # For ISiteSchema I have seen a missing site_title field.
         registry.registerInterface(iface, prefix=prefix)
         return
-    # Keep the original value so we can restore it.
-    original_value = record.value
     # Delete the bad record.
+    # Calling registry.registerInterface would clean this up too,
+    # but being explicit seems good here.
     del registry.records[field_name]
     # Make sure the interface is fully registered again.
     # This should recreate the field correctly.
