@@ -17,6 +17,11 @@
            handler=".alphas.to60alpha1"
            />
 
+      <gs:upgradeStep
+           title="Remove broken temp_folder / tempstorage / Products.TemporaryStorage"
+           handler=".alphas.remove_temp_folder"
+           />
+
     </gs:upgradeSteps>
 
 
