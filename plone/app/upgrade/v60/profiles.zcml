@@ -12,4 +12,16 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!--
+    This is special, we want to reread the profile to create the FTI only if the old FTI
+    is not already a Dexterity one
+  -->
+  <genericsetup:registerProfile
+      name="to_dx_site_root"
+      title="Upgrade profile to change the FTI for the Plone Site object a dexterity one"
+      directory="profiles/to_dx_site_root"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>
