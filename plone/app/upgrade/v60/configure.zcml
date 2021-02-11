@@ -22,6 +22,11 @@
            handler=".alphas.remove_temp_folder"
            />
 
+      <gs:upgradeStep
+           title="Make the Plone Site a dexterity container"
+           handler=".alphas.make_site_dx"
+           />
+
     </gs:upgradeSteps>
 
 
