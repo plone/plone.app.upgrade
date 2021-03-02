@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.38 (2021-03-02)
+-------------------
+
+Bug fixes:
+
+
+- Make portal_setup objects accessible only to Manager/Owner.
+  See `GenericSetup issue 101 <https://github.com/zopefoundation/Products.GenericSetup/issues/101>`_.
+  [maurits] (#101)
+
+
 2.0.37 (2021-02-19)
 -------------------
 
