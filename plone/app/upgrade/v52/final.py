@@ -256,8 +256,10 @@ def secure_portal_setup_objects(context):
     See https://github.com/zopefoundation/Products.GenericSetup/pull/102
     """
     # context conveniently is the portal_setup too.
-    # Set permission on setup tool and its sub objects, which are the logs.
-    _recursive_strict_permission(context)
+    # Set permission on the sub objects of the setup tool, which are the logs.
+    for child in context.objectValues():
+        # Recursive is not strictly needed, but it does not hurt.
+        _recursive_strict_permission(child)
     logger.info("Made portal_setup logs only available for Manager and Owner.")
 
     # And now the snapshot folder and sub items, if they exist.
