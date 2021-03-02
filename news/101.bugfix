@@ -1,0 +1,3 @@
+Make portal_setup objects accessible only to Manager/Owner.
+See `GenericSetup issue 101 <https://github.com/zopefoundation/Products.GenericSetup/issues/101>`_.
+[maurits]
