@@ -8,6 +8,39 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.38 (2021-03-02)
+-------------------
+
+Bug fixes:
+
+
+- Make portal_setup objects accessible only to Manager/Owner.
+  See `GenericSetup issue 101 <https://github.com/zopefoundation/Products.GenericSetup/issues/101>`_.
+  [maurits] (#101)
+
+
+2.0.37 (2021-02-19)
+-------------------
+
+Breaking changes:
+
+
+- Remove temp_folder from Zope root if broken.
+  See `issue 2957 <https://github.com/plone/Products.CMFPlone/issues/2957>`_.
+  [maurits] (#2957)
+
+
+Bug fixes:
+
+
+- Plone 6.0: remove portal_form_controller tool.
+  [maurits] (#3057)
+- Improved upgrade step for site_logo from ASCII to Bytes.
+  The previous upgrade was incomplete and could remove the logo when called twice.
+  See `comment on issue 3172 <https://github.com/plone/Products.CMFPlone/issues/3172#issuecomment-733085519>`_.
+  [maurits] (#3172)
+
+
 2.0.36 (2020-10-30)
 -------------------
 

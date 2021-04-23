@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+from AccessControl.Permissions import view
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFPlone.utils import base_hasattr
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
@@ -238,3 +240,30 @@ def migrate_site_logo_from_ascii_to_bytes(context):
     you get a WrongType error when saving the site-controlpanel.
     """
     migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
+
+
+def _recursive_strict_permission(obj):
+    obj.manage_permission(view, ('Manager', 'Owner'), 0)
+    if base_hasattr(obj, 'objectValues'):
+        for child in obj.objectValues():
+            _recursive_strict_permission(child)
+
+
+def secure_portal_setup_objects(context):
+    """Make portal_setup objects accessible only to Manager/Owner.
+
+    This matches the GenericSetup code for new logs and snapshots.
+    See https://github.com/zopefoundation/Products.GenericSetup/pull/102
+    """
+    # context conveniently is the portal_setup too.
+    # Set permission on the sub objects of the setup tool, which are the logs.
+    for child in context.objectValues():
+        # Recursive is not strictly needed, but it does not hurt.
+        _recursive_strict_permission(child)
+    logger.info("Made portal_setup logs only available for Manager and Owner.")
+
+    # And now the snapshot folder and sub items, if they exist.
+    if not base_hasattr(context, "snapshots"):
+        return
+    _recursive_strict_permission(context.snapshots)
+    logger.info("Made portal_setup snapshots only available for Manager and Owner.")

@@ -181,4 +181,16 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5211"
+        destination="5212"
+        profile="Products.CMFPlone:plone">
+
+        <gs:upgradeStep
+            title="Make portal_setup logs accessible only to Manager/Owner."
+            handler=".final.secure_portal_setup_objects"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>

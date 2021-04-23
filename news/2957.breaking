@@ -1,3 +1,0 @@
-Remove temp_folder from Zope root if broken.
-See `issue 2957 <https://github.com/plone/Products.CMFPlone/issues/2957>`_.
-[maurits]
