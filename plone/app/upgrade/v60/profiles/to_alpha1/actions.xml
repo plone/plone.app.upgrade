@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+ <object name="object" meta_type="CMF Action Category">
+  <object name="history" meta_type="CMF Action" i18n:domain="plone">
+   <property name="permissions">
+    <element value="Modify portal content"/>
+   </property>
+  </object>
+ </object>
+</object>
