@@ -44,5 +44,4 @@
     i18n:attributes="title">
     <permission>Inspect Relations</permission>
   </configlet>
-
 </object>
