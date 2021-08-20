@@ -193,4 +193,18 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5212"
+        destination="5213"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.5 -->
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>

@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = '2.0.39.dev0'
+version = '2.0.40.dev0'
 
 setup(
     name='plone.app.upgrade',
@@ -17,6 +17,7 @@ setup(
         "Framework :: Plone :: 5.0",
         "Framework :: Plone :: 5.1",
         "Framework :: Plone :: 5.2",
+        "Framework :: Plone :: 6.0",
         "Framework :: Plone :: Core",
         "Framework :: Zope2",
         "Framework :: Zope :: 4",
@@ -27,6 +28,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     keywords='Plone upgrade migration',
     author='Plone Foundation',

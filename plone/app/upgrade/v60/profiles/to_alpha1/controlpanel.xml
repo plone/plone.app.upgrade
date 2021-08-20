@@ -36,6 +36,12 @@
     url_expr="string:${portal_url}/@@member-fields" visible="True"
     i18n:attributes="title">
     <permission>Plone Site Setup: Users and Groups</permission>
-   </configlet>
-
+  </configlet>
+  <configlet title="Relations" action_id="inspectrelations"
+    icon_expr="string:share-fill"
+    appId="Relations" category="plone-content" condition_expr=""
+    url_expr="string:${portal_url}/@@inspect-relations" visible="True"
+    i18n:attributes="title">
+    <permission>Inspect Relations</permission>
+  </configlet>
 </object>
