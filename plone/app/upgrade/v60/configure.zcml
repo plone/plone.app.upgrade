@@ -12,6 +12,16 @@
         profile="Products.CMFPlone:plone">
 
       <gs:upgradeStep
+           title="Be sure that the Plone Site FTI is a dexterity one"
+           handler=".alphas.change_plone_site_fti"
+           />
+
+      <gs:upgradeStep
+           title="Make the Plone Site a dexterity container"
+           handler=".alphas.make_site_dx"
+           />
+
+      <gs:upgradeStep
            title="Run to60alpha1 upgrade profile."
            description=""
            handler=".alphas.to60alpha1"
