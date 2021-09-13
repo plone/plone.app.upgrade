@@ -39,6 +39,17 @@ def remove_temp_folder(context):
         logger.info("Removed %s from Zope root _mount_points.", broken_id)
 
 
+FT_PROPERTIES_TO_KEEP = [
+    "allow_discussion",
+    "allowed_content_types",
+    "default_view",
+    "filter_content_types",
+    "global_allow",
+    "immediate_view",
+    "view_methods",
+]
+
+
 def change_plone_site_fti(context):
     pt = getToolByName(context, "portal_types")
     fti = pt.getTypeInfo("Plone Site")
@@ -48,8 +59,17 @@ def change_plone_site_fti(context):
         return
 
     # ... otherwise we fix it
+    # keep important settings (often customized ones)
+    keep = {prop: fti.getProperty(prop) for prop in FT_PROPERTIES_TO_KEEP}
+
     del pt["Plone Site"]
+
     loadMigrationProfile(context, "profile-plone.app.upgrade.v60:to_dx_site_root")
+
+    # restore important settings
+    fti = pt.getTypeInfo("Plone Site")
+    for prop, value in keep.items():
+        fti._setPropValue(prop, value)
 
 
 def make_site_dx(context):
