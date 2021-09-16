@@ -8,6 +8,31 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.40 (2021-09-16)
+-------------------
+
+Breaking changes:
+
+
+- Upgrade step to make the Plone site a dexterity object (#256)
+
+
+New features:
+
+
+- Protect @@historyview with Modify portal content permission. Fixes https://github.com/plone/Products.CMFPlone/issues/3297
+  [pbauer] (#254)
+- Add relations controlpanel as part of https://github.com/plone/Products.CMFPlone/pull/3232
+  [pbauer] (#255)
+
+
+Bug fixes:
+
+
+- Added upgrade to 6000, Plone 6.0.0a1.dev0.
+  [maurits] (#600)
+
+
 2.0.39 (2021-07-31)
 -------------------
 
