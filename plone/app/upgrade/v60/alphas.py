@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.dexterity.fti import DexterityFTI
+from plone.uuid.interfaces import ATTRIBUTE_NAME
+from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from ZODB.broken import Broken
+from zope.component import queryUtility
 from zope.component.hooks import getSite
 
 import logging
@@ -97,3 +100,19 @@ def make_site_dx(context):
 
     delattr(portal, "_objects")
     portal._p_changed = True
+
+
+def add_uuid_to_dxsiteroot(context):
+    """Give the Plone Site an UUID."""
+    portal = getSite()
+    if getattr(portal, ATTRIBUTE_NAME, None):
+        # we already have an UUID
+        return
+    generator = queryUtility(IUUIDGenerator)
+    if generator is None:
+        return
+    uuid = generator()
+    if not uuid:
+        return
+    setattr(portal, ATTRIBUTE_NAME, uuid)
+    portal.reindexObject()

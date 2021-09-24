@@ -41,11 +41,12 @@
         profile="Products.CMFPlone:plone">
 
        <gs:upgradeStep
-           title="Miscellaneous"
+           title="Fix UUID for DX Site Root"
            description=""
-           handler="..utils.null_upgrade_step"
+           handler=".alphas.add_uuid_to_dxsiteroot"
            />
 
     </gs:upgradeSteps>
+
 
 </configure>
