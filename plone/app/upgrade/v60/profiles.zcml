@@ -4,10 +4,9 @@
     i18n_domain="plone">
 
   <genericsetup:registerProfile
-      name="to60alpha1"
-      title="Upgrade profile for Plone 5.2.x to Plone 6.0alpha1"
-      description=""
-      directory="profiles/to_alpha1"
+      name="to6000"
+      title="Upgrade profile for Plone 5.2.x to Plone 6.0.0a1.dev0 (6000)"
+      directory="profiles/to6000"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />

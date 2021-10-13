@@ -14,10 +14,6 @@ import logging
 logger = logging.getLogger("plone.app.upgrade")
 
 
-def to60alpha1(context):
-    loadMigrationProfile(context, "profile-plone.app.upgrade.v60:to60alpha1")
-
-
 def remove_temp_folder(context):
     """Remove temp_folder from Zope root if broken."""
 
