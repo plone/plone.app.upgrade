@@ -21,10 +21,9 @@
            handler=".alphas.make_site_dx"
            />
 
-      <gs:upgradeStep
-           title="Run to60alpha1 upgrade profile."
-           description=""
-           handler=".alphas.to60alpha1"
+      <gs:upgradeDepends
+           title="Run to6000 upgrade profile."
+           import_profile="plone.app.upgrade.v60:to6000"
            />
 
       <gs:upgradeStep
