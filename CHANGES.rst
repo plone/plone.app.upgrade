@@ -8,6 +8,25 @@ Changelog
 
 .. towncrier release notes start
 
+2.0.41 (2021-10-16)
+-------------------
+
+Bug fixes:
+
+
+- Add an UUID to existing, migrated site roots. [jensens] (#258)
+- Add upgrade to 5214, Plone 5.2.6.
+  [maurits] (#5214)
+- Renamed ``v60/profiles/to_alpha1`` to ``to6000``.
+  We have no Plone alpha1 release yet, but do have a pre alpha.
+  [maurits] (#6000)
+- Added upgrade to 6001, Plone 6.0.0a1.dev1.
+  [maurits]
+
+  Fix icon_expr in typeinfo action
+  [petschki] (#6001)
+
+
 2.0.40 (2021-09-16)
 -------------------
 
