@@ -149,6 +149,22 @@ def cleanUpSkinsTool(context):
         skins.selections[layer] = ','.join(new_paths)
 
 
+def cleanUpToolRegistry(context):
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    toolset = context.getToolsetRegistry()
+    required = toolset._required.copy()
+    existing = portal.keys()
+    changed = False
+    items = list(required.items())
+    for name, info in items:
+        if name not in existing:
+            del required[name]
+            changed = True
+    if changed:
+        toolset._required = required
+        logger.info('Cleaned up the toolset registry.')
+
+
 def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     """Installs a product
 
