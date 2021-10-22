@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<object name="ATDateRangeCriterion">
- <property name="icon_expr">string:${portal_url}/document_icon.png</property>
- <action action_id="references" category="object" remove="True"/>
-</object>

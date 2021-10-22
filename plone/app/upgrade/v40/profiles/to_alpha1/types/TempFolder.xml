@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<object name="TempFolder">
- <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
- <property name="immediate_view">index_html</property>
-</object>

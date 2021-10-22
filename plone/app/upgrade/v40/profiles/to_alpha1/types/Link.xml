@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<object name="Link">
- <property name="icon_expr">string:${portal_url}/link_icon.png</property>
- <action action_id="references" category="object" remove="True"/>
-</object>

@@ -1,7 +1,0 @@
-<object name="portal_catalog" meta_type="Plone Catalog Tool">
-  <index name="getObjPositionInParent" remove="True" />
-  <index name="getObjPositionInParent" meta_type="GopipIndex">
-    <indexed_attr value="getObjPositionInParent"/>
-  </index>
-  <index name="getEventType" remove="True" />
-</object>
