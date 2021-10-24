@@ -4,25 +4,12 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone">
 
-    <include package=".v40" />
-    <include package=".v41" />
-    <include package=".v42" />
-    <include package=".v43" />
-    <include package=".v50" zcml:condition="have plone-5" />
-    <include package=".v51" zcml:condition="have plone-51" />
-    <include package=".v52" zcml:condition="have plone-52" />
+    <include package=".v52" />
     <include package=".v60" zcml:condition="have plone-60" />
 
     <utility
-        zcml:condition="have plone-51"
         factory=".HiddenProducts"
         provides="Products.CMFPlone.interfaces.INonInstallable"
-        name="plone.app.upgrade"
-        />
-    <utility
-        zcml:condition="installed Products.CMFQuickInstallerTool"
-        factory=".HiddenProducts"
-        provides="Products.CMFQuickInstallerTool.interfaces.INonInstallable"
         name="plone.app.upgrade"
         />
 

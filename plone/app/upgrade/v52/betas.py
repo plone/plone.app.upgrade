@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from plone.app.upgrade.utils import cleanUpToolRegistry
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.app.upgrade.v40.alphas import cleanUpToolRegistry
 from Products.CMFCore.utils import getToolByName
 from types import ModuleType
 from zc.relation.interfaces import ICatalog

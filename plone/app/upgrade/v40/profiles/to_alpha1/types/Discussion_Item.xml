@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<object name="Discussion Item">
- <property name="icon_expr">string:${portal_url}/discussionitem_icon.png</property>
-</object>

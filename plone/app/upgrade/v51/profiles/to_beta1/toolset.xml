@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<tool-setup>
- <required tool_id="portal_password_reset"
-           class="Products.CMFPlone.PasswordResetTool.PasswordResetTool"/>
-</tool-setup>
