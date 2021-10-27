@@ -45,6 +45,12 @@
            handler=".alphas.add_uuid_to_dxsiteroot"
            />
 
+       <gs:upgradeStep
+           title="Index the Site Root"
+           description=""
+           handler=".alphas.index_siteroot"
+           />
+
     </gs:upgradeSteps>
 
 
