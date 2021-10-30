@@ -111,4 +111,9 @@ def add_uuid_to_dxsiteroot(context):
     if not uuid:
         return
     setattr(portal, ATTRIBUTE_NAME, uuid)
+
+
+def index_siteroot(context):
+    """Index the Plone Site"""
+    portal = getSite()
     portal.reindexObject()
