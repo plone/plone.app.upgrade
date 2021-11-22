@@ -45,6 +45,13 @@
            handler=".alphas.add_uuid_to_dxsiteroot"
            />
 
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="6001"
+        destination="6002"
+        profile="Products.CMFPlone:plone">
+
        <gs:upgradeStep
            title="Index the Site Root"
            description=""
