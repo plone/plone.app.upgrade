@@ -1,3 +1,0 @@
-Removed upgrade steps from Plone 5.1 and lower.
-You can only migrate to Plone 6 from a site that is already Python 3, so Plone 5.2.
-[maurits]

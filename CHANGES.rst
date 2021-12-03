@@ -8,6 +8,24 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0a1 (2021-12-03)
+--------------------
+
+Breaking changes:
+
+
+- Removed upgrade steps from Plone 5.1 and lower.
+  You can only migrate to Plone 6 from a site that is already Python 3, so Plone 5.2.
+  [maurits] (#227)
+
+
+Bug fixes:
+
+
+- Index the Plone site root (#264)
+- Added upgrade to 6002, Plone 6.0.0a2.  [maurits] (#6002)
+
+
 2.0.41 (2021-10-16)
 -------------------
 
