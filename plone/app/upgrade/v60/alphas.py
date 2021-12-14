@@ -154,7 +154,7 @@ def _fix_properties(obj, path=None):
     The unicode variants are planned to be removed in Zope 6.
 
     Intended usage:
-    app.ZopeFindAndApply(app, apply_func=fix_properties)
+    app.ZopeFindAndApply(app, search_sub=1, apply_func=fix_properties)
     """
     if path is None:
         # When using ZopeFindAndApply, path is always given.
@@ -263,4 +263,4 @@ def fix_unicode_properties(context):
         fix_properties = _fix_properties
     portal = getSite()
     portal.reindexObject()
-    portal.ZopeFindAndApply(portal, apply_func=fix_properties)
+    portal.ZopeFindAndApply(portal, search_sub=1, apply_func=fix_properties)
