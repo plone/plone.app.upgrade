@@ -65,11 +65,10 @@
         destination="6003"
         profile="Products.CMFPlone:plone">
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
-            />
+       <gs:upgradeStep
+           title="Fix unicode properties"
+           handler=".alphas.fix_unicode_properties"
+           />
 
     </gs:upgradeSteps>
 
