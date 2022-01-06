@@ -13,7 +13,7 @@
 
   <genericsetup:registerProfile
       name="to6003"
-      title="Upgrade profile for Plone 5.2.x to Plone 6.0.0a3.dev0 (6003)"
+      title="Upgrade profile to Plone 6.0.0a3 (6003)"
       directory="profiles/to6003"
       for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
