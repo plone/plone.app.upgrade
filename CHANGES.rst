@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+2.1.0 (2022-01-25)
+------------------
+
+New features:
+
+
+- Removed the Plone 6 upgrade code.
+  From now on, the 2.x branch is for Plone 5.2, master is for Plone 6.
+  [maurits] (#227)
+
+
+Bug fixes:
+
+
+- Added upgrade to 5215, Plone 5.2.7.  [maurits] (#5215)
+
+
 2.0.41 (2021-10-16)
 -------------------
 
