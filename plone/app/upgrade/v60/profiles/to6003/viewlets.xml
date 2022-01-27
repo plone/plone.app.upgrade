@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object>
+  <order manager="plone.portalheader" skinname="Plone Default" purge="false">
+    <viewlet name="plone.favicon" />
+  </order>
+</object>
