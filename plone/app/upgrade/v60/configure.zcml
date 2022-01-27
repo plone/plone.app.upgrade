@@ -87,6 +87,11 @@
           handler="..utils.null_upgrade_step"
           />
 
+      <gs:upgradeDepends
+           title="Run to6004 upgrade profile."
+           import_profile="plone.app.upgrade.v60:to6004"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
