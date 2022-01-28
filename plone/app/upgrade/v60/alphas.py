@@ -292,14 +292,27 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     # Otherwise the bundles we delete will come back to haunt us
     context.upgradeProfile("plone.staticresources:default", dest="208")
 
-    # Remove all plone.resouces from the registry
+    # Remove obsolete records from the registry
+    removed_keys = [
+        "plone.resources/",
+        "plone.lessvariables",
+        "plone.resources.configjs",
+        "plone.resources.last_legacy_import",
+        "plone.resources.less-modify",
+        "plone.resources.less-variables",
+        "plone.resources.lessc",
+        "plone.resources.requirejs",
+        "plone.resources.rjs",
+    ]
     to_delete = []
     for key in registry.records:
-        if key.startswith("plone.resources/"):
-            to_delete.append(key)
+        for removed_key in removed_keys:
+            if key.startswith(removed_key):
+                to_delete.append(key)
+                logger.debug(u"Removed record {}".format(key))
     for key in to_delete:
         del registry.records[key]
-    logger.info(u"Removed {} plone.resources records from registry".format(len(to_delete)))
+    logger.info(u"Removed {} records from registry".format(len(to_delete)))
 
     # make sure they are all gone
     try:
@@ -350,6 +363,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         for removed_field in removed_fields:
             if key.startswith("plone.bundles/") and key.endswith(removed_field):
                 to_delete.append(key)
+                logger.debug(u"Removed record {}".format(key))
     for key in to_delete:
         del registry.records[key]
     logger.info(u"Removed {} deprecated bundle attributes from registry".format(len(to_delete)))
