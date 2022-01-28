@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.dexterity.fti import DexterityFTI
+from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import ATTRIBUTE_NAME
 from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IBundleRegistry
 from Products.CMFPlone.utils import safe_unicode
 from ZODB.broken import Broken
+from zope.component import getUtility
 from zope.component import queryUtility
 from zope.component.hooks import getSite
 
@@ -278,3 +281,75 @@ def fix_unicode_properties(context):
     portal = getSite()
     portal.reindexObject()
     portal.ZopeFindAndApply(portal, search_sub=1, apply_func=fix_properties)
+
+
+def cleanup_resources_and_bundles_in_registry(context=None):
+    """Fix registry for es6 resources and new resource registry.
+    """
+    registry = getUtility(IRegistry)
+
+    # We need to upgrade staticresources first.
+    # Otherwise the bundles we delete will come back to haunt us
+    context.upgradeProfile("plone.staticresources:default", dest="208")
+
+    # Remove all plone.resouces from the registry
+    to_delete = []
+    for key in registry.records:
+        if key.startswith("plone.resources/"):
+            to_delete.append(key)
+    for key in to_delete:
+        del registry.records[key]
+    logger.info(u"Removed {} plone.resources records from registry".format(len(to_delete)))
+
+    # make sure they are all gone
+    try:
+        from Products.CMFPlone.interfaces import IResourceRegistry
+        records = registry.collectionOfInterface(
+            IResourceRegistry, prefix="plone.resources", check=False
+        )
+        assert(len(records) == 0)
+    except ImportError:
+        # the interface may be removed at some point
+        pass
+
+    # Remove obsolete bundles and reload the default bundles
+    # The default bundles are reloaded in v60/profiles/to6003/registry.xml
+    removed_bundles = [
+        "filemanager",
+        "plone-base",
+        "plone-datatables",
+        "plone-editor-tools",
+        "plone-fontello",
+        "plone-glyphicons",
+        "plone-moment",
+        "plone-tinymce",
+        "resourceregistry",
+        "thememapper",
+        "plone-legacy",
+        "plone-logged-in",
+    ]
+    bundles = registry.collectionOfInterface(
+        IBundleRegistry, prefix="plone.bundles", check=False
+    )
+    for name in removed_bundles:
+        if name in bundles:
+            del bundles[name]
+            logger.info(u"Removed bundle {}".format(name))
+
+    # Remove deprecated bundle fields
+    removed_fields = [
+        "compile",
+        "develop_javascript",
+        "last_compilation",
+        "merge_with",
+        "resources",
+        "stub_js_modules",
+    ]
+    to_delete = []
+    for key in registry.records:
+        for removed_field in removed_fields:
+            if key.startswith("plone.bundles/") and key.endswith(removed_field):
+                to_delete.append(key)
+    for key in to_delete:
+        del registry.records[key]
+    logger.info(u"Removed {} deprecated bundle attributes from registry".format(len(to_delete)))

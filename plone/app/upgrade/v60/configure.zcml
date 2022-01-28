@@ -83,9 +83,14 @@
         profile="Products.CMFPlone:plone">
 
       <gs:upgradeDepends
-           title="Run to6004 upgrade profile."
-           import_profile="plone.app.upgrade.v60:to6004"
-           />
+          title="Run to6004 upgrade profile."
+          import_profile="plone.app.upgrade.v60:to6004"
+          />
+
+      <gs:upgradeStep
+          title="Cleanup resources and bundles"
+          handler=".alphas.cleanup_resources_and_bundles_in_registry"
+          />
 
     </gs:upgradeSteps>
 
