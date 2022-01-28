@@ -6,6 +6,7 @@ from plone.uuid.interfaces import ATTRIBUTE_NAME
 from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IBundleRegistry
+from Products.CMFPlone.utils import get_installer
 from Products.CMFPlone.utils import safe_unicode
 from ZODB.broken import Broken
 from zope.component import getUtility
@@ -367,3 +368,15 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     for key in to_delete:
         del registry.records[key]
     logger.info(u"Removed {} deprecated bundle attributes from registry".format(len(to_delete)))
+
+    # local default controlpanel icons
+    installer = get_installer(context)
+    loadMigrationProfile(context, "profile-Products.CMFPlone:plone", steps=["controlpanel"])
+    if installer.is_profile_installed("plone.app.theming:default"):
+        loadMigrationProfile(context, "profile-plone.app.theming:default", steps=["controlpanel"])
+    if installer.is_profile_installed("plone.app.registry:default"):
+        loadMigrationProfile(context, "profile-plone.app.registry:default", steps=["controlpanel"])
+    if installer.is_profile_installed("plone.app.caching:default"):
+        loadMigrationProfile(context, "profile-plone.app.caching:default", steps=["controlpanel"])
+    if installer.is_profile_installed("Products.CMFPlacefulWorkflow:base"):
+        loadMigrationProfile(context, "profile-Products.CMFPlacefulWorkflow:base", steps=["controlpanel"])
