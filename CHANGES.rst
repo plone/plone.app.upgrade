@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0a2 (2022-01-28)
+--------------------
+
+Bug fixes:
+
+
+- Upgrade Step for renamed error-log-form view link in ControlPanel
+  [jmevissen] (#266)
+- Fix unicode properties.
+  See `issue 3305 <https://github.com/plone/Products.CMFPlone/issues/3305>`_.
+  [maurits] (#3305)
+- Added upgrade to 6003, Plone 6.0.0a3.  [maurits] (#6003)
+
+
 3.0.0a1 (2021-12-03)
 --------------------
 
