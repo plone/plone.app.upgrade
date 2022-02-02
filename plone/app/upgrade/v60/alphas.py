@@ -166,11 +166,19 @@ def _fix_properties(obj, path=None):
             # We don't care about the path then, it is only shown in logs.
             path = "/dummy"
 
+    if not hasattr(obj, "_updateProperty"):
+        # Seen with portal_url tool, most items in portal_skins,
+        # catalog lexicons, workflow states/transitions/variables, etc.
+        return
     try:
         prop_map = obj.propertyMap()
-    except AttributeError:
-        # Object does not inherit from PropertyManager.
-        # For example 'MountedObject'.
+    except (AttributeError, TypeError, KeyError, ValueError):
+        # If getting the property map fails, there is nothing we can do.
+        # Problems seen in practice:
+        # - Object does not inherit from PropertyManager,
+        #   for example 'MountedObject'.
+        # - Object is a no longer existing skin layer.
+        logger.warning("Error getting property map from %s", path)
         return
 
     for prop_info in prop_map:
@@ -256,11 +264,17 @@ def fix_unicode_properties(context):
     If it is not there, we use our own copy.
     The Zope one should be leading though.
     Our copy can be removed when Zope 5.4. is released.
+
+    Update: there is a problem with both versions of the code,
+    so for the moment we fix it in our own version,
+    and always use it.
+    See https://github.com/plone/plone.app.upgrade/issues/270
     """
-    try:
-        from ZPublisher.utils import fix_properties
-    except ImportError:
-        fix_properties = _fix_properties
+    # try:
+    #     from ZPublisher.utils import fix_properties
+    # except ImportError:
+    #     fix_properties = _fix_properties
+    fix_properties = _fix_properties
     portal = getSite()
     portal.reindexObject()
     portal.ZopeFindAndApply(portal, search_sub=1, apply_func=fix_properties)
