@@ -1,0 +1,2 @@
+Fix several exceptions when calling ``fix_unicode_properties``.
+[maurits]
