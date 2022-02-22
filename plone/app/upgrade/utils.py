@@ -380,3 +380,21 @@ def get_property(context, property_name, default_value=None):
         return getattr(context, property_name, default_value)
     except AttributeError:
         return default_value
+
+
+def remove_configlets(context):
+    portal_controlpanel = getToolByName(context, "portal_controlpanel")
+    # Remove "Change Password" from Controlpanel
+    _remove_configlet_by_id(portal_controlpanel, "MemberPassword")
+    # Remove "Personal Preferences" from Controlpanel
+    _remove_configlet_by_id(portal_controlpanel, "MemberPrefs")
+
+
+def _remove_configlet_by_id(tool, action_id=None):
+    if not action_id:
+        return
+    if not tool:
+        return
+    if action_id not in tool.keys():
+        return
+    del tool[action_id]
