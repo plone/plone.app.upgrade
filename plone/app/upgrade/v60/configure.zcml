@@ -82,11 +82,6 @@
         destination="6004"
         profile="Products.CMFPlone:plone">
 
-      <gs:upgradeStep
-          title="Miscellaneous upgrades to Plone 6.0.0a4"
-          handler="..utils.null_upgrade_step"
-          />
-
       <gs:upgradeDepends
            title="Run to6004 upgrade profile."
            import_profile="plone.app.upgrade.v60:to6004"
