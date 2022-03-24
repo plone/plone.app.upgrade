@@ -311,6 +311,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
             if key.startswith(removed_key):
                 to_delete.append(key)
                 logger.debug(u"Removed record {}".format(key))
+                break
     for key in to_delete:
         del registry.records[key]
     logger.info(u"Removed {} records from registry".format(len(to_delete)))
