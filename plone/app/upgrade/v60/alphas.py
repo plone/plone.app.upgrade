@@ -381,3 +381,62 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         loadMigrationProfile(context, "profile-plone.app.caching:default", steps=["controlpanel"])
     if installer.is_profile_installed("Products.CMFPlacefulWorkflow:base"):
         loadMigrationProfile(context, "profile-Products.CMFPlacefulWorkflow:base", steps=["controlpanel"])
+
+
+def add_new_image_scales(context):
+    """Add new image scales.
+
+    See PLIP 3279, which adds and updates a few scales, and especially my
+    comment on how we should handle upgrades:
+    https://github.com/plone/Products.CMFPlone/issues/3279#issuecomment-1064970253
+
+    Summary: we want an upgrade step in plone.app.upgrade that adds the
+    completely new scales, without changing existing scales.
+    """
+    registry = getUtility(IRegistry)
+    record = registry.records["plone.allowed_sizes"]
+    new_scales = [
+        "huge 1600:65536",
+        "great 1200:65536",
+        "larger 1000:65536",
+        "teaser 600:65536",
+    ]
+    changed = False
+    # Get the old/current value, without empty lines.
+    old_value = [line for line in record.value if line.strip()]
+    for line in new_scales:
+        found = False
+        new_name, new_dimensions = line.split()
+        for old_line in old_value:
+            try:
+                old_name, old_dimensions = old_line.split()
+            except (ValueError, KeyError, TypeError):
+                continue
+            if old_name == new_name:
+                # A scale with this name is already defined.  Keep it.
+                found = True
+                break
+        if found:
+            continue
+        old_value.append(line)
+        logger.info("Added image scale: %s", line)
+        changed = True
+
+    if not changed:
+        return
+
+    def sorter(value):
+        try:
+            dimensions = value.strip().split()[-1]
+            width, height = dimensions.split(":")
+            width = int(width)
+            height = int(height)
+        except (ValueError, KeyError, TypeError):
+            return (0, 0)
+        return width, height
+
+    # Sort the lines.
+    new_value = sorted(old_value, key=sorter, reverse=True)
+
+    # Explicitly save the record.
+    record.value = new_value

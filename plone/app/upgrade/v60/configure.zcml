@@ -92,6 +92,11 @@
           handler=".alphas.cleanup_resources_and_bundles_in_registry"
           />
 
+       <gs:upgradeStep
+           title="Add new image scales."
+           handler=".alphas.add_new_image_scales"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
