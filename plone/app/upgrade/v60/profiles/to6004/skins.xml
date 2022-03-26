@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="plone_form_scripts" remove="true" />
+ <object name="plone_prefs" remove="true" />
+ <skin-path name="*">
+  <layer name="plone_form_scripts" remove="true" />
+  <layer name="plone_prefs" remove="true" />
+ </skin-path>
+</object>
