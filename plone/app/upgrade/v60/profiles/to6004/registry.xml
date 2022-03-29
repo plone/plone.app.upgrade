@@ -18,9 +18,9 @@
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/plone" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+  <records prefix="plone.bundles/jquery" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
     <value key="enabled">True</value>
-    <value key="jscompilation">++plone++static/bundle-plone/bundle.min.js</value>
+    <value key="jscompilation">++plone++static/bundle-jquery/jquery.min.js</value>
     <value key="csscompilation"></value>
     <value key="expression"></value>
     <value key="depends"></value>
@@ -28,12 +28,11 @@
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/plone-logged-in" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
-    <value key="merge_with">logged-in</value><!-- needs to be here -->
-    <value key="enabled">False</value>
-    <value key="expression">python: False</value>
-    <value key="jscompilation">++plone++static/plone-logged-in-compiled.min.js</value><!-- needs to be here -->
+  <records prefix="plone.bundles/plone" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+    <value key="enabled">True</value>
+    <value key="jscompilation">++plone++static/bundle-plone/bundle.min.js</value>
     <value key="csscompilation"></value>
+    <value key="expression"></value>
     <value key="depends"></value>
     <value key="load_async">False</value>
     <value key="load_defer">False</value>
