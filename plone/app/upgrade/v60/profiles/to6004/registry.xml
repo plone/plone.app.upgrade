@@ -55,4 +55,8 @@
     <value key="resource">++plone++bootstrap-icons/eye.svg</value>
   </record>
 
+  <record name="plone.content_css">
+    <value purge="True"></value>
+  </record>
+
 </registry>
