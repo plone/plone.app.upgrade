@@ -47,4 +47,12 @@
     <value key="load_defer">False</value>
   </records>
 
+  <!-- Add new plone-view icon -->
+  <record name="plone.icon.plone-view">
+    <field type="plone.registry.field.TextLine">
+      <title>Plone Icon eye</title>
+    </field>
+    <value key="resource">++plone++bootstrap-icons/eye.svg</value>
+  </record>
+
 </registry>
