@@ -359,6 +359,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         "merge_with",
         "resources",
         "stub_js_modules",
+        "conditionalcomment",
     ]
     to_delete = []
     for key in registry.records:
