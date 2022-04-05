@@ -7,7 +7,6 @@ from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IBundleRegistry
 from Products.CMFPlone.utils import get_installer
-from Products.CMFPlone.utils import safe_unicode
 from ZODB.broken import Broken
 from zope.component import getUtility
 from zope.component import queryUtility
@@ -124,133 +123,6 @@ def index_siteroot(context):
     portal.reindexObject()
 
 
-def _string_tuple(value):
-    # Copy of ZPublisher.utils._string_tuple which will be released in Zope 5.4.
-    if not value:
-        return ()
-    return tuple([safe_unicode(element) for element in value])
-
-
-def _fix_properties(obj, path=None):
-    """Fix properties on object.
-
-    Copy of ZPublisher.utils.fix_properties which will be released in Zope 5.4.
-    See https://github.com/zopefoundation/Zope/pull/993
-
-    This does two things:
-
-    1. Make sure lines contain only strings, instead of bytes,
-       or worse: a combination of strings and bytes.
-    2. Replace deprecated ulines, utext, utoken, and ustring properties
-       with their non-unicode variant, using native strings.
-
-    See https://github.com/zopefoundation/Zope/issues/987
-
-    Since Zope 5.3, a lines property stores strings instead of bytes.
-    But there is no migration yet.  (We do that here.)
-    Result is that getProperty on an already created lines property
-    will return the old value with bytes, but a newly created lines property
-    will return strings.  And you might get combinations.
-
-    Also since Zope 5.3, the ulines property type is deprecated.
-    You should use a lines property instead.
-    Same for a few others: utext, utoken, ustring.
-    The unicode variants are planned to be removed in Zope 6.
-
-    Intended usage:
-    app.ZopeFindAndApply(app, search_sub=1, apply_func=fix_properties)
-    """
-    if path is None:
-        # When using ZopeFindAndApply, path is always given.
-        # But we may be called by other code.
-        if hasattr(object, 'getPhysicalPath'):
-            path = '/'.join(object.getPhysicalPath())
-        else:
-            # Some simple object, for example in tests.
-            # We don't care about the path then, it is only shown in logs.
-            path = "/dummy"
-
-    if not hasattr(obj, "_updateProperty"):
-        # Seen with portal_url tool, most items in portal_skins,
-        # catalog lexicons, workflow states/transitions/variables, etc.
-        return
-    try:
-        prop_map = obj.propertyMap()
-    except (AttributeError, TypeError, KeyError, ValueError):
-        # If getting the property map fails, there is nothing we can do.
-        # Problems seen in practice:
-        # - Object does not inherit from PropertyManager,
-        #   for example 'MountedObject'.
-        # - Object is a no longer existing skin layer.
-        logger.warning("Error getting property map from %s", path)
-        return
-
-    for prop_info in prop_map:
-        # Example: {'id': 'title', 'type': 'string', 'mode': 'w'}
-        prop_id = prop_info.get("id")
-        current = obj.getProperty(prop_id)
-        if current is None:
-            continue
-        new_type = prop_type = prop_info.get("type")
-        if prop_type == "lines":
-            new = _string_tuple(current)
-        elif prop_type == "ulines":
-            new_type = "lines"
-            new = _string_tuple(current)
-        elif prop_type == "utokens":
-            new_type = "tokens"
-            new = _string_tuple(current)
-        elif prop_type == "utext":
-            new_type = "text"
-            new = safe_unicode(current)
-        elif prop_type == "ustring":
-            new_type = "string"
-            new = safe_unicode(current)
-        else:
-            continue
-        if prop_type != new_type:
-            # Replace with non-unicode variant.
-            # This could easily lead to:
-            # Exceptions.BadRequest: Invalid or duplicate property id.
-            #   obj._delProperty(prop_id)
-            #   obj._setProperty(prop_id, new, new_type)
-            # So fix it by using internal details.
-            for prop in obj._properties:
-                if prop.get("id") == prop_id:
-                    prop["type"] = new_type
-                    obj._p_changed = True
-                    break
-            else:
-                # This probably cannot happen.
-                # If it does, we want to know.
-                logger.warning(
-                    "Could not change property %s from %s to %s for %s",
-                    prop_id,
-                    prop_type,
-                    new_type,
-                    path,
-                )
-                continue
-            obj._updateProperty(prop_id, new)
-            logger.info(
-                "Changed property %s from %s to %s for %s",
-                prop_id,
-                prop_type,
-                new_type,
-                path,
-            )
-            continue
-        if current != new:
-            obj._updateProperty(prop_id, new)
-            logger.info(
-                "Changed property %s at %s so value fits the type %s: %r",
-                prop_id,
-                path,
-                prop_type,
-                new,
-            )
-
-
 def fix_unicode_properties(context):
     """Fix unicode properties.
 
@@ -263,24 +135,14 @@ def fix_unicode_properties(context):
 
     See https://github.com/plone/Products.CMFPlone/issues/3305
 
-    The main function we use here will be in Zope 5.4:
+    The main function we use was added in Zope 5.4:
     https://github.com/zopefoundation/Zope/pull/993
-    If it is not there, we use our own copy.
-    The Zope one should be leading though.
-    Our copy can be removed when Zope 5.4. is released.
-
-    Update: there is a problem with both versions of the code,
-    so for the moment we fix it in our own version,
-    and always use it.
-    See https://github.com/plone/plone.app.upgrade/issues/270
+    and improved in Zope 5.5:
+    https://github.com/zopefoundation/Zope/pull/1009
     """
-    # try:
-    #     from ZPublisher.utils import fix_properties
-    # except ImportError:
-    #     fix_properties = _fix_properties
-    fix_properties = _fix_properties
+    from ZPublisher.utils import fix_properties
+
     portal = getSite()
-    portal.reindexObject()
     portal.ZopeFindAndApply(portal, search_sub=1, apply_func=fix_properties)
 
 
