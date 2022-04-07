@@ -59,4 +59,7 @@
     <value purge="True"></value>
   </record>
 
+  <records interface="Products.CMFPlone.interfaces.ISearchSchema"
+           prefix="plone" />
+
 </registry>
