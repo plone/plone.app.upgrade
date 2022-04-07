@@ -8,6 +8,49 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0a4 (2022-04-08)
+--------------------
+
+New features:
+
+
+- Add upgrades to migrate existing site to es6. [pbauer] (#269)
+- Add plone-view icon.
+  Ref: https://github.com/plone/plone.staticresources/commit/59bb178620b186f07a058cedefeeec1039f5c821
+  [thet] (#279)
+- Reload ISearchSettings to add support for images in liveSearch results.
+  [agitator+maurits] (#3489)
+
+
+Bug fixes:
+
+
+- Remove old ``plone.session`` bundles.
+  Reapply its new registry settings, if its optional refresh support is installed.
+  Part of `plone.session issue 24 <https://github.com/plone/plone.session/issues/24>`_.
+  [maurits] (#24)
+- Upgrade step to remove the removed viewlet plone.header
+  [erral] (#268)
+- Fix several exceptions when calling ``fix_unicode_properties``.
+  Depend on Zope 5.5 to use its official version of this function.
+  [maurits] (#270)
+- Added upgrade to remove Configlets "Change Member Password" and "Member Prefs"
+  [1letter] (#272)
+- Do not reload plone-logged-in during upgrade. Add jquery bundle.
+  [pbauer] (#277)
+- Add eventedit bundle on upgrade.
+  [pbauer] (#278)
+- Clear out plone.content_css
+  [pbauer] (#280)
+- Remove deprecated `conditionalcomment` field from IBundleRegistry
+  [petschki] (#283)
+- Removed empty skin layers ``plone_prefs`` and ``plone_form_scripts``.
+  [maurits] (#3240)
+- Add new image scales.
+  [maurits] (#3279)
+- Added upgrade to 6004, Plone 6.0.0a4.  [maurits] (#6004)
+
+
 3.0.0a3 (2022-01-28)
 --------------------
 

@@ -1,3 +1,0 @@
-Fix several exceptions when calling ``fix_unicode_properties``.
-Depend on Zope 5.5 to use its official version of this function.
-[maurits]

@@ -1,4 +1,0 @@
-Remove old ``plone.session`` bundles.
-Reapply its new registry settings, if its optional refresh support is installed.
-Part of `plone.session issue 24 <https://github.com/plone/plone.session/issues/24>`_.
-[maurits]
