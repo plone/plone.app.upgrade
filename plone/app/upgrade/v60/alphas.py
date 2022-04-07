@@ -293,6 +293,11 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     # Otherwise the bundles we delete will come back to haunt us
     context.upgradeProfile("plone.staticresources:default", dest="208")
 
+    # Also reregister the newly defined plone.session bundle if it is installed.
+    installer = get_installer(context)
+    if installer.is_profile_installed("plone.session:default"):
+        loadMigrationProfile(context, "profile-plone.session:default", steps=["plone.app.registry"])
+
     # Remove obsolete records from the registry
     removed_keys = [
         "plone.resources/",
@@ -342,6 +347,8 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         "thememapper",
         "plone-legacy",
         "plone-logged-in",
+        "plone-session-pseudo-css",
+        "plone-session-js",
     ]
     bundles = registry.collectionOfInterface(
         IBundleRegistry, prefix="plone.bundles", check=False
@@ -354,6 +361,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     # Remove deprecated bundle fields
     removed_fields = [
         "compile",
+        "develop_css",
         "develop_javascript",
         "last_compilation",
         "merge_with",
@@ -372,7 +380,6 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     logger.info(u"Removed {} deprecated bundle attributes from registry".format(len(to_delete)))
 
     # local default controlpanel icons
-    installer = get_installer(context)
     loadMigrationProfile(context, "profile-Products.CMFPlone:plone", steps=["controlpanel"])
     if installer.is_profile_installed("plone.app.theming:default"):
         loadMigrationProfile(context, "profile-plone.app.theming:default", steps=["controlpanel"])
