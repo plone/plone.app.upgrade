@@ -35,31 +35,29 @@ setup(
     zip_safe=False,
     extras_require=dict(
         test=[
-            'plone.app.caching',
             'plone.app.testing',
-            'plone.app.theming',
+            'plone.app.redirector',
         ]
     ),
     install_requires=[
         'setuptools',
         'plone.base',
-        'plone.portlets',
+        'plone.registry',
+        'plone.folder',
+        'plone.uuid',
         'transaction',
         'zope.component',
         'zope.interface',
-        'zope.ramcache',
         'Acquisition',
         'Products.CMFPlone>=6.0.0a1',
         'Products.CMFCore',
         'Products.CMFEditions',
         'Products.GenericSetup',
         'Products.PlonePAS',
-        'Products.PluggableAuthService',
         'Products.ZCatalog',
+        'ZODB',
         'Zope>=5.5',
-        'plone.contentrules',
-        'plone.app.iterate',
-        'plone.app.viewletmanager',
+        'plone.app.theming',
     ],
     entry_points="""
     [z3c.autoinclude.plugin]

@@ -27,14 +27,7 @@ class UpgradeTestCaseFixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
-    def setUpZope(self, app, configurationContext):
-        # In 5.0 alpha we install or upgrade plone.app.caching,
-        # so it must be available to Zope.
-        import plone.app.caching
-        self.loadZCML(
-            name='configure.zcml',
-            package=plone.app.caching,
-        )
+    # We used to have a method setUpZope here, but currently it is not needed.
 
 
 UPGRADE_TEST_CASE_FIXTURE = UpgradeTestCaseFixture()
