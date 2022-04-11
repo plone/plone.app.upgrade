@@ -16,7 +16,6 @@ from zope.component.hooks import setSite
 import transaction
 import warnings
 
-from plone.app.upgrade import IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED
 
 #
 # Base TestCase for upgrades
@@ -66,20 +65,6 @@ class MigrationTest(PloneTestCase):
             IActionInfo.providedBy(tool._getOb(action_id))
         ):
             tool._delOb(action_id)
-
-    def addResourceToJSTool(self, resource_name):
-        if IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
-            # Registers a resource with the javascripts tool
-            tool = getToolByName(self.portal, 'portal_javascripts')
-            if resource_name not in tool.getResourceIds():
-                tool.registerScript(resource_name)
-
-    def addResourceToCSSTool(self, resource_name):
-        if IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
-            # Registers a resource with the css tool
-            tool = getToolByName(self.portal, 'portal_css')
-            if resource_name not in tool.getResourceIds():
-                tool.registerStylesheet(resource_name)
 
     def removeSiteProperty(self, property_id):
         # Removes a site property from portal_properties

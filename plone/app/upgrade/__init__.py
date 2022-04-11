@@ -10,13 +10,6 @@ import warnings
 
 
 try:
-    pkg_resources.get_distribution('Products.ResourceRegistries')
-except pkg_resources.DistributionNotFound:
-    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = False
-else:
-    IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED = True
-
-try:
     from zope.app.cache.interfaces.ram import IRAMCache  # noqa F401
 except ImportError:
     import zope.ramcache.interfaces.ram
@@ -155,11 +148,6 @@ try:
 except ImportError:
     from plone.folder.nogopip import GopipIndex
     alias_module('plone.app.folder.nogopip.GopipIndex', GopipIndex)
-
-
-if not IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
-    sys.modules['Products.ResourceRegistries.tools.CSSRegistry'] = bbb
-    sys.modules['Products.ResourceRegistries.tools.JSRegistry'] = bbb
 
 
 try:
