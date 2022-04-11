@@ -24,10 +24,6 @@ except ImportError:
     import zope.ramcache.ram
     alias_module('zope.app.cache.ram', zope.ramcache.ram)
 
-if 'products.kupu' not in pkg_resources.working_set.by_key:
-    from . import kupu_bbb
-    alias_module('Products.kupu.plone.plonelibrarytool', kupu_bbb)
-
 try:
     from Products.CMFCalendar import interfaces
 except ImportError:
