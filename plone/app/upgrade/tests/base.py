@@ -7,6 +7,7 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing.bbb import PloneTestCase
 from plone.app.testing.bbb import PTC_FIXTURE
+from plone.base.utils import get_installer
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
@@ -102,19 +103,9 @@ class MigrationTest(PloneTestCase):
 
     def uninstallProduct(self, product_name):
         # Removes a product
-        try:
-            from Products.CMFPlone.utils import get_installer
-        except ImportError:
-            # BBB For Plone 5.0 and lower.
-            qi = getToolByName(self.portal, 'portal_quickinstaller', None)
-            if qi is None:
-                return
-            if qi.isProductInstalled(product_name):
-                qi.uninstallProducts([product_name])
-        else:
-            qi = get_installer(self.portal)
-            if qi.is_product_installed(product_name):
-                qi.uninstall_product(product_name)
+        installer = get_installer(self.portal)
+        if installer.is_product_installed(product_name):
+            installer.uninstall_product(product_name)
 
     def addSkinLayer(self, layer, skin='Plone Default', pos=None):
         # Adds a skin layer at pos. If pos is None, the layer is appended

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.base.utils import get_installer
 from plone.dexterity.fti import DexterityFTI
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import ATTRIBUTE_NAME
 from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IBundleRegistry
-from Products.CMFPlone.utils import get_installer
 from ZODB.broken import Broken
 from zope.component import getUtility
 from zope.component import queryUtility
