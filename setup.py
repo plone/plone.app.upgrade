@@ -35,7 +35,6 @@ setup(
     zip_safe=False,
     extras_require=dict(
         test=[
-            'zope.site',
             'plone.app.caching',
             'plone.app.testing',
             'plone.app.theming',
