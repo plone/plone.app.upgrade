@@ -11,7 +11,6 @@ from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
 import logging
-import six
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -217,12 +216,9 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
         logger.info("Replaced empty %s ASCII (native string) field with Bytes field.", field_name)
         return
     new_record = registry.records[field_name]
-    if isinstance(original_value, six.text_type):
-        # This is what we expect in Python 3.
-        # fromUnicode could be called fromText in Python 3.
+    if isinstance(original_value, str):
         new_value = new_record.field.fromUnicode(original_value)
     elif isinstance(original_value, bytes):
-        # This is what we expect in Python 2.
         new_value = original_value
     else:
         # Seems impossible, but I like to be careful.
