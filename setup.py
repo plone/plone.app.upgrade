@@ -36,7 +36,6 @@ setup(
     extras_require=dict(
         test=[
             'zope.site',
-            'mock',
             'plone.app.caching',
             'plone.app.testing',
             'plone.app.theming',
