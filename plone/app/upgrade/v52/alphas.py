@@ -11,24 +11,24 @@ from zope.component import getUtility
 import logging
 
 
-logger = logging.getLogger('plone.app.upgrade')
+logger = logging.getLogger("plone.app.upgrade")
 
 
 def cleanup_resources():
     registry = getUtility(IRegistry)
-    record = 'plone.bundles/plone-legacy.resources'
+    record = "plone.bundles/plone-legacy.resources"
     resources = registry.records[record]
 
-    if 'jquery-highlightsearchterms' in resources.value:
-        resources.value.remove('jquery-highlightsearchterms')
+    if "jquery-highlightsearchterms" in resources.value:
+        resources.value.remove("jquery-highlightsearchterms")
 
 
 def migrate_gopipindex(context):
     # GopipIndex class has moved from p.a.folder to p.folder
     # just remove and reinstall the index
-    catalog = getToolByName(context, 'portal_catalog')
-    catalog.manage_delIndex('getObjPositionInParent')
-    manage_addGopipIndex(catalog, 'getObjPositionInParent')
+    catalog = getToolByName(context, "portal_catalog")
+    catalog.manage_delIndex("getObjPositionInParent")
+    manage_addGopipIndex(catalog, "getObjPositionInParent")
 
 
 def rebuild_memberdata(context):
@@ -38,20 +38,21 @@ def rebuild_memberdata(context):
     # with new MemberData records that we get by creating them via a lookup of
     # all members in portal_membership.
     logger.info(
-        'Rebuilding member data information. This step can take a while if '
-        'your site has many users.')
-    md_tool = getToolByName(context, 'portal_memberdata')
-    ms_tool = getToolByName(context, 'portal_membership')
+        "Rebuilding member data information. This step can take a while if "
+        "your site has many users."
+    )
+    md_tool = getToolByName(context, "portal_memberdata")
+    ms_tool = getToolByName(context, "portal_membership")
     # We cannot access data in _members any more, therefore purge it
     md_tool._members = OOBTree()
     # Iterate over all existing members and add their data to the tool again
     for member in ms_tool.searchForMembers():
         try:
             md = MemberData(member, md_tool)
-            logger.info(f'Updated memberdata for {member}')
+            logger.info(f"Updated memberdata for {member}")
         # If we can't create a MemberData record for this member, skip it
         except Exception as e:
-            logger.info(f'Skip broken memberdata for {member}: {e}')
+            logger.info(f"Skip broken memberdata for {member}: {e}")
             continue
         md_tool.registerMemberData(md._md, md.getId())
 
@@ -60,12 +61,10 @@ def fix_core_behaviors_in_ftis(context):
     # The behaviors for IRichText and ILeadImage have been renamed.
     # All FTIs that use them must be updated accordingly
     # See plone/plone.app.contenttypes#480
-    types_tool = getToolByName(context, 'portal_types')
+    types_tool = getToolByName(context, "portal_types")
     to_replace = {
-        'plone.app.contenttypes.behaviors.richtext.IRichText':
-            'plone.app.contenttypes.behaviors.richtext.IRichTextBehavior',
-        'plone.app.contenttypes.behaviors.leadimage.ILeadImage':
-            'plone.app.contenttypes.behaviors.leadimage.ILeadImageBehavior',
+        "plone.app.contenttypes.behaviors.richtext.IRichText": "plone.app.contenttypes.behaviors.richtext.IRichTextBehavior",
+        "plone.app.contenttypes.behaviors.leadimage.ILeadImage": "plone.app.contenttypes.behaviors.leadimage.ILeadImageBehavior",
     }
     ftis = types_tool.listTypeInfo()
     for fti in ftis:
@@ -85,8 +84,8 @@ def fix_core_behaviors_in_ftis(context):
 
 
 def to52alpha1(context):
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52alpha1')
-    portal = getToolByName(context, 'portal_url').getPortalObject()
+    loadMigrationProfile(context, "profile-plone.app.upgrade.v52:to52alpha1")
+    portal = getToolByName(context, "portal_url").getPortalObject()
 
     cleanUpSkinsTool(portal)
 

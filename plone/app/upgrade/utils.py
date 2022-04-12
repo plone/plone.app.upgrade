@@ -18,13 +18,13 @@ import transaction
 
 _marker = []
 
-logger = logging.getLogger('plone.app.upgrade')
+logger = logging.getLogger("plone.app.upgrade")
 
-plone_version = pkg_resources.get_distribution('Products.CMFPlone').version
+plone_version = pkg_resources.get_distribution("Products.CMFPlone").version
 
 
 def version_match(target):
-    """ Given, our versioning scheme is always major.minorANYTHING, where major
+    """Given, our versioning scheme is always major.minorANYTHING, where major
     and minor are single-digit numbers, we can compare versions as follows.
     pkg_resources.parse_version is not compatible with our versioning scheme
     (like '5.0b1') and also not compatible with the semver.org proposal
@@ -35,12 +35,12 @@ def version_match(target):
 
 
 def null_upgrade_step(tool):
-    """ This is a null upgrade, use it when nothing happens """
+    """This is a null upgrade, use it when nothing happens"""
     pass
 
 
-def safeEditProperty(obj, key, value, data_type='string'):
-    """ An add or edit function, surprisingly useful :) """
+def safeEditProperty(obj, key, value, data_type="string"):
+    """An add or edit function, surprisingly useful :)"""
     if obj.hasProperty(key):
         obj._updateProperty(key, value)
     else:
@@ -60,7 +60,7 @@ def addLinesToProperty(obj, key, values):
     else:
         if not isinstance(values, list):
             values = [values]
-        obj._setProperty(key, values, 'lines')
+        obj._setProperty(key, values, "lines")
 
 
 def saveCloneActions(actionprovider):
@@ -68,10 +68,12 @@ def saveCloneActions(actionprovider):
         return True, actionprovider._cloneActions()
     except AttributeError:
         # Stumbled across ancient dictionary actions
-        if not base_hasattr(actionprovider, '_convertActions'):
+        if not base_hasattr(actionprovider, "_convertActions"):
             return False, (
                 "Can't convert actions of {}! Jumping to next "
-                'action.'.format(actionprovider.getId()), logging.ERROR)
+                "action.".format(actionprovider.getId()),
+                logging.ERROR,
+            )
         else:
             actionprovider._convertActions()
             return True, actionprovider._cloneActions()
@@ -85,10 +87,10 @@ def testSkinLayer(skinsTool, layer):
     """
     # code adapted from CMFCore.SkinsContainer.getSkinByPath
     ob = aq_base(skinsTool)
-    for name in layer.strip().split('/'):
+    for name in layer.strip().split("/"):
         if not name:
             continue
-        if name.startswith('_'):
+        if name.startswith("_"):
             return 0
         ob = getattr(ob, name, None)
         if ob is None:
@@ -98,14 +100,14 @@ def testSkinLayer(skinsTool, layer):
 
 def cleanupSkinPath(portal, skinName, test=1):
     """Remove invalid skin layers from skins"""
-    skinstool = getToolByName(portal, 'portal_skins')
+    skinstool = getToolByName(portal, "portal_skins")
     selections = skinstool._getSelections()
-    old_path = selections[skinName].split(',')
+    old_path = selections[skinName].split(",")
     new_path = []
     for layer in old_path:
         if layer and testSkinLayer(skinstool, layer):
             new_path.append(layer)
-    skinstool.addSkinSelection(skinName, ','.join(new_path), test=test)
+    skinstool.addSkinSelection(skinName, ",".join(new_path), test=test)
 
 
 def cleanUpSkinsTool(context):
@@ -117,17 +119,17 @@ def cleanUpSkinsTool(context):
 
     - Remove invalid skin layers from all skin selections.
     """
-    skins = getToolByName(context, 'portal_skins')
+    skins = getToolByName(context, "portal_skins")
     # Remove directory views for directories missing on the filesystem
     for name in skins.keys():
         directory_view = skins.get(name)
-        reg_key = getattr(directory_view, '_dirpath', None)
+        reg_key = getattr(directory_view, "_dirpath", None)
         if not reg_key:
             # not a directory view, but a persistent folder
             continue
         try:
             # Removed in CMF 2.3
-            if getattr(_dirreg, 'getCurrentKeyFormat', None):
+            if getattr(_dirreg, "getCurrentKeyFormat", None):
                 reg_key = _dirreg.getCurrentKeyFormat(reg_key)
             _dirreg.getDirectoryInfo(reg_key)
         except ValueError:
@@ -138,19 +140,22 @@ def cleanUpSkinsTool(context):
     # Remove no longer existing entries from skin selections
     for layer, paths in skins.selections.items():
         new_paths = []
-        for name in paths.split(','):
+        for name in paths.split(","):
             if name in existing:
                 new_paths.append(name)
-            elif '/' in name and testSkinLayer(skins, name):
+            elif "/" in name and testSkinLayer(skins, name):
                 new_paths.append(name)
             else:
-                logger.info('Removed no longer existing path %s '
-                            'from skin selection %s.', name, layer)
-        skins.selections[layer] = ','.join(new_paths)
+                logger.info(
+                    "Removed no longer existing path %s " "from skin selection %s.",
+                    name,
+                    layer,
+                )
+        skins.selections[layer] = ",".join(new_paths)
 
 
 def cleanUpToolRegistry(context):
-    portal = getToolByName(context, 'portal_url').getPortalObject()
+    portal = getToolByName(context, "portal_url").getPortalObject()
     toolset = context.getToolsetRegistry()
     required = toolset._required.copy()
     existing = portal.keys()
@@ -162,7 +167,7 @@ def cleanUpToolRegistry(context):
             changed = True
     if changed:
         toolset._required = required
-        logger.info('Cleaned up the toolset registry.')
+        logger.info("Cleaned up the toolset registry.")
 
 
 def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
@@ -174,36 +179,35 @@ def installOrReinstallProduct(portal, product_name, out=None, hidden=False):
     installer = get_installer(portal)
     if not installer.is_product_installed(product_name):
         installer.install_product(product_name, allow_hidden=True)
-        logger.info('Installed %s', product_name)
+        logger.info("Installed %s", product_name)
     else:
         installer.upgrade_product(product_name)
-        logger.info('Upgraded %s', product_name)
+        logger.info("Upgraded %s", product_name)
     # Refresh skins
     portal.clearCurrentSkin()
-    if getattr(portal, 'REQUEST', None):
+    if getattr(portal, "REQUEST", None):
         portal.setupCurrentSkin(portal.REQUEST)
 
 
 def loadMigrationProfile(context, profile, steps=_marker):
     if not ISetupTool.providedBy(context):
-        context = getToolByName(context, 'portal_setup')
+        context = getToolByName(context, "portal_setup")
     if steps is _marker:
         context.runAllImportStepsFromProfile(profile, purge_old=False)
     else:
         for step in steps:
-            context.runImportStepFromProfile(profile,
-                                             step,
-                                             run_dependencies=False,
-                                             purge_old=False)
+            context.runImportStepFromProfile(
+                profile, step, run_dependencies=False, purge_old=False
+            )
 
 
 def alias_module(name, target):
-    parts = name.split('.')
+    parts = name.split(".")
     i = 0
     module = None
     while i < len(parts) - 1:
         i += 1
-        module_name = '.'.join(parts[:i])
+        module_name = ".".join(parts[:i])
         try:
             __import__(module_name)
         except ImportError:
@@ -215,7 +219,7 @@ def alias_module(name, target):
 
     setattr(module, parts[-1], target)
     # also make sure sys.modules is updated
-    sys.modules[module_name + '.' + parts[-1]] = target
+    sys.modules[module_name + "." + parts[-1]] = target
 
 
 def unregisterSteps(context, import_steps=None, export_steps=None):
@@ -250,7 +254,7 @@ def unregisterSteps(context, import_steps=None, export_steps=None):
 
 
 def _types_with_empty_icons(context, typesToUpdate):
-    ttool = getToolByName(context, 'portal_types')
+    ttool = getToolByName(context, "portal_types")
     empty_icons = []
     for name in typesToUpdate.keys():
         fti = ttool.get(name)
@@ -265,14 +269,14 @@ def _update_icon_in_single_brain(brain, typesToUpdate, getIconPos, metadata):
     # if the old icon is a standard icon, we assume no customization
     # has taken place and we can simply empty the getIcon metadata
     # without loading the object
-    new_value = ''
+    new_value = ""
     old_icons = typesToUpdate[brain.portal_type]
     brain_icon = brain.getIcon
     if brain_icon not in old_icons:
         # Otherwise we need to ask the object
-        new_value = ''
+        new_value = ""
         obj = brain.getObject()
-        method = getattr(aq_base(obj), 'getIcon', None)
+        method = getattr(aq_base(obj), "getIcon", None)
         if method is not None:
             try:
                 new_value = obj.getIcon
@@ -281,7 +285,7 @@ def _update_icon_in_single_brain(brain, typesToUpdate, getIconPos, metadata):
             except ConflictError:
                 raise
             except Exception:
-                new_value = ''
+                new_value = ""
     if brain_icon != new_value:
         rid = brain.getRID()
         record = metadata[rid]
@@ -302,22 +306,22 @@ def updateIconsInBrains(context, typesToUpdate=None):
     main use case.
     """
     if not typesToUpdate:
-        logger.warn('No typesToUpdate given for updateIconsInBrains.')
+        logger.warn("No typesToUpdate given for updateIconsInBrains.")
         return
 
-    catalog = getToolByName(context, 'portal_catalog')
-    logger.info('Updating `getIcon` metadata.')
+    catalog = getToolByName(context, "portal_catalog")
+    logger.info("Updating `getIcon` metadata.")
     search = catalog.unrestrictedSearchResults
-    _catalog = getattr(catalog, '_catalog', None)
+    _catalog = getattr(catalog, "_catalog", None)
     getIconPos = None
     if _catalog is not None:
         metadata = _catalog.data
-        getIconPos = _catalog.schema.get('getIcon', None)
+        getIconPos = _catalog.schema.get("getIcon", None)
     empty_icons = _types_with_empty_icons(context, typesToUpdate)
-    brains = search(portal_type=empty_icons, sort_on='path')
+    brains = search(portal_type=empty_icons, sort_on="path")
     num_objects = len(brains)
     pghandler = ZLogHandler(1000)
-    pghandler.init('Updating getIcon metadata', num_objects)
+    pghandler.init("Updating getIcon metadata", num_objects)
     i = 0
     for brain in brains:
         pghandler.report(i)
@@ -325,8 +329,7 @@ def updateIconsInBrains(context, typesToUpdate=None):
         if not brain_icon:
             continue
         if getIconPos is not None:
-            _update_icon_in_single_brain(
-                brain, typesToUpdate, getIconPos, metadata)
+            _update_icon_in_single_brain(brain, typesToUpdate, getIconPos, metadata)
         else:
             # If we don't have a standard catalog tool, fall back to the
             # official API
@@ -336,15 +339,14 @@ def updateIconsInBrains(context, typesToUpdate=None):
             # SearchableText
             brain_path = brain.getPath()
             try:
-                catalog.catalog_object(
-                    obj, brain_path, ['id'], True, pghandler)
+                catalog.catalog_object(obj, brain_path, ["id"], True, pghandler)
             except ConflictError:
                 raise
             except Exception:
                 pass
         i += 1
     pghandler.finish()
-    logger.info('Updated `getIcon` metadata.')
+    logger.info("Updated `getIcon` metadata.")
 
 
 def get_property(context, property_name, default_value=None):

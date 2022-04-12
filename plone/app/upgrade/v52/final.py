@@ -13,7 +13,7 @@ from zope.component import getUtility
 import logging
 
 
-logger = logging.getLogger('plone.app.upgrade')
+logger = logging.getLogger("plone.app.upgrade")
 
 
 def rebuild_redirections(context):
@@ -24,18 +24,17 @@ def rebuild_redirections(context):
     from plone.app.redirector.interfaces import IRedirectionStorage
 
     storage = getUtility(IRedirectionStorage)
-    if not hasattr(storage, '_rebuild'):
+    if not hasattr(storage, "_rebuild"):
         logger.warning(
-            'Not rebuilding redirections: '
-            'IRedirectionStorage misses the _rebuild method. '
+            "Not rebuilding redirections: "
+            "IRedirectionStorage misses the _rebuild method. "
         )
         return
     logger.info(
-        'Starting rebuild of redirections to '
-        'add date and manual information.'
+        "Starting rebuild of redirections to " "add date and manual information."
     )
     storage._rebuild()
-    logger.info('Done rebuilding redirections.')
+    logger.info("Done rebuilding redirections.")
 
 
 def move_dotted_to_named_behaviors(context):
@@ -43,7 +42,7 @@ def move_dotted_to_named_behaviors(context):
     from plone.behavior.registration import lookup_behavior_registration
     from plone.dexterity.interfaces import IDexterityFTI
 
-    ptt = getToolByName(context, 'portal_types')
+    ptt = getToolByName(context, "portal_types")
 
     ftis = [fti for fti in ptt.objectValues() if IDexterityFTI.providedBy(fti)]
 
@@ -71,22 +70,22 @@ def move_dotted_to_named_behaviors(context):
                 behaviors.append(behavior)
                 logger.info(
                     '"{dotted}" has no name registered. '
-                    'kept it dotted.'.format(
+                    "kept it dotted.".format(
                         dotted=behavior,
                     ),
                 )
         fti.behaviors = tuple(behaviors)
         logger.info(
-            'Converted dotted behaviors of {ct} to named behaviors.'.format(
+            "Converted dotted behaviors of {ct} to named behaviors.".format(
                 ct=safe_unicode(fti.title),
             ),
         )
 
-    logger.info('Done moving dotted to named behaviors.')
+    logger.info("Done moving dotted to named behaviors.")
     # Make sure plone.staticresources is installed
     installer = get_installer(context)
-    if not installer.is_product_installed('plone.staticresources'):
-        installer.install_product('plone.staticresources')
+    if not installer.is_product_installed("plone.staticresources"):
+        installer.install_product("plone.staticresources")
 
 
 KEYS_TO_CHANGE = [
@@ -118,38 +117,35 @@ def change_interface_on_lang_registry_records(context):
         record = registry.records.get(old_key, _marker)
         if record is _marker:
             continue
-        logger.info(
-            f"Change registry key '{old_key}' to new interface."
-        )
+        logger.info(f"Change registry key '{old_key}' to new interface.")
         record.field.interfaceName = NEW_PREFIX
 
 
 def to521(context):
     """5.2.0 -> 5.2.1"""
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to521')
+    loadMigrationProfile(context, "profile-plone.app.upgrade.v52:to521")
     # Make sure plone.staticresources is installed
     installer = get_installer(context)
-    if not installer.is_product_installed('plone.staticresources'):
-        installer.install_product('plone.staticresources')
+    if not installer.is_product_installed("plone.staticresources"):
+        installer.install_product("plone.staticresources")
 
 
 def to522(context):
     """5.2.1 -> 5.2.2"""
-    loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to522')
+    loadMigrationProfile(context, "profile-plone.app.upgrade.v52:to522")
 
 
 def move_markdown_transform_settings_to_registry(context):
-    """Move markdown settings from portal_transforms to Plone registry.
-    """
+    """Move markdown settings from portal_transforms to Plone registry."""
     registry = getUtility(IRegistry)
     try:
-        settings = registry.forInterface(IMarkupSchema, prefix='plone')
+        settings = registry.forInterface(IMarkupSchema, prefix="plone")
     except KeyError:
         # Catch case where markdown_extensions is not yet registered
-        registry.registerInterface(IMarkupSchema, prefix='plone')
-        settings = registry.forInterface(IMarkupSchema, prefix='plone')
-    pt = getToolByName(context, 'portal_transforms')
-    extensions = pt.markdown_to_html._config.get('enabled_extensions') or []
+        registry.registerInterface(IMarkupSchema, prefix="plone")
+        settings = registry.forInterface(IMarkupSchema, prefix="plone")
+    pt = getToolByName(context, "portal_transforms")
+    extensions = pt.markdown_to_html._config.get("enabled_extensions") or []
     extensions = [safe_unicode(ext) for ext in extensions]
     settings.markdown_extensions = extensions
 
@@ -181,7 +177,7 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
     if prefix is None:
         prefix = iface.__identifier__
     if not prefix.endswith("."):
-        prefix += '.'
+        prefix += "."
     if not field_name.startswith(prefix):
         field_name = prefix + field_name
     registry = getUtility(IRegistry)
@@ -211,7 +207,10 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
     registry.registerInterface(iface, prefix=prefix)
     if original_value is None:
         # Nothing left to do.
-        logger.info("Replaced empty %s ASCII (native string) field with Bytes field.", field_name)
+        logger.info(
+            "Replaced empty %s ASCII (native string) field with Bytes field.",
+            field_name,
+        )
         return
     new_record = registry.records[field_name]
     if isinstance(original_value, str):
@@ -237,8 +236,8 @@ def migrate_site_logo_from_ascii_to_bytes(context):
 
 
 def _recursive_strict_permission(obj):
-    obj.manage_permission(view, ('Manager', 'Owner'), 0)
-    if base_hasattr(obj, 'objectValues'):
+    obj.manage_permission(view, ("Manager", "Owner"), 0)
+    if base_hasattr(obj, "objectValues"):
         for child in obj.objectValues():
             _recursive_strict_permission(child)
 

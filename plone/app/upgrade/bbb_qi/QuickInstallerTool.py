@@ -10,15 +10,14 @@ from Products.CMFCore.utils import UniqueObject
 
 # @implementer(INonInstallable)
 class HiddenProducts:
-
     def getNonInstallableProducts(self):
         # We can't really install ourselves: that would be weird.
         # So hide ourselves from ourselves.
-        return ['CMFQuickInstallerTool', 'Products.CMFQuickInstallerTool']
+        return ["CMFQuickInstallerTool", "Products.CMFQuickInstallerTool"]
 
 
 # @implementer(IQuickInstallerTool)
 class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
 
-    meta_type = 'CMF QuickInstaller Tool'
-    id = 'portal_quickinstaller'
+    meta_type = "CMF QuickInstaller Tool"
+    id = "portal_quickinstaller"
