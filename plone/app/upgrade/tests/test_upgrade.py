@@ -2,7 +2,6 @@ from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import version_match
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
-
 from unittest import mock
 
 
@@ -71,7 +70,8 @@ class TestUpgrade(MigrationTest):
 
 
 def test_suite():
-    from unittest import TestSuite, makeSuite
+    from unittest import makeSuite
+    from unittest import TestSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestUpgrade))
     return suite

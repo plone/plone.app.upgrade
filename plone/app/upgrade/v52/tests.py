@@ -154,8 +154,8 @@ class SiteLogoTest(unittest.TestCase):
     def test_migrate_record_from_ascii_to_bytes_with_prefix(self):
         # This is the more general fixer from ASCII to Bytes.
         from plone.app.upgrade.v52.final import migrate_record_from_ascii_to_bytes
-        from zope.interface import Interface
         from zope import schema
+        from zope.interface import Interface
 
         class ITest(Interface):
             testfield = schema.ASCII()
@@ -183,8 +183,8 @@ class SiteLogoTest(unittest.TestCase):
     def test_migrate_record_from_ascii_to_bytes_without_prefix(self):
         # This is the more general fixer from ASCII to Bytes.
         from plone.app.upgrade.v52.final import migrate_record_from_ascii_to_bytes
-        from zope.interface import Interface
         from zope import schema
+        from zope.interface import Interface
 
         class ITest(Interface):
             testfield = schema.ASCII()
@@ -224,8 +224,9 @@ class UpgradePortalTransforms521to522Test(unittest.TestCase):
         self.settings = registry.forInterface(IMarkupSchema, prefix='plone')
 
     def test_migrate_markup_settings(self):
-        from plone.app.upgrade.v52.final import \
-            move_markdown_transform_settings_to_registry
+        from plone.app.upgrade.v52.final import (
+            move_markdown_transform_settings_to_registry,
+        )
         self.pt.markdown_to_html._config['enabled_extensions'] = [
             'markdown.extensions.fenced_code',
             'markdown.extensions.nl2br',
