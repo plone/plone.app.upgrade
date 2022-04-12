@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.upgrade import utils
 from plone.app.upgrade.tests.base import MigrationTest
 from Products.CMFCore.utils import getToolByName
@@ -27,13 +26,13 @@ class TestUtils(MigrationTest):
         self.assertEqual(
             len(skins.keys()),
             len(existing),
-            msg='Skink difference is: {0}'.format(list(difference)))
+            msg=f'Skink difference is: {list(difference)}')
         difference = set(layers_in_selection(selection)) ^ set(
             existing_layers_in_selection)
         self.assertEqual(
             len(layers_in_selection(selection)),
             len(existing_layers_in_selection),
-            msg='Layer difference is: {0}'.format(list(difference)))
+            msg=f'Layer difference is: {list(difference)}')
 
         # A second cleanup should also do nothing.  We used to rename
         # plone_styles to classic_styles on the first run, which would get
@@ -55,7 +54,7 @@ class TestUtils(MigrationTest):
         registerDirectory(skin_name, globals(), subdirs=1)
         # Add the DirectoryView object to portal_skins.
         directory_info = DirectoryView(
-            skin_name, reg_key='plone.app.upgrade.tests:{0}'.format(skin_name))
+            skin_name, reg_key=f'plone.app.upgrade.tests:{skin_name}')
         skins._setObject(skin_name, directory_info)
 
         # Add its sub skins to a skin selection.

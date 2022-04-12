@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_base
 from plone.base.utils import get_installer
 from Products.CMFCore.DirectoryView import _dirreg
@@ -71,7 +70,7 @@ def saveCloneActions(actionprovider):
         # Stumbled across ancient dictionary actions
         if not base_hasattr(actionprovider, '_convertActions'):
             return False, (
-                "Can't convert actions of {0}! Jumping to next "
+                "Can't convert actions of {}! Jumping to next "
                 'action.'.format(actionprovider.getId()), logging.ERROR)
         else:
             actionprovider._convertActions()
@@ -234,7 +233,7 @@ def unregisterSteps(context, import_steps=None, export_steps=None):
     registry = context.getImportStepRegistry()
     persistent_steps = registry.listSteps()
     zcml_steps = _import_step_registry.listSteps()
-    duplicated = set([s for s in persistent_steps if s in zcml_steps])
+    duplicated = {s for s in persistent_steps if s in zcml_steps}
     remove = duplicated.union(import_steps)
     for step in remove:
         if step in registry._registered:
@@ -242,7 +241,7 @@ def unregisterSteps(context, import_steps=None, export_steps=None):
     registry = context.getExportStepRegistry()
     persistent_steps = registry.listSteps()
     zcml_steps = _export_step_registry.listSteps()
-    duplicated = set([s for s in persistent_steps if s in zcml_steps])
+    duplicated = {s for s in persistent_steps if s in zcml_steps}
     remove = duplicated.union(export_steps)
     for step in remove:
         if step in registry._registered:

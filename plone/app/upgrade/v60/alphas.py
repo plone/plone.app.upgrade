@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.base.utils import get_installer
 from plone.dexterity.fti import DexterityFTI
@@ -177,11 +176,11 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         for removed_key in removed_keys:
             if key.startswith(removed_key):
                 to_delete.append(key)
-                logger.debug(u"Removed record {}".format(key))
+                logger.debug(f"Removed record {key}")
                 break
     for key in to_delete:
         del registry.records[key]
-    logger.info(u"Removed {} records from registry".format(len(to_delete)))
+    logger.info(f"Removed {len(to_delete)} records from registry")
 
     # make sure they are all gone
     try:
@@ -218,7 +217,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     for name in removed_bundles:
         if name in bundles:
             del bundles[name]
-            logger.info(u"Removed bundle {}".format(name))
+            logger.info(f"Removed bundle {name}")
 
     # Remove deprecated bundle fields
     removed_fields = [
@@ -236,10 +235,10 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         for removed_field in removed_fields:
             if key.startswith("plone.bundles/") and key.endswith(removed_field):
                 to_delete.append(key)
-                logger.debug(u"Removed record {}".format(key))
+                logger.debug(f"Removed record {key}")
     for key in to_delete:
         del registry.records[key]
-    logger.info(u"Removed {} deprecated bundle attributes from registry".format(len(to_delete)))
+    logger.info(f"Removed {len(to_delete)} deprecated bundle attributes from registry")
 
     # local default controlpanel icons
     loadMigrationProfile(context, "profile-Products.CMFPlone:plone", steps=["controlpanel"])

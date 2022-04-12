@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
 from plone.app.upgrade.utils import cleanUpSkinsTool
 from plone.app.upgrade.utils import loadMigrationProfile
@@ -20,8 +19,8 @@ def cleanup_resources():
     record = 'plone.bundles/plone-legacy.resources'
     resources = registry.records[record]
 
-    if u'jquery-highlightsearchterms' in resources.value:
-        resources.value.remove(u'jquery-highlightsearchterms')
+    if 'jquery-highlightsearchterms' in resources.value:
+        resources.value.remove('jquery-highlightsearchterms')
 
 
 def migrate_gopipindex(context):
@@ -49,10 +48,10 @@ def rebuild_memberdata(context):
     for member in ms_tool.searchForMembers():
         try:
             md = MemberData(member, md_tool)
-            logger.info(u'Updated memberdata for {}'.format(member))
+            logger.info(f'Updated memberdata for {member}')
         # If we can't create a MemberData record for this member, skip it
         except Exception as e:
-            logger.info(u'Skip broken memberdata for {}: {}'.format(member, e))
+            logger.info(f'Skip broken memberdata for {member}: {e}')
             continue
         md_tool.registerMemberData(md._md, md.getId())
 

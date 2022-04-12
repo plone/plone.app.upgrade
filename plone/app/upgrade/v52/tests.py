@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from DateTime import DateTime
 from pkg_resources import get_distribution
 from pkg_resources import parse_version
@@ -106,7 +105,7 @@ class SiteLogoTest(unittest.TestCase):
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsNone(record.value)
         with self.assertRaises(WrongType):
-            record.value = u"abc"
+            record.value = "abc"
         record.value = b"ABC"
         self.assertEqual(record.value, b"ABC")
         # Migrating does nothing.
@@ -191,7 +190,7 @@ class SiteLogoTest(unittest.TestCase):
             testfield = schema.ASCII()
 
         self.registry.registerInterface(ITest)
-        record_name = "{}.testfield".format(ITest.__identifier__)
+        record_name = f"{ITest.__identifier__}.testfield"
         record = self.registry.records[record_name]
         record.value = "native string"
         self.assertIsInstance(record.field, field.ASCII)

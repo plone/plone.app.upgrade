@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import cleanUpToolRegistry
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.base.utils import get_installer

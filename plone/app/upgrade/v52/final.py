@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl.Permissions import view
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.base.utils import get_installer
@@ -78,7 +77,7 @@ def move_dotted_to_named_behaviors(context):
                 )
         fti.behaviors = tuple(behaviors)
         logger.info(
-            u'Converted dotted behaviors of {ct} to named behaviors.'.format(
+            'Converted dotted behaviors of {ct} to named behaviors.'.format(
                 ct=safe_unicode(fti.title),
             ),
         )
@@ -120,7 +119,7 @@ def change_interface_on_lang_registry_records(context):
         if record is _marker:
             continue
         logger.info(
-            "Change registry key '{0}' to new interface.".format(old_key)
+            f"Change registry key '{old_key}' to new interface."
         )
         record.field.interfaceName = NEW_PREFIX
 

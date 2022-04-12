@@ -14,7 +14,7 @@ except pkg_resources.DistributionNotFound:
     alias_module('Products.CMFPlone.QuickInstallerTool', bbb_qi)
 
 
-class HiddenProducts(object):
+class HiddenProducts:
     """This hides the upgrade profiles from the quick installer tool."""
 
     def getNonInstallableProducts(self):

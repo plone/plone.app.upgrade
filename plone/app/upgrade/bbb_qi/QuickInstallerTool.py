@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from OFS.ObjectManager import ObjectManager
 from OFS.SimpleItem import SimpleItem
 from Products.CMFCore.utils import UniqueObject
@@ -8,7 +7,7 @@ from Products.CMFCore.utils import UniqueObject
 
 
 # @implementer(INonInstallable)
-class HiddenProducts(object):
+class HiddenProducts:
 
     def getNonInstallableProducts(self):
         # We can't really install ourselves: that would be weird.
