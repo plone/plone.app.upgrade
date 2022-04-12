@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from AccessControl.Permissions import view
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.base.utils import get_installer
 from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -11,7 +12,6 @@ from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
 import logging
-import six
 
 
 logger = logging.getLogger('plone.app.upgrade')
@@ -85,10 +85,9 @@ def move_dotted_to_named_behaviors(context):
 
     logger.info('Done moving dotted to named behaviors.')
     # Make sure plone.staticresources is installed
-    from Products.CMFPlone.utils import get_installer
-    qi = get_installer(context)
-    if not qi.is_product_installed('plone.staticresources'):
-        qi.install_product('plone.staticresources')
+    installer = get_installer(context)
+    if not installer.is_product_installed('plone.staticresources'):
+        installer.install_product('plone.staticresources')
 
 
 KEYS_TO_CHANGE = [
@@ -130,10 +129,9 @@ def to521(context):
     """5.2.0 -> 5.2.1"""
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to521')
     # Make sure plone.staticresources is installed
-    from Products.CMFPlone.utils import get_installer
-    qi = get_installer(context)
-    if not qi.is_product_installed('plone.staticresources'):
-        qi.install_product('plone.staticresources')
+    installer = get_installer(context)
+    if not installer.is_product_installed('plone.staticresources'):
+        installer.install_product('plone.staticresources')
 
 
 def to522(context):
@@ -217,12 +215,9 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
         logger.info("Replaced empty %s ASCII (native string) field with Bytes field.", field_name)
         return
     new_record = registry.records[field_name]
-    if isinstance(original_value, six.text_type):
-        # This is what we expect in Python 3.
-        # fromUnicode could be called fromText in Python 3.
+    if isinstance(original_value, str):
         new_value = new_record.field.fromUnicode(original_value)
     elif isinstance(original_value, bytes):
-        # This is what we expect in Python 2.
         new_value = original_value
     else:
         # Seems impossible, but I like to be careful.

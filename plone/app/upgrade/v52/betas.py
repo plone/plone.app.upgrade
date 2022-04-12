@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import cleanUpToolRegistry
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.base.utils import get_installer
 from Products.CMFCore.utils import getToolByName
 from types import ModuleType
 from zc.relation.interfaces import ICatalog
@@ -142,16 +143,14 @@ def to52beta1(context):
     remove_legacy_resource_registries(context)
     remove_interface_indexes_from_relations_catalog()
     # Make sure plone.staticresources is installed
-    from Products.CMFPlone.utils import get_installer
-    qi = get_installer(context)
-    if not qi.is_product_installed('plone.staticresources'):
-        qi.install_product('plone.staticresources')
+    installer = get_installer(context)
+    if not installer.is_product_installed('plone.staticresources'):
+        installer.install_product('plone.staticresources')
 
 
 def to52rc1(context):
     loadMigrationProfile(context, 'profile-plone.app.upgrade.v52:to52rc1')
     # Make sure plone.staticresources is installed
-    from Products.CMFPlone.utils import get_installer
-    qi = get_installer(context)
-    if not qi.is_product_installed('plone.staticresources'):
-        qi.install_product('plone.staticresources')
+    installer = get_installer(context)
+    if not installer.is_product_installed('plone.staticresources'):
+        installer.install_product('plone.staticresources')

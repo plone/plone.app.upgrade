@@ -7,6 +7,7 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing.bbb import PloneTestCase
 from plone.app.testing.bbb import PTC_FIXTURE
+from plone.base.utils import get_installer
 from Products.CMFCore.interfaces import IActionCategory
 from Products.CMFCore.interfaces import IActionInfo
 from Products.CMFCore.utils import getToolByName
@@ -16,7 +17,6 @@ from zope.component.hooks import setSite
 import transaction
 import warnings
 
-from plone.app.upgrade import IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED
 
 #
 # Base TestCase for upgrades
@@ -27,14 +27,7 @@ class UpgradeTestCaseFixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
-    def setUpZope(self, app, configurationContext):
-        # In 5.0 alpha we install or upgrade plone.app.caching,
-        # so it must be available to Zope.
-        import plone.app.caching
-        self.loadZCML(
-            name='configure.zcml',
-            package=plone.app.caching,
-        )
+    # We used to have a method setUpZope here, but currently it is not needed.
 
 
 UPGRADE_TEST_CASE_FIXTURE = UpgradeTestCaseFixture()
@@ -66,20 +59,6 @@ class MigrationTest(PloneTestCase):
             IActionInfo.providedBy(tool._getOb(action_id))
         ):
             tool._delOb(action_id)
-
-    def addResourceToJSTool(self, resource_name):
-        if IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
-            # Registers a resource with the javascripts tool
-            tool = getToolByName(self.portal, 'portal_javascripts')
-            if resource_name not in tool.getResourceIds():
-                tool.registerScript(resource_name)
-
-    def addResourceToCSSTool(self, resource_name):
-        if IS_PRODUCT_RESOURCE_REGISTRIES_INSTALLED:
-            # Registers a resource with the css tool
-            tool = getToolByName(self.portal, 'portal_css')
-            if resource_name not in tool.getResourceIds():
-                tool.registerStylesheet(resource_name)
 
     def removeSiteProperty(self, property_id):
         # Removes a site property from portal_properties
@@ -117,19 +96,9 @@ class MigrationTest(PloneTestCase):
 
     def uninstallProduct(self, product_name):
         # Removes a product
-        try:
-            from Products.CMFPlone.utils import get_installer
-        except ImportError:
-            # BBB For Plone 5.0 and lower.
-            qi = getToolByName(self.portal, 'portal_quickinstaller', None)
-            if qi is None:
-                return
-            if qi.isProductInstalled(product_name):
-                qi.uninstallProducts([product_name])
-        else:
-            qi = get_installer(self.portal)
-            if qi.is_product_installed(product_name):
-                qi.uninstall_product(product_name)
+        installer = get_installer(self.portal)
+        if installer.is_product_installed(product_name):
+            installer.uninstall_product(product_name)
 
     def addSkinLayer(self, layer, skin='Plone Default', pos=None):
         # Adds a skin layer at pos. If pos is None, the layer is appended

@@ -10,7 +10,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
 from zope.component import getUtility
 
-import six
 import unittest
 
 
@@ -144,22 +143,6 @@ class SiteLogoTest(unittest.TestCase):
 
         del self.registry.records['plone.site_logo']
         record_51 = Record(field.ASCII())
-        record_51.value = "native string"
-        self.registry.records['plone.site_logo'] = record_51
-        # Migrate.
-        migrate_site_logo_from_ascii_to_bytes(self.portal)
-        record = self.registry.records['plone.site_logo']
-        self.assertIsInstance(record.field, field.Bytes)
-        self.assertIsInstance(record.value, bytes)
-        self.assertEqual(record.value, b"native string")
-
-    @unittest.skipIf(six.PY3, 'Only test on Python 2')
-    def test_site_logo_field_bytes_value_text(self):
-        from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
-
-        del self.registry.records['plone.site_logo']
-        record_51 = Record(field.Bytes())
-        # This would give a WrongType error on Python 3:
         record_51.value = "native string"
         self.registry.records['plone.site_logo'] = record_51
         # Migrate.
