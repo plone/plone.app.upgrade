@@ -27,6 +27,14 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="to6005"
+      title="Upgrade profile to Plone 6.0.0a5 (6005)"
+      directory="profiles/to6005"
+      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
   <!--
     This is special, we want to reread the profile to create the FTI only if the old FTI
     is not already a Dexterity one
