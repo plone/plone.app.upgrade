@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<registry>
+
+  <records interface="plone.base.interfaces.ITinyMCESchema"
+           prefix="plone" />
+
+</registry>
