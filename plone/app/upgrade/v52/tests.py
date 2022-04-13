@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from DateTime import DateTime
 from pkg_resources import get_distribution
 from pkg_resources import parse_version
@@ -17,12 +16,12 @@ class UpgradeMemberData51to52Test(unittest.TestCase):
     layer = PLONE_INTEGRATION_TESTING
 
     def test_rebuild_member_data(self):
-        portal = self.layer['portal']
+        portal = self.layer["portal"]
         from plone.app.upgrade.v52.alphas import rebuild_memberdata
 
         rebuild_memberdata(portal)
-        tool = getToolByName(portal, 'portal_memberdata')
-        self.assertIn('test_user_1_', tool._members.keys())
+        tool = getToolByName(portal, "portal_memberdata")
+        self.assertIn("test_user_1_", tool._members.keys())
 
 
 class Various52Test(unittest.TestCase):
@@ -38,13 +37,13 @@ class Various52Test(unittest.TestCase):
 
         storage = getUtility(IRedirectionStorage)
         # add old-style redirect directly in internal structure:
-        old = '/plone/old'
-        new = '/plone/new'
+        old = "/plone/old"
+        new = "/plone/new"
         storage._paths[old] = new
         # get_full mocks a new-style redirect,
         # though with None instead of a DateTime, and manual always True.
         self.assertTupleEqual(storage.get_full(old), (new, None, True))
-        portal = self.layer['portal']
+        portal = self.layer["portal"]
         # Run the rebuild, and keep track of time before and after.
         time1 = DateTime()
         rebuild_redirections(portal.portal_setup)
@@ -91,10 +90,11 @@ class SiteLogoTest(unittest.TestCase):
     Ah, no problem after all: zope.schema.ASCII/Bytes may be the same,
     but plone.registry.fields.ASCII/Bytes are always different.
     """
+
     layer = PLONE_INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
+        self.portal = self.layer["portal"]
         self.registry = getUtility(IRegistry)
 
     def test_current_site_logo(self):
@@ -102,16 +102,16 @@ class SiteLogoTest(unittest.TestCase):
         from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
         from zope.schema.interfaces import WrongType
 
-        record = self.registry.records['plone.site_logo']
+        record = self.registry.records["plone.site_logo"]
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsNone(record.value)
         with self.assertRaises(WrongType):
-            record.value = u"abc"
+            record.value = "abc"
         record.value = b"ABC"
         self.assertEqual(record.value, b"ABC")
         # Migrating does nothing.
         migrate_site_logo_from_ascii_to_bytes(self.portal)
-        record = self.registry.records['plone.site_logo']
+        record = self.registry.records["plone.site_logo"]
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsInstance(record.value, bytes)
         self.assertEqual(record.value, b"ABC")
@@ -120,34 +120,34 @@ class SiteLogoTest(unittest.TestCase):
         # Test that the migration adds the record if for some reason it is missing.
         from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
 
-        del self.registry.records['plone.site_logo']
+        del self.registry.records["plone.site_logo"]
         migrate_site_logo_from_ascii_to_bytes(self.portal)
-        record = self.registry.records['plone.site_logo']
+        record = self.registry.records["plone.site_logo"]
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsNone(record.value)
 
     def test_site_logo_empty(self):
         from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
 
-        del self.registry.records['plone.site_logo']
+        del self.registry.records["plone.site_logo"]
         record_51 = Record(field.ASCII())
-        self.registry.records['plone.site_logo'] = record_51
+        self.registry.records["plone.site_logo"] = record_51
         # Migrate.
         migrate_site_logo_from_ascii_to_bytes(self.portal)
-        record = self.registry.records['plone.site_logo']
+        record = self.registry.records["plone.site_logo"]
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsNone(record.value)
 
     def test_site_logo_text(self):
         from plone.app.upgrade.v52.final import migrate_site_logo_from_ascii_to_bytes
 
-        del self.registry.records['plone.site_logo']
+        del self.registry.records["plone.site_logo"]
         record_51 = Record(field.ASCII())
         record_51.value = "native string"
-        self.registry.records['plone.site_logo'] = record_51
+        self.registry.records["plone.site_logo"] = record_51
         # Migrate.
         migrate_site_logo_from_ascii_to_bytes(self.portal)
-        record = self.registry.records['plone.site_logo']
+        record = self.registry.records["plone.site_logo"]
         self.assertIsInstance(record.field, field.Bytes)
         self.assertIsInstance(record.value, bytes)
         self.assertEqual(record.value, b"native string")
@@ -155,8 +155,8 @@ class SiteLogoTest(unittest.TestCase):
     def test_migrate_record_from_ascii_to_bytes_with_prefix(self):
         # This is the more general fixer from ASCII to Bytes.
         from plone.app.upgrade.v52.final import migrate_record_from_ascii_to_bytes
-        from zope.interface import Interface
         from zope import schema
+        from zope.interface import Interface
 
         class ITest(Interface):
             testfield = schema.ASCII()
@@ -184,14 +184,14 @@ class SiteLogoTest(unittest.TestCase):
     def test_migrate_record_from_ascii_to_bytes_without_prefix(self):
         # This is the more general fixer from ASCII to Bytes.
         from plone.app.upgrade.v52.final import migrate_record_from_ascii_to_bytes
-        from zope.interface import Interface
         from zope import schema
+        from zope.interface import Interface
 
         class ITest(Interface):
             testfield = schema.ASCII()
 
         self.registry.registerInterface(ITest)
-        record_name = "{}.testfield".format(ITest.__identifier__)
+        record_name = f"{ITest.__identifier__}.testfield"
         record = self.registry.records[record_name]
         record.value = "native string"
         self.assertIsInstance(record.field, field.ASCII)
@@ -218,36 +218,38 @@ class UpgradePortalTransforms521to522Test(unittest.TestCase):
     layer = PLONE_INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         self.pt = self.portal.portal_transforms
         registry = getUtility(IRegistry)
-        self.settings = registry.forInterface(IMarkupSchema, prefix='plone')
+        self.settings = registry.forInterface(IMarkupSchema, prefix="plone")
 
     def test_migrate_markup_settings(self):
-        from plone.app.upgrade.v52.final import \
-            move_markdown_transform_settings_to_registry
-        self.pt.markdown_to_html._config['enabled_extensions'] = [
-            'markdown.extensions.fenced_code',
-            'markdown.extensions.nl2br',
-            'markdown.extensions.extra',
+        from plone.app.upgrade.v52.final import (
+            move_markdown_transform_settings_to_registry,
+        )
+
+        self.pt.markdown_to_html._config["enabled_extensions"] = [
+            "markdown.extensions.fenced_code",
+            "markdown.extensions.nl2br",
+            "markdown.extensions.extra",
         ]
         move_markdown_transform_settings_to_registry(self.portal)
-        if getattr(self.settings, 'markdown_extensions', None):
+        if getattr(self.settings, "markdown_extensions", None):
             self.assertEqual(
                 self.settings.markdown_extensions,
                 [
-                    'markdown.extensions.fenced_code',
-                    'markdown.extensions.nl2br',
-                    'markdown.extensions.extra',
-                ]
+                    "markdown.extensions.fenced_code",
+                    "markdown.extensions.nl2br",
+                    "markdown.extensions.extra",
+                ],
             )
 
 
 def test_suite():
     # Skip these tests on Plone < 5.2a1
-    plone_version = get_distribution('Products.CMFPlone').version
-    if not parse_version(plone_version) >= parse_version('5.2a1'):
+    plone_version = get_distribution("Products.CMFPlone").version
+    if not parse_version(plone_version) >= parse_version("5.2a1"):
         return unittest.TestSuite()
 
     suite = unittest.TestSuite()

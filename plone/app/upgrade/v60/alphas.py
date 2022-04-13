@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.base.utils import get_installer
 from plone.dexterity.fti import DexterityFTI
@@ -147,8 +146,7 @@ def fix_unicode_properties(context):
 
 
 def cleanup_resources_and_bundles_in_registry(context=None):
-    """Fix registry for es6 resources and new resource registry.
-    """
+    """Fix registry for es6 resources and new resource registry."""
     registry = getUtility(IRegistry)
 
     # We need to upgrade staticresources first.
@@ -158,7 +156,9 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     # Also reregister the newly defined plone.session bundle if it is installed.
     installer = get_installer(context)
     if installer.is_profile_installed("plone.session:default"):
-        loadMigrationProfile(context, "profile-plone.session:default", steps=["plone.app.registry"])
+        loadMigrationProfile(
+            context, "profile-plone.session:default", steps=["plone.app.registry"]
+        )
 
     # Remove obsolete records from the registry
     removed_keys = [
@@ -177,19 +177,20 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         for removed_key in removed_keys:
             if key.startswith(removed_key):
                 to_delete.append(key)
-                logger.debug(u"Removed record {}".format(key))
+                logger.debug(f"Removed record {key}")
                 break
     for key in to_delete:
         del registry.records[key]
-    logger.info(u"Removed {} records from registry".format(len(to_delete)))
+    logger.info(f"Removed {len(to_delete)} records from registry")
 
     # make sure they are all gone
     try:
         from Products.CMFPlone.interfaces import IResourceRegistry
+
         records = registry.collectionOfInterface(
             IResourceRegistry, prefix="plone.resources", check=False
         )
-        assert(len(records) == 0)
+        assert len(records) == 0
     except ImportError:
         # the interface may be removed at some point
         pass
@@ -218,7 +219,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
     for name in removed_bundles:
         if name in bundles:
             del bundles[name]
-            logger.info(u"Removed bundle {}".format(name))
+            logger.info(f"Removed bundle {name}")
 
     # Remove deprecated bundle fields
     removed_fields = [
@@ -236,21 +237,31 @@ def cleanup_resources_and_bundles_in_registry(context=None):
         for removed_field in removed_fields:
             if key.startswith("plone.bundles/") and key.endswith(removed_field):
                 to_delete.append(key)
-                logger.debug(u"Removed record {}".format(key))
+                logger.debug(f"Removed record {key}")
     for key in to_delete:
         del registry.records[key]
-    logger.info(u"Removed {} deprecated bundle attributes from registry".format(len(to_delete)))
+    logger.info(f"Removed {len(to_delete)} deprecated bundle attributes from registry")
 
     # local default controlpanel icons
-    loadMigrationProfile(context, "profile-Products.CMFPlone:plone", steps=["controlpanel"])
+    loadMigrationProfile(
+        context, "profile-Products.CMFPlone:plone", steps=["controlpanel"]
+    )
     if installer.is_profile_installed("plone.app.theming:default"):
-        loadMigrationProfile(context, "profile-plone.app.theming:default", steps=["controlpanel"])
+        loadMigrationProfile(
+            context, "profile-plone.app.theming:default", steps=["controlpanel"]
+        )
     if installer.is_profile_installed("plone.app.registry:default"):
-        loadMigrationProfile(context, "profile-plone.app.registry:default", steps=["controlpanel"])
+        loadMigrationProfile(
+            context, "profile-plone.app.registry:default", steps=["controlpanel"]
+        )
     if installer.is_profile_installed("plone.app.caching:default"):
-        loadMigrationProfile(context, "profile-plone.app.caching:default", steps=["controlpanel"])
+        loadMigrationProfile(
+            context, "profile-plone.app.caching:default", steps=["controlpanel"]
+        )
     if installer.is_profile_installed("Products.CMFPlacefulWorkflow:base"):
-        loadMigrationProfile(context, "profile-Products.CMFPlacefulWorkflow:base", steps=["controlpanel"])
+        loadMigrationProfile(
+            context, "profile-Products.CMFPlacefulWorkflow:base", steps=["controlpanel"]
+        )
 
 
 def add_new_image_scales(context):

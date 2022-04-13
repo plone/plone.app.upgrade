@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
