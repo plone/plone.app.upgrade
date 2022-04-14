@@ -321,3 +321,71 @@ def add_new_image_scales(context):
 
     # Explicitly save the record.
     record.value = new_value
+
+
+def upgrade_plone_module_profiles(context):
+    """Upgrade profiles of core Plone modules to specific versions.
+
+    This means: all packages that are installed when you use the Plone package.
+    So this includes optional packages, like multilingual and plone.volto.
+    We want to upgrade all of them to a specific version.
+
+    Originally, when you upgrade a Plone 5.2 site to Plone 6.2, this happened:
+
+    * We run all upgrade steps for Products.CMFPlone:plone to Plone 6.2.
+    * Then we run all upgrade steps of the other modules.
+
+    The danger is that an upgrade step that works now when Plone 6.0 alpha
+    is the latest release, will not work when run on a 6.2 site.
+    Or it may undo a plone.app.upgrade fix from 6.1.
+
+    So the new idea is:
+
+    * We run all upgrade steps for Products.CMFPlone:plone to Plone 6.0 alpha or
+      beta, wherever we decide to put this function.
+    * Then we call this function.  This runs all upgrade steps of the modules that
+      were defined around that alpha/beta time.
+    * Then we run the rest of the upgrade steps for Products.CMFPlone:plone to 6.2.
+    * Then run any remaining upgrade steps for the other modules.
+
+    See https://github.com/plone/Products.CMFPlone/issues/3346
+
+    You can generate an up to date list if you first activate all modules,
+    and then with `bin/instance debug` do this:
+
+    >>> tool = app.Plone.portal_setup
+    >>> for profile_id in tool.listProfilesWithUpgrades():
+    ...     version = ".".join(tool.getLastVersionForProfile(profile_id))
+    ...     print(f'("{profile_id}", "{version}"),')
+
+    You must remove Products.CMFPlone:plone from the printed list:
+    it would lead to recursion.
+
+    Also, you may need to fix the plone.app.iterate version if it is unknown,
+    due to a 'default' and 'plone.app.iterate' profile:
+
+    >>> tool.getLastVersionForProfile('plone.app.iterate:default')
+
+    See https://github.com/plone/plone.app.iterate/issues/99
+    """
+    profile_versions = (
+        ("Products.CMFEditions:CMFEditions", "11"),
+        ("Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow", "1000"),
+        # Do NOT add Products.CMFPlone:plone in here: it leads to recursion.
+        ("Products.PlonePAS:PlonePAS", "5"),
+        ("plone.app.caching:default", "3"),
+        ("plone.app.contenttypes:default", "3000"),
+        ("plone.app.dexterity:default", "2006"),
+        ("plone.app.discussion:default", "1004"),
+        ("plone.app.event:default", "15"),
+        ("plone.app.iterate:default", "121"),
+        ("plone.app.multilingual:default", "4"),
+        ("plone.app.querystring:default", "13"),
+        ("plone.app.theming:default", "1002"),
+        ("plone.app.users:default", "1"),
+        ("plone.restapi:default", "0006"),
+        ("plone.staticresources:default", "209"),
+        ("plone.volto:default", "1016"),
+    )
+    for profile_id, version in profile_versions:
+        context.upgradeProfile(profile_id, dest=version, quiet=True)

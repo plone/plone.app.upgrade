@@ -110,6 +110,11 @@
           import_profile="plone.app.upgrade.v60:to6005"
           />
 
+       <gs:upgradeStep
+           title="Upgrade profiles of core Plone modules to specific versions."
+           handler=".alphas.upgrade_plone_module_profiles"
+           />
+
     </gs:upgradeSteps>
 
 </configure>
