@@ -3,5 +3,7 @@
 
   <records interface="plone.base.interfaces.ITinyMCESchema"
            prefix="plone" />
+  <records interface="plone.base.interfaces.IImagingSchema"
+           prefix="plone" />
 
 </registry>
