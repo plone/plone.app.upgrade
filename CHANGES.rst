@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+2.1.1 (2022-04-29)
+------------------
+
+Bug fixes:
+
+
+- Added upgrade to 5216, Plone 5.2.8.  [maurits] (#5216)
+
+
 2.1.0 (2022-01-25)
 ------------------
 
