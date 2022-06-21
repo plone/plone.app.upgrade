@@ -6,4 +6,15 @@
   <records interface="plone.base.interfaces.IImagingSchema"
            prefix="plone" />
 
+  <records interface="plone.base.interfaces.controlpanel.IFilterSchema" prefix="plone">
+    <value key="valid_tags" purge="false">
+      <element>picture</element>
+    </value>
+    <value key="custom_attributes" purge="false">
+      <element>loading</element>
+      <element>srcset</element>
+      <element>sizes</element>
+    </value>
+  </records>
+
 </registry>
