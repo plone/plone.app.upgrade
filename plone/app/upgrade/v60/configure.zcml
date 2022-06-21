@@ -115,6 +115,11 @@
            handler=".alphas.upgrade_plone_module_profiles"
            />
 
+       <gs:upgradeStep
+           title="Update catalog brains to add image_scales."
+           handler="plone.app.upgrade.utils.update_catalog_metadata"
+           />
+
     </gs:upgradeSteps>
 
 </configure>

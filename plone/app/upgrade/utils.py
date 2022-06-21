@@ -349,6 +349,33 @@ def updateIconsInBrains(context, typesToUpdate=None):
     logger.info("Updated `getIcon` metadata.")
 
 
+def update_catalog_metadata(context):
+    """Update catalog metadata for all brains."""
+    catalog = getToolByName(context, "portal_catalog")
+    logger.info("Updating metadata.")
+    # If we want to report progress, we need to know how many brains there are
+    # and we can only do this if we have a list instead of a generator.
+    brains = list(catalog.getAllBrains())
+    num_objects = len(brains)
+    pghandler = ZLogHandler(100)
+    pghandler.init("Updating metadata", num_objects)
+    for index, brain in enumerate(brains, 1):
+        pghandler.report(index)
+        obj = brain.getObject()
+        # We can only update the metadata if we also update at least one index.
+        # Passing in a valid but inexpensive index, makes sure we do not reindex the
+        # entire catalog including expensive indexes like SearchableText.
+        brain_path = brain.getPath()
+        try:
+            catalog.catalog_object(obj, brain_path, ["id"], True, pghandler)
+        except ConflictError:
+            raise
+        except Exception:
+            pass
+    pghandler.finish()
+    logger.info("Updated metadata of all brains.")
+
+
 def get_property(context, property_name, default_value=None):
     try:
         return getattr(context, property_name, default_value)
