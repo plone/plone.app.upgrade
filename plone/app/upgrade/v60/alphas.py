@@ -347,7 +347,7 @@ def update_catalog_for_image_scales(context):
         catalog.addColumn(column)
         logger.info("Added %s column to catalog metadata schema.", column)
     start = time()
-    update_catalog_metadata(context)
+    update_catalog_metadata(context, column=column)
     end = time()
     minutes = (end - start) / 60
     logger.info(

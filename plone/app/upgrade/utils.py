@@ -1,5 +1,7 @@
 from Acquisition import aq_base
+from Missing import Missing
 from plone.base.utils import get_installer
+from plone.indexer.interfaces import IIndexableObject
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import base_hasattr
@@ -9,6 +11,7 @@ from Products.GenericSetup.registry import _import_step_registry
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from types import ModuleType
 from ZODB.POSException import ConflictError
+from zope.component import getMultiAdapter
 
 import logging
 import pkg_resources
@@ -349,7 +352,7 @@ def updateIconsInBrains(context, typesToUpdate=None):
     logger.info("Updated `getIcon` metadata.")
 
 
-def update_catalog_metadata(context):
+def update_catalog_metadata(context, column=None):
     """Update catalog metadata for all brains."""
     catalog = getToolByName(context, "portal_catalog")
     logger.info("Updating metadata.")
@@ -359,9 +362,43 @@ def update_catalog_metadata(context):
     num_objects = len(brains)
     pghandler = ZLogHandler(100)
     pghandler.init("Updating metadata", num_objects)
+
+    column_position = metadata = None
+    if column is not None:
+        # We want to update one single column.
+        # First check if it is there.
+        if column not in catalog.schema():
+            raise KeyError(
+                "Column %s is not in the catalog schema: %s", column, catalog.schema()
+            )
+        # Updating a single column is only possible when relying on inner workings of
+        # the catalog.  Find out if we have a regular ZCatalog and not something
+        # special. Taken over from updateIconsInBrains above.
+        _catalog = getattr(catalog, "_catalog", None)
+        if _catalog is not None:
+            metadata = _catalog.data
+            column_position = _catalog.schema.get(column, None)
+
     for index, brain in enumerate(brains, 1):
         pghandler.report(index)
         obj = brain.getObject()
+        if column_position is not None:
+            # We rely on the inner workings of the catalog.
+            rid = brain.getRID()
+            record = metadata[rid]
+            old_value = record[column_position]
+            # see CMFPlone/catalog.zcml
+            wrapper = getMultiAdapter((obj, catalog), IIndexableObject)
+            try:
+                new_value = getattr(wrapper, column)
+            except AttributeError:
+                new_value = Missing
+            if old_value == new_value:
+                continue
+            new_record = list(record)
+            new_record[column_position] = new_value
+            metadata[rid] = tuple(new_record)
+            continue
         # We can only update the metadata if we also update at least one index.
         # Passing in a valid but inexpensive index, makes sure we do not reindex the
         # entire catalog including expensive indexes like SearchableText.
