@@ -1,5 +1,5 @@
 from Acquisition import aq_base
-from Missing import Missing
+from Missing import MV
 from plone.base.utils import get_installer
 from plone.indexer.interfaces import IIndexableObject
 from Products.CMFCore.DirectoryView import _dirreg
@@ -389,10 +389,12 @@ def update_catalog_metadata(context, column=None):
             old_value = record[column_position]
             # see CMFPlone/catalog.zcml
             wrapper = getMultiAdapter((obj, catalog), IIndexableObject)
-            try:
-                new_value = getattr(wrapper, column)
-            except AttributeError:
-                new_value = Missing
+            # See ZCatalog/Catalog.py:recordify
+            new_value = getattr(wrapper, column, MV)
+            if (new_value is not MV and safe_callable(new_value)):
+                new_value = new_value()
+            record.append(attr)
+
             if old_value == new_value:
                 continue
             new_record = list(record)
