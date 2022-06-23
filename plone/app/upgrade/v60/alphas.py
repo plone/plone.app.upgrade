@@ -1,4 +1,5 @@
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import update_catalog_metadata
 from plone.base.utils import get_installer
 from plone.dexterity.fti import DexterityFTI
 from plone.registry.interfaces import IRegistry
@@ -6,12 +7,14 @@ from plone.uuid.interfaces import ATTRIBUTE_NAME
 from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IBundleRegistry
+from time import time
 from ZODB.broken import Broken
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.component.hooks import getSite
 
 import logging
+import os
 
 
 logger = logging.getLogger("plone.app.upgrade")
@@ -321,6 +324,30 @@ def add_new_image_scales(context):
 
     # Explicitly save the record.
     record.value = new_value
+
+
+def update_catalog_for_image_scales(context):
+    """Update the catalog to add the image_scales column to all brains.
+
+    This may take long.  By default we update, but we check an environment variable
+    so you can switch this off:
+    UPDATE_CATALOG_FOR_IMAGE_SCALES = 0
+    """
+    # We could catch TypeError and ValueError, but really this is a user error,
+    # so let's fail.
+    update = bool(int(os.getenv("UPDATE_CATALOG_FOR_IMAGE_SCALES", 1)))
+    if not update:
+        logger.warning(
+            "UPDATE_CATALOG_FOR_IMAGE_SCALES is false, so not updating catalog."
+        )
+        return
+    start = time()
+    update_catalog_metadata(context)
+    end = time()
+    minutes = (end - start) / 60
+    logger.info(
+        "Time taken to update catalog for image scales: %.1f minutes.", minutes
+    )
 
 
 def upgrade_plone_module_profiles(context):
