@@ -341,6 +341,11 @@ def update_catalog_for_image_scales(context):
             "UPDATE_CATALOG_FOR_IMAGE_SCALES is false, so not updating catalog."
         )
         return
+    catalog = getToolByName(context, "portal_catalog")
+    column = "image_scales"
+    if column not in catalog.schema():
+        catalog.addColumn(column)
+        logger.info("Added %s column to catalog metadata schema.", column)
     start = time()
     update_catalog_metadata(context)
     end = time()
