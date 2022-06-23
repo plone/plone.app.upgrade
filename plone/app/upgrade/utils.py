@@ -8,6 +8,7 @@ from Products.CMFPlone.utils import base_hasattr
 from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry
+from Products.PluginIndexes.util import safe_callable
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from types import ModuleType
 from ZODB.POSException import ConflictError
@@ -393,8 +394,6 @@ def update_catalog_metadata(context, column=None):
             new_value = getattr(wrapper, column, MV)
             if (new_value is not MV and safe_callable(new_value)):
                 new_value = new_value()
-            record.append(attr)
-
             if old_value == new_value:
                 continue
             new_record = list(record)
