@@ -12,6 +12,7 @@ from Products.PluginIndexes.util import safe_callable
 from Products.ZCatalog.ProgressHandler import ZLogHandler
 from types import ModuleType
 from ZODB.POSException import ConflictError
+from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 
 import logging
@@ -389,7 +390,12 @@ def update_catalog_metadata(context, column=None):
             record = metadata[rid]
             old_value = record[column_position]
             # see CMFPlone/catalog.zcml
-            wrapper = getMultiAdapter((obj, catalog), IIndexableObject)
+            try:
+                wrapper = getMultiAdapter((obj, catalog), IIndexableObject)
+            except ComponentLookupError:
+                # I have seen the portal_catalog as brain in the portal_catalog...
+                logger.exception(obj)
+                continue
             # See ZCatalog/Catalog.py:recordify
             new_value = getattr(wrapper, column, MV)
             if (new_value is not MV and safe_callable(new_value)):
