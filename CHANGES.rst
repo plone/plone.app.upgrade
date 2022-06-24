@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0b2 (2022-06-24)
+--------------------
+
+Bug fixes:
+
+
+- ``update_catalog_metadata``: catch and log ``ComponentLookupError`` when getting indexable object.
+  [maurits] (#3521)
+
+
 3.0.0b1 (2022-06-24)
 --------------------
 
