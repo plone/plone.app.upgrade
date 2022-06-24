@@ -402,21 +402,21 @@ def upgrade_plone_module_profiles(context):
     """
     profile_versions = (
         ("Products.CMFEditions:CMFEditions", "11"),
-        ("Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow", "1000"),
+        ("Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow", "1001"),
         # Do NOT add Products.CMFPlone:plone in here: it leads to recursion.
         ("Products.PlonePAS:PlonePAS", "5"),
         ("plone.app.caching:default", "3"),
         ("plone.app.contenttypes:default", "3000"),
-        ("plone.app.dexterity:default", "2006"),
-        ("plone.app.discussion:default", "1004"),
+        ("plone.app.dexterity:default", "2007"),
+        ("plone.app.discussion:default", "2000"),
         ("plone.app.event:default", "15"),
-        ("plone.app.iterate:default", "121"),
-        ("plone.app.multilingual:default", "4"),
-        ("plone.app.querystring:default", "13"),
+        ("plone.app.iterate:plone.app.iterate", "121"),
+        ("plone.app.multilingual:default", "1000"),
+        ("plone.app.querystring:default", "14"),
         ("plone.app.theming:default", "1002"),
         ("plone.app.users:default", "1"),
         ("plone.restapi:default", "0006"),
-        ("plone.staticresources:default", "209"),
+        ("plone.staticresources:default", "210"),
         ("plone.volto:default", "1016"),
     )
     for profile_id, version in profile_versions:

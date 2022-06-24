@@ -99,27 +99,27 @@ class Various60Test(unittest.TestCase):
         portal = self.layer["portal"]
         setup = getToolByName(portal, "portal_setup")
 
-        # We expect plone.app.dexterity to be at least at version 2006.
-        # The version is a tuple like ("2006",)
+        # We expect plone.app.dexterity to be at least at version 2007.
+        # The version is a tuple like ("2007",)
         profile_id = "plone.app.dexterity:default"
-        self.assertGreaterEqual(setup.getLastVersionForProfile(profile_id), ("2006",))
+        self.assertGreaterEqual(setup.getLastVersionForProfile(profile_id), ("2007",))
 
         # Calling the upgrade step should not change this.
         upgrade_plone_module_profiles(setup)
-        self.assertGreaterEqual(setup.getLastVersionForProfile(profile_id), ("2006",))
+        self.assertGreaterEqual(setup.getLastVersionForProfile(profile_id), ("2007",))
 
         # Pretend that we are at an earlier version.
         # This should result in an upgrade to the exact requested version,
         # even when steps exist to upgrade it to a much newer version.
         setup.setLastVersionForProfile(profile_id, "2005")
         upgrade_plone_module_profiles(setup)
-        self.assertEqual(setup.getLastVersionForProfile(profile_id), ("2006",))
+        self.assertEqual(setup.getLastVersionForProfile(profile_id), ("2007",))
 
         # Pretend that we are at a later version.
         # The version should stay the same then, no downgrading.
-        setup.setLastVersionForProfile(profile_id, "2007")
+        setup.setLastVersionForProfile(profile_id, "9999")
         upgrade_plone_module_profiles(setup)
-        self.assertEqual(setup.getLastVersionForProfile(profile_id), ("2007",))
+        self.assertEqual(setup.getLastVersionForProfile(profile_id), ("9999",))
 
     def test_upgrade_plone_module_profiles_multilingual(self):
         from plone.app.upgrade.v60.alphas import upgrade_plone_module_profiles
