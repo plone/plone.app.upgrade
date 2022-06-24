@@ -1,4 +1,0 @@
-Removed old code, aliases and dependencies.
-This were only needed to have a clean upgrade to earlier Plone versions.
-We only support upgrading from Plone 5.2 Python 3.
-[maurits]

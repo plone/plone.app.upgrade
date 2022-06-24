@@ -8,6 +8,43 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0b1 (2022-06-24)
+--------------------
+
+Breaking changes:
+
+
+- Removed old code, aliases and dependencies.
+  This were only needed to have a clean upgrade to earlier Plone versions.
+  We only support upgrading from Plone 5.2 Python 3.
+  [maurits] (#286)
+
+
+New features:
+
+
+- Upgrade profiles of core Plone modules to specific versions.
+  See `issue 3346 <https://github.com/plone/Products.CMFPlone/issues/3346>`_.
+  [maurits] (#3346)
+- Add ``image_scales`` catalog metadata column.
+  Update all brains to get this info.
+  Since this takes long on large sites, you can disable this with an environment variable:
+  ``export UPDATE_CATALOG_FOR_IMAGE_SCALES=0``
+  In that case, you are advised to add the ``image_scales`` column manually to the catalog later.
+  [maurits] (#3521)
+
+
+Bug fixes:
+
+
+- Cleanup: pyupgrade, isort, black.  [maurits] (#287)
+- Add upgrade-profile for 6005 and reload tinyconfig to allow inline-mode.
+  [pbauer] (#288)
+- Remove empty ``plone_templates`` skin layer.
+  [maurits] (#3515)
+- Added upgrade to 6005, Plone 6.0.0a5.  [maurits] (#6005)
+
+
 3.0.0a4 (2022-04-08)
 --------------------
 
