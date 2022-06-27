@@ -103,7 +103,8 @@
         source="6004"
         destination="6005"
         profile="Products.CMFPlone:plone">
-        <!-- Plone 6.0.0a5 -->
+        <!-- Plone 6.0.0a6.  Note: there is no official 6.0.0a5 full Plone release,
+             only a Products.CMFPlone release. -->
 
       <gs:upgradeDepends
           title="Run to6005 upgrade profile."
@@ -119,6 +120,20 @@
            title="Update catalog brains to add image_scales."
            handler=".alphas.update_catalog_for_image_scales"
            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="6005"
+        destination="6006"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 6.0.0a7 -->
+
+      <gs:upgradeStep
+            title="Misceleneous: upgrade to Plone 6.0.0a7"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
 
     </gs:upgradeSteps>
 
