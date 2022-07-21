@@ -112,11 +112,6 @@
           />
 
        <gs:upgradeStep
-           title="Upgrade profiles of core Plone modules to specific versions."
-           handler=".alphas.upgrade_plone_module_profiles"
-           />
-
-       <gs:upgradeStep
            title="Update catalog brains to add image_scales."
            handler=".alphas.update_catalog_for_image_scales"
            />
@@ -129,11 +124,10 @@
         profile="Products.CMFPlone:plone">
         <!-- Plone 6.0.0b1 -->
 
-      <gs:upgradeStep
-            title="Miscellaneous: upgrade to Plone 6.0.0b1"
-            description=""
-            handler="..utils.null_upgrade_step"
-            />
+       <gs:upgradeStep
+           title="Upgrade profiles of core Plone modules to specific versions."
+           handler=".alphas.upgrade_plone_module_profiles"
+           />
 
     </gs:upgradeSteps>
 

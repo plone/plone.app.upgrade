@@ -416,7 +416,7 @@ def upgrade_plone_module_profiles(context):
         ("plone.app.theming:default", "1002"),
         ("plone.app.users:default", "1"),
         ("plone.restapi:default", "0006"),
-        ("plone.staticresources:default", "210"),
+        ("plone.staticresources:default", "213"),
         ("plone.volto:default", "1016"),
     )
     for profile_id, version in profile_versions:
