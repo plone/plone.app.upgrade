@@ -7,7 +7,7 @@
       name="to6000"
       title="Upgrade profile for Plone 5.2.x to Plone 6.0.0a1.dev0 (6000)"
       directory="profiles/to6000"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -15,7 +15,7 @@
       name="to6003"
       title="Upgrade profile to Plone 6.0.0a3 (6003)"
       directory="profiles/to6003"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -23,7 +23,7 @@
       name="to6004"
       title="Upgrade profile to Plone 6.0.0a4 (6004)"
       directory="profiles/to6004"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -31,7 +31,14 @@
       name="to6005"
       title="Upgrade profile to Plone 6.0.0a5 (6005)"
       directory="profiles/to6005"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+  <genericsetup:registerProfile
+      name="to6007"
+      title="Upgrade profile to Plone 6.0.0b2 (6007)"
+      directory="profiles/to6007"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -43,7 +50,7 @@
       name="to_dx_site_root"
       title="Upgrade profile to change the FTI for the Plone Site object a dexterity one"
       directory="profiles/to_dx_site_root"
-      for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
