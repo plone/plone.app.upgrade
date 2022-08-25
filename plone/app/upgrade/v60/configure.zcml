@@ -143,6 +143,11 @@
           import_profile="plone.app.upgrade.v60:to6007"
           />
 
+      <gs:upgradeStep
+          title="Add a timezone property to portal memberdata if it is missing."
+          handler=".betas.add_the_timezone_property"
+          />
+
     </gs:upgradeSteps>
 
 </configure>
