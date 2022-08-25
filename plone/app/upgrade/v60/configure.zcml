@@ -143,15 +143,6 @@
           import_profile="plone.app.upgrade.v60:to6007"
           />
 
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6007"
-        destination="6008"
-        >
-      <!-- Plone 6.0.0b2 -->
-
       <gs:upgradeStep
           title="Add a timezone property to portal memberdata if it is missing."
           handler=".betas.add_the_timezone_property"
