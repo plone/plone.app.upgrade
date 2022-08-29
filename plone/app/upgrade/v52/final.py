@@ -267,3 +267,11 @@ def secure_portal_setup_objects(context):
         return
     _recursive_strict_permission(context.snapshots)
     logger.info("Made portal_setup snapshots only available for Manager and Owner.")
+
+
+def add_the_timezone_property(context):
+    """Ensure that the portal_memberdata tool has the timezone property."""
+    portal_memberdata = getToolByName(context, "portal_memberdata")
+    if portal_memberdata.hasProperty("timezone"):
+        return
+    portal_memberdata.manage_addProperty("timezone", "", "string")
