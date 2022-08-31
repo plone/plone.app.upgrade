@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+1.4.8 (2022-08-31)
+------------------
+
+Bug fixes:
+
+
+- Check that maxage field is a FieldRef before getting its recordName
+  [frapell] (#246)
+
+
 1.4.7 (2020-08-19)
 ------------------
 
