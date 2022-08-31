@@ -148,6 +148,11 @@
           handler=".betas.add_the_timezone_property"
           />
 
+      <gs:upgradeStep
+          title="Fix the portal action icons."
+          handler=".betas.add_action_icons"
+          />
+
     </gs:upgradeSteps>
 
 </configure>
