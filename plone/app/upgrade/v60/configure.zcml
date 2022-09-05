@@ -153,6 +153,11 @@
           handler=".betas.add_action_icons"
           />
 
+      <gs:upgradeStep
+          title="Rename the behavior collective.dexteritytextindexer to plone.textindexer"
+          handler=".betas.rename_dexteritytextindexer_behavior"
+          />
+
     </gs:upgradeSteps>
 
 </configure>
