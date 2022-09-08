@@ -81,19 +81,22 @@ def rename_dexteritytextindexer_behavior(context):
     """Rename collective.dexteritytextindexer behavior to plone.textindexer"""
     portal_types = getToolByName(context, "portal_types")
 
-    # Gather the FTIs that have the obsolete behavior
+    # Gather the FTIs that have the obsolete behavior,
+    # it can appear with the name or the interface identifier
+    old_behaviors = {
+        "collective.dexteritytextindexer",
+        "collective.dexteritytextindexer.behavior.IDexterityTextIndexer",
+    }
     ftis_to_fix = (
         fti
         for fti in portal_types.objectValues("Dexterity FTI")
-        if "collective.dexteritytextindexer" in fti.behaviors
+        if set(fti.behaviors) & old_behaviors
     )
 
     for fti in ftis_to_fix:
         # Rename the behavior
         behaviors = [
-            "plone.textindexer"
-            if behavior == "collective.dexteritytextindexer"
-            else behavior
+            "plone.textindexer" if behavior in old_behaviors else behavior
             for behavior in fti.behaviors
         ]
 
