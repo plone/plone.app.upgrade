@@ -75,3 +75,34 @@ def add_action_icons(context):
                 _set_icon_expr(action, new)
             elif action.icon_expr != new:
                 logger.info("Skipping action %r, it looks customized", action_path)
+
+
+def rename_dexteritytextindexer_behavior(context):
+    """Rename collective.dexteritytextindexer behavior to plone.textindexer"""
+    portal_types = getToolByName(context, "portal_types")
+
+    # Gather the FTIs that have the obsolete behavior,
+    # it can appear with the name or the interface identifier
+    old_behaviors = {
+        "collective.dexteritytextindexer",
+        "collective.dexteritytextindexer.behavior.IDexterityTextIndexer",
+    }
+    ftis_to_fix = (
+        fti
+        for fti in portal_types.objectValues("Dexterity FTI")
+        if set(fti.behaviors) & old_behaviors
+    )
+
+    for fti in ftis_to_fix:
+        # Rename the behavior
+        behaviors = [
+            "plone.textindexer" if behavior in old_behaviors else behavior
+            for behavior in fti.behaviors
+        ]
+
+        # Ensure we did not have the behavior more than once
+        while behaviors.count("plone.textindexer") > 1:
+            behaviors.remove("plone.textindexer")
+
+        # Set the updated behaviors
+        fti.behaviors = tuple(behaviors)

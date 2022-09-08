@@ -2,6 +2,7 @@ from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
+from plone.dexterity.interfaces import IDexterityFTI
 
 import unittest
 
@@ -134,3 +135,34 @@ class Various60Test(unittest.TestCase):
         self.assertEqual(setup.getLastVersionForProfile(profile_id), UNKNOWN)
         upgrade_plone_module_profiles(setup)
         self.assertEqual(setup.getLastVersionForProfile(profile_id), UNKNOWN)
+
+    def test_rename_dexteritytextindexer_behavior(self):
+        from plone.app.upgrade.v60.betas import rename_dexteritytextindexer_behavior
+
+        portal = self.layer["portal"]
+
+        fti = getUtility(IDexterityFTI, name="Document")
+
+        original_behaviors = fti.behaviors
+        expected_behaviors = original_behaviors + ("plone.textindexer",)
+        # If the dexteritytextindexer behavior is not present nothing should change
+        rename_dexteritytextindexer_behavior(portal)
+        self.assertTupleEqual(fti.behaviors, original_behaviors)
+
+        # If the dexteritytextindexer behavior is present it should be renamed
+        fti.behaviors = fti.behaviors + ("collective.dexteritytextindexer",)
+        rename_dexteritytextindexer_behavior(portal)
+        self.assertTupleEqual(fti.behaviors, expected_behaviors)
+
+        # If the old and new dexteritytextindexer behaviors are present,
+        # we should only have the new one
+        fti.behaviors = fti.behaviors + ("collective.dexteritytextindexer",)
+        rename_dexteritytextindexer_behavior(portal)
+        self.assertTupleEqual(fti.behaviors, expected_behaviors)
+
+        # Check that the fix also works with the interface identifier
+        fti.behaviors = original_behaviors + (
+            "collective.dexteritytextindexer.behavior.IDexterityTextIndexer",
+        )
+        rename_dexteritytextindexer_behavior(portal)
+        self.assertTupleEqual(fti.behaviors, expected_behaviors)
