@@ -8,6 +8,22 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0b4 (2022-09-10)
+--------------------
+
+Bug fixes:
+
+
+- Add migration of actions.xml for https://github.com/plone/Products.CMFPlone/pull/3616 
+  Add infrastructure for to beta2 migrations.
+  [jensens] (#294)
+- Add a timezone property to portal memberdata if it is missing. (#295)
+- Update the portal actions icon expressions
+  [ale-rt] (#298)
+- Add an upgrade step to fix the dexterity indexer behavior (#300)
+- Added upgrade to 6007, Plone 6.0.0b2.  [maurits] (#6007)
+
+
 3.0.0b3 (2022-07-23)
 --------------------
 
