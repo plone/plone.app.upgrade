@@ -167,11 +167,10 @@
         >
         <!-- Plone 6.0.0rc1 -->
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            description=""
-            handler="..utils.null_upgrade_step"
-            />
+        <gs:upgradeDepends
+            title="Update plonetheme.barceloneta registry"
+            import_profile="plonetheme.barceloneta:default"
+            import_steps="plone.app.registry" />
 
     </gs:upgradeSteps>
 
