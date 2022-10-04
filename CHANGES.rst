@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0b5 (2022-10-04)
+--------------------
+
+Bug fixes:
+
+
+- Update plonetheme.barceloneta registry.
+  [petschki] (#302)
+- Added upgrade to 6008, Plone 6.0.0b3. (#6008)
+
+
 3.0.0b4 (2022-09-10)
 --------------------
 
