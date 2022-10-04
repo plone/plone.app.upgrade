@@ -165,7 +165,7 @@
         source="6007"
         destination="6008"
         >
-        <!-- Plone 6.0.0rc1 -->
+        <!-- Plone 6.0.0b3 -->
 
         <gs:upgradeDepends
             title="Update plonetheme.barceloneta registry"
