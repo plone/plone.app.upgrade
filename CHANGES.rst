@@ -8,6 +8,19 @@ Changelog
 
 .. towncrier release notes start
 
+2.1.3 (2022-10-31)
+------------------
+
+Bug fixes:
+
+
+- Add a timezone property to portal memberdata if it is missing
+  Backports #296 to Plone 5.2.
+  [ale-rt] (#296)
+- Added upgrade to 5218, Plone 5.2.10.
+  [maurits] (#5218)
+
+
 2.1.2 (2022-07-18)
 ------------------
 

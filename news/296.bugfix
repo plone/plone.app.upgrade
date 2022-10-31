@@ -1,3 +1,0 @@
-Add a timezone property to portal memberdata if it is missing
-Backports #296 to Plone 5.2.
-[ale-rt]
