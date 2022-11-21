@@ -1,0 +1,3 @@
+Catch KeyError when getting object from a brain, and ignore this brain.
+Log a warning.
+[maurits]

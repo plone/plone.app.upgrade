@@ -280,7 +280,11 @@ def _update_icon_in_single_brain(brain, typesToUpdate, getIconPos, metadata):
     if brain_icon not in old_icons:
         # Otherwise we need to ask the object
         new_value = ""
-        obj = brain.getObject()
+        try:
+            obj = brain.getObject()
+        except KeyError:
+            logger.warning("Ignoring brain without object: %s", brain.getURL())
+            return
         method = getattr(aq_base(obj), "getIcon", None)
         if method is not None:
             try:
@@ -338,7 +342,11 @@ def updateIconsInBrains(context, typesToUpdate=None):
         else:
             # If we don't have a standard catalog tool, fall back to the
             # official API
-            obj = brain.getObject()
+            try:
+                obj = brain.getObject()
+            except KeyError:
+                logger.warning("Ignoring brain without object: %s", brain.getURL())
+                continue
             # passing in a valid but inexpensive index, makes sure we don't
             # reindex the entire catalog including expensive indexes like
             # SearchableText
@@ -383,7 +391,11 @@ def update_catalog_metadata(context, column=None):
 
     for index, brain in enumerate(brains, 1):
         pghandler.report(index)
-        obj = brain.getObject()
+        try:
+            obj = brain.getObject()
+        except KeyError:
+            logger.warning("Ignoring brain without object: %s", brain.getURL())
+            continue
         if column_position is not None:
             # We rely on the inner workings of the catalog.
             rid = brain.getRID()
