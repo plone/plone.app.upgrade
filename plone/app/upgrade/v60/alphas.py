@@ -13,6 +13,7 @@ from zope.component import getUtility
 from zope.component import queryUtility
 from zope.component.hooks import getSite
 
+import json
 import logging
 import os
 
@@ -77,6 +78,26 @@ def change_plone_site_fti(context):
         fti._setPropValue(prop, value)
 
 
+def make_volto_site(context):
+    """Check if the portal was being used as a Volto site, and if so apply the relevant behaviors"""
+    if context.hasProperty("blocks") and context.hasProperty("blocks_layout"):
+        # If the portal object has those properties it was being used
+        # as a Volto site, so we need to set the volto.blocks behavior to the FTI
+        # and copy the content of those properties to the fields
+        pt = getToolByName(context, "portal_types")
+        fti = pt.getTypeInfo("Plone Site")
+        fti.behaviors = fti.behaviors + ("volto.blocks",)
+
+        blocks_property_value = context.getProperty("blocks")
+        blocks_layout_property_value = context.getProperty("blocks_layout")
+        context.manage_delProperties(["blocks", "blocks_layout"])
+
+        context.blocks = json.loads(blocks_property_value)
+        context.blocks_layout = json.loads(blocks_layout_property_value)
+
+        logger.info("Applied volto.blocks behavior and migrated existing blocks")
+
+
 def make_site_dx(context):
     """Make the Plone Site a dexterity container"""
     portal = getSite()
@@ -102,6 +123,8 @@ def make_site_dx(context):
 
     delattr(portal, "_objects")
     portal._p_changed = True
+
+    make_volto_site(portal)
 
 
 def add_uuid_to_dxsiteroot(context):
@@ -350,9 +373,7 @@ def update_catalog_for_image_scales(context):
     update_catalog_metadata(context, column=column)
     end = time()
     minutes = (end - start) / 60
-    logger.info(
-        "Time taken to update catalog for image scales: %.1f minutes.", minutes
-    )
+    logger.info("Time taken to update catalog for image scales: %.1f minutes.", minutes)
 
 
 def upgrade_plone_module_profiles(context):
