@@ -21,6 +21,11 @@
            handler=".alphas.make_site_dx"
            />
 
+      <gs:upgradeStep
+           title="Migrate blocks of Plone Site root"
+           handler=".alphas.migrate_blocks_of_root"
+           />
+
       <gs:upgradeDepends
            title="Run to6000 upgrade profile."
            import_profile="plone.app.upgrade.v60:to6000"

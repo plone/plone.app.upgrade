@@ -78,22 +78,23 @@ def change_plone_site_fti(context):
         fti._setPropValue(prop, value)
 
 
-def make_volto_site(context):
+def migrate_blocks_of_root(context):
     """Check if the portal was being used as a Volto site, and if so apply the relevant behaviors"""
-    if context.hasProperty("blocks") and context.hasProperty("blocks_layout"):
+    portal = getSite()
+    if portal.hasProperty("blocks") and portal.hasProperty("blocks_layout"):
         # If the portal object has those properties it was being used
         # as a Volto site, so we need to set the volto.blocks behavior to the FTI
         # and copy the content of those properties to the fields
-        pt = getToolByName(context, "portal_types")
+        pt = getToolByName(portal, "portal_types")
         fti = pt.getTypeInfo("Plone Site")
         fti.behaviors = fti.behaviors + ("volto.blocks",)
 
-        blocks_property_value = context.getProperty("blocks")
-        blocks_layout_property_value = context.getProperty("blocks_layout")
-        context.manage_delProperties(["blocks", "blocks_layout"])
+        blocks_property_value = portal.getProperty("blocks")
+        blocks_layout_property_value = portal.getProperty("blocks_layout")
+        portal.manage_delProperties(["blocks", "blocks_layout"])
 
-        context.blocks = json.loads(blocks_property_value)
-        context.blocks_layout = json.loads(blocks_layout_property_value)
+        portal.blocks = json.loads(blocks_property_value)
+        portal.blocks_layout = json.loads(blocks_layout_property_value)
 
         logger.info("Applied volto.blocks behavior and migrated existing blocks")
 
@@ -123,8 +124,6 @@ def make_site_dx(context):
 
     delattr(portal, "_objects")
     portal._p_changed = True
-
-    make_volto_site(portal)
 
 
 def add_uuid_to_dxsiteroot(context):
