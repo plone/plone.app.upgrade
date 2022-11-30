@@ -197,8 +197,9 @@
         <!-- Plone 6.0.0rc2 -->
 
         <gs:upgradeStep
-            title="Migrate blocks of Plone Site root"
-            handler=".alphas.migrate_blocks_of_root"
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
             />
 
     </gs:upgradeSteps>
