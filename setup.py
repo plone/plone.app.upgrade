@@ -39,6 +39,7 @@ setup(
             "plone.app.redirector",
         ]
     ),
+    python_requires=">=3.8",
     install_requires=[
         "setuptools",
         "plone.base",
