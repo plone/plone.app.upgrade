@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0rc2 (2022-12-05)
+---------------------
+
+Bug fixes:
+
+
+- Apply volto.blocks behavior if the site was being used as a Volto site
+  [erral] (#304)
+- Catch KeyError when getting object from a brain, and ignore this brain.
+  Log a warning.
+  [maurits] (#306)
+- Added upgrade to 6010, Plone 6.0.0rc2.  [maurits] (#6010)
+
+
 3.0.0rc1 (2022-11-18)
 ---------------------
 
