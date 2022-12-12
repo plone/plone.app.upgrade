@@ -219,4 +219,19 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        profile="Products.CMFPlone:plone"
+        source="6011"
+        destination="6012"
+        >
+        <!-- Plone 6.0.1 -->
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            description=""
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
