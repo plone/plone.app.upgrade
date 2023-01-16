@@ -239,6 +239,7 @@
         source="5215"
         destination="5216"
         profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.8 -->
 
         <gs:upgradeStep
             title="Miscellaneous upgrades to Plone 5.2.8"
@@ -251,6 +252,7 @@
         source="5216"
         destination="5217"
         profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.9 -->
 
         <gs:upgradeStep
             title="Miscellaneous upgrades to Plone 5.2.9"
@@ -263,10 +265,24 @@
         source="5217"
         destination="5218"
         profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.10 -->
 
         <gs:upgradeStep
             title="Add a timezone property to portal memberdata if it is missing."
             handler=".final.add_the_timezone_property"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5218"
+        destination="5219"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.11 -->
+
+        <gs:upgradeStep
+            title="Miscellaneous upgrades to Plone 5.2.11"
+            handler="..utils.null_upgrade_step"
             />
 
     </gs:upgradeSteps>
