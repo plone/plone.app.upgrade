@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<registry>
+
+  <records interface="plone.base.interfaces.ITinyMCESchema"
+           prefix="plone">
+    <value key="plugins" purge="false">
+      <element>autolink</element>
+    </value>
+  </records>
+
+</registry>
