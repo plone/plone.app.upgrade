@@ -1,2 +1,2 @@
-Update `plone.base` registry entries.
+Add `autolink` plugin to `ITinyMCESchema.plugins`.
 [petschki]
