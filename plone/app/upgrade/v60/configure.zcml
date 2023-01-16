@@ -227,9 +227,9 @@
         <!-- Plone 6.0.1 -->
 
         <gs:upgradeDepends
-            title="Update Products.CMFPlone registry"
-            import_profile="Products.CMFPlone:dependencies"
-            import_steps="plone.app.registry" />
+          title="Run to6012 upgrade profile."
+          import_profile="plone.app.upgrade.v60:to6012"
+          />
 
     </gs:upgradeSteps>
 
