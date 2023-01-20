@@ -281,8 +281,8 @@
         <!-- Plone 5.2.11 -->
 
         <gs:upgradeStep
-            title="Miscellaneous upgrades to Plone 5.2.11"
-            handler="..utils.null_upgrade_step"
+            title="Add GET application/json for content to weak caching."
+            handler=".final.add_get_application_json_to_weak_caching"
             />
 
     </gs:upgradeSteps>
