@@ -8,6 +8,19 @@ Changelog
 
 .. towncrier release notes start
 
+2.1.4 (2023-01-26)
+------------------
+
+Bug fixes:
+
+
+- Apply weak caching to GET requests of content with application/json.
+  See `plone.rest issue 73 <https://github.com/plone/plone.rest/issues/73>`_.
+  [maurits] (#73)
+- Added upgrade to 5219, Plone 5.2.11.
+  [maurits] (#5219)
+
+
 2.1.3 (2022-10-31)
 ------------------
 
