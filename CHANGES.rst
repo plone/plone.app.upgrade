@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.1 (2023-01-30)
+------------------
+
+Bug fixes:
+
+
+- Add `autolink` plugin to `ITinyMCESchema.plugins`.
+  [petschki] (#308)
+- Added upgrade to 6012, Plone 6.0.1.  [maurits] (#6012)
+
+
 3.0.0 (2022-12-12)
 ------------------
 
