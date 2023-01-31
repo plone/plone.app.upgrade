@@ -41,7 +41,6 @@
 
        <gs:upgradeStep
            title="Fix UUID for DX Site Root"
-           description=""
            handler=".alphas.add_uuid_to_dxsiteroot"
            />
 
@@ -54,7 +53,6 @@
 
        <gs:upgradeStep
            title="Index the Site Root"
-           description=""
            handler=".alphas.index_siteroot"
            />
 
@@ -183,7 +181,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -198,7 +195,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -213,7 +209,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 

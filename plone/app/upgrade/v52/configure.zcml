@@ -13,7 +13,6 @@
 
       <gs:upgradeStep
            title="Run to52alpha1 upgrade profile."
-           description=""
            handler=".alphas.to52alpha1"
            />
 
@@ -26,7 +25,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -39,13 +37,11 @@
 
       <gs:upgradeStep
            title="Run to52beta1 upgrade profile."
-           description=""
            handler=".betas.to52beta1"
            />
 
       <gs:upgradeStep
            title="Run to52rc1 upgrade profile."
-           description=""
            handler=".betas.to52rc1"
            />
     </gs:upgradeSteps>
@@ -57,7 +53,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -76,7 +71,6 @@
 
         <gs:upgradeStep
             title="Move from dotted behaviors to named behaviors."
-            description=""
             handler=".final.move_dotted_to_named_behaviors"
             />
 
@@ -106,7 +100,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -119,7 +112,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -132,7 +124,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler=".final.to521"
             />
 
@@ -145,7 +136,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler=".final.to522"
             />
 
@@ -163,7 +153,6 @@
 
         <gs:upgradeStep
             title="Migrate site logo from native string to bytes"
-            description=""
             handler=".final.migrate_site_logo_from_ascii_to_bytes"
             />
 
@@ -201,7 +190,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
@@ -215,7 +203,6 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            description=""
             handler="..utils.null_upgrade_step"
             />
 
