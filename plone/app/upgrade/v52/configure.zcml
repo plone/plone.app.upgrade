@@ -208,4 +208,69 @@
 
     </gs:upgradeSteps>
 
+    <gs:upgradeSteps
+        source="5214"
+        destination="5215"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.7 -->
+
+        <gs:upgradeStep
+            title="Miscellaneous"
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5215"
+        destination="5216"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.8 -->
+
+        <gs:upgradeStep
+            title="Miscellaneous upgrades to Plone 5.2.8"
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5216"
+        destination="5217"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.9 -->
+
+        <gs:upgradeStep
+            title="Miscellaneous upgrades to Plone 5.2.9"
+            handler="..utils.null_upgrade_step"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5217"
+        destination="5218"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.10 -->
+
+        <gs:upgradeStep
+            title="Add a timezone property to portal memberdata if it is missing."
+            handler=".final.add_the_timezone_property"
+            />
+
+    </gs:upgradeSteps>
+
+    <gs:upgradeSteps
+        source="5218"
+        destination="5219"
+        profile="Products.CMFPlone:plone">
+        <!-- Plone 5.2.11 -->
+
+        <gs:upgradeStep
+            title="Add GET application/json for content to weak caching."
+            handler=".final.add_get_application_json_to_weak_caching"
+            />
+
+    </gs:upgradeSteps>
+
 </configure>
