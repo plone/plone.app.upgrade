@@ -260,3 +260,42 @@ def secure_portal_setup_objects(context):
         return
     _recursive_strict_permission(context.snapshots)
     logger.info("Made portal_setup snapshots only available for Manager and Owner.")
+
+
+def add_the_timezone_property(context):
+    """Ensure that the portal_memberdata tool has the timezone property."""
+    portal_memberdata = getToolByName(context, "portal_memberdata")
+    if portal_memberdata.hasProperty("timezone"):
+        return
+    portal_memberdata.manage_addProperty("timezone", "", "string")
+
+
+def add_get_application_json_to_weak_caching(context):
+    """Add GET application/json for content to weak caching.
+
+    See https://github.com/plone/plone.rest/issues/73#issuecomment-1384298492
+    We want to get this in the templateRulesetMapping setting of the registry:
+
+        <element key="GET_application_json_">plone.content.folderView</element>
+    """
+    registry = getUtility(IRegistry)
+    try:
+        from plone.app.caching.interfaces import IPloneCacheSettings
+    except ImportError:
+        # plone.app.caching is optional.
+        return
+
+    try:
+        settings = registry.forInterface(IPloneCacheSettings)
+    except KeyError:
+        # It is available, but not activated.  Nothing to do.
+        return
+    mapping = settings.templateRulesetMapping
+    key = "GET_application_json_"
+    if key in mapping:
+        # already set, do not change
+        return
+    mapping[key] = "plone.content.folderView"
+    # Note: if we edit templateRulesetMapping, our change will not be persisted,
+    # because it is a simple dict.  We have to set the entire mapping.
+    settings.templateRulesetMapping = mapping
