@@ -4,7 +4,7 @@ from plone.base.utils import get_installer
 from plone.indexer.interfaces import IIndexableObject
 from Products.CMFCore.DirectoryView import _dirreg
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import base_hasattr
+from plone.base.utils import base_hasattr
 from Products.GenericSetup.interfaces import ISetupTool
 from Products.GenericSetup.registry import _export_step_registry
 from Products.GenericSetup.registry import _import_step_registry

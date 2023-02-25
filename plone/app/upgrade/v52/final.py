@@ -6,7 +6,7 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IMarkupSchema
 from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import base_hasattr
+from plone.base.utils import base_hasattr
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
