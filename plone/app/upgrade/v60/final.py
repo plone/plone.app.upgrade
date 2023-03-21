@@ -1,4 +1,5 @@
 from AccessControl.Permission import Permission
+from plone.base.utils import get_installer
 from zope.component.hooks import getSite
 
 import logging
@@ -68,3 +69,51 @@ def rolemap_site_admin(context):
                     roles.append(SITE_ADMIN)
                     perm.setRoles(roles)
                     logger.info("Added %s role to '%s' permission.", SITE_ADMIN, name)
+
+
+def fix_iterate_profiles(context):
+    """Fix profiles of plone.app.iterate.
+
+    See https://github.com/plone/plone.app.iterate/issues/99
+    There used to be only a plone.app.iterate:plone.app.iterate profile.
+    This was kept for backwards compatibility, but copied to a
+    plone.app.iterate:default profile, as is usual.
+    We want to remove the old profile definition, but this might give problems
+    when someone still has this installed instead of the default profile.
+
+    Later we may want to do something similar with CMFPlacefulWorkflow:
+    https://github.com/plone/Products.CMFPlacefulWorkflow/issues/38
+    But this has no default profile yet.
+    """
+    product = "plone.app.iterate"
+    old_profile = "plone.app.iterate:plone.app.iterate"
+    installer = get_installer(context)
+
+    # check the product
+    product_installed = installer.is_product_installed("plone.app.iterate")
+    if product_installed:
+        logger.info("The %s product is currently installed.", product)
+    else:
+        logger.info("The %s product is currently not installed.", product)
+
+    # check the old profile
+    old_profile_installed = installer.is_profile_installed(old_profile)
+    if old_profile_installed:
+        logger.info("The old %s profile is currently installed.", old_profile)
+    else:
+        logger.info("The old %s profile is currently not installed.", old_profile)
+
+    if not (product_installed or old_profile_installed):
+        logger.info("%s is not installed at all, nothing needs to be done.", product)
+        return
+
+    if old_profile_installed:
+        # mark as not installed
+        context.unsetLastVersionForProfile(old_profile)
+    if not product_installed:
+        # This is the main fix: the old profile was marked as installed,
+        # so now the new profile should be installed.
+        installer.install_product(product)
+    else:
+        # Now seems a good time to run any upgrade steps.
+        installer.upgrade_product(product)
