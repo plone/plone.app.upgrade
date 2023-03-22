@@ -254,6 +254,11 @@
             handler=".final.rolemap_site_admin"
             />
 
+        <gs:upgradeStep
+            title="Fix plone.app.iterate profiles"
+            handler=".final.fix_iterate_profiles"
+            />
+
     </gs:upgradeSteps>
 
 </configure>
