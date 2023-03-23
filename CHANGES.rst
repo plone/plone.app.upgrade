@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.3 (2023-03-23)
+------------------
+
+Bug fixes:
+
+
+- Import more from plone.base. [maurits] (#1)
+- Fix plone.app.iterate profiles.
+  [maurits] (#99)
+- Add Site Administrator role to various permissions.
+  [maurits] (#3225)
+- Added upgrade to 6014, Plone 6.0.3.  [maurits] (#6014)
+
+
 3.0.2 (2023-02-23)
 ------------------
 
