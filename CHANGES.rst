@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.4 (2023-04-21)
+------------------
+
+Bug fixes:
+
+
+- Added upgrade to 6015, Plone 6.0.4.  [maurits] (#6015)
+
+
 3.0.3 (2023-03-23)
 ------------------
 
