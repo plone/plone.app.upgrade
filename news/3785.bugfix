@@ -1,0 +1,3 @@
+Fix TinyMCE problem: Tools and View do not show up in menubar.
+The menubar contained "toolsview" instead.
+[maurits]

@@ -283,8 +283,8 @@
         <!-- Plone 6.0.5 -->
 
         <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
+            title="Fix TinyMCE menubar"
+            handler=".final.fix_tinymce_menubar"
             />
 
     </gs:upgradeSteps>
