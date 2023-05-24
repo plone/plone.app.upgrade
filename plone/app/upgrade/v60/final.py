@@ -1,5 +1,7 @@
 from AccessControl.Permission import Permission
 from plone.base.utils import get_installer
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 from zope.component.hooks import getSite
 
 import logging
@@ -117,3 +119,22 @@ def fix_iterate_profiles(context):
     else:
         # Now seems a good time to run any upgrade steps.
         installer.upgrade_product(product)
+
+
+def fix_tinymce_menubar(context):
+    """Fix menubar with 'toolsview' instead of 'tools' and 'view'.
+
+    See https://github.com/plone/Products.CMFPlone/issues/3785
+    """
+    registry = getUtility(IRegistry)
+    record = registry.records.get("plone.menubar")
+    if record is None:
+        return
+    value = record.value
+    if "toolsview" not in value:
+        return
+    index = value.index("toolsview")
+    value.pop(index)
+    value.insert(index, "view")
+    value.insert(index, "tools")
+    record.value = value
