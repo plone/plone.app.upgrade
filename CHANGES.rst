@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.5 (2023-05-30)
+------------------
+
+Bug fixes:
+
+
+- Fix TinyMCE problem: Tools and View do not show up in menubar.
+  The menubar contained "toolsview" instead.
+  [maurits] (#3785)
+- Added upgrade to 6016, Plone 6.0.5.  [maurits] (#6016)
+
+
 3.0.4 (2023-04-21)
 ------------------
 
