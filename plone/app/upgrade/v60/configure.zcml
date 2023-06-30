@@ -311,8 +311,8 @@
         <!-- Plone 6.0.7 -->
 
         <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
+            title="Fix Registry ISyndication Settings"
+            handler=".final.fix_syndication_settings"
             />
 
     </gs:upgradeSteps>
