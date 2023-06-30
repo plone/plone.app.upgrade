@@ -4,6 +4,7 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from zope.component.hooks import getSite
+from zope.schema.interfaces import IVocabularyFactory
 
 import logging
 
@@ -150,7 +151,11 @@ def fix_syndication_settings(context):
     registry = getUtility(IRegistry)
     record_keys = list(registry.records.keys())
     portal_catalog = getToolByName(context,'portal_catalog')
-    
+
+    portal_url = getToolByName(context, "portal_url")
+    portal = portal_url.getPortalObject()
+    path = "/".join(portal.getPhysicalPath())
+
     old_iface = "Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings"
     new_iface ="plone.base.interfaces.syndication.ISiteSyndicationSettings"
 
@@ -179,12 +184,11 @@ def fix_syndication_settings(context):
                 items = list(record.value)
                 newitems=[]
                 for item in items:
-                    brains = portal_catalog(path={ "query": item })
+                    brains = portal_catalog(path={ "query": f"{path}{item}", "depth": 0})                    
                     if len(brains) > 0:
-                        newitems.append(item)
-                
+                        brain = brains[0]
+                        newitems.append(brain.UID)                
                 registry[new_key] = tuple(newitems)
-
             else:
                 registry[new_key] = record.value
 
