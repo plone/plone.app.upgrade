@@ -4,7 +4,6 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from zope.component.hooks import getSite
-from zope.schema.interfaces import IVocabularyFactory
 
 import logging
 
