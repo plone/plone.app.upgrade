@@ -1,13 +1,13 @@
 from plone.app.upgrade import utils
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.base.interfaces.syndication import ISiteSyndicationSettings
-from Products.CMFCore.utils import getToolByName
 
 
 class TestFixRegistrySettings(MigrationTest):
     
     def test_fix_syndication_settings(self):
-        # add fake settings, simulate the old iface settings of 
+        # add fake settings, simulate the old iface settings of
+        # Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings 
 
         from plone.app.upgrade.v60.final import fix_syndication_settings
         from plone.registry.interfaces import IRegistry
@@ -15,7 +15,10 @@ class TestFixRegistrySettings(MigrationTest):
 
         registry = getUtility(IRegistry)
         
-        registry.registerInterface(ISiteSyndicationSettings, prefix="Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings")
+        registry.registerInterface(
+            ISiteSyndicationSettings,
+            prefix="Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings"
+        )
         
         records = list(registry.records.keys())
         
@@ -44,7 +47,7 @@ class TestFixRegistrySettings(MigrationTest):
             recordname = f"{new_iface}.{fieldname}"
             self.assertIn(recordname, records)
         
-        # remove the old fields
+        # remove the old fields and copy the record values
         fix_syndication_settings(self.portal)
 
         records = list(registry.records.keys())
@@ -57,9 +60,6 @@ class TestFixRegistrySettings(MigrationTest):
             
             recordname = f"{new_iface}.{fieldname}"
             self.assertIn(recordname, records)
-
-        
-
 
 def test_suite():
     from unittest import makeSuite
