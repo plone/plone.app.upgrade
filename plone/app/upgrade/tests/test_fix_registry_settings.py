@@ -60,11 +60,3 @@ class TestFixRegistrySettings(MigrationTest):
             
             recordname = f"{new_iface}.{fieldname}"
             self.assertIn(recordname, records)
-
-def test_suite():
-    from unittest import makeSuite
-    from unittest import TestSuite
-
-    suite = TestSuite()
-    suite.addTest(makeSuite(TestFixRegistrySettings))
-    return suite
