@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.7 (2023-09-14)
+------------------
+
+Bug fixes:
+
+
+- Add Upgrade Step to fix ISyndicationSettings
+  [1letter] (#315)
+- Added upgrade to 6018, Plone 6.0.7.
+  [maurits] (#6018)
+
+
 3.0.6 (2023-06-22)
 ------------------
 
