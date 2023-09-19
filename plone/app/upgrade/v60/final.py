@@ -141,12 +141,18 @@ def fix_tinymce_menubar(context):
     record.value = value
 
 def fix_syndication_settings(context):
-    """Fix Syndication Setting in the registry 
+    """Fix Syndication Setting in the registry
     Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings
     is moved to plone.base.interfaces.syndication.ISiteSyndicationSettings.
 
     See https://github.com/plone/Products.CMFPlone/issues/3805
     """
+    try:
+        from plone.base.interfaces.syndication import ISiteSyndicationSettings
+    except ImportError:
+        # Upgrade step called from older Plone version?
+        return
+
     registry = getUtility(IRegistry)
     record_keys = list(registry.records.keys())
     portal_catalog = getToolByName(context,'portal_catalog')
@@ -170,6 +176,9 @@ def fix_syndication_settings(context):
         "show_syndication_button",
         "show_syndication_link"
     ]
+
+    # Make sure the interface is registered
+    registry.registerInterface(ISiteSyndicationSettings)
 
     # write old record values to new record
     for fieldname in fieldnames:
