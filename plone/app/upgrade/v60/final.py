@@ -140,25 +140,32 @@ def fix_tinymce_menubar(context):
     value.insert(index, "tools")
     record.value = value
 
+
 def fix_syndication_settings(context):
-    """Fix Syndication Setting in the registry 
+    """Fix Syndication Setting in the registry
     Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings
     is moved to plone.base.interfaces.syndication.ISiteSyndicationSettings.
 
     See https://github.com/plone/Products.CMFPlone/issues/3805
     """
+    try:
+        from plone.base.interfaces.syndication import ISiteSyndicationSettings
+    except ImportError:
+        # Upgrade step called from older Plone version?
+        return
+
     registry = getUtility(IRegistry)
     record_keys = list(registry.records.keys())
-    portal_catalog = getToolByName(context,'portal_catalog')
+    portal_catalog = getToolByName(context, "portal_catalog")
 
     portal_url = getToolByName(context, "portal_url")
     portal = portal_url.getPortalObject()
     path = "/".join(portal.getPhysicalPath())
 
     old_iface = "Products.CMFPlone.interfaces.syndication.ISiteSyndicationSettings"
-    new_iface ="plone.base.interfaces.syndication.ISiteSyndicationSettings"
+    new_iface = "plone.base.interfaces.syndication.ISiteSyndicationSettings"
 
-    fieldnames=[
+    fieldnames = [
         "allowed",
         "default_enabled",
         "search_rss_enabled",
@@ -168,8 +175,11 @@ def fix_syndication_settings(context):
         "allowed_feed_types",
         "site_rss_items",
         "show_syndication_button",
-        "show_syndication_link"
+        "show_syndication_link",
     ]
+
+    # Make sure the interface is registered
+    registry.registerInterface(ISiteSyndicationSettings)
 
     # write old record values to new record
     for fieldname in fieldnames:
@@ -177,20 +187,19 @@ def fix_syndication_settings(context):
         new_key = f"{new_iface}.{fieldname}"
         record = registry.records.get(old_key)
         if record is not None:
-            if fieldname == 'site_rss_items':
+            if fieldname == "site_rss_items":
                 # handle none existing items
                 # if in path in catalog add to the record
-                items = list(record.value)
-                newitems=[]
+                items = list(record.value) if record.value else ()
+                newitems = []
                 for item in items:
-                    brains = portal_catalog(path={ "query": f"{path}{item}", "depth": 0})                    
+                    brains = portal_catalog(path={"query": f"{path}{item}", "depth": 0})
                     if len(brains) > 0:
                         brain = brains[0]
-                        newitems.append(brain.UID)                
+                        newitems.append(brain.UID)
                 registry[new_key] = tuple(newitems)
             else:
                 registry[new_key] = record.value
-
 
     # delete the old records
     for fieldname in fieldnames:
