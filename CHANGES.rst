@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.8 (2023-09-20)
+------------------
+
+Bug fixes:
+
+
+- Fix error in site syndication settings when upgrading.
+  [maurits] (#315)
+
+
 3.0.7 (2023-09-14)
 ------------------
 
