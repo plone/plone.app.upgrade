@@ -145,7 +145,7 @@ Bug fixes:
 Bug fixes:
 
 
-- Add migration of actions.xml for https://github.com/plone/Products.CMFPlone/pull/3616 
+- Add migration of actions.xml for https://github.com/plone/Products.CMFPlone/pull/3616
   Add infrastructure for to beta2 migrations.
   [jensens] (#294)
 - Add a timezone property to portal memberdata if it is missing. (#295)
