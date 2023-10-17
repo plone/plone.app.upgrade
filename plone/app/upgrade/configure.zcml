@@ -6,6 +6,7 @@
 
     <include package=".v52" />
     <include package=".v60" zcml:condition="have plone-60" />
+    <include package=".v61" zcml:condition="have plone-61" />
 
     <utility
         factory=".HiddenProducts"
