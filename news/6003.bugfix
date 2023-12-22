@@ -1,0 +1,3 @@
+Remove Archetypes modifiers from portal_modifier early in Plone 6.0 alpha.
+CMFEditions already tried to do this, but this might fail in a corner case.
+[maurits]

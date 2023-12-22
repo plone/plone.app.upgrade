@@ -152,6 +152,34 @@ def index_siteroot(context):
     portal.reindexObject()
 
 
+def remove_broken_modifiers(context):
+    """Remove Archetypes modifiers from portal_modifier.
+
+    For Plone 6 we have removed Archetypes support.
+    This includes removing classes for four Archetypes modifiers.
+    During normal usage you should not notice this.
+    But it is still better to remove them.
+
+    In CMFEditions we have an upgrade step to remove them: removeBrokenModifiers.
+    But there are reports of getting a TypeError when loading one of these modifiers
+    when running this code, or before this code has had a chance to run.  See
+    https://community.plone.org/t/upgrading-migrating-from-5-2-6-to-6-0-5-fails/17577
+    So we delete them early on, especially before running fix_unicode_properties below
+    which is where it went wrong in this report.
+
+    Note that the objects themselves are not really broken, but they contain an
+    attribute '_modifier' that is broken and cannot be loaded.
+    """
+    tool = getToolByName(context, "portal_modifier", None)
+    if tool is None:
+        # Can't really happen, but this is upgrade code, so you never know.
+        return
+    for modifier_id in ("RetainATRefs", "NotRetainATRefs", "SkipBlobs", "CloneBlobs"):
+        if modifier_id in tool:
+            tool._delObject(modifier_id)
+            logger.info("Removed outdated %s from portal_modifier.", modifier_id)
+
+
 def fix_unicode_properties(context):
     """Fix unicode properties.
 
