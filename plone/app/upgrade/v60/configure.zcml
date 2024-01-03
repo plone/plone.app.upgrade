@@ -64,6 +64,11 @@
         profile="Products.CMFPlone:plone">
 
        <gs:upgradeStep
+           title="Remove broken modifiers"
+           handler=".alphas.remove_broken_modifiers"
+           />
+
+       <gs:upgradeStep
            title="Fix unicode properties"
            handler=".alphas.fix_unicode_properties"
            />
