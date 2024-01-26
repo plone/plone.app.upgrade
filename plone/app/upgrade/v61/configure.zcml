@@ -16,4 +16,16 @@
         />
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6100"
+      destination="6101"
+      >
+    <!-- Plone 6.1.0a1 -->
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+  </gs:upgradeSteps>
+
 </configure>
