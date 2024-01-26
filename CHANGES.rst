@@ -8,6 +8,24 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.2 (2024-01-26)
+------------------
+
+Bug fixes:
+
+
+- Remove Archetypes modifiers from portal_modifier early in Plone 6.0 alpha.
+  CMFEditions already tried to do this, but this might fail in a corner case.
+  [maurits] (#6003)
+
+
+Internal:
+
+
+- Added upgrade to 6021, Plone 6.0.10.
+  [maurits] (#6021)
+
+
 3.1.1 (2023-12-14)
 ------------------
 
