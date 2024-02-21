@@ -219,7 +219,7 @@ def fix_tinymce_format_iconnames(context):
         return
     values = record.value
     replacements = [
-        ("Superscript|superscript|superscript", "Superscript|superscript|super-script"),
+        ("Strikethrough|strikethrough|strikethrough", "Strikethrough|strikethrough|strike-through"),
         ("Code|code|code", "Code|code|sourcecode")
     ]
     for _old, _new in replacements:
