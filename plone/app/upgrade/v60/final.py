@@ -208,21 +208,36 @@ def fix_syndication_settings(context):
             del registry.records[key]
 
 
-def fix_tinymce_format_iconnames(context):
-    """Fix 'strike-through' and 'sourcecode'.
-
-    See https://github.com/plone/Products.CMFPlone/issues/3905
-    """
+def _replace_values_in_record(record_name, *replacements):
+    """Take the values of a registry record and replace some of them."""
     registry = getUtility(IRegistry)
-    record = registry.records.get("plone.inline_styles")
+    record = registry.records.get(record_name)
     if record is None:
         return
     values = record.value
-    replacements = [
-        ("Strikethrough|strikethrough|strikethrough", "Strikethrough|strikethrough|strike-through"),
-        ("Code|code|code", "Code|code|sourcecode")
-    ]
     for _old, _new in replacements:
         if _old in values:
             values[values.index(_old)] = _new
     record.value = values
+
+
+def fix_tinymce_format_iconnames(context):
+    """Fix various TinyMCE formats to have the correct icon name.
+
+    See https://github.com/plone/Products.CMFPlone/issues/3905
+    """
+    _replace_values_in_record(
+        "plone.inline_styles",
+        (
+            "Strikethrough|strikethrough|strikethrough",
+            "Strikethrough|strikethrough|strike-through",
+        ),
+        ("Code|code|code", "Code|code|sourcecode"),
+    )
+    _replace_values_in_record(
+        "plone.alignment_styles",
+        ("Left|alignleft|alignleft", "Left|alignleft|align-left"),
+        ("Center|aligncenter|aligncenter", "Center|aligncenter|align-center"),
+        ("Right|alignright|alignright", "Right|alignright|align-right"),
+        ("Justify|alignjustify|alignjustify", "Justify|alignjustify|align-justify"),
+    )
