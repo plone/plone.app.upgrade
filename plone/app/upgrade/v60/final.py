@@ -206,3 +206,23 @@ def fix_syndication_settings(context):
         key = f"{old_iface}.{fieldname}"
         if key in record_keys:
             del registry.records[key]
+
+
+def fix_tinymce_format_iconnames(context):
+    """Fix 'strike-through' and 'sourcecode'.
+
+    See https://github.com/plone/Products.CMFPlone/issues/3905
+    """
+    registry = getUtility(IRegistry)
+    record = registry.records.get("plone.inline_styles")
+    if record is None:
+        return
+    values = record.value
+    replacements = [
+        ("Strikethrough|strikethrough|strikethrough", "Strikethrough|strikethrough|strike-through"),
+        ("Code|code|code", "Code|code|sourcecode")
+    ]
+    for _old, _new in replacements:
+        if _old in values:
+            values[values.index(_old)] = _new
+    record.value = values

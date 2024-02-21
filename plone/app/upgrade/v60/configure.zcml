@@ -358,8 +358,8 @@
         <!-- Plone 6.0.10 -->
 
         <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
+            title="Fix TinyMCE format icon names"
+            handler=".final.fix_tinymce_format_iconnames"
             />
 
     </gs:upgradeSteps>
