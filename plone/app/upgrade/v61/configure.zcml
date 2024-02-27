@@ -21,7 +21,19 @@
       source="6100"
       destination="6101"
       >
-    <!-- Plone 6.1.0a1 -->
+    <!-- Plone 6.1.0a2 -->
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6101"
+      destination="6102"
+      >
+    <!-- Plone 6.1.0a3 -->
     <gs:upgradeStep
         title="Miscellaneous"
         handler="..utils.null_upgrade_step"
