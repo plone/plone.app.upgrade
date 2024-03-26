@@ -62,4 +62,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- to_isiteschema needs to be applied in Plone 6.0.11 and 6.1.0a3. -->
+  <genericsetup:registerProfile
+      name="to_isiteschema"
+      title="Reregister ISiteSchema to get new webstats_head_js record"
+      directory="profiles/to_isiteschema"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

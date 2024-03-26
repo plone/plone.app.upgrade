@@ -34,10 +34,11 @@
       destination="6102"
       >
     <!-- Plone 6.1.0a3 -->
-    <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
-        />
+    <!-- We reuse an upgrade step from v60 -->
+    <gs:upgradeDepends
+      title="Run to_isiteschema upgrade profile."
+      import_profile="plone.app.upgrade.v60:to_isiteschema"
+      />
   </gs:upgradeSteps>
 
 </configure>
