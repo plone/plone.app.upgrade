@@ -35,9 +35,11 @@
       >
     <!-- Plone 6.1.0a3 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Add Feature to TinyMCE Editor"
+        description="add accordion plugin to tinymce editor"
+        handler=".alpha.add_feature_tinymce_accordion_plugin"
         />
+        
   </gs:upgradeSteps>
 
 </configure>
