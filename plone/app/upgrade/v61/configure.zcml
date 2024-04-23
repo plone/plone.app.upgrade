@@ -39,7 +39,11 @@
         description="add accordion plugin to tinymce editor"
         handler=".alpha.add_feature_tinymce_accordion_plugin"
         />
-        
+    <!-- We reuse an upgrade step from v60 -->
+    <gs:upgradeDepends
+      title="Run to_isiteschema upgrade profile."
+      import_profile="plone.app.upgrade.v60:to_isiteschema"
+      />
   </gs:upgradeSteps>
 
 </configure>
