@@ -1,8 +1,8 @@
 from plone.app.testing import PLONE_INTEGRATION_TESTING
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
-from plone.dexterity.interfaces import IDexterityFTI
 
 import unittest
 

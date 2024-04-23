@@ -34,6 +34,11 @@
       destination="6102"
       >
     <!-- Plone 6.1.0a3 -->
+    <gs:upgradeStep
+        title="Add Feature to TinyMCE Editor"
+        description="add accordion plugin to tinymce editor"
+        handler=".alpha.add_feature_tinymce_accordion_plugin"
+        />
     <!-- We reuse an upgrade step from v60 -->
     <gs:upgradeDepends
       title="Run to_isiteschema upgrade profile."
