@@ -376,6 +376,13 @@
           import_profile="plone.app.upgrade.v60:to_isiteschema"
           />
 
+        
+        <gs:upgradeStep
+          title="Add Feature to TinyMCE Editor"
+          description="add accordion plugin to tinymce editor"
+          handler="plone.app.upgrade.v61.alpha.add_feature_tinymce_accordion_plugin"
+          />
+
     </gs:upgradeSteps>
 
 </configure>
