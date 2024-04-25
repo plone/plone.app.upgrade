@@ -8,6 +8,29 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.4 (2024-04-25)
+------------------
+
+Bug fixes:
+
+
+- Add upgrade step for enable TinyMCE Plugin accordion to v60
+  [1letter] (324-1)
+- Add upgrade step for enable TinyMCE Plugin accordion
+  [1letter] (#324)
+- Add upgrade to add registry record ``webstats_head_js`` to ``ISiteSchema``.
+  [maurits] (#3931)
+
+
+Internal:
+
+
+- Added upgrade to 6022, Plone 6.0.11.
+  [maurits] (#6022)
+- Added upgrade to 6102, Plone 6.1.0a3.
+  [maurits] (#6102)
+
+
 3.1.3 (2024-02-22)
 ------------------
 
