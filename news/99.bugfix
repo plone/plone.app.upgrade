@@ -1,0 +1,3 @@
+Fix upgrading `plone.app.iterate` to specific version.
+In Plone 6.1 the deprecated GS profile with id `plone.app.iterate` has been removed, and only `default` remains, as is usual.
+[maurits]
