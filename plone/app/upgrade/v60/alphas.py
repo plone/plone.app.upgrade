@@ -463,7 +463,12 @@ def upgrade_plone_module_profiles(context):
         ("plone.app.dexterity:default", "2007"),
         ("plone.app.discussion:default", "2000"),
         ("plone.app.event:default", "15"),
+        # Let's try both possible iterate profiles.
+        # Only one of them will have been marked as installed,
+        # but we don't know which one.  This will be fixed in
+        # v60/final.py in fix_iterate_profiles.
         ("plone.app.iterate:plone.app.iterate", "121"),
+        ("plone.app.iterate:default", "121"),
         ("plone.app.multilingual:default", "1000"),
         ("plone.app.querystring:default", "14"),
         ("plone.app.theming:default", "1002"),
