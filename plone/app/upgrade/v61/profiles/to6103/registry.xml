@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<registry>
+    <record name="plone.libraries_spellchecker_choice" remove="true" />
+    <record name="plone.libraries_atd_ignore_strings" remove="true" />
+    <record name="plone.libraries_atd_show_types" remove="true" />
+    <record name="plone.libraries_atd_service_url" remove="true" />
+</registry>
