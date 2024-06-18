@@ -21,6 +21,7 @@ class HiddenProducts:
         return [
             "plone.app.upgrade.v52",
             "plone.app.upgrade.v60",
+            "plone.app.upgrade.v61",
         ]
 
     def getNonInstallableProfiles(self):
