@@ -4,6 +4,8 @@
     i18n_domain="plone"
     >
 
+  <include file="profiles.zcml" />
+
   <gs:upgradeSteps
       profile="Products.CMFPlone:plone"
       source="6099"
@@ -56,6 +58,11 @@
         title="Miscellaneous"
         handler="..utils.null_upgrade_step"
         />
+
+    <gs:upgradeDepends
+      title="Run to6103 upgrade profile."
+      import_profile="plone.app.upgrade.v61:to6103"
+      />
   </gs:upgradeSteps>
 
 </configure>
