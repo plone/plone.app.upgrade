@@ -54,15 +54,14 @@
       destination="6103"
       >
     <!-- Plone 6.1.0a4 -->
-    <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
-        />
-
     <gs:upgradeDepends
       title="Run to6103 upgrade profile."
       import_profile="plone.app.upgrade.v61:to6103"
       />
+    <gs:upgradeStep
+        title="Remove the portal_properties tool."
+        handler=".final.remove_portal_properties_tool"
+        />
   </gs:upgradeSteps>
 
 </configure>

@@ -1,0 +1,3 @@
+6.1: Remove the portal_properties tool completely.
+This tool is deprecated, and we said we would remove it in 6.1.
+[maurits]
