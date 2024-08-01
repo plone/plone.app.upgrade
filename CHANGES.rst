@@ -8,6 +8,31 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.5 (2024-08-01)
+------------------
+
+Bug fixes:
+
+
+- Fix upgrading `plone.app.iterate` to specific version.
+  In Plone 6.1 the deprecated GS profile with id `plone.app.iterate` has been removed, and only `default` remains, as is usual.
+  [maurits] (#99)
+- 6.1: Remove the portal_properties tool completely.
+  This tool is deprecated, and we said we would remove it in 6.1.
+  [maurits] (#125)
+- 6.1: Add upgrade step that removes After the Deadline settings.
+  [reinhardt] (#328)
+
+
+Internal:
+
+
+- Added upgrade to 6023, Plone 6.0.12.
+  [maurits] (#6023)
+- Added upgrade to 6103, Plone 6.1.0a4.
+  [maurits] (#6103)
+
+
 3.1.4 (2024-04-25)
 ------------------
 
