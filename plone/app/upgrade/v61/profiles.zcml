@@ -11,4 +11,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <!-- This is a copy of plone.app.discussion/profiles/uninstall. -->
+  <genericsetup:registerProfile
+      name="uninstall-discussion"
+      title="Uninstall plone.app.discussion"
+      directory="profiles/uninstall-discussion"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

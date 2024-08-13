@@ -71,8 +71,8 @@
       >
     <!-- Plone 6.1.0a5 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Maybe get rid of plone.app.discussion"
+        handler=".final.maybe_cleanup_discussion"
         />
   </gs:upgradeSteps>
 
