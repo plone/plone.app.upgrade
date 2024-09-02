@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry>
+  <!-- This would give ModuleNotFoundError: No module named 'plone.app.discussion'
+       So we do this in Python code in maybe_cleanup_discussion. -->
+  <!-- <records interface="plone.app.discussion.interfaces.IDiscussionSettings"
+           remove="true"
+  /> -->
+</registry>
