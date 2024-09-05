@@ -1,4 +1,0 @@
-6.1: Cleanup ``plone.app.discussion`` settings when the package is not available.
-If the site contains comments, we throw an error and stop the upgrade.
-The advice then is to add the ``plone.app.discussion`` package.
-[maurits]

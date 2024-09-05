@@ -8,6 +8,27 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.6 (2024-09-05)
+------------------
+
+Bug fixes:
+
+
+- 6.1: Cleanup ``plone.app.discussion`` settings when the package is not available.
+  If the site contains comments, we throw an error and stop the upgrade.
+  The advice then is to add the ``plone.app.discussion`` package.
+  [maurits] (#211)
+
+
+Internal:
+
+
+- Added upgrade to 6024, Plone 6.0.13.
+  [maurits] (#6024)
+- Added upgrade to 6104, Plone 6.1.0a5.
+  [maurits] (#6104)
+
+
 3.1.5 (2024-08-01)
 ------------------
 
