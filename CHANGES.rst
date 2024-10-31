@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.7 (2024-10-31)
+------------------
+
+Internal:
+
+
+- Added upgrade to 6025, Plone 6.0.14.
+  [maurits] (#6025)
+- Added upgrade to 6105, Plone 6.1.0b1.
+  [maurits] (#6105)
+
+
 3.1.6 (2024-09-05)
 ------------------
 
