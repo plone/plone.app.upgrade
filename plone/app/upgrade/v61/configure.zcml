@@ -81,7 +81,7 @@
       source="6104"
       destination="6105"
       >
-    <!-- Plone 6.1.0a6 -->
+    <!-- Plone 6.1.0b1 -->
     <gs:upgradeStep
         title="Miscellaneous"
         handler="..utils.null_upgrade_step"
