@@ -252,9 +252,9 @@ def test_suite():
     if not parse_version(plone_version) >= parse_version("5.2a1"):
         return unittest.TestSuite()
 
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(UpgradeMemberData51to52Test))
-    suite.addTest(unittest.makeSuite(Various52Test))
-    suite.addTest(unittest.makeSuite(SiteLogoTest))
-    suite.addTest(unittest.makeSuite(UpgradePortalTransforms521to522Test))
-    return suite
+    return unittest.TestSuite((
+        unittest.defaultTestLoader.loadTestsFromTestCase(UpgradeMemberData51to52Test),
+        unittest.defaultTestLoader.loadTestsFromTestCase(Various52Test),
+        unittest.defaultTestLoader.loadTestsFromTestCase(SiteLogoTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(UpgradePortalTransforms521to522Test),
+    ))

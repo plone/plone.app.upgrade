@@ -69,9 +69,8 @@ class TestUpgrade(MigrationTest):
 
 
 def test_suite():
-    from unittest import makeSuite
-    from unittest import TestSuite
+    import unittest
 
-    suite = TestSuite()
-    suite.addTest(makeSuite(TestUpgrade))
-    return suite
+    return unittest.TestSuite((
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestUpgrade),
+    ))

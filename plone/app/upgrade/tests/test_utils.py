@@ -82,9 +82,8 @@ class TestUtils(MigrationTest):
 
 
 def test_suite():
-    from unittest import makeSuite
-    from unittest import TestSuite
+    import unittest
 
-    suite = TestSuite()
-    suite.addTest(makeSuite(TestUtils))
-    return suite
+    return unittest.TestSuite((
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestUtils),
+    ))
