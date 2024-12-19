@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.8 (2024-12-19)
+------------------
+
+Internal:
+
+
+- Added upgrade to 6106, Plone 6.1.0b2.
+  [maurits] (#6106)
+
+
+Tests
+
+
+- Fix removed `unittest.makeSuite` in python 3.13.
+  [petschki] (#331)
+
+
 3.1.7 (2024-10-31)
 ------------------
 
