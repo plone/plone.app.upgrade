@@ -6,7 +6,7 @@ from plone.registry import field
 from plone.registry import Record
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IMarkupSchema
+from plone.base.interfaces import IMarkupSchema
 from zope.component import getUtility
 
 import unittest

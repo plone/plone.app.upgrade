@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <registry>
 
-  <records interface="Products.CMFPlone.interfaces.controlpanel.INavigationSchema" prefix="plone" purge="False">
+  <records interface="plone.base.interfaces.INavigationSchema" prefix="plone" purge="False">
     <value key="navigation_depth">1</value>
   </records>
 
   <!-- changes from PLIP 1653 - restructure static resources -->
-  <records remove="True" prefix="plone.resources/expect" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
-  <records remove="True" prefix="plone.resources/js-shortcuts" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
-  <records remove="True" prefix="plone.resources/marked" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
-  <records remove="True" prefix="plone.resources/rjs" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
-  <records remove="True" prefix="plone.resources/react" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
-  <records remove="True" prefix="plone.resources/JSXTransformer" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
-  <records remove="True" prefix="plone.resources/sinon" interface='Products.CMFPlone.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/expect" interface='plone.base.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/js-shortcuts" interface='plone.base.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/marked" interface='plone.base.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/rjs" interface='plone.base.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/react" interface='plone.base.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/JSXTransformer" interface='plone.base.interfaces.IResourceRegistry'/>
+  <records remove="True" prefix="plone.resources/sinon" interface='plone.base.interfaces.IResourceRegistry'/>
 
   <records
       prefix="plone.resources/plone-patterns-toolbar"
-      interface='Products.CMFPlone.interfaces.IResourceRegistry'
+      interface='plone.base.interfaces.IResourceRegistry'
       purge="False">
     <value key="js">++resource++mockup/toolbar/pattern.js</value>
     <value key="css">
@@ -26,7 +26,7 @@
 
   <records
       prefix="plone.resources/thememapper"
-      interface='Products.CMFPlone.interfaces.IResourceRegistry'
+      interface='plone.base.interfaces.IResourceRegistry'
       purge="False">
     <value key="js">++plone++static/thememapper.js</value>
     <value key="css">
@@ -36,7 +36,7 @@
 
   <records
       prefix="plone.bundles/thememapper"
-      interface='Products.CMFPlone.interfaces.IBundleRegistry'
+      interface='plone.base.interfaces.IBundleRegistry'
       purge="False">
     <value key="resources">
       <element>thememapper</element>

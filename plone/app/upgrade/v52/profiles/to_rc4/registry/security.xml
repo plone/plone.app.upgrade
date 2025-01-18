@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <registry>
 
-  <records interface="Products.CMFPlone.interfaces.ISecuritySchema"
+  <records interface="plone.base.interfaces.ISecuritySchema"
 	           prefix="plone" />
 
 </registry>

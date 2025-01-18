@@ -3,13 +3,13 @@
 
   <!-- Plone bundle resources -->
   <records prefix="plone.resources/plone-base"
-            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+            interface='plone.base.interfaces.IResourceRegistry'>
       <value key="js">++resource++plone-base.js</value>
   </records>
 
   <!-- Bundles -->
   <records prefix="plone.bundles/plone-base"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+            interface='plone.base.interfaces.IBundleRegistry'>
     <value key="merge_with">default</value>
     <value key="resources">
       <element>plone-base</element>
@@ -25,7 +25,7 @@
   </records>
 
   <records prefix="plone.bundles/plone"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+            interface='plone.base.interfaces.IBundleRegistry'>
     <value key="depends">plone-base</value>
     <value key="last_compilation">2019-06-18 22:30:00</value>
   </records>

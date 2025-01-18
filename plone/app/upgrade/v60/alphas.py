@@ -6,7 +6,7 @@ from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import ATTRIBUTE_NAME
 from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IBundleRegistry
+from plone.base.interfaces import IBundleRegistry
 from time import time
 from ZODB.broken import Broken
 from zope.component import getUtility
@@ -243,7 +243,7 @@ def cleanup_resources_and_bundles_in_registry(context=None):
 
     # make sure they are all gone
     try:
-        from Products.CMFPlone.interfaces import IResourceRegistry
+        from plone.base.interfaces import IResourceRegistry
 
         records = registry.collectionOfInterface(
             IResourceRegistry, prefix="plone.resources", check=False

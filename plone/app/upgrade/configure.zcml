@@ -10,7 +10,7 @@
 
     <utility
         factory=".HiddenProducts"
-        provides="Products.CMFPlone.interfaces.INonInstallable"
+        provides="plone.base.interfaces.INonInstallable"
         name="plone.app.upgrade"
         />
 
