@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <registry>
-  <records interface="Products.CMFPlone.interfaces.controlpanel.IFilterSchema" prefix="plone">
+  <records interface="plone.base.interfaces.IFilterSchema" prefix="plone">
     <value key="valid_tags" purge="false">
       <element>hr</element>
     </value>

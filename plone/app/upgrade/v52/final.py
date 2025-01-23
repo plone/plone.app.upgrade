@@ -5,8 +5,8 @@ from plone.base.utils import get_installer
 from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IMarkupSchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import IMarkupSchema
+from plone.base.interfaces import ISiteSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 
@@ -157,7 +157,7 @@ def migrate_record_from_ascii_to_bytes(field_name, iface, prefix=None):
 
     Sample use:
 
-    from Products.CMFPlone.interfaces import ISiteSchema
+    from plone.base.interfaces import ISiteSchema
     migrate_record_from_ascii_to_bytes("plone.site_logo", ISiteSchema, prefix="plone")
     or:
     migrate_record_from_ascii_to_bytes("site_logo", ISiteSchema, prefix="plone")

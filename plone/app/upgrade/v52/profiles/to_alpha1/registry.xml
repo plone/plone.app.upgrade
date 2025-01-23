@@ -3,39 +3,39 @@
 
 
   <records prefix="plone.resources/jquery-highlightsearchterms"
-           interface='Products.CMFPlone.interfaces.IResourceRegistry'
+           interface='plone.base.interfaces.IResourceRegistry'
            remove="True">
   </records>
 
   <!-- Update ``last_compilation`` to deliver new bundles -->
   <records
       prefix="plone.bundles/plone"
-      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      interface="plone.base.interfaces.IBundleRegistry"
       purge="False">
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
   <records
       prefix="plone.bundles/plone-logged-in"
-      interface="Products.CMFPlone.interfaces.IBundleRegistry"
+      interface="plone.base.interfaces.IBundleRegistry"
       purge="False">
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
   <records
       prefix="plone.bundles/resourceregistry"
-      interface='Products.CMFPlone.interfaces.IBundleRegistry'
+      interface='plone.base.interfaces.IBundleRegistry'
       purge="False">
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
   <records
       prefix="plone.bundles/thememapper"
-      interface='Products.CMFPlone.interfaces.IBundleRegistry'
+      interface='plone.base.interfaces.IBundleRegistry'
       purge="False">
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
 
   <!-- Update legacy bundle -->
   <records prefix="plone.bundles/plone-legacy"
-            interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+            interface='plone.base.interfaces.IBundleRegistry'>
     <value key="last_compilation"></value>
   </records>
 

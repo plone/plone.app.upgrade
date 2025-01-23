@@ -2,13 +2,13 @@
 <registry>
   <records interface="plone.app.theming.interfaces.IThemeSettings" />
 
-  <records interface="Products.CMFPlone.interfaces.controlpanel.ITypesSchema" prefix="plone">
+  <records interface="plone.base.interfaces.ITypesSchema" prefix="plone">
     <value key="default_page_types" purge="false">
       <element>Collection</element>
     </value>
   </records>
 
-  <records interface="Products.CMFPlone.interfaces.controlpanel.IFilterSchema" prefix="plone">
+  <records interface="plone.base.interfaces.IFilterSchema" prefix="plone">
     <value key="valid_tags" purge="false">
       <element>hr</element>
     </value>

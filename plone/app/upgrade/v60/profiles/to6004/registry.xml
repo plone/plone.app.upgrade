@@ -8,7 +8,7 @@
   </record>
 
   <!-- Load default bundles with default values for all fields (e.g. to get rid of a depdendency on plone.base) -->
-  <records prefix="plone.bundles/bootstrap-js" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+  <records prefix="plone.bundles/bootstrap-js" interface='plone.base.interfaces.IBundleRegistry' purge="true">
     <value key="enabled">True</value>
     <value key="jscompilation">++plone++static/bundle-bootstrap/js/bootstrap.bundle.min.js</value>
     <value key="csscompilation"></value>
@@ -18,7 +18,7 @@
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/jquery" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+  <records prefix="plone.bundles/jquery" interface='plone.base.interfaces.IBundleRegistry' purge="true">
     <value key="enabled">True</value>
     <value key="jscompilation">++plone++static/bundle-jquery/jquery.min.js</value>
     <value key="csscompilation"></value>
@@ -28,7 +28,7 @@
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/plone" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+  <records prefix="plone.bundles/plone" interface='plone.base.interfaces.IBundleRegistry' purge="true">
     <value key="enabled">True</value>
     <value key="jscompilation">++plone++static/bundle-plone/bundle.min.js</value>
     <value key="csscompilation"></value>
@@ -38,7 +38,7 @@
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/eventedit" interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+  <records prefix="plone.bundles/eventedit" interface='plone.base.interfaces.IBundleRegistry'>
     <value key="enabled">True</value>
     <value key="expression">python: member is not None</value>
     <value key="jscompilation">++plone++plone.app.event/event.js</value>
@@ -59,7 +59,7 @@
     <value purge="True"></value>
   </record>
 
-  <records interface="Products.CMFPlone.interfaces.ISearchSchema"
+  <records interface="plone.base.interfaces.ISearchSchema"
            prefix="plone" />
 
 </registry>
