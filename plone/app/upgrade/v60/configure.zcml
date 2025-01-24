@@ -435,7 +435,7 @@
 
         <gs:upgradeStep
             title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
+            handler="..v61.final.cleanup_mimetypes_registry"
             />
 
     </gs:upgradeSteps>
