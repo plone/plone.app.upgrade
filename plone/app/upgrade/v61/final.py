@@ -9,6 +9,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.component import getSiteManager
 
 import logging
+import re
 
 
 logger = logging.getLogger(__name__)
@@ -103,3 +104,75 @@ def maybe_cleanup_discussion(context):
 
     # Mark GS profile as not installed/activated.
     context.unsetLastVersionForProfile(profile_id)
+
+
+class BogusPattern:
+
+    def __init__(self, pattern, exception):
+        self.pattern = pattern
+        self.exception = exception
+
+    def __repr__(self):
+        return f"BogusPattern({self.pattern!r}, {self.exception!r})"
+
+
+class TemporaryReCompile:
+
+    original_compile = re._compile
+
+    @staticmethod
+    def custom_compile(pattern, flags=0):
+        """
+        Custom compile function to handle problematic patterns while unpickling.
+        """
+        try:
+            return TemporaryReCompile.original_compile(pattern, flags)
+        except re.error as exception:
+            return BogusPattern(pattern, exception)
+
+    def __enter__(self):
+        """
+        Replace `re.compile` with a custom compile function that
+        will return a BogusPattern instance in case the pattern cannot be compiled.
+        """
+        re._compile = TemporaryReCompile.custom_compile
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """
+        Restore the original `re.compile` function.
+        """
+        re._compile = TemporaryReCompile.original_compile
+
+
+def cleanup_mimetypes_registry(context):
+    """Sites created with <= Python 2.7 have stored compiled regular expression
+    patterns that will not be compatible with Python >= 3.11.
+    """
+    mtr = getToolByName(context, "mimetypes_registry")
+    bad_globs = {}
+
+    # We use a context manager to provide a custom `re.compile` function
+    # that will allow to unpickle globs with patterns that are not compatible
+    # with the current Python version.
+    with TemporaryReCompile():
+        for glob in set(mtr.globs):
+            pattern, mimetype = mtr.globs[glob]
+            # Since 2009 the fnmatch.translate, in Python 2,
+            # returned a string ending with `\Z(?ms)`
+            # which triggers an error in Python >= 3.11.
+            # See https://github.com/python/cpython/commit/b98d6b2cbcba1344609a60c7c0fb9f595d19023b
+            if isinstance(pattern, BogusPattern) or pattern.pattern.endswith(
+                r"\Z(?ms)"
+            ):
+                logger.info("Found problematic glob %r with pattern %r", glob, pattern)
+                bad_globs[glob] = mimetype
+
+        # While in the context manager we can remove the problematic globs
+        for glob in bad_globs:
+            del mtr.globs[glob]
+
+        # Re-register the problematic globs with the correct pattern
+        for glob, mimetype in bad_globs.items():
+            mtr.register_glob(glob, mimetype)
+
+        logger.info("%r globs were fixed", len(bad_globs))
