@@ -108,8 +108,9 @@
     <!-- Plone 6.1.0rc1 -->
     <gs:upgradeStep
         title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        handler="..v60.final.cleanup_mimetypes_registry"
         />
+
   </gs:upgradeSteps>
 
 </configure>
