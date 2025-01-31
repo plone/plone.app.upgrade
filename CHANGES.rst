@@ -8,6 +8,25 @@ Changelog
 
 .. towncrier release notes start
 
+3.1.9 (2025-01-31)
+------------------
+
+Bug fixes:
+
+
+- Ensure that the mimetypes registry globs contain valid patterns (#333)
+- Fix DeprecationWarnings. [maurits] (#4090)
+
+
+Internal:
+
+
+- Added upgrade to 6026, Plone 6.0.15.
+  [maurits] (#6026)
+- Added upgrade to 6107, Plone 6.1.0rc1.
+  [maurits] (#6107)
+
+
 3.1.8 (2024-12-19)
 ------------------
 
