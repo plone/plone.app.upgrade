@@ -23,7 +23,7 @@ Internal:
 
 - Added upgrade to 6026, Plone 6.0.15.
   [maurits] (#6026)
-- Added upgrade to 6107, Plone 6.1.0rc1.
+- Added upgrade to 6107, Plone 6.1.0rc1 and 6.1.0 final.
   [maurits] (#6107)
 
 

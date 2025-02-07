@@ -105,10 +105,23 @@
       source="6106"
       destination="6107"
       >
-    <!-- Plone 6.1.0rc1 -->
+    <!-- Plone 6.1.0rc1 and 6.1.0 final -->
     <gs:upgradeStep
         title="Miscellaneous"
         handler="..v60.final.cleanup_mimetypes_registry"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6107"
+      destination="6108"
+      >
+    <!-- Plone 6.1.1 -->
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
         />
 
   </gs:upgradeSteps>
