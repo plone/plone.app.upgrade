@@ -1,0 +1,19 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone"
+    >
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6199"
+      destination="6200"
+      >
+    <!-- Plone 6.2.0a1 -->
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+  </gs:upgradeSteps>
+
+</configure>
