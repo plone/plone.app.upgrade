@@ -1,6 +1,4 @@
 from DateTime import DateTime
-from importlib.metadata import distribution
-from packaging import version
 from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.registry import field
 from plone.registry import Record
@@ -247,11 +245,6 @@ class UpgradePortalTransforms521to522Test(unittest.TestCase):
 
 
 def test_suite():
-    # Skip these tests on Plone < 5.2a1
-    plone_version = distribution("Products.CMFPlone").version
-    if not version.parse(plone_version) >= version.parse("5.2a1"):
-        return unittest.TestSuite()
-
     return unittest.TestSuite((
         unittest.defaultTestLoader.loadTestsFromTestCase(UpgradeMemberData51to52Test),
         unittest.defaultTestLoader.loadTestsFromTestCase(Various52Test),
