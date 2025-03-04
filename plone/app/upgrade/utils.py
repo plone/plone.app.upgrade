@@ -1,4 +1,5 @@
 from Acquisition import aq_base
+from importlib.metadata import distribution
 from Missing import MV
 from plone.base.utils import base_hasattr
 from plone.base.utils import get_installer
@@ -16,25 +17,30 @@ from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 
 import logging
-import pkg_resources
 import sys
 import transaction
+import warnings
 
 
 _marker = []
 
 logger = logging.getLogger("plone.app.upgrade")
 
-plone_version = pkg_resources.get_distribution("Products.CMFPlone").version
+plone_version = distribution("Products.CMFPlone").version
 
 
 def version_match(target):
-    """Given, our versioning scheme is always major.minorANYTHING, where major
-    and minor are single-digit numbers, we can compare versions as follows.
-    pkg_resources.parse_version is not compatible with our versioning scheme
-    (like '5.0b1') and also not compatible with the semver.org proposal
-    (requires '5.0-beta1').
+    """Does a target version have the same major and minor version as CMFPlone?
+
+    Given, our versioning scheme is always major.minor.ANYTHING, where major
+    and minor are single-digit numbers, we can compare versions as follows,
+    without worrying about strictly following semantic versioning.
     """
+    warnings.warn(
+        "This method is no longer used by plone.app.upgrade. "
+        "You can use packaging.version.parse instead. Will be removed in Plone 7",
+        DeprecationWarning,
+    )
     # MAJOR.MINOR
     return (target[0], target[2]) == (plone_version[0], plone_version[2])
 
