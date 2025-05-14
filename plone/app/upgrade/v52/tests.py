@@ -1,10 +1,10 @@
 from DateTime import DateTime
 from plone.app.testing import PLONE_INTEGRATION_TESTING
+from plone.base.interfaces import IMarkupSchema
 from plone.registry import field
 from plone.registry import Record
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import IMarkupSchema
 from zope.component import getUtility
 
 import unittest
