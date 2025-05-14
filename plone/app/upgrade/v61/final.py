@@ -1,11 +1,8 @@
-from Acquisition import aq_parent
 from importlib.metadata import distribution
 from importlib.metadata import PackageNotFoundError
 from plone.app.upgrade.utils import loadMigrationProfile
-from plone.browserlayer.utils import unregister_layer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from zope.component import getSiteManager
 from zope.component import getUtility
 
 import logging
