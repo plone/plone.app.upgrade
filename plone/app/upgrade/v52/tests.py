@@ -245,9 +245,15 @@ class UpgradePortalTransforms521to522Test(unittest.TestCase):
 
 
 def test_suite():
-    return unittest.TestSuite((
-        unittest.defaultTestLoader.loadTestsFromTestCase(UpgradeMemberData51to52Test),
-        unittest.defaultTestLoader.loadTestsFromTestCase(Various52Test),
-        unittest.defaultTestLoader.loadTestsFromTestCase(SiteLogoTest),
-        unittest.defaultTestLoader.loadTestsFromTestCase(UpgradePortalTransforms521to522Test),
-    ))
+    return unittest.TestSuite(
+        (
+            unittest.defaultTestLoader.loadTestsFromTestCase(
+                UpgradeMemberData51to52Test
+            ),
+            unittest.defaultTestLoader.loadTestsFromTestCase(Various52Test),
+            unittest.defaultTestLoader.loadTestsFromTestCase(SiteLogoTest),
+            unittest.defaultTestLoader.loadTestsFromTestCase(
+                UpgradePortalTransforms521to522Test
+            ),
+        )
+    )

@@ -71,6 +71,6 @@ class TestUpgrade(MigrationTest):
 def test_suite():
     import unittest
 
-    return unittest.TestSuite((
-        unittest.defaultTestLoader.loadTestsFromTestCase(TestUpgrade),
-    ))
+    return unittest.TestSuite(
+        (unittest.defaultTestLoader.loadTestsFromTestCase(TestUpgrade),)
+    )
