@@ -1,6 +1,7 @@
 from importlib.metadata import distribution
 from importlib.metadata import PackageNotFoundError
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.base.interfaces.controlpanel import ITinyMCESchema
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
@@ -100,3 +101,26 @@ def maybe_cleanup_discussion(context):
 
     # Mark GS profile as not installed/activated.
     context.unsetLastVersionForProfile(profile_id)
+
+
+def upgrade_registry_tinymce_menubar(context):
+    """
+    the interface definition of plone.base.interfaces.controlpanel.ITinyMCEPluginSchema changed
+    the field `menubar` is now a TextField
+    the registry record must be converted
+    """
+
+    registry = getUtility(IRegistry)
+
+    # convert list to string
+    menubar = " ".join(registry.records["plone.menubar"].value)
+
+    # delete the record
+    del registry.records["plone.menubar"]
+
+    # re-register the interface with prefix, needed for plone.menubar key
+    registry.registerInterface(ITinyMCESchema, prefix="plone")
+
+    # set the registry entry
+    registry["plone.menubar"] = menubar
+    logger.info(f"plone.menubar converted to: {menubar}")
