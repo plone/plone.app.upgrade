@@ -68,12 +68,20 @@ class TestUpgrade(MigrationTest):
         self.assertEqual(len(upgrades), 0)
 
     def test_upgrade_tinymce_menubar(self):
+
+        from packaging.version import parse
+        from plone.app.upgrade.utils import plone_version
         from plone.app.upgrade.v61.final import upgrade_registry_tinymce_menubar
         from plone.base.interfaces.controlpanel import ITinyMCESchema
         from plone.registry import field
         from plone.registry.interfaces import IRegistry
         from plone.registry.record import Record
         from zope.component import getUtility
+
+        version = parse(plone_version)
+        if version.major < 6 or version.minor < 1:
+            # don't execute the test for Plone < 6.1
+            return
 
         registry = getUtility(IRegistry)
 
