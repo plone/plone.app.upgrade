@@ -1,10 +1,10 @@
 from DateTime import DateTime
 from plone.app.testing import PLONE_INTEGRATION_TESTING
+from plone.base.interfaces import IMarkupSchema
 from plone.registry import field
 from plone.registry import Record
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import IMarkupSchema
 from zope.component import getUtility
 
 import unittest
@@ -245,9 +245,15 @@ class UpgradePortalTransforms521to522Test(unittest.TestCase):
 
 
 def test_suite():
-    return unittest.TestSuite((
-        unittest.defaultTestLoader.loadTestsFromTestCase(UpgradeMemberData51to52Test),
-        unittest.defaultTestLoader.loadTestsFromTestCase(Various52Test),
-        unittest.defaultTestLoader.loadTestsFromTestCase(SiteLogoTest),
-        unittest.defaultTestLoader.loadTestsFromTestCase(UpgradePortalTransforms521to522Test),
-    ))
+    return unittest.TestSuite(
+        (
+            unittest.defaultTestLoader.loadTestsFromTestCase(
+                UpgradeMemberData51to52Test
+            ),
+            unittest.defaultTestLoader.loadTestsFromTestCase(Various52Test),
+            unittest.defaultTestLoader.loadTestsFromTestCase(SiteLogoTest),
+            unittest.defaultTestLoader.loadTestsFromTestCase(
+                UpgradePortalTransforms521to522Test
+            ),
+        )
+    )

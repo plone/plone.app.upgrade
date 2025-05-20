@@ -1,12 +1,12 @@
 from AccessControl.Permissions import view
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.base.interfaces import IMarkupSchema
+from plone.base.interfaces import ISiteSchema
 from plone.base.utils import base_hasattr
 from plone.base.utils import get_installer
 from plone.registry import field
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import IMarkupSchema
-from plone.base.interfaces import ISiteSchema
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getUtility
 

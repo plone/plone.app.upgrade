@@ -416,7 +416,7 @@ def update_catalog_metadata(context, column=None):
                 continue
             # See ZCatalog/Catalog.py:recordify
             new_value = getattr(wrapper, column, MV)
-            if (new_value is not MV and safe_callable(new_value)):
+            if new_value is not MV and safe_callable(new_value):
                 new_value = new_value()
             if old_value == new_value:
                 continue
