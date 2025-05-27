@@ -8,6 +8,28 @@ Changelog
 
 .. towncrier release notes start
 
+3.2.0 (2025-03-14)
+------------------
+
+New features:
+
+
+- Prepare a folder for the 6.2 upgrade steps
+
+
+Bug fixes:
+
+
+- Replace `pkg_resources` with `importlib.metadata`/`packaging` @gforcada (#4126)
+
+
+Internal:
+
+
+- Added upgrade to 6108, Plone 6.1.1.
+  [maurits] (#6108)
+
+
 3.1.9 (2025-01-31)
 ------------------
 
