@@ -1,4 +1,6 @@
 from plone.base.interfaces.controlpanel import IFilterSchema
+
+from plone.base.interfaces.controlpanel import IEditingSchema
 from plone.base.interfaces.controlpanel import ITinyMCEPluginSchema
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -45,3 +47,9 @@ def add_feature_tinymce_accordion_plugin(context):
         if val in custom_attributes_record.value:
             continue
         custom_attributes_record.value.append(val)
+
+
+def add_form_layout_setting(context):
+    registry = getUtility(IRegistry)
+    registry.registerInterface(IEditingSchema, prefix="plone")
+    registry["plone.form_layout"] = "tabbing"

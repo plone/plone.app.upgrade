@@ -144,4 +144,16 @@
 
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6109"
+      destination="6110"
+      >
+    <gs:upgradeStep
+        title="Add form layout options to the edit settings"
+        description="Add tabbing, stacking, and extended options for forms"
+        handler=".alpha.add_form_layout_setting"
+        />
+  </gs:upgradeSteps>
+
 </configure>
