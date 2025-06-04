@@ -124,3 +124,43 @@ def upgrade_registry_tinymce_menubar(context):
     # set the registry entry
     registry["plone.menubar"] = menubar
     logger.info(f"plone.menubar converted to: {menubar}")
+
+
+def make_external_editor_action_condition_safer(context):
+    """Make the condition for the external editor action safer.
+
+    This condition uses `object/externalEditorEnabled`.
+    This uses a script in the `plone_scripts` skin layer,
+    which we may remove at some point.
+    """
+    portal_actions = getToolByName(context, "portal_actions")
+    action_path = "document_actions/extedit"
+    action = portal_actions.unrestrictedTraverse(action_path, None)
+    if action is None:
+        logger.info("Action %s does not exist, nothing to do.", action_path)
+        return
+    prop = "available_expr"
+    value = action.getProperty(prop)
+    new = "object/externalEditorEnabled|nothing"
+    if value == new:
+        logger.info(
+            "Action %s already has the expected %s.",
+            action_path,
+            prop,
+        )
+        return
+    old = "object/externalEditorEnabled"
+    if value != old:
+        logger.info(
+            "Action %s has a customized %s, so we do not change it.",
+            action_path,
+            prop,
+        )
+        return
+    # Note: this automatically updates the compiled available_expr_object as well.
+    action._setPropValue(prop, new)
+    logger.info(
+        "Changed action %s to have the expected %s.",
+        action_path,
+        prop,
+    )
