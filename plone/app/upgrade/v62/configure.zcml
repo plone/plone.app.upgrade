@@ -11,9 +11,10 @@
       >
     <!-- Plone 6.2.0a1 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Make the condition for the external editor action safer."
+        handler="..v61.final.make_external_editor_action_condition_safer"
         />
+
   </gs:upgradeSteps>
 
 </configure>
