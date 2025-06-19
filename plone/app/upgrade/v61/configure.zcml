@@ -133,11 +133,6 @@
       >
     <!-- Plone 6.1.2 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
-        />
-
-    <gs:upgradeStep
         title="convert TinyMCE menubar registry entry"
         handler=".final.upgrade_registry_tinymce_menubar"
         />
