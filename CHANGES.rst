@@ -8,6 +8,27 @@ Changelog
 
 .. towncrier release notes start
 
+3.2.1 (2025-06-20)
+------------------
+
+Bug fixes:
+
+
+- add upgrade step to fix menubar value of ITinyMCESchema, value is now a string, not a list
+  [1letter] (#340)
+- Harden condition of external editor action to not fail when the ``externalEditorEnabled`` script is not available.
+  [maurits] (#4179)
+
+
+Internal:
+
+
+- Added upgrade to 6027, Plone 6.0.16.
+  [maurits] (#6027)
+- Added upgrade to 6109, Plone 6.1.2.
+  [maurits] (#6109)
+
+
 3.2.0 (2025-03-14)
 ------------------
 
