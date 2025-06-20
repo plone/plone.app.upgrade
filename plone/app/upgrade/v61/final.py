@@ -112,8 +112,13 @@ def upgrade_registry_tinymce_menubar(context):
 
     registry = getUtility(IRegistry)
 
+    value = registry.records["plone.menubar"].value
+    if isinstance(value, str):
+        # no fix needed
+        return
+
     # convert list to string
-    menubar = " ".join(registry.records["plone.menubar"].value)
+    menubar = " ".join(value)
 
     # delete the record
     del registry.records["plone.menubar"]
