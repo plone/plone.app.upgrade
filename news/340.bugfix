@@ -1,2 +1,0 @@
-Do not "fix" menubar value of ITinyMCESchema if it is already a string.
-[maurits]

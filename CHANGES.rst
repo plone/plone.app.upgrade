@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+3.2.2 (2025-06-20)
+------------------
+
+Bug fixes:
+
+
+- Do not "fix" menubar value of ITinyMCESchema if it is already a string.
+  [maurits] (#340)
+
+
 3.2.1 (2025-06-20)
 ------------------
 
