@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone"
+    >
+
+  <genericsetup:registerProfile
+      name="to_iclassicuischema"
+      title="Reregister IClassicUISchema for new records"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_iclassicuischema"
+      />
+
+</configure>

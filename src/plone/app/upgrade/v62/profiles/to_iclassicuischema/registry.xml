@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry>
+  <records interface="plone.base.interfaces.IClassicUISchema"
+           prefix="plone"
+  />
+</registry>
