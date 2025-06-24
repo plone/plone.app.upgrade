@@ -15,6 +15,7 @@ from types import ModuleType
 from ZODB.POSException import ConflictError
 from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
+from zope.component.hooks import getSiteManager
 
 import logging
 import sys
@@ -443,3 +444,57 @@ def get_property(context, property_name, default_value=None):
         return getattr(context, property_name, default_value)
     except AttributeError:
         return default_value
+
+
+def remove_utility(iface):
+    """Remove an interface from all utility and adapter registrations.
+
+    Code adapted from
+    https://github.com/collective/collective.migrationhelpers/blob/master/src/collective/migrationhelpers/persistent.py
+
+    There are several places where an interface like IPropertiesTool can have
+    lodged itself.  We need to find them all, otherwise you will continue to
+    see lines like this when first accessing a Plone Site after startup:
+
+    WARNING [OFS.Uninstalled:76][waitress-2] Could not import class
+    'PropertiesTool' from module 'Products.CMFPlone.PropertiesTool'
+
+    A pack of the ZODB should get rid of that warning, but various component
+    registrations will still be there, and may cause problems later on.
+    """
+    sm = getSiteManager()
+
+    for component in (sm.utilities, sm.adapters):
+        subscribers = component._subscribers
+        if subscribers:
+            subscribers = subscribers[0]
+            if iface in subscribers:
+                del subscribers[iface]
+                logging.info("Unregistering subscriber for %s", iface)
+
+        adapters = component._adapters
+        if adapters:
+            adapters = adapters[0]
+            if iface in adapters:
+                del adapters[iface]
+                logging.info("Unregistering adapter for %s", iface)
+
+        provided = component._provided
+        if iface in provided:
+            del provided[iface]
+            logging.info("Unregistering provided for %s", iface)
+
+        # Mark the component as changed, even when maybe there was no change.
+        # There is no harm in a technically unneeded persistent change here.
+        component._p_changed = True
+
+    for registrations in (sm._utility_registrations, sm._adapter_registrations):
+        # Get the full list instead of a generator, otherwise you may get:
+        # 'RuntimeError: dictionary changed size during iteration'
+        reg_keys = list(registrations.keys())
+        for reg_key in reg_keys:
+            # registration key is (interface, name)
+            # Note that the interface can probably be there under several names.
+            if iface is reg_key[0]:
+                del registrations[reg_key]
+                logging.info("Unregistering registration for %s", reg_key)
