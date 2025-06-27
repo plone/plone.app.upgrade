@@ -62,6 +62,10 @@
         title="Remove the portal_properties tool."
         handler=".final.remove_portal_properties_tool"
         />
+    <gs:upgradeStep
+        title="Remove IPropertiesTool components."
+        handler=".final.remove_ipropertiestool_components"
+        />
   </gs:upgradeSteps>
 
   <gs:upgradeSteps
@@ -151,8 +155,8 @@
       >
     <!-- Plone 6.1.3 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Remove IPropertiesTool components."
+        handler=".final.remove_ipropertiestool_components"
         />
   </gs:upgradeSteps>
 

@@ -1,0 +1,3 @@
+Remove ``IPropertiesTool`` components.
+These were left over after the removal of the ``portal_properties`` tool in Plone 6.1.
+[maurits]

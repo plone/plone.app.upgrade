@@ -1,10 +1,12 @@
 from importlib.metadata import distribution
 from importlib.metadata import PackageNotFoundError
 from plone.app.upgrade.utils import loadMigrationProfile
+from plone.app.upgrade.utils import remove_utility
 from plone.base.interfaces.controlpanel import ITinyMCESchema
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
+from zope.component.hooks import getSiteManager
 
 import logging
 
@@ -27,6 +29,19 @@ def remove_portal_properties_tool(context):
     # AttributeError: 'PropertiesTool' object has no attribute '__of__'
     portal._delOb("portal_properties")
     logger.info("Removed portal_properties tool.")
+
+
+def remove_ipropertiestool_components(context):
+    """Remove IPropertiesTool components.
+
+    After running `remove_portal_properties_tool` from above,
+    some related components may still linger.
+    See https://github.com/plone/plone.app.upgrade/issues/338
+    """
+    from Products.CMFCore.interfaces import IPropertiesTool
+
+    remove_utility(IPropertiesTool)
+    logger.info("Removed IPropertiesTool components.")
 
 
 def maybe_cleanup_discussion(context):
