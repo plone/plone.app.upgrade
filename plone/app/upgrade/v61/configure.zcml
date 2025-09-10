@@ -158,6 +158,10 @@
         title="Remove IPropertiesTool components."
         handler=".final.remove_ipropertiestool_components"
         />
+    <gs:upgradeStep
+        title="Cleanup ITinyMCESchema.plugins."
+        handler=".final.cleanup_tinymce_plugins"
+        />
   </gs:upgradeSteps>
 
 </configure>

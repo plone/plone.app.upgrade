@@ -184,3 +184,33 @@ def make_external_editor_action_condition_safer(context):
         action_path,
         prop,
     )
+
+
+def cleanup_tinymce_plugins(context):
+    """
+    update tinymce plugins registry entry to new default
+    """
+
+    registry = getUtility(IRegistry)
+    removed_plugins = [
+        "colorpicker",
+        "contextmenu",
+        "fullpage",
+        "hr",
+        "noneditable",
+        "paste",
+        "print",
+        "tabfocus",
+        "textcolor",
+        "textpattern",
+    ]
+
+    clean_plugins = []
+
+    for val in registry.records["plone.plugins"].value:
+        if val not in removed_plugins:
+            clean_plugins.append(val)
+
+    # set the registry entry
+    registry["plone.plugins"] = clean_plugins
+    logger.info("plone.plugins cleaned")
