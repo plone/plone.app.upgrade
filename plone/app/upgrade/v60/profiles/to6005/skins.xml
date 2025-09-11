@@ -1,7 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <object name="portal_skins">
- <object name="plone_templates" remove="True" />
- <skin-path name="*">
-  <layer name="plone_templates" remove="True" />
- </skin-path>
+  <object name="plone_templates"
+          remove="True"
+  />
+  <skin-path name="*">
+    <layer name="plone_templates"
+           remove="True"
+    />
+  </skin-path>
 </object>

@@ -1,42 +1,44 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
 
 
-  <records prefix="plone.resources/jquery-highlightsearchterms"
-           interface='plone.base.interfaces.IResourceRegistry'
-           remove="True">
+  <records interface="plone.base.interfaces.IResourceRegistry"
+           prefix="plone.resources/jquery-highlightsearchterms"
+           remove="True"
+  >
   </records>
 
   <!-- Update ``last_compilation`` to deliver new bundles -->
-  <records
-      prefix="plone.bundles/plone"
-      interface="plone.base.interfaces.IBundleRegistry"
-      purge="False">
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/plone"
+           purge="False"
+  >
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
-  <records
-      prefix="plone.bundles/plone-logged-in"
-      interface="plone.base.interfaces.IBundleRegistry"
-      purge="False">
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/plone-logged-in"
+           purge="False"
+  >
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
-  <records
-      prefix="plone.bundles/resourceregistry"
-      interface='plone.base.interfaces.IBundleRegistry'
-      purge="False">
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/resourceregistry"
+           purge="False"
+  >
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
-  <records
-      prefix="plone.bundles/thememapper"
-      interface='plone.base.interfaces.IBundleRegistry'
-      purge="False">
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/thememapper"
+           purge="False"
+  >
     <value key="last_compilation">2018-09-16 16:00:00</value>
   </records>
 
   <!-- Update legacy bundle -->
-  <records prefix="plone.bundles/plone-legacy"
-            interface='plone.base.interfaces.IBundleRegistry'>
-    <value key="last_compilation"></value>
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/plone-legacy"
+  >
+    <value key="last_compilation" />
   </records>
 
 </registry>

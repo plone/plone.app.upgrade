@@ -1,19 +1,23 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <object name="portal_skins">
-  <object
-      name="plone_login"
-      meta_type="Filesystem Directory View"
-      directory="Products.CMFPlone:skins/plone_login"
-      remove="True"/>
+  <object directory="Products.CMFPlone:skins/plone_login"
+          meta_type="Filesystem Directory View"
+          name="plone_login"
+          remove="True"
+  />
   <skin-path name="*">
-    <layer name="plone_login" remove="True"/>
+    <layer name="plone_login"
+           remove="True"
+    />
   </skin-path>
-  <object
-      name="plone_ecmascript"
-      meta_type="Filesystem Directory View"
-      directory="Products.CMFPlone:skins/plone_ecmascript"
-      remove="True"/>
+  <object directory="Products.CMFPlone:skins/plone_ecmascript"
+          meta_type="Filesystem Directory View"
+          name="plone_ecmascript"
+          remove="True"
+  />
   <skin-path name="*">
-    <layer name="plone_ecmascript" remove="True"/>
+    <layer name="plone_ecmascript"
+           remove="True"
+    />
   </skin-path>
 </object>

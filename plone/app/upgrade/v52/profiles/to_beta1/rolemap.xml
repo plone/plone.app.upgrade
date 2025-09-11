@@ -1,15 +1,19 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <rolemap>
   <permissions>
-    <permission name="Manage Context Aliases" acquire="True">
-      <role name="Manager"/>
-      <role name="Site Administrator"/>
-      <role name="Owner"/>
-      <role name="Editor"/>
+    <permission acquire="True"
+                name="Manage Context Aliases"
+    >
+      <role name="Manager" />
+      <role name="Site Administrator" />
+      <role name="Owner" />
+      <role name="Editor" />
     </permission>
-    <permission name="Manage Portal Aliases" acquire="True">
-      <role name="Manager"/>
-      <role name="Site Administrator"/>
+    <permission acquire="True"
+                name="Manage Portal Aliases"
+    >
+      <role name="Manager" />
+      <role name="Site Administrator" />
     </permission>
   </permissions>
 </rolemap>
