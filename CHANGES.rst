@@ -679,7 +679,7 @@ New features:
   Allow ``figcaption`` in rich text editor as a valid tag.
   Add registry setting for plone.image_caption outputfilter transform.
   [thet] (#209)
-- Add upgrade step to migrate markdown tranform settings to markup control panel.
+- Add upgrade step to migrate markdown transform settings to markup control panel.
   [thomasmassmann] (#228)
 - Add upgrade profiles for v60, including a upgrade step for #3086 (custom.css view)
   [MrTango] (#3086)

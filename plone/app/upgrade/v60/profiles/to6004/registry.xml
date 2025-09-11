@@ -7,7 +7,7 @@
     </field>
   </record>
 
-  <!-- Load default bundles with default values for all fields (e.g. to get rid of a depdendency on plone.base) -->
+  <!-- Load default bundles with default values for all fields (e.g. to get rid of a dependency on plone.base) -->
   <records interface="plone.base.interfaces.IBundleRegistry"
            prefix="plone.bundles/bootstrap-js"
            purge="true"
