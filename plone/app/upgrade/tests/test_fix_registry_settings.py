@@ -1,4 +1,3 @@
-from plone.app.upgrade import utils
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.base.interfaces.syndication import ISiteSyndicationSettings
 

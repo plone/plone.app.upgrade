@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
   <record name="plone.resources.development">
     <field type="plone.registry.field.Bool">
@@ -7,42 +7,53 @@
     </field>
   </record>
 
-  <!-- Load default bundles with default values for all fields (e.g. to get rid of a depdendency on plone.base) -->
-  <records prefix="plone.bundles/bootstrap-js" interface='plone.base.interfaces.IBundleRegistry' purge="true">
+  <!-- Load default bundles with default values for all fields (e.g. to get rid of a dependency on plone.base) -->
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/bootstrap-js"
+           purge="true"
+  >
     <value key="enabled">True</value>
     <value key="jscompilation">++plone++static/bundle-bootstrap/js/bootstrap.bundle.min.js</value>
-    <value key="csscompilation"></value>
-    <value key="expression"></value>
-    <value key="depends"></value>
+    <value key="csscompilation" />
+    <value key="expression" />
+    <value key="depends" />
     <value key="load_async">False</value>
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/jquery" interface='plone.base.interfaces.IBundleRegistry' purge="true">
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/jquery"
+           purge="true"
+  >
     <value key="enabled">True</value>
     <value key="jscompilation">++plone++static/bundle-jquery/jquery.min.js</value>
-    <value key="csscompilation"></value>
-    <value key="expression"></value>
-    <value key="depends"></value>
+    <value key="csscompilation" />
+    <value key="expression" />
+    <value key="depends" />
     <value key="load_async">False</value>
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/plone" interface='plone.base.interfaces.IBundleRegistry' purge="true">
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/plone"
+           purge="true"
+  >
     <value key="enabled">True</value>
     <value key="jscompilation">++plone++static/bundle-plone/bundle.min.js</value>
-    <value key="csscompilation"></value>
-    <value key="expression"></value>
-    <value key="depends"></value>
+    <value key="csscompilation" />
+    <value key="expression" />
+    <value key="depends" />
     <value key="load_async">False</value>
     <value key="load_defer">False</value>
   </records>
 
-  <records prefix="plone.bundles/eventedit" interface='plone.base.interfaces.IBundleRegistry'>
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/eventedit"
+  >
     <value key="enabled">True</value>
     <value key="expression">python: member is not None</value>
     <value key="jscompilation">++plone++plone.app.event/event.js</value>
-    <value key="csscompilation"></value>
+    <value key="csscompilation" />
     <value key="load_async">False</value>
     <value key="load_defer">False</value>
   </records>
@@ -56,10 +67,11 @@
   </record>
 
   <record name="plone.content_css">
-    <value purge="True"></value>
+    <value purge="True" />
   </record>
 
   <records interface="plone.base.interfaces.ISearchSchema"
-           prefix="plone" />
+           prefix="plone"
+  />
 
 </registry>

@@ -1,4 +1,6 @@
 from AccessControl.Permissions import view
+from importlib.metadata import distribution
+from importlib.metadata import PackageNotFoundError
 from plone.app.upgrade.utils import loadMigrationProfile
 from plone.base.interfaces import IMarkupSchema
 from plone.base.interfaces import ISiteSchema
@@ -14,6 +16,13 @@ import logging
 
 
 logger = logging.getLogger("plone.app.upgrade")
+
+
+try:
+    distribution("plone.app.discussion")
+    HAS_P_A_DISCUSSION = True
+except PackageNotFoundError:
+    HAS_P_A_DISCUSSION = False
 
 
 def rebuild_redirections(context):
@@ -49,6 +58,11 @@ def move_dotted_to_named_behaviors(context):
     for fti in ftis:
         behaviors = []
         for behavior in fti.behaviors:
+            if behavior == "plone.allowdiscussion" and not HAS_P_A_DISCUSSION:
+                logger.warning(
+                    f'Behavior "{behavior}" can not be migrated as plone.app.discussion is not available'
+                )
+                continue
             behavior_registration = lookup_behavior_registration(behavior)
             named_behavior = behavior_registration.name
             if named_behavior:

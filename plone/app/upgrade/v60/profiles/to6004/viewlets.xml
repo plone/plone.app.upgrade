@@ -1,6 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <object>
-  <order manager="plone.portaltop" skinname="Plone Default">
-    <viewlet name="plone.header" remove="true"/>
+  <order manager="plone.portaltop"
+         skinname="Plone Default"
+  >
+    <viewlet name="plone.header"
+             remove="true"
+    />
   </order>
 </object>

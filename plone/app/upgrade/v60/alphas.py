@@ -438,8 +438,8 @@ def upgrade_plone_module_profiles(context):
     You can generate an up to date list if you first activate all modules,
     and then with `bin/instance debug` do this:
 
-    >>> tool = app.Plone.portal_setup
-    >>> for profile_id in tool.listProfilesWithUpgrades():
+    >> tool = app.Plone.portal_setup
+    >> for profile_id in tool.listProfilesWithUpgrades():
     ...     version = ".".join(tool.getLastVersionForProfile(profile_id))
     ...     print(f'("{profile_id}", "{version}"),')
 
@@ -449,7 +449,7 @@ def upgrade_plone_module_profiles(context):
     Also, you may need to fix the plone.app.iterate version if it is unknown,
     due to a 'default' and 'plone.app.iterate' profile:
 
-    >>> tool.getLastVersionForProfile('plone.app.iterate:default')
+    >> tool.getLastVersionForProfile('plone.app.iterate:default')
 
     See https://github.com/plone/plone.app.iterate/issues/99
     """

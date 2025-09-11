@@ -2,456 +2,465 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     xmlns:zcml="http://namespaces.zope.org/zcml"
-    i18n_domain="plone">
+    i18n_domain="plone"
+    >
 
-    <include file="profiles.zcml" />
+  <include file="profiles.zcml" />
 
-    <gs:upgradeSteps
-        source="5299"
-        destination="6000"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5299"
+      destination="6000"
+      >
 
-      <gs:upgradeStep
-           title="Be sure that the Plone Site FTI is a dexterity one"
-           handler=".alphas.change_plone_site_fti"
-           />
+    <gs:upgradeStep
+        title="Be sure that the Plone Site FTI is a dexterity one"
+        handler=".alphas.change_plone_site_fti"
+        />
 
-      <gs:upgradeStep
-           title="Make the Plone Site a dexterity container"
-           handler=".alphas.make_site_dx"
-           />
+    <gs:upgradeStep
+        title="Make the Plone Site a dexterity container"
+        handler=".alphas.make_site_dx"
+        />
 
-      <gs:upgradeDepends
-           title="Run to6000 upgrade profile."
-           import_profile="plone.app.upgrade.v60:to6000"
-           />
+    <gs:upgradeDepends
+        title="Run to6000 upgrade profile."
+        import_profile="plone.app.upgrade.v60:to6000"
+        />
 
-      <gs:upgradeStep
-           title="Remove broken temp_folder / tempstorage / Products.TemporaryStorage"
-           handler=".alphas.remove_temp_folder"
-           />
+    <gs:upgradeStep
+        title="Remove broken temp_folder / tempstorage / Products.TemporaryStorage"
+        handler=".alphas.remove_temp_folder"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
 
-    <gs:upgradeSteps
-        source="6000"
-        destination="6001"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6000"
+      destination="6001"
+      >
 
-       <gs:upgradeStep
-           title="Fix UUID for DX Site Root"
-           handler=".alphas.add_uuid_to_dxsiteroot"
-           />
+    <gs:upgradeStep
+        title="Fix UUID for DX Site Root"
+        handler=".alphas.add_uuid_to_dxsiteroot"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="6001"
-        destination="6002"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6001"
+      destination="6002"
+      >
 
-       <gs:upgradeStep
-           title="Index the Site Root"
-           handler=".alphas.index_siteroot"
-           />
+    <gs:upgradeStep
+        title="Index the Site Root"
+        handler=".alphas.index_siteroot"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="6002"
-        destination="6003"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6002"
+      destination="6003"
+      >
 
-       <gs:upgradeStep
-           title="Remove broken modifiers"
-           handler=".alphas.remove_broken_modifiers"
-           />
+    <gs:upgradeStep
+        title="Remove broken modifiers"
+        handler=".alphas.remove_broken_modifiers"
+        />
 
-       <gs:upgradeStep
-           title="Fix unicode properties"
-           handler=".alphas.fix_unicode_properties"
-           />
+    <gs:upgradeStep
+        title="Fix unicode properties"
+        handler=".alphas.fix_unicode_properties"
+        />
 
-      <gs:upgradeDepends
-           title="Run to6003 upgrade profile."
-           import_profile="plone.app.upgrade.v60:to6003"
-           />
+    <gs:upgradeDepends
+        title="Run to6003 upgrade profile."
+        import_profile="plone.app.upgrade.v60:to6003"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="6003"
-        destination="6004"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6003"
+      destination="6004"
+      >
 
-      <gs:upgradeDepends
-          title="Run to6004 upgrade profile."
-          import_profile="plone.app.upgrade.v60:to6004"
-          />
+    <gs:upgradeDepends
+        title="Run to6004 upgrade profile."
+        import_profile="plone.app.upgrade.v60:to6004"
+        />
 
-      <gs:upgradeStep
-          title="Cleanup resources and bundles"
-          handler=".alphas.cleanup_resources_and_bundles_in_registry"
-          />
+    <gs:upgradeStep
+        title="Cleanup resources and bundles"
+        handler=".alphas.cleanup_resources_and_bundles_in_registry"
+        />
 
-       <gs:upgradeStep
-           title="Add new image scales."
-           handler=".alphas.add_new_image_scales"
-           />
+    <gs:upgradeStep
+        title="Add new image scales."
+        handler=".alphas.add_new_image_scales"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="6004"
-        destination="6005"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 6.0.0a6.  Note: there is no official 6.0.0a5 full Plone release,
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6004"
+      destination="6005"
+      >
+    <!-- Plone 6.0.0a6.  Note: there is no official 6.0.0a5 full Plone release,
              only a Products.CMFPlone release. -->
 
-      <gs:upgradeDepends
-          title="Run to6005 upgrade profile."
-          import_profile="plone.app.upgrade.v60:to6005"
-          />
-
-       <gs:upgradeStep
-           title="Update catalog brains to add image_scales."
-           handler=".alphas.update_catalog_for_image_scales"
-           />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        source="6005"
-        destination="6006"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 6.0.0b1 -->
-
-       <gs:upgradeStep
-           title="Upgrade profiles of core Plone modules to specific versions."
-           handler=".alphas.upgrade_plone_module_profiles"
-           />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6006"
-        destination="6007"
-        >
-        <!-- Plone 6.0.0b2 -->
-
-      <gs:upgradeDepends
-          title="Run to6007 upgrade profile."
-          import_profile="plone.app.upgrade.v60:to6007"
-          />
-
-      <gs:upgradeStep
-          title="Add a timezone property to portal memberdata if it is missing."
-          handler=".betas.add_the_timezone_property"
-          />
-
-      <gs:upgradeStep
-          title="Fix the portal action icons."
-          handler=".betas.add_action_icons"
-          />
-
-      <gs:upgradeStep
-          title="Rename the behavior collective.dexteritytextindexer to plone.textindexer"
-          handler=".betas.rename_dexteritytextindexer_behavior"
-          />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6007"
-        destination="6008"
-        >
-        <!-- Plone 6.0.0b3 -->
-
-        <gs:upgradeDepends
-            title="Update plonetheme.barceloneta registry"
-            import_profile="plonetheme.barceloneta:default"
-            import_steps="plone.app.registry" />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6008"
-        destination="6009"
-        >
-        <!-- Plone 6.0.0rc1 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6009"
-        destination="6010"
-        >
-        <!-- Plone 6.0.0rc2 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6010"
-        destination="6011"
-        >
-        <!-- Plone 6.0.0 final -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6011"
-        destination="6012"
-        >
-        <!-- Plone 6.0.1 -->
-
-        <gs:upgradeDepends
-          title="Run to6012 upgrade profile."
-          import_profile="plone.app.upgrade.v60:to6012"
-          />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6012"
-        destination="6013"
-        >
-        <!-- Plone 6.0.2 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6013"
-        destination="6014"
-        >
-        <!-- Plone 6.0.3 -->
-
-        <gs:upgradeStep
-            title="Update rolemap for Site Administrator"
-            handler=".final.rolemap_site_admin"
-            />
-
-        <gs:upgradeStep
-            title="Fix plone.app.iterate profiles"
-            handler=".final.fix_iterate_profiles"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6014"
-        destination="6015"
-        >
-        <!-- Plone 6.0.4 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6015"
-        destination="6016"
-        >
-        <!-- Plone 6.0.5 -->
-
-        <gs:upgradeStep
-            title="Fix TinyMCE menubar"
-            handler=".final.fix_tinymce_menubar"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6016"
-        destination="6017"
-        >
-        <!-- Plone 6.0.6 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6017"
-        destination="6018"
-        >
-        <!-- Plone 6.0.7 -->
-
-        <gs:upgradeStep
-            title="Fix Registry ISyndication Settings"
-            handler=".final.fix_syndication_settings"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6018"
-        destination="6019"
-        >
-        <!-- Plone 6.0.8 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6019"
-        destination="6020"
-        >
-        <!-- Plone 6.0.9 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6020"
-        destination="6021"
-        >
-        <!-- Plone 6.0.10 -->
-
-        <gs:upgradeStep
-            title="Fix TinyMCE format icon names"
-            handler=".final.fix_tinymce_format_iconnames"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6021"
-        destination="6022"
-        >
-        <!-- Plone 6.0.11 -->
-
-        <gs:upgradeDepends
-          title="Run to_isiteschema upgrade profile."
-          import_profile="plone.app.upgrade.v60:to_isiteschema"
-          />
-
-        <gs:upgradeStep
-          title="Add Feature to TinyMCE Editor"
-          description="add accordion plugin to tinymce editor"
-          handler="plone.app.upgrade.v61.alpha.add_feature_tinymce_accordion_plugin"
-          />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6022"
-        destination="6023"
-        >
-        <!-- Plone 6.0.12 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6023"
-        destination="6024"
-        >
-        <!-- Plone 6.0.13 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6024"
-        destination="6025"
-        >
-        <!-- Plone 6.0.14 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6025"
-        destination="6026"
-        >
-        <!-- Plone 6.0.15 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler=".final.cleanup_mimetypes_registry"
-            />
-
-    </gs:upgradeSteps>
-
-    <gs:upgradeSteps
-        profile="Products.CMFPlone:plone"
-        source="6026"
-        destination="6027"
-        >
-        <!-- Plone 6.0.16 -->
-
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
-
-    </gs:upgradeSteps>
+    <gs:upgradeDepends
+        title="Run to6005 upgrade profile."
+        import_profile="plone.app.upgrade.v60:to6005"
+        />
+
+    <gs:upgradeStep
+        title="Update catalog brains to add image_scales."
+        handler=".alphas.update_catalog_for_image_scales"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6005"
+      destination="6006"
+      >
+    <!-- Plone 6.0.0b1 -->
+
+    <gs:upgradeStep
+        title="Upgrade profiles of core Plone modules to specific versions."
+        handler=".alphas.upgrade_plone_module_profiles"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6006"
+      destination="6007"
+      >
+    <!-- Plone 6.0.0b2 -->
+
+    <gs:upgradeDepends
+        title="Run to6007 upgrade profile."
+        import_profile="plone.app.upgrade.v60:to6007"
+        />
+
+    <gs:upgradeStep
+        title="Add a timezone property to portal memberdata if it is missing."
+        handler=".betas.add_the_timezone_property"
+        />
+
+    <gs:upgradeStep
+        title="Fix the portal action icons."
+        handler=".betas.add_action_icons"
+        />
+
+    <gs:upgradeStep
+        title="Rename the behavior collective.dexteritytextindexer to plone.textindexer"
+        handler=".betas.rename_dexteritytextindexer_behavior"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6007"
+      destination="6008"
+      >
+    <!-- Plone 6.0.0b3 -->
+
+    <gs:upgradeDepends
+        title="Update plonetheme.barceloneta registry"
+        import_profile="plonetheme.barceloneta:default"
+        import_steps="plone.app.registry"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6008"
+      destination="6009"
+      >
+    <!-- Plone 6.0.0rc1 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6009"
+      destination="6010"
+      >
+    <!-- Plone 6.0.0rc2 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6010"
+      destination="6011"
+      >
+    <!-- Plone 6.0.0 final -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6011"
+      destination="6012"
+      >
+    <!-- Plone 6.0.1 -->
+
+    <gs:upgradeDepends
+        title="Run to6012 upgrade profile."
+        import_profile="plone.app.upgrade.v60:to6012"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6012"
+      destination="6013"
+      >
+    <!-- Plone 6.0.2 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6013"
+      destination="6014"
+      >
+    <!-- Plone 6.0.3 -->
+
+    <gs:upgradeStep
+        title="Update rolemap for Site Administrator"
+        handler=".final.rolemap_site_admin"
+        />
+
+    <gs:upgradeStep
+        title="Fix plone.app.iterate profiles"
+        handler=".final.fix_iterate_profiles"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6014"
+      destination="6015"
+      >
+    <!-- Plone 6.0.4 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6015"
+      destination="6016"
+      >
+    <!-- Plone 6.0.5 -->
+
+    <gs:upgradeStep
+        title="Fix TinyMCE menubar"
+        handler=".final.fix_tinymce_menubar"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6016"
+      destination="6017"
+      >
+    <!-- Plone 6.0.6 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6017"
+      destination="6018"
+      >
+    <!-- Plone 6.0.7 -->
+
+    <gs:upgradeStep
+        title="Fix Registry ISyndication Settings"
+        handler=".final.fix_syndication_settings"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6018"
+      destination="6019"
+      >
+    <!-- Plone 6.0.8 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6019"
+      destination="6020"
+      >
+    <!-- Plone 6.0.9 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6020"
+      destination="6021"
+      >
+    <!-- Plone 6.0.10 -->
+
+    <gs:upgradeStep
+        title="Fix TinyMCE format icon names"
+        handler=".final.fix_tinymce_format_iconnames"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6021"
+      destination="6022"
+      >
+    <!-- Plone 6.0.11 -->
+
+    <gs:upgradeDepends
+        title="Run to_isiteschema upgrade profile."
+        import_profile="plone.app.upgrade.v60:to_isiteschema"
+        />
+
+    <gs:upgradeStep
+        title="Add Feature to TinyMCE Editor"
+        description="add accordion plugin to tinymce editor"
+        handler="plone.app.upgrade.v61.alpha.add_feature_tinymce_accordion_plugin"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6022"
+      destination="6023"
+      >
+    <!-- Plone 6.0.12 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6023"
+      destination="6024"
+      >
+    <!-- Plone 6.0.13 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6024"
+      destination="6025"
+      >
+    <!-- Plone 6.0.14 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6025"
+      destination="6026"
+      >
+    <!-- Plone 6.0.15 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler=".final.cleanup_mimetypes_registry"
+        />
+
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6026"
+      destination="6027"
+      >
+    <!-- Plone 6.0.16 -->
+
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+
+  </gs:upgradeSteps>
 
 </configure>

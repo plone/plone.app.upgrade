@@ -1,15 +1,17 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
 
   <!-- Plone bundle resources -->
-  <records prefix="plone.resources/plone-base"
-            interface='plone.base.interfaces.IResourceRegistry'>
-      <value key="js">++resource++plone-base.js</value>
+  <records interface="plone.base.interfaces.IResourceRegistry"
+           prefix="plone.resources/plone-base"
+  >
+    <value key="js">++resource++plone-base.js</value>
   </records>
 
   <!-- Bundles -->
-  <records prefix="plone.bundles/plone-base"
-            interface='plone.base.interfaces.IBundleRegistry'>
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/plone-base"
+  >
     <value key="merge_with">default</value>
     <value key="resources">
       <element>plone-base</element>
@@ -24,8 +26,9 @@
     </value>
   </records>
 
-  <records prefix="plone.bundles/plone"
-            interface='plone.base.interfaces.IBundleRegistry'>
+  <records interface="plone.base.interfaces.IBundleRegistry"
+           prefix="plone.bundles/plone"
+  >
     <value key="depends">plone-base</value>
     <value key="last_compilation">2019-06-18 22:30:00</value>
   </records>

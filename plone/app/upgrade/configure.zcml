@@ -2,17 +2,27 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:zcml="http://namespaces.zope.org/zcml"
-    i18n_domain="plone">
+    i18n_domain="plone"
+    >
 
-    <include package=".v52" />
-    <include package=".v60" zcml:condition="have plone-60" />
-    <include package=".v61" zcml:condition="have plone-61" />
-    <include package=".v62" zcml:condition="have plone-62" />
+  <include package=".v52" />
+  <include
+      package=".v60"
+      zcml:condition="have plone-60"
+      />
+  <include
+      package=".v61"
+      zcml:condition="have plone-61"
+      />
+  <include
+      package=".v62"
+      zcml:condition="have plone-62"
+      />
 
-    <utility
-        factory=".HiddenProducts"
-        provides="plone.base.interfaces.INonInstallable"
-        name="plone.app.upgrade"
-        />
+  <utility
+      factory=".HiddenProducts"
+      provides="plone.base.interfaces.INonInstallable"
+      name="plone.app.upgrade"
+      />
 
 </configure>

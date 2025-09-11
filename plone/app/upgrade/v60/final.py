@@ -2,7 +2,6 @@ from AccessControl.Permission import Permission
 from plone.base.utils import get_installer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.MimetypesRegistry.MimeTypeItem import MimeTypeItem
 from zope.component import getUtility
 from zope.component.hooks import getSite
 

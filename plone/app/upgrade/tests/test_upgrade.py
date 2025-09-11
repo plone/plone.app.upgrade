@@ -1,14 +1,21 @@
+from importlib.metadata import version
 from plone.app.upgrade.tests.base import MigrationTest
 from plone.app.upgrade.utils import version_match
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from unittest import mock
 
+import unittest
+
+
+IS_CMFPLONE_DEV = "dev" in version("Products.CMFPlone")
+
 
 class TestUpgrade(MigrationTest):
     def afterSetUp(self):
         self.setup = getToolByName(self.portal, "portal_setup")
 
+    @unittest.skipUnless(IS_CMFPLONE_DEV, reason="Only run with CMFPlone checkouts")
     def testListUpgradeSteps(self):
         # There should be no upgrade steps from the current version
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)
@@ -61,7 +68,8 @@ class TestUpgrade(MigrationTest):
         current = self.setup.getVersionForProfile(_DEFAULT_PROFILE)
         current = tuple(current.split("."))
         last = self.setup.getLastVersionForProfile(_DEFAULT_PROFILE)
-        self.assertEqual(last, current)
+        if IS_CMFPLONE_DEV:
+            self.assertEqual(last, current)
 
         # There are no more upgrade steps available
         upgrades = self.setup.listUpgrades(_DEFAULT_PROFILE)

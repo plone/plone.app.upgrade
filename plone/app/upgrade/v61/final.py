@@ -6,7 +6,6 @@ from plone.base.interfaces.controlpanel import ITinyMCESchema
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
-from zope.component.hooks import getSiteManager
 
 import logging
 
