@@ -37,15 +37,22 @@ setup(
     zip_safe=False,
     extras_require=dict(
         test=[
+            "packaging",
             "plone.app.testing",
             "plone.app.redirector",
+            "Products.MimetypesRegistry",
         ]
     ),
     python_requires=">=3.9",
     install_requires=[
         "setuptools",
+        "plone.app.caching",
+        "plone.app.redirector",
         "plone.base",
+        "plone.behavior",
+        "plone.dexterity",
         "plone.registry",
+        "plone.indexer",
         "plone.folder",
         "plone.uuid",
         "transaction",
@@ -54,13 +61,13 @@ setup(
         "Acquisition",
         "Products.CMFPlone>=6.0.0a1",
         "Products.CMFCore",
-        "Products.CMFEditions",
         "Products.GenericSetup",
         "Products.PlonePAS",
         "Products.ZCatalog",
+        "zc.relation",
         "ZODB",
         "Zope>=5.5",
-        "plone.app.theming",
+        "zope.intid",
     ],
     entry_points="""
     [z3c.autoinclude.plugin]
