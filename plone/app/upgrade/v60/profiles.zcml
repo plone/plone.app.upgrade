@@ -1,53 +1,54 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="plone">
+    i18n_domain="plone"
+    >
 
   <genericsetup:registerProfile
       name="to6000"
       title="Upgrade profile for Plone 5.2.x to Plone 6.0.0a1.dev0 (6000)"
-      directory="profiles/to6000"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6000"
       />
 
   <genericsetup:registerProfile
       name="to6003"
       title="Upgrade profile to Plone 6.0.0a3 (6003)"
-      directory="profiles/to6003"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6003"
       />
 
   <genericsetup:registerProfile
       name="to6004"
       title="Upgrade profile to Plone 6.0.0a4 (6004)"
-      directory="profiles/to6004"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6004"
       />
 
   <genericsetup:registerProfile
       name="to6005"
       title="Upgrade profile to Plone 6.0.0a5 (6005)"
-      directory="profiles/to6005"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6005"
       />
   <genericsetup:registerProfile
       name="to6007"
       title="Upgrade profile to Plone 6.0.0b2 (6007)"
-      directory="profiles/to6007"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6007"
       />
 
-      <genericsetup:registerProfile
+  <genericsetup:registerProfile
       name="to6012"
       title="Upgrade profile to Plone 6.0.1 (6012)"
-      directory="profiles/to6012"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6012"
       />
 
   <!--
@@ -57,18 +58,18 @@
   <genericsetup:registerProfile
       name="to_dx_site_root"
       title="Upgrade profile to change the FTI for the Plone Site object a dexterity one"
-      directory="profiles/to_dx_site_root"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_dx_site_root"
       />
 
   <!-- to_isiteschema needs to be applied in Plone 6.0.11 and 6.1.0a3. -->
   <genericsetup:registerProfile
       name="to_isiteschema"
       title="Reregister ISiteSchema to get new webstats_head_js record"
-      directory="profiles/to_isiteschema"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_isiteschema"
       />
 
 </configure>

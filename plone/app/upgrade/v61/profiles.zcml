@@ -1,23 +1,24 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="plone">
+    i18n_domain="plone"
+    >
 
   <genericsetup:registerProfile
       name="to6103"
       title="Upgrade profile to Plone 6.1.0a4 (6103)"
-      directory="profiles/to6103"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to6103"
       />
 
   <!-- This is a copy of plone.app.discussion/profiles/uninstall. -->
   <genericsetup:registerProfile
       name="uninstall-discussion"
       title="Uninstall plone.app.discussion"
-      directory="profiles/uninstall-discussion"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/uninstall-discussion"
       />
 
 </configure>

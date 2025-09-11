@@ -2,275 +2,296 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     xmlns:zcml="http://namespaces.zope.org/zcml"
-    i18n_domain="plone">
+    i18n_domain="plone"
+    >
 
-    <include file="profiles.zcml" />
+  <include file="profiles.zcml" />
 
-    <gs:upgradeSteps
-        source="5199"
-        destination="5200"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5199"
+      destination="5200"
+      >
 
-      <gs:upgradeStep
-           title="Run to52alpha1 upgrade profile."
-           handler=".alphas.to52alpha1"
-           />
+    <gs:upgradeStep
+        title="Run to52alpha1 upgrade profile."
+        handler=".alphas.to52alpha1"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5200"
-        destination="5201"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5200"
+      destination="5201"
+      >
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5201"
-        destination="5202"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5201"
+      destination="5202"
+      >
 
-      <gs:upgradeStep
-           title="Run to52beta1 upgrade profile."
-           handler=".betas.to52beta1"
-           />
+    <gs:upgradeStep
+        title="Run to52beta1 upgrade profile."
+        handler=".betas.to52beta1"
+        />
 
-      <gs:upgradeStep
-           title="Run to52rc1 upgrade profile."
-           handler=".betas.to52rc1"
-           />
-    </gs:upgradeSteps>
+    <gs:upgradeStep
+        title="Run to52rc1 upgrade profile."
+        handler=".betas.to52rc1"
+        />
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5202"
-        destination="5203"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5202"
+      destination="5203"
+      >
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5203"
-        destination="5204"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5203"
+      destination="5204"
+      >
 
-        <gs:upgradeStep
-            title="Rebuild the plone.app.redirector information."
-            description="This initializes the date and manual information."
-            handler=".final.rebuild_redirections"
-            />
+    <gs:upgradeStep
+        title="Rebuild the plone.app.redirector information."
+        description="This initializes the date and manual information."
+        handler=".final.rebuild_redirections"
+        />
 
-        <gs:upgradeStep
-            title="Move from dotted behaviors to named behaviors."
-            handler=".final.move_dotted_to_named_behaviors"
-            />
+    <gs:upgradeStep
+        title="Move from dotted behaviors to named behaviors."
+        handler=".final.move_dotted_to_named_behaviors"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5204"
-        destination="5205"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5204"
+      destination="5205"
+      >
 
-        <gs:upgradeDepends
-            title="Miscellaneous"
-            import_profile="plone.app.upgrade.v52:to52rc4"
-            />
-        <gs:upgradeStep
-            title="Move registry fields interfaceName for ILanguageSchema"
-            description="old: Products.CMFPlone, new: plone.i18n"
-            handler=".final.change_interface_on_lang_registry_records"
-            />
+    <gs:upgradeDepends
+        title="Miscellaneous"
+        import_profile="plone.app.upgrade.v52:to52rc4"
+        />
+    <gs:upgradeStep
+        title="Move registry fields interfaceName for ILanguageSchema"
+        description="old: Products.CMFPlone, new: plone.i18n"
+        handler=".final.change_interface_on_lang_registry_records"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5205"
-        destination="5206"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5205"
+      destination="5206"
+      >
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5206"
-        destination="5207"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5206"
+      destination="5207"
+      >
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5207"
-        destination="5208"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5207"
+      destination="5208"
+      >
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler=".final.to521"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler=".final.to521"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5208"
-        destination="5209"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5208"
+      destination="5209"
+      >
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler=".final.to522"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler=".final.to522"
+        />
 
-        <gs:upgradeStep
-            title="Move markdown settings from portal_transforms to Plone registry"
-            handler=".final.move_markdown_transform_settings_to_registry"
-            />
+    <gs:upgradeStep
+        title="Move markdown settings from portal_transforms to Plone registry"
+        handler=".final.move_markdown_transform_settings_to_registry"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5209"
-        destination="5210"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5209"
+      destination="5210"
+      >
 
-        <gs:upgradeStep
-            title="Migrate site logo from native string to bytes"
-            handler=".final.migrate_site_logo_from_ascii_to_bytes"
-            />
+    <gs:upgradeStep
+        title="Migrate site logo from native string to bytes"
+        handler=".final.migrate_site_logo_from_ascii_to_bytes"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5210"
-        destination="5211"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5210"
+      destination="5211"
+      >
 
-        <gs:upgradeStep
-            title="Migrate site logo from native string to bytes again"
-            handler=".final.migrate_site_logo_from_ascii_to_bytes"
-            />
+    <gs:upgradeStep
+        title="Migrate site logo from native string to bytes again"
+        handler=".final.migrate_site_logo_from_ascii_to_bytes"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5211"
-        destination="5212"
-        profile="Products.CMFPlone:plone">
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5211"
+      destination="5212"
+      >
 
-        <gs:upgradeStep
-            title="Make portal_setup logs accessible only to Manager/Owner."
-            handler=".final.secure_portal_setup_objects"
-            />
+    <gs:upgradeStep
+        title="Make portal_setup logs accessible only to Manager/Owner."
+        handler=".final.secure_portal_setup_objects"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5212"
-        destination="5213"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.5 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5212"
+      destination="5213"
+      >
+    <!-- Plone 5.2.5 -->
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5213"
-        destination="5214"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.6 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5213"
+      destination="5214"
+      >
+    <!-- Plone 5.2.6 -->
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5214"
-        destination="5215"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.7 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5214"
+      destination="5215"
+      >
+    <!-- Plone 5.2.7 -->
 
-        <gs:upgradeStep
-            title="Miscellaneous"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5215"
-        destination="5216"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.8 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5215"
+      destination="5216"
+      >
+    <!-- Plone 5.2.8 -->
 
-        <gs:upgradeStep
-            title="Miscellaneous upgrades to Plone 5.2.8"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous upgrades to Plone 5.2.8"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5216"
-        destination="5217"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.9 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5216"
+      destination="5217"
+      >
+    <!-- Plone 5.2.9 -->
 
-        <gs:upgradeStep
-            title="Miscellaneous upgrades to Plone 5.2.9"
-            handler="..utils.null_upgrade_step"
-            />
+    <gs:upgradeStep
+        title="Miscellaneous upgrades to Plone 5.2.9"
+        handler="..utils.null_upgrade_step"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5217"
-        destination="5218"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.10 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5217"
+      destination="5218"
+      >
+    <!-- Plone 5.2.10 -->
 
-        <gs:upgradeStep
-            title="Add a timezone property to portal memberdata if it is missing."
-            handler=".final.add_the_timezone_property"
-            />
+    <gs:upgradeStep
+        title="Add a timezone property to portal memberdata if it is missing."
+        handler=".final.add_the_timezone_property"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
-    <gs:upgradeSteps
-        source="5218"
-        destination="5219"
-        profile="Products.CMFPlone:plone">
-        <!-- Plone 5.2.11 -->
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="5218"
+      destination="5219"
+      >
+    <!-- Plone 5.2.11 -->
 
-        <gs:upgradeStep
-            title="Add GET application/json for content to weak caching."
-            handler=".final.add_get_application_json_to_weak_caching"
-            />
+    <gs:upgradeStep
+        title="Add GET application/json for content to weak caching."
+        handler=".final.add_get_application_json_to_weak_caching"
+        />
 
-    </gs:upgradeSteps>
+  </gs:upgradeSteps>
 
 </configure>

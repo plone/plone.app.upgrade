@@ -43,9 +43,9 @@
         />
     <!-- We reuse an upgrade step from v60 -->
     <gs:upgradeDepends
-      title="Run to_isiteschema upgrade profile."
-      import_profile="plone.app.upgrade.v60:to_isiteschema"
-      />
+        title="Run to_isiteschema upgrade profile."
+        import_profile="plone.app.upgrade.v60:to_isiteschema"
+        />
   </gs:upgradeSteps>
 
   <gs:upgradeSteps
@@ -55,9 +55,9 @@
       >
     <!-- Plone 6.1.0a4 -->
     <gs:upgradeDepends
-      title="Run to6103 upgrade profile."
-      import_profile="plone.app.upgrade.v61:to6103"
-      />
+        title="Run to6103 upgrade profile."
+        import_profile="plone.app.upgrade.v61:to6103"
+        />
     <gs:upgradeStep
         title="Remove the portal_properties tool."
         handler=".final.remove_portal_properties_tool"

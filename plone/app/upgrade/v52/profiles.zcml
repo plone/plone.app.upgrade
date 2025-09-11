@@ -1,54 +1,55 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="plone">
+    i18n_domain="plone"
+    >
 
   <genericsetup:registerProfile
       name="to52alpha1"
       title="Upgrade profile for Plone 5.1.x to Plone 5.2alpha1"
-      directory="profiles/to_alpha1"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_alpha1"
       />
 
   <genericsetup:registerProfile
       name="to52beta1"
       title="Upgrade profile for Plone 5.2alpha2 to Plone 5.2beta1"
-      directory="profiles/to_beta1"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_beta1"
       />
 
   <genericsetup:registerProfile
       name="to52rc1"
       title="Upgrade profile for Plone 5.2beta1 to Plone 5.2rc1"
-      directory="profiles/to_rc1"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_rc1"
       />
 
   <genericsetup:registerProfile
       name="to52rc4"
       title="Upgrade profile for Plone 5.2rc3 to Plone 5.2rc4"
-      directory="profiles/to_rc4"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_rc4"
       />
 
   <genericsetup:registerProfile
       name="to521"
       title="Upgrade profile for Plone 5.2 to Plone 5.2.1"
-      directory="profiles/to_521"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_521"
       />
 
   <genericsetup:registerProfile
       name="to522"
       title="Upgrade profile for Plone 5.2.1 to Plone 5.2.2"
-      directory="profiles/to_522"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="plone.base.interfaces.IMigratingPloneSiteRoot"
+      directory="profiles/to_522"
       />
 
 </configure>
