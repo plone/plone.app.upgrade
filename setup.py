@@ -1,14 +1,19 @@
+from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
 
 version = "3.2.3.dev0"
 
+long_description = (
+    f"{Path('README.rst').read_text()}\n{Path('CHANGES.rst').read_text()}\n"
+)
+
 setup(
     name="plone.app.upgrade",
     version=version,
     description="Upgrade machinery for Plone.",
-    long_description=(open("README.rst").read() + "\n" + open("CHANGES.rst").read()),
+    long_description=long_description,
     classifiers=[
         "Development Status :: 6 - Mature",
         "Environment :: Web Environment",
@@ -31,8 +36,9 @@ setup(
     author_email="plone-developers@lists.sourceforge.net",
     url="https://pypi.org/project/plone.app.upgrade/",
     license="GPL version 2",
-    packages=find_packages(),
+    packages=find_packages("src"),
     namespace_packages=["plone", "plone.app"],
+    package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     extras_require=dict(
