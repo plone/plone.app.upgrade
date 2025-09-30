@@ -7,11 +7,11 @@ def update_tinymce_toolbar_menu_styles(context):
 
     # rename "styleselect" to "styles"
     mce_toolbar = registry.records["plone.toolbar"].value
-    registry.records["plone.toolbar"] = mce_toolbar.replace("styleselect", "styles")
+    registry["plone.toolbar"] = mce_toolbar.replace("styleselect", "styles")
 
     # rename "formats" to "styles"
     mce_menu = registry.records["plone.menu"].value
     mce_menu["format"]["items"] = mce_menu["format"]["items"].replace(
         "formats", "styles"
     )
-    registry.records["plone.menu"] = mce_menu
+    registry["plone.menu"] = mce_menu
