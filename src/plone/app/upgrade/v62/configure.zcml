@@ -16,6 +16,10 @@
         title="Make the condition for the external editor action safer."
         handler="..v61.final.make_external_editor_action_condition_safer"
         />
+    <gs:upgradeStep
+        title="Update TinyMCE toolbar button and menu."
+        handler=".alpha.update_tinymce_toolbar_menu_styles"
+        />
 
     <gs:upgradeDepends
         title="Register IClassicUISchema control panel."
