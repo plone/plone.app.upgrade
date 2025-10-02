@@ -8,6 +8,37 @@ Changelog
 
 .. towncrier release notes start
 
+3.3.0 (2025-10-02)
+------------------
+
+New features:
+
+
+- Add ``utils.remove_utility`` helper function.
+  Code taken over from ``collective.migrationhelpers``.
+  [maurits, pbauer] (#338)
+
+
+Bug fixes:
+
+
+- Update TinyMCE toolbar and menu button names to match TinyMCE version 6. @petschki (#86)
+- Remove ``IPropertiesTool`` components.
+  These were left over after the removal of the ``portal_properties`` tool in Plone 6.1.
+  [maurits] (#338)
+- Cleanup `ITinyMCESchema.plugins` and remove non-existing plugins. @petschki (#1500)
+
+
+Internal:
+
+
+- Move distribution to src layout [gforcada] (#4217)
+- Added upgrade to 6110, Plone 6.1.3.
+  [maurits] (#6110)
+- Add 6.2 upgrade for the IClassicUISchema control panel and the use_ajax_main_template registry entry.
+- Use ``plone.meta`` to ease maintenance [gforcada]
+
+
 3.2.2 (2025-06-20)
 ------------------
 
