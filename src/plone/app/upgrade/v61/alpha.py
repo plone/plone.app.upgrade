@@ -30,7 +30,12 @@ def add_feature_tinymce_accordion_plugin(context):
 
     # add the old value for plugin
     plugins_record = registry.records.get("plone.plugins")
-    plugins_record.value = old_value_plugins
+    available_plugins_vocab = plugins_record.field.value_type.vocabulary
+    valid_plugins_record = []
+    for val in old_value_plugins:
+        if val in available_plugins_vocab:
+            valid_plugins_record.append(val)
+    plugins_record.value = valid_plugins_record
 
     # add the old value for valid_tags
     valid_tags_record = registry.records.get("plone.valid_tags")
