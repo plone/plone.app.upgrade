@@ -8,6 +8,21 @@ Changelog
 
 .. towncrier release notes start
 
+3.3.1 (2025-10-24)
+------------------
+
+Bug fixes:
+
+
+- Fix upgrading TinyMCE plugins with invalid/outdated plugins. @petschki (#351)
+
+
+Internal:
+
+
+- Added upgrade to 6111, Plone 6.1.4.  [maurits] (#6111)
+
+
 3.3.0 (2025-10-02)
 ------------------
 
