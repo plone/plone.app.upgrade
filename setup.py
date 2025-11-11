@@ -45,7 +45,6 @@ setup(
     ),
     python_requires=">=3.10",
     install_requires=[
-        "setuptools",
         "plone.app.caching",
         "plone.app.redirector",
         "plone.base",
