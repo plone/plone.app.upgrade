@@ -1,9 +1,8 @@
 from pathlib import Path
-from setuptools import find_packages
 from setuptools import setup
 
 
-version = "3.3.2.dev0"
+version = "4.0.0.dev0"
 
 long_description = (
     f"{Path('README.rst').read_text()}\n{Path('CHANGES.rst').read_text()}\n"
@@ -18,14 +17,12 @@ setup(
         "Development Status :: 6 - Mature",
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 6.0",
-        "Framework :: Plone :: 6.1",
+        "Framework :: Plone :: 6.2",
         "Framework :: Plone :: Core",
         "Framework :: Zope :: 5",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
@@ -36,9 +33,6 @@ setup(
     author_email="plone-developers@lists.sourceforge.net",
     url="https://pypi.org/project/plone.app.upgrade/",
     license="GPL version 2",
-    packages=find_packages("src"),
-    namespace_packages=["plone", "plone.app"],
-    package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     extras_require=dict(
@@ -49,9 +43,8 @@ setup(
             "Products.MimetypesRegistry",
         ]
     ),
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     install_requires=[
-        "setuptools",
         "plone.app.caching",
         "plone.app.redirector",
         "plone.base",
