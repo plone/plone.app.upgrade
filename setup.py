@@ -39,20 +39,16 @@ setup(
         test=[
             "packaging",
             "plone.app.testing",
-            "plone.app.redirector",
             "Products.MimetypesRegistry",
         ]
     ),
     python_requires=">=3.10",
     install_requires=[
         "plone.app.caching",
-        "plone.app.redirector",
         "plone.base",
-        "plone.behavior",
         "plone.dexterity",
         "plone.registry",
         "plone.indexer",
-        "plone.folder",
         "plone.uuid",
         "transaction",
         "zope.component",
@@ -61,12 +57,9 @@ setup(
         "Products.CMFPlone>=6.0.0a1",
         "Products.CMFCore",
         "Products.GenericSetup",
-        "Products.PlonePAS",
         "Products.ZCatalog",
-        "zc.relation",
         "ZODB",
         "Zope>=5.5",
-        "zope.intid",
     ],
     entry_points="""
     [z3c.autoinclude.plugin]
