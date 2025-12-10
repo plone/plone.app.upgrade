@@ -5,38 +5,6 @@
     >
 
   <genericsetup:registerProfile
-      name="to52alpha1"
-      title="Upgrade profile for Plone 5.1.x to Plone 5.2alpha1"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
-      directory="profiles/to_alpha1"
-      />
-
-  <genericsetup:registerProfile
-      name="to52beta1"
-      title="Upgrade profile for Plone 5.2alpha2 to Plone 5.2beta1"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
-      directory="profiles/to_beta1"
-      />
-
-  <genericsetup:registerProfile
-      name="to52rc1"
-      title="Upgrade profile for Plone 5.2beta1 to Plone 5.2rc1"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
-      directory="profiles/to_rc1"
-      />
-
-  <genericsetup:registerProfile
-      name="to52rc4"
-      title="Upgrade profile for Plone 5.2rc3 to Plone 5.2rc4"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="plone.base.interfaces.IMigratingPloneSiteRoot"
-      directory="profiles/to_rc4"
-      />
-
-  <genericsetup:registerProfile
       name="to521"
       title="Upgrade profile for Plone 5.2 to Plone 5.2.1"
       provides="Products.GenericSetup.interfaces.EXTENSION"

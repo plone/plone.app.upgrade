@@ -1,0 +1,1 @@
+Remove upgrade steps from before Plone 5.2.0.  [maurits]
