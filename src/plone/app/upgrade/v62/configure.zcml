@@ -20,6 +20,10 @@
         title="Update TinyMCE toolbar button and menu."
         handler=".alpha.update_tinymce_toolbar_menu_styles"
         />
+    <gs:upgradeStep
+        title="Add TinyMCE license key."
+        handler=".alpha.add_tinymce_license_key"
+        />
 
     <gs:upgradeDepends
         title="Register IClassicUISchema control panel."

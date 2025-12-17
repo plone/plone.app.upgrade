@@ -1,3 +1,4 @@
+from plone.base.interfaces import ITinyMCESchema
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -28,3 +29,9 @@ def update_tinymce_toolbar_menu_styles(context):
         logger.info(
             "Could not rename 'formats' to 'styles' in 'plone.menu' registry value due to custom TinyMCE menu configuration"
         )
+
+
+def add_tinymce_license_key(context):
+    registry = getUtility(IRegistry)
+    # re-register the interface with prefix, needed for plone.license_key
+    registry.registerInterface(ITinyMCESchema, prefix="plone")
