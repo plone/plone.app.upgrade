@@ -24,6 +24,10 @@
         title="Add TinyMCE license key."
         handler=".alpha.add_tinymce_license_key"
         />
+    <gs:upgradeStep
+        title="Install plone.app.layout if classic distribution is used."
+        handler=".alpha.install_plone_app_layout"
+        />
 
     <gs:upgradeDepends
         title="Register IClassicUISchema control panel."

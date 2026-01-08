@@ -1,4 +1,5 @@
 from plone.base.interfaces import ITinyMCESchema
+from plone.base.utils import get_installer
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -35,3 +36,19 @@ def add_tinymce_license_key(context):
     registry = getUtility(IRegistry)
     # re-register the interface with prefix, needed for plone.license_key
     registry.registerInterface(ITinyMCESchema, prefix="plone")
+
+
+def install_plone_app_layout(context):
+    """Install plone.app.layout if the current site has the classic distribution."""
+    try:
+        from plone.distribution.api.distribution import get_current_distribution
+    except ImportError:
+        return
+
+    dist = get_current_distribution()
+    if dist is None or dist.name != "classic":
+        return
+    installer = get_installer(context)
+    if installer.is_product_installed("plone.app.layout"):
+        return
+    installer.install_product("plone.app.layout")
