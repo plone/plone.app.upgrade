@@ -120,6 +120,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
+ignore-packages = ['plone.distribution']
 'Products.ZCatalog' = ['Products.ZCTextIndex', 'Products.PluginIndexes']
 
 ##
