@@ -3,7 +3,7 @@
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "2.2.1"
+commit-id = "2.3.2.dev0"
 
 [tox]
 test_matrix = {"6.2" = ["*"]}
@@ -12,3 +12,5 @@ test_matrix = {"6.2" = ["*"]}
 dependencies_mappings = [
     "'Products.ZCatalog' = ['Products.ZCTextIndex', 'Products.PluginIndexes']",
     ]
+# plone.distribution is only conditionally used
+dependencies_ignores = "['plone.distribution']"
