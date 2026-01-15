@@ -8,6 +8,29 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a1 (2026-01-15)
+--------------------
+
+Breaking changes:
+
+
+- Replace ``pkg_resources`` namespace with PEP 420 native namespace.
+  Support only Plone 6.2 and Python 3.10+. (#3928)
+- Remove upgrade steps from before Plone 5.2.0.  [maurits]
+
+
+New features:
+
+
+- Add "license_key" field to TinyMCE controlpanel.  @petschki
+
+
+Bug fixes:
+
+
+- Install plone.app.layout if classic distribution is used.  [maurits] (#23)
+
+
 3.3.1 (2025-10-24)
 ------------------
 

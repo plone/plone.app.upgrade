@@ -1,1 +1,0 @@
-Install plone.app.layout if classic distribution is used.  [maurits]
