@@ -9,3 +9,6 @@ commit-id = "2.3.2.dev0"
 dependencies_mappings = [
     "'Products.ZCatalog' = ['Products.ZCTextIndex', 'Products.PluginIndexes']",
     ]
+
+[tox]
+test_matrix = {"6.1" = ["*"], "6.0" = ["*"]}
