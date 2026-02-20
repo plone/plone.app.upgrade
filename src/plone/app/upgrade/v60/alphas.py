@@ -17,7 +17,6 @@ import json
 import logging
 import os
 
-
 logger = logging.getLogger("plone.app.upgrade")
 
 

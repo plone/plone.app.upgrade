@@ -16,7 +16,6 @@ from zope.component.hooks import setSite
 import transaction
 import warnings
 
-
 #
 # Base TestCase for upgrades
 #

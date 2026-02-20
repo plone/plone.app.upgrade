@@ -8,7 +8,6 @@ from zope.component.hooks import getSite
 import logging
 import re
 
-
 logger = logging.getLogger(__name__)
 SITE_ADMIN = "Site Administrator"
 SITE_ADMIN_PERMISSIONS = [
