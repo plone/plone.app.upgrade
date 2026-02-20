@@ -2,7 +2,6 @@ from importlib.metadata import distribution
 from importlib.metadata import PackageNotFoundError
 from plone.app.upgrade.utils import alias_module
 
-
 try:
     distribution("Products.CMFQuickInstallerTool")
 except PackageNotFoundError:

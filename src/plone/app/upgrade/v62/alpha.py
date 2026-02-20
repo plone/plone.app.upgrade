@@ -6,7 +6,6 @@ from zope.component import getUtility
 import json
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 

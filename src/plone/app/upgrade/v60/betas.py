@@ -3,7 +3,6 @@ from Products.CMFPlone.utils import getToolByName
 
 import logging
 
-
 logger = logging.getLogger("plone.app.upgrade")
 
 

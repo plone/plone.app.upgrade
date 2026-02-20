@@ -7,7 +7,6 @@ from unittest import mock
 
 import unittest
 
-
 IS_CMFPLONE_DEV = "dev" in version("Products.CMFPlone")
 
 

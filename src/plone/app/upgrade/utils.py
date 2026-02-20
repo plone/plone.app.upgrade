@@ -22,7 +22,6 @@ import sys
 import transaction
 import warnings
 
-
 _marker = []
 
 logger = logging.getLogger("plone.app.upgrade")
