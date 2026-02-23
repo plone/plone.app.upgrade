@@ -1,0 +1,2 @@
+Update ``fix_mimetypes_registry`` tests to pass on Python 3.14 as well.
+[maurits]

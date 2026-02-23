@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 
 import re
+import sys
 import unittest
 
 
@@ -218,9 +219,15 @@ class Various60Test(unittest.TestCase):
                 mock_logger.method_calls[1].args, ("%r globs were fixed", 1)
             )
 
-        self.assertTupleEqual(
-            mtr.globs["bogus"], (re.compile("(?s:bogus)\\Z"), mimetype)
-        )
+        if sys.version_info >= (3, 14):
+            # Python 3.14 introduces \z as preferred over \Z.
+            self.assertTupleEqual(
+                mtr.globs["bogus"], (re.compile("(?s:bogus)\\z"), mimetype)
+            )
+        else:
+            self.assertTupleEqual(
+                mtr.globs["bogus"], (re.compile("(?s:bogus)\\Z"), mimetype)
+            )
 
     def test_fix_mimetypes_registry_bogus_pattern(self):
         """Check that a glob with a pattern that is an instance of BogusPattern
@@ -243,6 +250,12 @@ class Various60Test(unittest.TestCase):
                 mock_logger.method_calls[1].args, ("%r globs were fixed", 1)
             )
 
-        self.assertTupleEqual(
-            mtr.globs["bogus"], (re.compile("(?s:bogus)\\Z"), mimetype)
-        )
+        if sys.version_info >= (3, 14):
+            # Python 3.14 introduces \z as preferred over \Z.
+            self.assertTupleEqual(
+                mtr.globs["bogus"], (re.compile("(?s:bogus)\\z"), mimetype)
+            )
+        else:
+            self.assertTupleEqual(
+                mtr.globs["bogus"], (re.compile("(?s:bogus)\\Z"), mimetype)
+            )
