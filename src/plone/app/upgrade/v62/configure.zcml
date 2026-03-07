@@ -42,8 +42,8 @@
       >
     <!-- Plone 6.2.0a2 -->
     <gs:upgradeStep
-        title="Cleanup resource registry"
-        handler=".alpha.cleanup_resource_registry"
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
         />
   </gs:upgradeSteps>
 
