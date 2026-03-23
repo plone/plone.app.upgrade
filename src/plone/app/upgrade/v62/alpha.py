@@ -72,3 +72,19 @@ def fix_history_action_permission(context):
         logger.info("Action object/history has customized permissions, not changing.")
         return
     action.permissions = new_perm
+
+
+def add_s_to_valid_tags(context):
+    """Add <s> tag to valid_tags for TinyMCE strikethrough support.
+
+    TinyMCE 8 uses <s> for strikethrough, but <s> was not in the default
+    valid_tags list, causing strikethrough formatting to be silently stripped.
+
+    Fixes: https://github.com/plone/Products.CMFPlone/issues/3069
+    """
+    registry = getUtility(IRegistry)
+    record = registry.records.get("plone.valid_tags")
+    if record is None:
+        return
+    if "s" not in record.value:
+        record.value = sorted([*record.value, "s"])

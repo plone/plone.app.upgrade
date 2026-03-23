@@ -45,6 +45,10 @@
         title="Fix history action permission to CMFEditions: Access previous versions."
         handler=".alpha.fix_history_action_permission"
         />
+    <gs:upgradeStep
+        title="Add s tag to valid_tags for TinyMCE strikethrough support."
+        handler=".alpha.add_s_to_valid_tags"
+        />
   </gs:upgradeSteps>
 
 </configure>
