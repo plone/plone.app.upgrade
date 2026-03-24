@@ -1,7 +1,7 @@
 from plone.base.interfaces import ITinyMCESchema
 from plone.base.utils import get_installer
-from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 
 import json
