@@ -1,6 +1,7 @@
 from plone.base.interfaces import ITinyMCESchema
 from plone.base.utils import get_installer
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 
 import json
@@ -51,3 +52,23 @@ def install_plone_app_layout(context):
     if installer.is_product_installed("plone.app.layout"):
         return
     installer.install_product("plone.app.layout")
+
+
+def fix_history_action_permission(context):
+    """Change history action permission to CMFEditions: Access previous versions.
+
+    Fixes: https://github.com/plone/Products.CMFPlone/issues/4059
+    """
+    portal_actions = getToolByName(context, "portal_actions")
+    action = portal_actions.unrestrictedTraverse("object/history", None)
+    if action is None:
+        logger.info("Action object/history does not exist, nothing to do.")
+        return
+    old_perm = ("Modify portal content",)
+    new_perm = ("CMFEditions: Access previous versions",)
+    if action.permissions == new_perm:
+        return
+    if action.permissions != old_perm:
+        logger.info("Action object/history has customized permissions, not changing.")
+        return
+    action.permissions = new_perm

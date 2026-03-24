@@ -42,8 +42,8 @@
       >
     <!-- Plone 6.2.0a2 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Fix history action permission to CMFEditions: Access previous versions."
+        handler=".alpha.fix_history_action_permission"
         />
   </gs:upgradeSteps>
 
