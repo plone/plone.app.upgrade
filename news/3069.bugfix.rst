@@ -1,0 +1,2 @@
+Add ``s`` to ``valid_tags`` for existing sites so TinyMCE strikethrough is not stripped on save.
+[jensens]
