@@ -1,0 +1,2 @@
+Fix history action permission from "Modify portal content" to "CMFEditions: Access previous versions" for existing sites.
+[jensens]
