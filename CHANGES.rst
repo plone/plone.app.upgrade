@@ -8,6 +8,33 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0rc1 (2026-03-27)
+---------------------
+
+Bug fixes:
+
+
+- Add ``s`` to ``valid_tags`` for existing sites so TinyMCE strikethrough is not stripped on save.
+  [jensens] (#3069)
+- Fix history action permission from "Modify portal content" to "CMFEditions: Access previous versions" for existing sites.
+  [jensens] (#4059)
+
+
+Internal:
+
+
+- Added upgrade to 6201, Plone 6.2.0rc1.  [maurits] (#6201)
+- Update configuration files.
+  [plone devs]
+
+
+Tests:
+
+
+- Update ``fix_mimetypes_registry`` tests to pass on Python 3.14 as well.
+  [maurits] (#361)
+
+
 4.0.0a1 (2026-01-15)
 --------------------
 
