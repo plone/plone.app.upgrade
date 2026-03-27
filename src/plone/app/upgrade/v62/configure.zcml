@@ -40,7 +40,7 @@
       source="6200"
       destination="6201"
       >
-    <!-- Plone 6.2.0a2 -->
+    <!-- Plone 6.2.0rc1 -->
     <gs:upgradeStep
         title="Fix history action permission to CMFEditions: Access previous versions."
         handler=".alpha.fix_history_action_permission"
