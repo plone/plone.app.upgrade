@@ -434,6 +434,7 @@ def update_catalog_metadata(context, column=None):
             raise
         except Exception:
             pass
+        obj._p_deactivate()
     pghandler.finish()
     logger.info("Updated metadata of all brains.")
 
