@@ -1,16 +1,2 @@
-Fix out-of-memory problem in 6005 upgrade steps.
-
-When running the "Update catalog brains to add image_scales."
-(`plone.app.upgrade.v60.alphas.update_catalog_for_image_scales`) upgrade step
-from the 6005 upgradeSteps this does a reindex catalog on all objects with
-image_scales. That runs `plone.app.upgrade.utils.update_catalog_metadata` and
-this might run out of memory.
-
-This PR calls `_p_deactivate` on each object in `update_catalog_metadata` which
-sets them in ghost state and that should release the object's memory.
-
-That doesn't let the process consume memory until the server's limit.
-
-Fixes: #368
-
+Fix possible out-of-memory problem in ``utils.update_catalog_metadata` by releasing memory early.
 [thet, jensens]
