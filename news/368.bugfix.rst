@@ -1,2 +1,2 @@
-Fix possible out-of-memory problem in ``utils.update_catalog_metadata` by releasing memory early.
+Fix possible out-of-memory problem in ``utils.update_catalog_metadata`` by releasing memory early.
 [thet, jensens]
