@@ -368,7 +368,7 @@ def updateIconsInBrains(context, typesToUpdate=None):
     logger.info("Updated `getIcon` metadata.")
 
 
-def update_catalog_metadata(context, column=None):
+def update_catalog_metadata(context, column=None, commit_threshold=1000):
     """Update catalog metadata for all brains."""
     catalog = getToolByName(context, "portal_catalog")
     logger.info("Updating metadata.")
@@ -434,7 +434,10 @@ def update_catalog_metadata(context, column=None):
             raise
         except Exception:
             pass
+
         obj._p_deactivate()
+        if index % commit_threshold == 0:
+            transaction.commit()
     pghandler.finish()
     logger.info("Updated metadata of all brains.")
 
