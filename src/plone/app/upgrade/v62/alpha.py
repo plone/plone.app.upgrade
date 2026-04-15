@@ -1,3 +1,4 @@
+from plone.base.interfaces import ITinyMCEPluginSchema
 from plone.base.interfaces import ITinyMCESchema
 from plone.base.utils import get_installer
 from plone.registry.interfaces import IRegistry
@@ -88,3 +89,21 @@ def add_s_to_valid_tags(context):
         return
     if "s" not in record.value:
         record.value = sorted([*record.value, "s"])
+
+
+def add_missing_tinymce_plugin(context):
+    registry = getUtility(IRegistry)
+
+    # save the old values temporarily
+    plugins_record = registry.records.get("plone.plugins")
+    plugins_value_old = plugins_record.value
+
+    # delete the old registry record, it holds the wrong vocabulary of the old schema
+    del registry.records["plone.plugins"]
+
+    # re-register the schema in the registry
+    registry.registerInterface(ITinyMCEPluginSchema, prefix="plone")
+
+    # re-set the old value for plugins. Should be safe, since we've added only a new plugin
+    plugins_record = registry.records.get("plone.plugins")
+    plugins_record.value = plugins_value_old

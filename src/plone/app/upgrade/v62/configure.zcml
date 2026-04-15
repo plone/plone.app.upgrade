@@ -58,8 +58,8 @@
       >
     <!-- Plone 6.2.0rc2 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Add missing TinyMCE plugins to the registry record plone.plugins."
+        handler=".alpha.add_missing_tinymce_plugin"
         />
   </gs:upgradeSteps>
 
