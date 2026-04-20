@@ -18,6 +18,10 @@
       package=".v62"
       zcml:condition="have plone-62"
       />
+  <include
+      package=".v70"
+      zcml:condition="have plone-70"
+      />
 
   <utility
       factory=".HiddenProducts"
