@@ -47,9 +47,11 @@ def install_plone_app_layout(context):
         return
 
     dist = get_current_distribution()
-    if dist is None or dist.name != "classic":
-        return
     installer = get_installer(context)
+    if dist is not None and dist.name != "classic":
+        return
+    if installer.is_product_installed("plone.volto"):
+        return
     if installer.is_product_installed("plone.app.layout"):
         return
     installer.install_product("plone.app.layout")
