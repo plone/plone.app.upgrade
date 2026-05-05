@@ -1,3 +1,5 @@
+from importlib.metadata import distribution
+from importlib.metadata import PackageNotFoundError
 from plone.base.interfaces import ITinyMCEPluginSchema
 from plone.base.interfaces import ITinyMCESchema
 from plone.base.utils import get_installer
@@ -47,12 +49,16 @@ def install_plone_app_layout(context):
         return
 
     dist = get_current_distribution()
-    installer = get_installer(context)
     if dist is not None and dist.name != "classic":
         return
+    installer = get_installer(context)
     if installer.is_product_installed("plone.volto"):
         return
     if installer.is_product_installed("plone.app.layout"):
+        return
+    try:
+        distribution("plone.classicui")
+    except PackageNotFoundError:
         return
     installer.install_product("plone.app.layout")
 
