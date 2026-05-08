@@ -8,6 +8,32 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0rc2 (2026-05-08)
+---------------------
+
+New features:
+
+
+- Make plone.app.layout installation safer in upgrades @erral (#372)
+
+
+Bug fixes:
+
+
+- Fix possible out-of-memory problem in ``utils.update_catalog_metadata`` by releasing memory early.
+  [thet, jensens] (#368)
+- Add new TinyMCE plugin `codesample`.
+  @petschki
+
+
+Internal:
+
+
+- Added upgrade to 6202, Plone 6.2.0rc2.  [maurits] (#6202)
+- Update configuration files.
+  [plone devs]
+
+
 4.0.0rc1 (2026-03-27)
 ---------------------
 
