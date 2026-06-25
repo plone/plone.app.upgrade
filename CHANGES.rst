@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+3.3.2 (2026-06-25)
+------------------
+
+Bug fixes:
+
+
+- Remove upgrades for Plone 6.2.
+  On Plone 6.2 you need ``plone.app.upgrade`` 4.0.0a1 or higher.
+  [maurits]
+
+
+Internal:
+
+
+- Added upgrade to 6112, Plone 6.1.5.  [maurits] (#6112)
+
+
 3.3.1 (2025-10-24)
 ------------------
 

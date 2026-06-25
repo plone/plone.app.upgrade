@@ -1,3 +1,0 @@
-Remove upgrades for Plone 6.2.
-On Plone 6.2 you need ``plone.app.upgrade`` 4.0.0a1 or higher.
-[maurits]
