@@ -1,1 +1,0 @@
-Added upgrade to 6204, Plone 6.2.1.  [maurits]
