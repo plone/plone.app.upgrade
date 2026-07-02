@@ -87,4 +87,18 @@
         />
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6204"
+      destination="6205"
+      >
+
+    <!-- Plone 6.2.2 -->
+    <gs:upgradeStep
+        title="Use Bootstrap style icon for discussion moderation action."
+        handler=".final.manage_comments_icon"
+        />
+
+  </gs:upgradeSteps>
+
 </configure>
