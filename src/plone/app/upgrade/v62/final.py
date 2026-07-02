@@ -24,14 +24,14 @@ def manage_comments_icon(context):
                     == "string:${globals_view/navigationRootUrl}/discussionitem_icon.png"
                 ):
                     review_comments_action.icon_expr = "string:chat"
-                    logger.info("Action icon modified for manage comments action")
+                    logger.info("Manage comments action icon modified")
                 else:
                     logger.info(
-                        "Manage comments action icon expression was modified by the user"
+                        "Manage comments action icon was modified by the user. Nothing is done."
                     )
             else:
-                logger.info("There is no manage comments action")
+                logger.info("There is no manage comments action. Nothing is done.")
         else:
-            logger.info("There are no user actions")
+            logger.info("There are no user actions. Nothing si done.")
     else:
         logger.info("plone.app.discussion is not installed. Nothing is done.")
