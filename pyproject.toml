@@ -4,7 +4,76 @@
 [build-system]
 requires = ["setuptools>=68.2,<83", "wheel"]
 
+# START-MARKER-MANUAL-CONFIG
+# Anything from here until END-MARKER-MANUAL-CONFIG
+# will be kept by plone.meta
 
+[project]
+name = "plone.app.upgrade"
+version = "4.1.1.dev0"
+description = "Upgrade machinery for Plone."
+classifiers = [
+    "Development Status :: 6 - Mature",
+    "Environment :: Web Environment",
+    "Framework :: Plone",
+    "Framework :: Plone :: 6.2",
+    "Framework :: Plone :: Core",
+    "Framework :: Zope :: 5",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+license = "GPL-2.0-only"
+dynamic = ["readme"]
+requires-python = ">=3.10"
+authors = [
+    {name = "Plone Foundation",email = "plone-developers@lists.sourceforge.net"},
+]
+maintainers = [
+    {name = "Plone Foundation and contributors",email = "plone-developers@lists.sourceforge.net"},
+]
+dependencies = [
+    "Acquisition",
+    "Products.CMFCore",
+    "Products.CMFPlone>=6.0.0a1",
+    "Products.GenericSetup",
+    "Products.ZCatalog",
+    "ZODB",
+    "Zope>=5.5",
+    "plone.app.caching",
+    "plone.base",
+    "plone.dexterity",
+    "plone.indexer",
+    "plone.registry",
+    "plone.uuid",
+    "transaction",
+    "zope.component",
+    "zope.interface",
+]
+keywords = ["Plone", "upgrade", "migration"]
+
+[project.entry-points."plone.autoinclude.plugin"]
+target = "plone"
+
+[project.optional-dependencies]
+test = [
+    "Products.MimetypesRegistry",
+    "packaging",
+    "plone.app.testing",
+]
+
+[project.urls]
+Source = "https://github.com/plone/plone.app.upgrade"
+Issues = "https://github.com/plone/Products.CMFPlone/issues"
+Changelog = "https://github.com/plone/plone.app.upgrade/blob/master/CHANGES.rst"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "CHANGES.rst"]}
+# END-MARKER-MANUAL-CONFIG
 
 [tool.towncrier]
 directory = "news/"
