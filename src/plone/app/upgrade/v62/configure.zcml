@@ -87,4 +87,16 @@
         />
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6204"
+      destination="6205"
+      >
+    <!-- Plone 6.2.2 -->
+    <gs:upgradeStep
+        title="Update the IImagingSchema field registrations."
+        handler=".final.update_iimagingschema_fields"
+        />
+  </gs:upgradeSteps>
+
 </configure>
