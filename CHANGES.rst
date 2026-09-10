@@ -20,7 +20,7 @@ Bug fixes:
 
 Internal:
 
-
+- Added upgrade to 6205, Plone 6.2.2.  [thet]
 - Move package metadata from ``setup.py`` to ``pyproject.toml``.
   [plone devs]
 
