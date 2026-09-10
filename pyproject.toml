@@ -10,7 +10,7 @@ requires = ["setuptools>=68.2,<83", "wheel"]
 
 [project]
 name = "plone.app.upgrade"
-version = "4.1.1.dev0"
+version = "4.1.1"
 description = "Upgrade machinery for Plone."
 classifiers = [
     "Development Status :: 6 - Mature",

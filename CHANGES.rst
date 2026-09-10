@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+4.1.1 (2026-09-10)
+------------------
+
+Bug fixes:
+
+
+- Allow the `sizes` attribute in `sourceset` of picture_variants in `IImagingSchema`. @thet
+- Update the sizes attribute for the small picture variant, if it's still the default. @thet
+
+
+Internal:
+
+
+- Move package metadata from ``setup.py`` to ``pyproject.toml``.
+  [plone devs]
+
+
 4.1.0 (2026-06-26)
 ------------------
 
