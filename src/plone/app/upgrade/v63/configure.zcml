@@ -16,4 +16,15 @@
         />
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6300"
+      destination="6301"
+      >
+    <gs:upgradeStep
+        title="Register plone.app.contentrules as installed core add-on"
+        handler=".alpha.install_contentrules_profile"
+        />
+  </gs:upgradeSteps>
+
 </configure>
