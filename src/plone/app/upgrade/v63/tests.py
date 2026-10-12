@@ -56,3 +56,7 @@ class TestInstallContentrulesProfile(MigrationTest):
         with mock.patch.object(self.setup, "profileExists", return_value=False):
             alpha.install_contentrules_profile(self.setup)
         self.assertEqual(self.setup.getLastVersionForProfile(PROFILE), "unknown")
+        self.assertNotIn(
+            "plone.app.contentrules.browser.interfaces.IPloneAppContentrulesLayer",
+            self._layer_names(),
+        )

@@ -5,6 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 CONTENTRULES_PROFILE = "plone.app.contentrules:default"
+CONTENTRULES_BASELINE_VERSION = "7000"
 
 
 def install_contentrules_profile(context):
@@ -16,6 +17,9 @@ def install_contentrules_profile(context):
     we only add the browser layer and set the profile version.  We do not
     rerun the component registry step: that could replace an existing
     rule storage and lose rules.
+
+    Existing sites match profile version 7000.  Stamping that baseline keeps
+    later plone.app.contentrules upgrade steps pending instead of skipping them.
     """
     setup = getToolByName(context, "portal_setup")
     if not setup.profileExists(CONTENTRULES_PROFILE):
@@ -27,7 +31,5 @@ def install_contentrules_profile(context):
     setup.runImportStepFromProfile(
         f"profile-{CONTENTRULES_PROFILE}", "browserlayer", run_dependencies=False
     )
-    setup.setLastVersionForProfile(
-        CONTENTRULES_PROFILE, setup.getVersionForProfile(CONTENTRULES_PROFILE)
-    )
+    setup.setLastVersionForProfile(CONTENTRULES_PROFILE, CONTENTRULES_BASELINE_VERSION)
     logger.info("Registered %s as installed.", CONTENTRULES_PROFILE)
