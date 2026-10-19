@@ -12,5 +12,7 @@ test_matrix = {"6.2" = ["*"]}
 dependencies_mappings = [
     "'Products.ZCatalog' = ['Products.ZCTextIndex', 'Products.PluginIndexes']",
     ]
-# plone.distribution is only conditionally used
-dependencies_ignores = "['plone.distribution']"
+# plone.distribution is only conditionally used.
+# plone.app.contentrules and plone.contentrules are core add-ons since Plone 6.3,
+# the upgrade code and its tests work without them.
+dependencies_ignores = "['plone.distribution', 'plone.app.contentrules', 'plone.contentrules']"

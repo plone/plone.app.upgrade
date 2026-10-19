@@ -64,6 +64,7 @@ test = [
     "Products.MimetypesRegistry",
     "packaging",
     "plone.app.testing",
+    "plone.browserlayer",
 ]
 
 [project.urls]
@@ -191,7 +192,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
-ignore-packages = ['plone.distribution']
+ignore-packages = ['plone.distribution', 'plone.app.contentrules', 'plone.contentrules']
 'Products.ZCatalog' = ['Products.ZCTextIndex', 'Products.PluginIndexes']
 
 ##
