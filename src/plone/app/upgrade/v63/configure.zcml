@@ -11,8 +11,8 @@
       >
     <!-- Plone 6.3.0a1 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Add the AVIF settings to the imaging control panel."
+        handler=".alpha.add_avif_imaging_settings"
         />
   </gs:upgradeSteps>
 
