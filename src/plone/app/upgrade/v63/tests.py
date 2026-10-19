@@ -2,9 +2,20 @@ from plone.app.upgrade.tests.base import MigrationTest
 from plone.browserlayer.utils import registered_layers
 from plone.browserlayer.utils import unregister_layer
 
+import unittest
+
+try:
+    import plone.app.contentrules  # noqa: F401
+
+    HAS_CONTENTRULES = True
+except ImportError:
+    # Core add-on since Plone 6.3, may not be installed.
+    HAS_CONTENTRULES = False
+
 PROFILE = "plone.app.contentrules:default"
 
 
+@unittest.skipUnless(HAS_CONTENTRULES, "plone.app.contentrules is not installed")
 class TestInstallContentrulesProfile(MigrationTest):
     def afterSetUp(self):
         self.setup = self.portal.portal_setup
