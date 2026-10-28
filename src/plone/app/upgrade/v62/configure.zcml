@@ -104,10 +104,10 @@
       source="6205"
       destination="6206"
       >
-    <!-- Plone 6.2.2 -->
+    <!-- Plone 6.2.3 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Load the plone-fullscreen JavaScript deferred."
+        handler=".final.defer_fullscreen_bundle"
         />
   </gs:upgradeSteps>
 
