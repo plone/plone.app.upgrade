@@ -47,3 +47,13 @@ def update_iimagingschema_fields(context):
             "Imaging: Did not add the sizes attribute to the small picture variant, "
             "because the plone.picture_variants value has been customized."
         )
+
+
+def defer_fullscreen_bundle(context):
+    # fullscreen.js only wires up .zoomable images on DOMContentLoaded,
+    # which fires after deferred scripts have run.
+    registry = getUtility(IRegistry)
+    key = "plone.bundles/plone-fullscreen.load_defer"
+    if key in registry.records:
+        registry[key] = True
+        logger.info("Load the plone-fullscreen bundle deferred.")
