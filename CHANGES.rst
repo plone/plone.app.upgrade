@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+4.1.2 (2026-11-10)
+------------------
+
+Internal:
+
+
+- Added upgrade to 6206, Plone 6.2.3.  [maurits]
+
+
 4.1.1 (2026-09-10)
 ------------------
 
