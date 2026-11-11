@@ -104,7 +104,19 @@
       source="6205"
       destination="6206"
       >
-    <!-- Plone 6.2.2 -->
+    <!-- Plone 6.2.3 -->
+    <gs:upgradeStep
+        title="Miscellaneous"
+        handler="..utils.null_upgrade_step"
+        />
+  </gs:upgradeSteps>
+
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6206"
+      destination="6207"
+      >
+    <!-- Plone 6.2.4 -->
     <gs:upgradeStep
         title="Miscellaneous"
         handler="..utils.null_upgrade_step"
