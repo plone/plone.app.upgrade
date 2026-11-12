@@ -16,4 +16,16 @@
         />
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6300"
+      destination="6301"
+      >
+    <!-- Plone 6.3.0a2 -->
+    <gs:upgradeStep
+        title="Add the mail setting for SSL/TLS (SMTPS)."
+        handler=".alpha.add_smtp_implicit_tls"
+        />
+  </gs:upgradeSteps>
+
 </configure>
