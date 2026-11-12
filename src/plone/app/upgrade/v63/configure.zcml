@@ -16,4 +16,16 @@
         />
   </gs:upgradeSteps>
 
+  <gs:upgradeSteps
+      profile="Products.CMFPlone:plone"
+      source="6300"
+      destination="6301"
+      >
+    <!-- Plone 6.3.0a2 -->
+    <gs:upgradeStep
+        title="Add the image scales fullhd and qhd."
+        handler=".alpha.add_larger_image_scales"
+        />
+  </gs:upgradeSteps>
+
 </configure>
