@@ -4,7 +4,11 @@ from plone.app.upgrade.tests.base import MigrationTest
 class TestAddSmtpImplicitTls(MigrationTest):
     def setUp(self):
         super().setUp()
+        from plone.base.interfaces import IMailSchema
         from plone.registry.interfaces import IRegistry
+
+        if "smtp_implicit_tls" not in IMailSchema:
+            self.skipTest("plone.base has no smtp_implicit_tls yet.")
         from zope.component import getUtility
 
         self.registry = getUtility(IRegistry)
