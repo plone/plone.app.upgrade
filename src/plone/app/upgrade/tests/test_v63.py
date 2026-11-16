@@ -10,7 +10,7 @@ class TestAddLargerImageScales(MigrationTest):
         from zope.component import getUtility
 
         self.registry = getUtility(IRegistry)
-        # Simulate a site from before 6301.
+        # Simulate a site from before 6300.
         self.registry["plone.allowed_sizes"] = ["huge 1600:65536", "mini 200:65536"]
         self.set_large_scales(OLD_LARGE)
 
