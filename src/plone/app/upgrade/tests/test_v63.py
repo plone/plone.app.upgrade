@@ -12,7 +12,7 @@ class TestAddSmtpImplicitTls(MigrationTest):
         from zope.component import getUtility
 
         self.registry = getUtility(IRegistry)
-        # Simulate a site from before 6301.
+        # Simulate a site from before 6300.
         if "plone.smtp_implicit_tls" in self.registry.records:
             del self.registry.records["plone.smtp_implicit_tls"]
 
