@@ -11,8 +11,8 @@
       >
     <!-- Plone 6.3.0a1 -->
     <gs:upgradeStep
-        title="Miscellaneous"
-        handler="..utils.null_upgrade_step"
+        title="Add the mail setting for SSL/TLS (SMTPS)."
+        handler=".alpha.add_smtp_implicit_tls"
         />
   </gs:upgradeSteps>
 
